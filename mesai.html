@@ -3,55 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Mesai Hesaplama</title>
+    <title>H360 | Mesai Analizi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Sayfayı mermi gibi ortalayan ve patlamayı önleyen özel CSS */
-        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
-        .main-wrapper { 
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; 
-        }
+        /* Parlamayı Sıfırlayan Deep Night Teması */
+        body { background-color: #080b12; margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; }
+        .main-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; }
+        
         .calc-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 40px;
-            width: 100%;
-            max-width: 450px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px; padding: 40px; width: 100%; max-width: 480px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        .header-area { text-align: center; margin-bottom: 35px; }
-        .header-area h1 { font-size: 1.6rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
-        .header-area p { color: #007bff; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; }
+
+        .header-area { text-align: center; margin-bottom: 30px; }
+        .header-area h1 { font-size: 1.4rem; letter-spacing: 2px; margin: 0; font-weight: 700; color: #fff; }
+        .header-area p { color: #3b82f6; font-size: 0.7rem; font-weight: 800; margin-top: 8px; text-transform: uppercase; }
         
-        .input-group { margin-bottom: 25px; }
-        .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px; }
-        .input-group input {
-            width: 100%; padding: 16px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; color: #3b82f6; font-size: 0.65rem; font-weight: 800; margin-bottom: 10px; }
+        
+        .input-group input, .input-group select {
+            width: 100%; padding: 16px; background: #1e293b;
+            border: 1px solid #334155; border-radius: 12px;
+            color: #fff; font-size: 1rem; outline: none; transition: 0.2s; box-sizing: border-box;
         }
-        .input-group input:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
-        
+        .input-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; }
+        .input-group input:focus { border-color: #3b82f6; background: #243146; }
+
         .calc-btn {
-            width: 100%; padding: 18px; background: #007bff; color: #fff;
-            border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
+            width: 100%; padding: 18px; background: #3b82f6; color: #fff;
+            border: none; border-radius: 14px; font-weight: 700; cursor: pointer;
             font-size: 1rem; transition: 0.3s; margin-top: 5px;
         }
-        .calc-btn:hover { background: #0056b3; transform: translateY(-2px); }
+        .calc-btn:hover { background: #2563eb; transform: translateY(-1px); }
         
+        /* Sonuç Paneli */
         .result-box {
-            margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15);
-            display: none; text-align: center;
+            margin-top: 30px; padding: 25px; background: #0f172a;
+            border-radius: 20px; border: 1px solid #1e293b;
+            display: none; text-align: center; border-top: 2px solid #2ecc71;
+            animation: fadeIn 0.4s ease;
         }
-        .result-label { font-size: 0.7rem; color: #888; font-weight: 800; margin-bottom: 5px; }
-        .result-main { font-size: 2.5rem; font-weight: 700; color: #2ecc71; margin-bottom: 20px; }
-        .result-footer { font-size: 0.85rem; color: #aaa; }
-        .result-footer b { color: #fff; }
+        .result-main { font-size: 2.2rem; font-weight: 800; color: #2ecc71; margin: 10px 0; }
+        .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .res-item { background: #1e293b; padding: 12px; border-radius: 10px; }
+        .res-item label { display: block; font-size: 0.6rem; color: #3b82f6; font-weight: 800; margin-bottom: 5px; }
+        .res-item b { font-size: 0.9rem; color: #fff; }
+
+        .info-text { font-size: 0.65rem; color: #64748b; margin-top: 15px; line-height: 1.4; text-align: left; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -61,75 +65,81 @@
         <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
     </div>
     <div class="nav-right">
-        <div class="menu-container">
-            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
-            <div class="dropdown-menu" id="navMenu">
-                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
-                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
-                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
-                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-            </div>
-        </div>
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
     </div>
 </nav>
 
 <div class="main-wrapper">
     <div class="calc-card">
         <div class="header-area">
-            <h1>MESAİ HESAPLAMA</h1>
-            <p>EK ÇALIŞMA VE GELİR ANALİZİ</p>
+            <h1>MESAİ ANALİZİ</h1>
+            <p>EK MESAİ VE GELİR HESAPLAMA</p>
         </div>
 
         <div class="input-group">
             <label>AYLIK NET MAAŞ (TL)</label>
-            <input type="number" id="maas" placeholder="Örn: 35000">
+            <input type="number" id="maas" placeholder="Örn: 45000">
+        </div>
+
+        <div class="input-group">
+            <label>MESAI TİPİ</label>
+            <select id="type">
+                <option value="1.5">Hafta İçi Fazla Mesai (%50 Zamlı)</option>
+                <option value="2.0">Hafta Sonu / Pazar (%100 Zamlı)</option>
+                <option value="3.0">Resmi Tatil / Bayram (%200 Zamlı)</option>
+            </select>
         </div>
 
         <div class="input-group">
             <label>TOPLAM MESAİ SAATİ</label>
-            <input type="number" id="saat" placeholder="Örn: 15">
+            <input type="number" id="saat" placeholder="Örn: 10">
         </div>
 
-        <button class="calc-btn" onclick="calcMesai()">EK KAZANCI GÖR</button>
+        <button class="calc-btn" onclick="calcMesai()">HAKEDİŞİ HESAPLA</button>
 
         <div id="res" class="result-box">
-            <div class="result-label">ALINACAK EK ÜCRET</div>
-            <div class="result-main" id="ekUcret">0 ₺</div>
-            <div class="result-footer">
-                Saatlik Mesai Ücreti: <b id="saatlik">0 ₺</b>
-                <p style="font-size: 0.65rem; color: #555; margin-top: 15px; line-height: 1.4;">
-                    * Yasal çalışma 225 saat üzerinden %50 zamlı (1.5 çarpan) hesaplanır.
-                </p>
+            <div style="font-size: 0.7rem; font-weight: 800; color: #64748b;">TOPLAM EK KAZANÇ</div>
+            <div class="result-main" id="totalEarn">0.00 ₺</div>
+            
+            <div class="result-grid">
+                <div class="res-item">
+                    <label>NET SAATLİK ÜCRET</label>
+                    <b id="hourNet">0.00 ₺</b>
+                </div>
+                <div class="res-item">
+                    <label>ZAMLI SAAT ÜCRETİ</label>
+                    <b id="hourBonus">0.00 ₺</b>
+                </div>
+            </div>
+
+            <div class="info-text">
+                * Hesaplama aylık <b>225 saatlik</b> yasal çalışma süresi baz alınarak yapılmıştır. <br>
+                * Net maaş üzerinden yaklaşık ek hakedişi gösterir.
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+    function toggleMenu() { /* Menü JS kodun buraya gelecek */ }
 
     function calcMesai() {
         const maas = parseFloat(document.getElementById('maas').value) || 0;
+        const multiplier = parseFloat(document.getElementById('type').value);
         const saat = parseFloat(document.getElementById('saat').value) || 0;
         
-        if(maas > 0 && saat > 0) {
-            // Yasal çalışma 225 saat üzerinden 1.5 çarpanla
-            const saatlikMesai = (maas / 225) * 1.5;
-            const sonuc = saatlikMesai * saat;
-            
-            document.getElementById('ekUcret').innerText = Math.round(sonuc).toLocaleString('tr-TR') + " ₺";
-            document.getElementById('saatlik').innerText = saatlikMesai.toFixed(2).toLocaleString('tr-TR') + " ₺";
-            document.getElementById('res').style.display = "block";
-        }
-    }
+        if(maas <= 0 || saat <= 0) return;
 
-    window.onclick = function(e) { 
-        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
-        }
+        // Türkiye yasalarına göre aylık çalışma 225 saattir.
+        const normalSaatlik = maas / 225;
+        const zamliSaatlik = normalSaatlik * multiplier;
+        const toplamEkUcret = zamliSaatlik * saat;
+
+        document.getElementById('totalEarn').innerText = toplamEkUcret.toLocaleString('tr-TR', {maximumFractionDigits: 0}) + " ₺";
+        document.getElementById('hourNet').innerText = normalSaatlik.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+        document.getElementById('hourBonus').innerText = zamliSaatlik.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+        
+        document.getElementById('res').style.display = "block";
     }
 </script>
 </body>
