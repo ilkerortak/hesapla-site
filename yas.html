@@ -1,1 +1,34 @@
-
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Yaş Hesaplama 2026</title>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="Doğum tarihinizden yaşınızı kolayca hesaplayın.">
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="index.html">Ana Sayfa</a></li>
+    <li><a href="netmaas.html">Net Maaş</a></li>
+    <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
+    <li><a href="kredi.html">Kredi Hesaplama</a></li>
+    <li><a href="yas.html">Yaş Hesaplama</a></li>
+    <li><a href="cv.html">CV Oluşturucu</a></li>
+  </ul>
+</nav>
+<hr>
+<h1>Yaş Hesaplama 2026</h1>
+<p>Doğum yılınızı girin:</p>
+<input type="number" id="dogum">
+<button onclick="hesapla()">Hesapla</button>
+<h2 id="sonuc"></h2>
+<script>
+function hesapla() {
+  let dogum = parseInt(document.getElementById("dogum").value);
+  let yas = 2026 - dogum;
+  document.getElementById("sonuc").innerText = "Yaşınız: " + yas;
+}
+</script>
+</body>
+</html>
