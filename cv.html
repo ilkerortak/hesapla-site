@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <title>CV Oluşturucu 2026</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <meta name="description" content="Basit CV oluşturucu ile kendi CV’nizi hemen hazırlayın.">
 </head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <body>
 <nav>
   <ul>
@@ -17,69 +17,67 @@
     <li><a href="yas.html">Yaş Hesaplama</a></li>
     <li><a href="cv.html">CV Oluşturucu</a></li>
   </ul>
+  <button id="theme-toggle">☀️</button>
 </nav>
 
 <div class="container">
-<p>Ad, soyad ve mesleğinizi girin:</p>
+<h1>CV Oluşturucu 2026</h1>
 <input type="text" id="ad" placeholder="Ad">
 <input type="text" id="soyad" placeholder="Soyad">
 <input type="text" id="meslek" placeholder="Meslek">
 <input type="text" id="telefon" placeholder="Telefon">
 <input type="text" id="email" placeholder="E-mail">
-
 <button onclick="olustur()">CV Oluştur & PDF İndir</button>
-
-<div id="cv-preview" style="display:none;"></div>
-<h1>CV Oluşturucu 2026</h1>
-<button onclick="toggleTheme()">Koyu/Açık Tema</button>
-<p>Ad, soyad ve mesleğinizi girin:</p>
-<input type="text" id="ad" placeholder="Ad">
-<input type="text" id="soyad" placeholder="Soyad">
-<input type="text" id="meslek" placeholder="Meslek">
-<button onclick="olustur()">CV Oluştur</button>
-<h2 id="sonuc"></h2>
 </div>
 
 <script>
-function olustur() {
-  let ad = document.getElementById("ad").value;
-  let soyad = document.getElementById("soyad").value;
-  let meslek = document.getElementById("meslek").value;
-  document.getElementById("sonuc").innerText = `Adı Soyadı: ${ad} ${soyad}\nMeslek: ${meslek}`;
-}
-function toggleTheme() { document.body.classList.toggle("dark"); }
-</script>
-<script>
-async function olustur() {
+async function olustur(){
   const { jsPDF } = window.jspdf;
   let doc = new jsPDF();
 
-  let ad = document.getElementById("ad").value;
-  let soyad = document.getElementById("soyad").value;
-  let meslek = document.getElementById("meslek").value;
-  let telefon = document.getElementById("telefon").value;
-  let email = document.getElementById("email").value;
+  let ad=document.getElementById("ad").value;
+  let soyad=document.getElementById("soyad").value;
+  let meslek=document.getElementById("meslek").value;
+  let telefon=document.getElementById("telefon").value;
+  let email=document.getElementById("email").value;
 
   doc.setFontSize(22);
-  doc.setTextColor(79, 70, 229);
-  doc.text(`${ad} ${soyad}`, 20, 30);
+  doc.setTextColor(79,70,229);
+  doc.text(`${ad} ${soyad}`,20,30);
 
   doc.setFontSize(16);
   doc.setTextColor(0,0,0);
-  doc.text(`Meslek: ${meslek}`, 20, 50);
-  doc.text(`Telefon: ${telefon}`, 20, 60);
-  doc.text(`Email: ${email}`, 20, 70);
+  doc.text(`Meslek: ${meslek}`,20,50);
+  doc.text(`Telefon: ${telefon}`,20,60);
+  doc.text(`Email: ${email}`,20,70);
 
   doc.setFontSize(18);
-  doc.setTextColor(79, 70, 229);
-  doc.text("Deneyim", 20, 90);
+  doc.setTextColor(79,70,229);
+  doc.text("Deneyim",20,90);
   doc.setFontSize(14);
   doc.setTextColor(0,0,0);
-  doc.text("- Örnek Firma | 2020-2023 | İş Tanımı", 20, 100);
-  doc.text("- Örnek Firma 2 | 2018-2020 | İş Tanımı", 20, 110);
+  doc.text("- Örnek Firma | 2020-2023 | İş Tanımı",20,100);
+  doc.text("- Örnek Firma 2 | 2018-2020 | İş Tanımı",20,110);
 
   doc.save(`${ad}_${soyad}_CV.pdf`);
 }
+
+// Tema persist
+const themeToggle = document.getElementById("theme-toggle");
+if(localStorage.getItem('theme')==='dark'){
+    document.body.classList.add('dark');
+    themeToggle.textContent='🌙';
+}else{ themeToggle.textContent='☀️'; }
+themeToggle.addEventListener('click',()=>{
+    document.body.classList.toggle('dark');
+    if(document.body.classList.contains('dark')){
+        themeToggle.textContent='🌙';
+        localStorage.setItem('theme','dark');
+    }else{
+        themeToggle.textContent='☀️';
+        localStorage.setItem('theme','light');
+    }
+});
 </script>
 </body>
 </html>
