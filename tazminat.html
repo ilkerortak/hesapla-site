@@ -3,31 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Tazminat Analizi</title>
+    <title>H360 | Gelişmiş Tazminat Analizi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .calculation-container { max-width: 600px; margin: 120px auto 60px; padding: 0 20px; }
-        .form-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            padding: 30px; border-radius: 20px; backdrop-filter: blur(10px);
+        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
+        .main-wrapper { 
+            display: flex; justify-content: center; align-items: flex-start; 
+            min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; 
         }
+        .calc-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px; padding: 40px; width: 100%; max-width: 550px;
+            backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .header-area { text-align: center; margin-bottom: 30px; }
+        .header-area h1 { font-size: 1.6rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
+        .header-area p { color: #007bff; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; }
+        
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .input-group { margin-bottom: 20px; }
-        label { color: var(--accent); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 8px; }
-        input[type="number"] {
-            width: 100%; padding: 15px; background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border); border-radius: 10px; color: #fff; font-size: 1.1rem; outline: none;
+        .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 8px; }
+        .input-group input {
+            width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
         }
-        input[type="number"]:focus { border-color: var(--accent); }
-        .btn-calc {
-            width: 100%; padding: 15px; background: var(--accent); color: #fff;
-            border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        .input-group input:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
+        
+        .calc-btn {
+            width: 100%; padding: 18px; background: #007bff; color: #fff;
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1rem;
         }
-        .btn-calc:hover { opacity: 0.9; transform: scale(0.98); }
-        .res-area { margin-top: 30px; padding-top: 20px; border-top: 1px dashed var(--border); display: none; }
-        .res-val { font-size: 2.2rem; font-weight: 700; color: var(--accent); margin: 10px 0; }
-        .detail-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-dim); }
+
+        .result-box { margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15); display: none; }
+        .res-item { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .res-item span { font-size: 0.7rem; color: #888; font-weight: 800; display: block; margin-bottom: 5px; }
+        .res-item b { font-size: 1.6rem; color: #fff; }
+        .res-total { text-align: center; padding: 20px; background: rgba(46, 204, 113, 0.1); border-radius: 15px; border: 1px solid rgba(46, 204,  green, 0.2); }
+        .res-total b { color: #2ecc71; font-size: 2.2rem; }
+
+        .detail-row { display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; color: #aaa; padding: 0 5px; }
+        .info-tag { font-size: 0.65rem; color: #555; margin-top: 15px; text-align: center; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -37,78 +55,106 @@
         <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
     </div>
     <div class="nav-right">
-        <div class="menu-container">
-            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
-            <div class="dropdown-menu" id="navMenu">
-                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
-                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
-                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
-                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-            </div>
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
+            <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
+            <a href="cv.html">📄 CV</a>
         </div>
     </div>
 </nav>
 
-<div class="calculation-container">
-    <header class="hero premium-header" style="padding: 0 0 40px 0;">
-        <h1 class="premium-title" style="font-size: 2rem;">TAZMİNAT ANALİZİ</h1>
-        <p class="premium-status">KIDEM VE İHBAR HESAPLAMA</p>
-    </header>
-
-    <div class="form-card">
-        <div class="input-group">
-            <label>SON BRÜT MAAŞ (TL)</label>
-            <input type="number" id="sonBrut" placeholder="Örn: 55000">
+<div class="main-wrapper">
+    <div class="calc-card">
+        <div class="header-area">
+            <h1>TAZMİNAT ANALİZİ</h1>
+            <p>KIDEM VE İHBAR HESAPLAMA (2026)</p>
         </div>
-        <div class="input-group">
-            <label>ÇALIŞILAN YIL</label>
-            <input type="number" id="yil" placeholder="Örn: 5">
-        </div>
-        
-        <button class="btn-calc" onclick="hesaplaTazminat()">HESAPLAMAYI BAŞLAT</button>
 
-        <div id="res" class="res-area">
-            <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim);">TOPLAM NET KIDEM TAZMİNATI</p>
-            <div class="res-val" id="toplamTazminat">0 ₺</div>
-            
-            <div class="detail-row"><span>Kıdem Tavanı (2026)</span> <b style="color:#fff">35.058 ₺</b></div>
-            <div class="detail-row"><span>Hesaplanan Süre</span> <b id="sureBilgi" style="color:#fff">-</b></div>
-            <div class="detail-row"><span>Damga Vergisi Kesintisi</span> <b id="kesinti" style="color:#fff">0</b></div>
+        <div class="input-group">
+            <label>BRÜT MAAŞ + DÜZENLİ YARDIMLAR (TL)</label>
+            <input type="number" id="brut" placeholder="Örn: 60000">
+        </div>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label>ÇALIŞILAN YIL</label>
+                <input type="number" id="yil" placeholder="Yıl" value="1">
+            </div>
+            <div class="input-group">
+                <label>EK AY</label>
+                <input type="number" id="ay" placeholder="Ay" value="0">
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="hesapla()">HESAPLAMAYI BAŞLAT</button>
+
+        <div id="res" class="result-box">
+            <div class="res-item">
+                <span>NET KIDEM TAZMİNATI</span>
+                <b id="kidemRes">0 ₺</b>
+                <div class="detail-row">Vergi Kesintisi: <span id="kidemVergi">0 ₺</span></div>
+            </div>
+
+            <div class="res-item">
+                <span>NET İHBAR TAZMİNATI</span>
+                <b id="ihbarRes">0 ₺</b>
+                <div class="detail-row">Süre: <span id="ihbarHafta">0 Hafta</span></div>
+            </div>
+
+            <div class="res-total">
+                <span>TOPLAM ELE GEÇEN</span>
+                <b id="toplamRes">0 ₺</b>
+            </div>
+
+            <div class="info-tag">
+                * Kıdem tavanı (35.058,58 ₺) otomatik uygulanır.<br>
+                * İhbar tazminatından Gelir Vergisi (%15) ve Damga Vergisi kesilmiştir.
+            </div>
         </div>
     </div>
 </div>
 
 <script>
     function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-    
-    function hesaplaTazminat() {
-        const maas = parseFloat(document.getElementById('sonBrut').value) || 0;
+
+    function hesapla() {
+        const brut = parseFloat(document.getElementById('brut').value) || 0;
         const yil = parseFloat(document.getElementById('yil').value) || 0;
+        const ay = parseFloat(document.getElementById('ay').value) || 0;
+        const KIDEM_TAVAN = 35058.58;
+
+        if(brut <= 0) return;
+
+        // 1. Kıdem Hesaplama
+        const esasBrut = brut > KIDEM_TAVAN ? KIDEM_TAVAN : brut;
+        const toplamYil = yil + (ay / 12);
+        const brutKidem = esasBrut * toplamYil;
+        const kidemDamga = brutKidem * 0.00759;
+        const netKidem = brutKidem - kidemDamga;
+
+        // 2. İhbar Hesaplama
+        let ihbarHafta = 2;
+        if (toplamYil >= 0.5 && toplamYil < 1.5) ihbarHafta = 4;
+        else if (toplamYil >= 1.5 && toplamYil < 3) ihbarHafta = 6;
+        else if (toplamYil >= 3) ihbarHafta = 8;
+
+        const gunlukBrut = brut / 30;
+        const brutIhbar = gunlukBrut * (ihbarHafta * 7);
+        const ihbarGelirVergi = brutIhbar * 0.15;
+        const ihbarDamga = brutIhbar * 0.00759;
+        const netIhbar = brutIhbar - ihbarGelirVergi - ihbarDamga;
+
+        // Yazdır
+        document.getElementById('kidemRes').innerText = Math.round(netKidem).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('kidemVergi').innerText = Math.round(kidemDamga).toLocaleString('tr-TR') + " ₺";
         
-        // 2026 Tahmini Kıdem Tazminatı Tavanı
-        const kidemTavan = 35058;
-        const esasMaas = (maas > kidemTavan ? kidemTavan : maas);
+        document.getElementById('ihbarRes').innerText = Math.round(netIhbar).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('ihbarHafta').innerText = ihbarHafta + " Hafta";
         
-        const brutKidem = esasMaas * yil;
-        const damgaVergisi = brutKidem * 0.00759;
-        const netKidem = brutKidem - damgaVergisi;
-        
-        // Arayüz Güncelleme
-        document.getElementById('toplamTazminat').innerText = Math.round(netKidem).toLocaleString('tr-TR') + " ₺";
-        document.getElementById('sureBilgi').innerText = yil + " Yıl";
-        document.getElementById('kesinti').innerText = Math.round(damgaVergisi).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('toplamRes').innerText = Math.round(netKidem + netIhbar).toLocaleString('tr-TR') + " ₺";
         
         document.getElementById('res').style.display = "block";
-    }
-
-    // Navigasyon dışı tıklama kontrolü
-    window.onclick = function(e) { 
-        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
-        }
     }
 </script>
 </body>
