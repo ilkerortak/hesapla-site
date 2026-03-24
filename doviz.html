@@ -2,33 +2,43 @@
 <html lang="tr">
 <head><link rel="stylesheet" href="style.css"></head>
 <body>
-<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
-    <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
-    <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html" class="active">💱 Döviz</a>
-    <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-</div></nav>
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a></nav>
 <div class="container">
-    <h2>💱 Döviz Çevirici</h2>
-    <div class="input-group"><label>Tutar</label><input type="number" id="a" value="1"></div>
-    <div class="input-group">
-        <label>İşlem</label>
-        <select id="s">
-            <option value="45.5">USD -> TRY (Dolar Satış)</option>
-            <option value="1">TRY -> USD (Dolar Alış)</option>
-        </select>
-    </div>
-    <button onclick="calc()">Dövizi Çevir</button>
+    <h2>💱 Canlı Döviz Çevirici</h2>
+    <div id="liveKur" style="color:var(--accent); font-weight:700; margin-bottom:15px; text-align:center;">Kur yükleniyor...</div>
+    <input type="number" id="amount" value="1" placeholder="Miktar">
+    <select id="type">
+        <option value="toTry">USD -> TRY</option>
+        <option value="toUsd">TRY -> USD</option>
+    </select>
+    <button onclick="convert()">Çevir</button>
     <div id="res" class="result-box">
-        <div class="row"><span>Birim Kur</span><span id="k"></span></div>
-        <div class="row total"><span>Hesaplanan Tutar</span><span id="so"></span></div>
+        <div class="row"><span id="resultText"></span></div>
     </div>
 </div>
+
 <script>
-function calc(){
-    let a=document.getElementById("a").value, k=document.getElementById("s").value; 
-    document.getElementById("res").style.display="block"; 
-    document.getElementById("k").innerText=k+" TL";
-    document.getElementById("so").innerText=k==45.5?(a*k).toFixed(2)+" TRY":(a/45.5).toFixed(2)+" USD";
-}
+    let currentRate = 0;
+    async function fetchRate() {
+        const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        const data = await res.json();
+        currentRate = data.rates.TRY;
+        document.getElementById('liveKur').innerText = `Güncel Dolar Kuru: ${currentRate} TL`;
+    }
+
+    function convert() {
+        let amt = document.getElementById('amount').value;
+        let type = document.getElementById('type').value;
+        let resBox = document.getElementById('res');
+        resBox.style.display = "block";
+        
+        if(type === "toTry") {
+            document.getElementById('resultText').innerText = (amt * currentRate).toFixed(2) + " TL";
+        } else {
+            document.getElementById('resultText').innerText = (amt / currentRate).toFixed(2) + " USD";
+        }
+    }
+    fetchRate();
 </script>
-</body></html>
+</body>
+</html>
