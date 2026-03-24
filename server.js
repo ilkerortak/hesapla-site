@@ -4,7 +4,8 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(__dirname)); // Dosyaların okunmasını sağlar
+// Dosyaların ana dizinde olduğunu kesinleştirelim
+app.use(express.static(path.join(__dirname, '.')));
 
 app.get('/api/finans', async (req, res) => {
     try {
@@ -20,8 +21,14 @@ app.get('/api/finans', async (req, res) => {
             gold: ((xauRate / 31.10347) * tryRate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
         });
     } catch (e) {
-        res.status(500).json({ error: "Hata" });
+        console.error("API Hatası:", e.message);
+        res.status(500).json({ error: "Veri çekilemedi" });
     }
 });
 
-app.listen(PORT, () => console.log(`H360 Aktif!`));
+// index.html'i ana sayfa olarak ayarla
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.listen(PORT, () => console.log(`H360 Sunucusu ${PORT} portunda aktif.`));
