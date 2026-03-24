@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HESAPLA360 | Finansal Dashboard</title>
+    <title>HESAPLA360 | Finansal Asistanı'nız</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -44,19 +44,18 @@
 <script>
     async function updateRates() {
         try {
-            // 1. Temel Döviz ve Yedek Altın Verisi (API)
+            // 1. Döviz ve Yedek Ons Verisi
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await res.json();
             const tryVal = data.rates.TRY;
             const eurRate = data.rates.EUR;
             const xauUsd = data.rates.XAU;
 
-            const eurTry = (tryVal / eurRate).toFixed(2);
             document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
-            document.getElementById('eurVal').innerText = eurTry + " ₺";
+            document.getElementById('eurVal').innerText = (tryVal / eurRate).toFixed(2) + " ₺";
 
-            // 2. Investing.com'dan Veri Çekme Denemesi (Ana Plan)
-            const targetUrl = encodeURIComponent('https://tr.investing.com/currencies/gau-try');
+            // 2. Bigpara'dan Gram Altın Çekme
+            const targetUrl = encodeURIComponent('https://bigpara.hurriyet.com.tr/altin/gram-altin-fiyati/');
             const proxyUrl = `https://api.allorigins.win/get?url=${targetUrl}`;
 
             try {
@@ -65,43 +64,30 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(goldData.contents, 'text/html');
 
-                // Çoklu Seçici Kontrolü (Investing yapısı değişirse diye)
-                const selectors = ['[data-test="instrument-price-last"]', '#last_last', '.main-current-data .inlineblock .text-2xl'];
-                let foundPrice = null;
-
-                for (let s of selectors) {
-                    let el = doc.querySelector(s);
-                    if (el && el.innerText.trim() !== "") {
-                        foundPrice = el.innerText.trim();
-                        break;
-                    }
-                }
-
-                if (foundPrice) {
-                    document.getElementById('goldVal').innerText = foundPrice + " ₺";
+                // Bigpara'daki fiyat hücresini bul (Genelde "lastPrice" class'ı içinde olur)
+                const bigParaPrice = doc.querySelector('.lastPrice');
+                
+                if (bigParaPrice && bigParaPrice.innerText.trim() !== "") {
+                    document.getElementById('goldVal').innerText = bigParaPrice.innerText.trim() + " ₺";
                 } else {
-                    throw new Error("Investing verisi okunamadı.");
+                    throw new Error("Bigpara verisi okunamadı");
                 }
 
             } catch (scrapeErr) {
-                // 3. Yedek Plan: API Ons Verisiyle Hesapla (Hata anında burası çalışır)
-                if (xauUsd) {
-                    const fallbackPrice = ((xauUsd / 31.1034) * tryVal);
-                    document.getElementById('goldVal').innerText = fallbackPrice.toLocaleString('tr-TR', {
-                        minimumFractionDigits: 2, 
-                        maximumFractionDigits: 2
-                    }) + " ₺";
-                    console.warn("Investing verisi çekilemedi, hesaplama yöntemi kullanıldı.");
-                }
+                // 3. Yedek Plan: API Ons Verisiyle Hesapla
+                const fallbackPrice = ((xauUsd / 31.1034) * tryVal);
+                document.getElementById('goldVal').innerText = fallbackPrice.toLocaleString('tr-TR', {
+                    minimumFractionDigits: 2, 
+                    maximumFractionDigits: 2
+                }) + " ₺";
+                console.warn("Bigpara başarısız, hesaplama devrede.");
             }
 
-        } catch (globalErr) {
-            console.error("Finansal veriler senkronize edilemedi:", globalErr);
-            document.getElementById('goldVal').innerText = "Hata!";
+        } catch (e) {
+            console.error("Veri güncellenemedi:", e);
         }
     }
 
-    // Sayfa açıldığında ve her dakikada bir güncelle
     updateRates();
     setInterval(updateRates, 60000);
 </script>
