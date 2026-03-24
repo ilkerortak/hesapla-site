@@ -1,7 +1,13 @@
 {
-  "name": "hesapla-site",
+  "name": "h360-finans",
   "version": "1.0.0",
+  "description": "H360 Finansal Dashboard Backend",
+  "main": "server.js",
   "scripts": {
-    "start": "npx serve ."
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0"
   }
 }
