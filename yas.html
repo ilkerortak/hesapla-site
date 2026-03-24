@@ -49,8 +49,12 @@
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-    
+    // Menü Kontrolü
+    function toggleMenu() { 
+        document.getElementById('navMenu').classList.toggle('active'); 
+    }
+
+    // Yaş Hesaplama Motoru
     function calcAge() {
         const birthInput = document.getElementById('birthDate').value;
         if(!birthInput) return;
@@ -59,6 +63,7 @@
         const now = new Date();
         const diff = now - birth;
         
+        // Artık yılları da hesaba katan yaklaşık yaş hesabı
         const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const weeks = Math.floor(days / 7);
@@ -67,6 +72,19 @@
         document.getElementById('days').innerText = days.toLocaleString();
         document.getElementById('weeks').innerText = weeks.toLocaleString();
         document.getElementById('res').style.display = "block";
+    }
+
+    // Menü dışına tıklandığında otomatik kapatma
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('active')) {
+                    openDropdown.classList.remove('active');
+                }
+            }
+        }
     }
 </script>
 </body>
