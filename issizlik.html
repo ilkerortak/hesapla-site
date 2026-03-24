@@ -8,17 +8,25 @@
     <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
 </div></nav>
 <div class="container">
-    <h2>📅 İşsizlik Maaşı</h2>
-    <div class="input-group"><label>Son 4 Ay Brüt Ortalaması</label><input type="number" id="o"></div>
-    <button onclick="calc()">Hesapla</button>
-    <div id="res" class="result-item"><div class="detail-row total"><span>Aylık Net</span><span id="n"></span></div></div>
+    <h2>📅 İşsizlik Analizi</h2>
+    <div class="input-group"><label>Son 4 Ay Brüt Maaş Ort.</label><input type="number" id="o" placeholder="0.00 TL"></div>
+    <button onclick="calc()">Sorgula</button>
+    <div id="res" class="result-box">
+        <div class="row"><span>Brüt Ödenek</span><span id="bo"></span></div>
+        <div class="row"><span>Damga Vergisi</span><span id="dv"></span></div>
+        <div class="row total"><span>Aylık Net Ödeme</span><span id="no"></span></div>
+        <p style="font-size:0.7rem; color:var(--dim); margin-top:10px;">*Ödeme süresi prim gün sayınıza göre 6-10 ay arası değişir.</p>
+    </div>
 </div>
 <script>
-    function calc(){
-        let o=document.getElementById("o").value; if(!o)return;
-        document.getElementById("res").style.display="block";
-        document.getElementById("n").innerText=(Math.min(o*0.4, 26424)*0.992).toLocaleString()+" TL";
-    }
+function calc(){
+    let o=parseFloat(document.getElementById("o").value); if(!o) return;
+    let brut = Math.min(o * 0.4, 26424); // 2026 Max Tavan
+    let damga = brut * 0.00759;
+    document.getElementById("res").style.display="block";
+    document.getElementById("bo").innerText = brut.toLocaleString() + " TL";
+    document.getElementById("dv").innerText = "-" + damga.toLocaleString() + " TL";
+    document.getElementById("no").innerText = (brut - damga).toLocaleString() + " TL";
+}
 </script>
-</body>
-</html>
+</body></html>
