@@ -1,39 +1,44 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>CV Oluşturucu - Hesapla360</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-</head>
-<body>
-<nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <ul class="nav-menu"><li><a href="cv.html" class="active">CV</a></li></ul>
-    <div class="theme-switch-wrapper"><label class="theme-switch"><input type="checkbox" id="theme-checkbox"><span class="slider"></span></label></div>
-</nav>
-
-<div class="container">
-    <h2>Ücretsiz CV</h2>
-    <input type="text" id="ad" placeholder="Ad Soyad" style="margin-bottom:10px;">
-    <textarea id="bilgi" placeholder="Deneyimler..." style="width:100%; height:100px; padding:10px; border-radius:10px; border:1px solid var(--input-border); background:var(--card-bg); color:var(--text-color);"></textarea>
-    <button onclick="indir()">PDF İndir</button>
-</div>
-
-<div id="cv-p" style="position:absolute; left:-9999px; width:190mm; padding:20px; background:white; color:black;">
-    <h1 id="p-ad"></h1><hr><p id="p-bilgi"></p>
+<div id="cv-p" style="position: absolute; left: -9999px; width: 190mm; min-height: 250mm; padding: 40px; background: white !important; color: #000 !important; font-family: Arial, sans-serif;">
+    <h1 id="p-ad" style="color: #6366f1; margin-bottom: 5px; font-size: 28px;"></h1>
+    <p id="p-meslek" style="font-weight: bold; font-size: 18px; color: #475569; margin-bottom: 20px;"></p>
+    <div style="border-bottom: 2px solid #6366f1; margin-bottom: 20px;"></div>
+    <h3 style="color: #6366f1; margin-bottom: 10px;">DENEYİM VE BİLGİLER</h3>
+    <p id="p-bilgi" style="line-height: 1.6; white-space: pre-wrap; font-size: 14px;"></p>
 </div>
 
 <script>
+    // Tema Kontrolü
     const checkbox = document.getElementById('theme-checkbox');
-    if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark'); checkbox.checked = true; }
-    checkbox.addEventListener('change', () => { document.body.classList.toggle('dark'); localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light'); });
+    if (localStorage.getItem('theme') === 'dark') { 
+        document.body.classList.add('dark'); 
+        if(checkbox) checkbox.checked = true; 
+    }
+    checkbox.addEventListener('change', () => { 
+        document.body.classList.toggle('dark'); 
+        localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light'); 
+    });
 
     function indir() {
-        document.getElementById("p-ad").innerText = document.getElementById("ad").value;
-        document.getElementById("p-bilgi").innerText = document.getElementById("bilgi").value;
-        html2pdf().from(document.getElementById('cv-p')).save("CV.pdf");
+        const ad = document.getElementById("ad").value;
+        const bilgi = document.getElementById("bilgi").value;
+
+        if(!ad) { alert("Lütfen adınızı girin."); return; }
+
+        // Değerleri PDF şablonuna aktar
+        document.getElementById("p-ad").innerText = ad;
+        document.getElementById("p-bilgi").innerText = bilgi;
+        
+        // PDF Seçenekleri
+        const opt = {
+            margin:       10,
+            filename:     ad + '_CV.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // PDF Oluşturma (Görünürlüğü zorla)
+        const element = document.getElementById('cv-p');
+        html2pdf().set(opt).from(element).save();
     }
 </script>
-</body>
-</html>
