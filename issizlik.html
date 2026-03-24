@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<link rel="stylesheet" href="style.css">
 <meta charset="UTF-8">
 <title>İşsizlik Maaşı Hesaplama 2026</title>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="2026 yılı işsizlik maaşı hesaplama aracını kullanarak yaklaşık işsizlik maaşınızı öğrenin.">
 </head>
 <body>
-
+<nav>
+  <ul>
+    <li><a href="index.html">Ana Sayfa</a></li>
+    <li><a href="netmaas.html">Net Maaş</a></li>
+    <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
+    <li><a href="kredi.html">Kredi Hesaplama</a></li>
+    <li><a href="yas.html">Yaş Hesaplama</a></li>
+    <li><a href="cv.html">CV Oluşturucu</a></li>
+  </ul>
+</nav>
+<hr>
 <h1>İşsizlik Maaşı Hesaplama 2026</h1>
-
 <p>Brüt maaşınızı girin:</p>
 <input type="number" id="brut">
 <button onclick="hesapla()">Hesapla</button>
-
 <h2 id="sonuc"></h2>
-
 <script>
 function hesapla() {
   let brut = document.getElementById("brut").value;
-  let net = brut * 0.50; // yaklaşık işsizlik maaşı
+  let net = brut * 0.50;
   document.getElementById("sonuc").innerText = "Yaklaşık İşsizlik Maaşı: " + net + " TL";
 }
 </script>
-
-<a href="index.html">Ana Sayfaya Dön</a>
 </body>
 </html>
