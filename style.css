@@ -1,24 +1,23 @@
-/* Genel Ayarlar ve Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
 body {
-    background-color: #0b0e14; /* Daha derin bir siyah-lacivert */
+    background-color: #0b0e14;
     color: #ffffff;
-    line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* 1. Navigasyon Çubuğu */
+/* TIKLAMA SORUNU ÇÖZÜMÜ */
+input, button, a {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto !important;
+}
+
 nav {
-    background: rgba(18, 22, 30, 0.8);
-    backdrop-filter: blur(15px);
+    background: rgba(18, 22, 30, 0.9);
+    backdrop-filter: blur(10px);
     padding: 15px 5%;
     display: flex;
     justify-content: space-between;
@@ -26,156 +25,84 @@ nav {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 100;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: white;
-    font-weight: 800;
-    font-size: 1.4rem;
-}
-
-.logo-box {
-    background: linear-gradient(135deg, #007bff, #00d4ff);
-    color: white;
-    padding: 5px 12px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
-}
-
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; font-weight: 800; }
+.logo-box { background: #007bff; padding: 5px 12px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,123,255,0.3); }
 .logo span { color: #007bff; }
 
-/* 2. Canlı Finans Bandı */
+.nav-menu a { color: #888; text-decoration: none; margin-left: 20px; font-size: 0.9rem; transition: 0.3s; }
+.nav-menu a:hover { color: #fff; }
+
 .rate-bar {
     background: #12161e;
-    padding: 10px 5%;
+    padding: 12px 5%;
     display: flex;
     gap: 30px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    overflow-x: auto;
-    white-space: nowrap;
 }
 
-.rate-bar span { color: #888; font-weight: 500; }
-.rate-bar b { color: #fff; margin-left: 5px; }
+.up { color: #28a745; margin-left: 5px; font-weight: bold; }
+.down { color: #dc3545; margin-left: 5px; font-weight: bold; }
 
-/* Trend Renkleri */
-.up { color: #2ecc71 !important; font-weight: bold; margin-left: 4px; }
-.down { color: #e74c3c !important; font-weight: bold; margin-left: 4px; }
-
-/* 3. Hero & Karşılama Bölümü */
 .hero-section {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
 }
 
-.welcome-text h2 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    background: linear-gradient(to right, #fff, #888);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+.welcome-text h2 { font-size: 2rem; font-weight: 800; }
+.welcome-text p { color: #666; }
 
-.welcome-text p { color: #666; margin-top: 5px; }
-
-/* 4. Arama Kutusu */
 .search-box input {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px 25px;
-    border-radius: 30px;
+    padding: 12px 20px;
+    border-radius: 25px;
     color: white;
     width: 300px;
-    transition: all 0.3s ease;
-}
-
-.search-box input:focus {
-    width: 350px;
-    border-color: #007bff;
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 20px rgba(0, 123, 255, 0.2);
     outline: none;
+    transition: 0.3s;
 }
 
-/* 5. Kart Izgarası (Grid) */
+.search-box input:focus { width: 350px; border-color: #007bff; box-shadow: 0 0 15px rgba(0,123,255,0.2); }
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
+    gap: 20px;
     max-width: 1200px;
     margin: 20px auto 60px;
     padding: 0 20px;
 }
 
-/* 6. Özellik Kartları (Glassmorphism) */
 .feature-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 15px;
     text-decoration: none;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    position: relative;
-    overflow: hidden;
+    transition: 0.3s;
 }
 
 .feature-card:hover {
-    background: rgba(255, 255, 255, 0.05);
     transform: translateY(-8px);
-    border-color: rgba(0, 123, 255, 0.5);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: #007bff;
 }
 
-.feature-card .icon {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-}
+.feature-card .icon { font-size: 2rem; margin-bottom: 15px; }
+.feature-card h3 { color: #fff; margin-bottom: 5px; }
+.feature-card p { color: #777; font-size: 0.85rem; }
 
-.feature-card h3 {
-    color: #fff;
-    font-size: 1.3rem;
-    margin-bottom: 8px;
-    font-weight: 700;
-}
-
-.feature-card p {
-    color: #888;
-    font-size: 0.9rem;
-}
-
-/* Kartın içindeki gizli parlama efekti */
-.feature-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at top right, rgba(0, 123, 255, 0.1), transparent);
-    opacity: 0;
-    transition: 0.4s;
-}
-
-.feature-card:hover::before { opacity: 1; }
-
-/* Mobil Uyumluluk */
 @media (max-width: 768px) {
-    .hero-section {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
+    .hero-section { flex-direction: column; align-items: flex-start; gap: 20px; }
     .search-box input { width: 100%; }
-    .welcome-text h2 { font-size: 1.8rem; }
 }
