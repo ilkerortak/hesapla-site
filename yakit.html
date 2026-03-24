@@ -2,101 +2,37 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Yakıt Tüketim Analizi</title>
+    <title>H360 | Yakıt Analizi</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .form-container {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-        }
-        .input-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
-        .input-group label { font-size: 0.85rem; color: #888; font-weight: 600; }
-        
-        .result-box {
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255, 193, 7, 0.05); /* Yakıt teması için sarımsı ton */
-            border-left: 4px solid #ffc107;
-            border-radius: 8px;
-            display: none;
-        }
-        .result-item { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .result-item b { color: #ffc107; font-size: 1.1rem; }
-        
-        .btn-calc {
-            background: #007bff; color: white; border: none; padding: 15px;
-            border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%;
-            transition: 0.3s; margin-top: 10px;
-        }
-        .btn-calc:hover { background: #0056b3; transform: translateY(-2px); }
-    </style>
 </head>
 <body>
-
-<nav>
-    <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
-    <div class="nav-menu">
-        <a href="/netmaas">💰 Maaş</a>
-        <a href="/tazminat">💼 Tazminat</a>
-        <a href="/yakit" style="color:#fff">⛽ Yakıt</a>
-        <a href="/cv">📄 CV</a>
+    <nav><a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a></nav>
+    <div class="hero-section" style="justify-content: center; text-align: center;">
+        <div class="welcome-text">
+            <h2 style="font-size: 2.5rem;">Yakıt Analizi</h2>
+            <p>Yol mesafesi ve maliyet sorgulama.</p>
+        </div>
     </div>
-</nav>
 
-<div class="hero-section">
-    <div class="welcome-text">
-        <h2>Yakıt Tüketim Analizi</h2>
-        <p>Yol Maliyet ve Lojistik Planlama</p>
+    <div class="grid-container" style="display: flex; justify-content: center;">
+        <div class="feature-card" style="width: 100%; max-width: 500px; cursor: default;">
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; color: #fff; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 15px;">Mesafe (KM) / Tüketim (L)</label>
+                <input type="number" id="dist" placeholder="Örn: 450" style="background: none; border: none; color: #fff; font-size: 1.5rem; width: 100%; outline: none;">
+                <input type="number" id="cons" placeholder="Ort. Tüketim: 6.5" style="background: none; border: none; color: #555; font-size: 1.1rem; width: 100%; outline: none; margin-top: 10px;">
+            </div>
+            <button onclick="calc()" style="background: #111; border: 1px solid #222; color: #fff; padding: 20px; border-radius: 15px; font-weight: 800; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">MALİYETİ HESAPLA</button>
+            <div id="res" style="margin-top: 20px; display: none; color: #007bff; font-weight: 800; text-align: center; font-size: 1.2rem;"></div>
+        </div>
     </div>
-</div>
-
-<div class="form-container">
-    <div class="input-group">
-        <label>Gidilecek Mesafe (KM)</label>
-        <input type="number" id="distance" placeholder="Örn: 450" step="any">
-    </div>
-    <div class="input-group">
-        <label>Ortalama Yakıt Tüketimi (L/100 KM)</label>
-        <input type="number" id="consumption" placeholder="Örn: 6.5" step="any">
-    </div>
-    <div class="input-group">
-        <label>Yakıt Litre Fiyatı (₺)</label>
-        <input type="number" id="fuelPrice" placeholder="Örn: 44.50" step="any">
-    </div>
-    
-    <button class="btn-calc" onclick="calculateFuel()">Maliyet Analizi Yap</button>
-
-    <div class="result-box" id="resultBox">
-        <div class="result-item"><span>Toplam Yakıt Gideri:</span> <b id="totalCost">0 ₺</b></div>
-        <div class="result-item"><span>Gereken Yakıt:</span> <b id="totalLiters" style="color:#888">0 Litre</b></div>
-        <div class="result-item"><span>KM Başı Maliyet:</span> <b id="kmCost" style="color:#2ecc71">0 ₺</b></div>
-    </div>
-</div>
-
-<script>
-    function calculateFuel() {
-        const d = parseFloat(document.getElementById('distance').value) || 0;
-        const c = parseFloat(document.getElementById('consumption').value) || 0;
-        const p = parseFloat(document.getElementById('fuelPrice').value) || 0;
-
-        if (d <= 0 || c <= 0) return;
-
-        const neededLiters = (d * c) / 100;
-        const totalCost = neededLiters * p;
-        const kmCost = totalCost / d;
-
-        document.getElementById('totalCost').innerText = totalCost.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " ₺";
-        document.getElementById('totalLiters').innerText = neededLiters.toFixed(2) + " L";
-        document.getElementById('kmCost').innerText = kmCost.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " ₺";
-        
-        document.getElementById('resultBox').style.display = "block";
-    }
-</script>
-
+    <script>
+        function calc() {
+            const d = parseFloat(document.getElementById('dist').value) || 0;
+            const c = parseFloat(document.getElementById('cons').value) || 0;
+            const total = (d * c / 100) * 44; // Yaklaşık fiyat
+            document.getElementById('res').innerText = "Tahmini Gider: " + total.toLocaleString() + " ₺";
+            document.getElementById('res').style.display = "block";
+        }
+    </script>
 </body>
 </html>
