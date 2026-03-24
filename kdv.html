@@ -1,33 +1,96 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><link rel="stylesheet" href="style.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>KDV Hesaplama | Hesapla360</title>
+</head>
 <body>
-<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
-    <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
-    <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
-    <a href="kdv.html" class="active">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-</div></nav>
-<div class="container">
-    <h2>🧾 KDV Hesapla</h2>
-    <div class="input-group"><label>Tutar</label><input type="number" id="t" placeholder="Tutar giriniz"></div>
-    <div class="input-group">
-        <label>KDV Oranı</label>
-        <select id="o"><option value="0.20">%20 (Genel)</option><option value="0.10">%10 (Gıda vb.)</option><option value="0.01">%1</option></select>
+
+<nav>
+    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
+    <div class="nav-menu">
+        <a href="netmaas.html">💰 Maaş</a>
+        <a href="tazminat.html">💼 Tazminat</a>
+        <a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
+        <a href="doviz.html">💱 Döviz</a>
+        <a href="kdv.html" class="active">🧾 KDV</a>
+        <a href="mesai.html">🕒 Mesai</a>
+        <a href="cv.html">📄 CV</a>
     </div>
-    <button onclick="calc()">Vergi Analizi</button>
-    <div id="res" class="result-box">
-        <div class="row"><span>Net Matrah</span><span id="m"></span></div>
-        <div class="row"><span>KDV Tutarı</span><span id="kt"></span></div>
-        <div class="row total"><span>Genel Toplam (KDV Dahil)</span><span id="gt"></span></div>
+</nav>
+
+<div style="max-width: 600px; margin: 60px auto; padding: 0 20px;">
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px;">KDV <span style="color: var(--accent);">Analizi</span></h2>
+        <p style="color: var(--dim); font-size: 0.85rem; margin-top: 5px;">Hızlı vergi hesaplama ve matrah dökümü.</p>
+    </div>
+
+    <div class="feature-card" style="text-align: left; cursor: default; transform: none; padding: 35px;">
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Net Tutar (Matrah)</label>
+            <input type="number" id="t" placeholder="Miktar giriniz..." 
+                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s;">
+        </div>
+
+        <div style="margin-bottom: 25px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">KDV Oranı Seçin</label>
+            <select id="o" style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; outline: none; cursor: pointer; font-size: 1rem;">
+                <option value="0.20">%20 (Genel Vergi)</option>
+                <option value="0.10">%10 (Gıda & Konaklama)</option>
+                <option value="0.01">%1 (Temel Gıda)</option>
+            </select>
+        </div>
+
+        <button onclick="calc()" 
+            style="width: 100%; background: var(--accent); color: #fff; border: none; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);">
+            VERGİ ANALİZİNİ YAP
+        </button>
+
+        <div id="res" style="display: none; margin-top: 35px; padding-top: 25px; border-top: 1px dotted var(--border);">
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Net Matrah</span>
+                <span id="m" style="color: #fff; font-weight: 600;"></span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Hesaplanan KDV Tutarı</span>
+                <span id="kt" style="color: var(--accent); font-weight: 600;"></span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding: 20px; background: rgba(88, 166, 255, 0.05); border-radius: 12px; border: 1px solid rgba(88, 166, 255, 0.1);">
+                <span style="color: #fff; font-weight: 700; font-size: 1.1rem;">Genel Toplam</span>
+                <span id="gt" style="color: #fff; font-weight: 800; font-size: 1.5rem;"></span>
+            </div>
+        </div>
     </div>
 </div>
+
 <script>
 function calc(){
-    let t=parseFloat(document.getElementById("t").value), o=parseFloat(document.getElementById("o").value); if(!t)return;
-    document.getElementById("res").style.display="block";
-    document.getElementById("m").innerText=t.toLocaleString()+" TL";
-    document.getElementById("kt").innerText=(t*o).toLocaleString()+" TL";
-    document.getElementById("gt").innerText=(t*(1+o)).toLocaleString()+" TL";
+    let t = parseFloat(document.getElementById("t").value);
+    let o = parseFloat(document.getElementById("o").value);
+    
+    if(!t || t <= 0) {
+        alert("Lütfen geçerli bir tutar girin.");
+        return;
+    }
+    
+    let kdvTutarı = t * o;
+    let genelToplam = t + kdvTutarı;
+
+    document.getElementById("res").style.display = "block";
+    document.getElementById("m").innerText = t.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    document.getElementById("kt").innerText = kdvTutarı.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    document.getElementById("gt").innerText = genelToplam.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
 }
 </script>
-</body></html>
+
+</body>
+</html>
