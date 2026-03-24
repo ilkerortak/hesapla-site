@@ -1,57 +1,30 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Maaş Analizi - Hesapla360</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<head><link rel="stylesheet" href="style.css"></head>
 <body>
 <nav>
     <a href="index.html" class="logo">HESAPLA<span>360</span></a>
     <div class="nav-menu">
-        <a href="netmaas.html" class="active">💰 Maaş</a>
-        <a href="tazminat.html">💼 Tazminat</a>
-        <a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html">🏦 Kredi</a>
-        <a href="yas.html">🎂 Yaş</a>
-        <a href="cv.html">📄 CV</a>
+        <a href="netmaas.html" class="active">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
+        <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
     </div>
 </nav>
-
 <div class="container">
-    <h2>💰 Detaylı Maaş Analizi</h2>
-    <div class="input-group"><label>Brüt Maaş (TL)</label><input type="number" id="brut"></div>
-    <button onclick="maasHesapla()">Hesapla</button>
-
-    <div id="sonuc-box" style="display:none;" class="result-item">
-        <div class="detail-row"><span>SGK İşçi Payı (%14)</span> <span id="sgk"></span></div>
-        <div class="detail-row"><span>İşsizlik Sigortası (%1)</span> <span id="iss"></span></div>
-        <div class="detail-row"><span>Gelir Vergisi Matrahı</span> <span id="matrah"></span></div>
-        <div class="detail-row"><span>Damga Vergisi (%0.759)</span> <span id="dv"></span></div>
-        <div class="detail-row total"><span>Net Ele Geçen</span> <span id="net"></span></div>
-        <p style="font-size:0.7rem; color:#a855f7; margin-top:10px;">*Asgari Ücret Vergi İstisnası düşülmüştür.</p>
+    <h2>💰 Maaş Analizi</h2>
+    <div class="input-group"><label>Brüt Maaş</label><input type="number" id="b"></div>
+    <button onclick="calc()">RGB Hesapla</button>
+    <div id="res" class="result-item">
+        <div class="detail-row"><span>SGK (%14)</span><span id="s"></span></div>
+        <div class="detail-row total"><span>Net Maaş</span><span id="n"></span></div>
     </div>
 </div>
-
 <script>
-    function maasHesapla() {
-        let b = parseFloat(document.getElementById("brut").value);
-        if(!b) return;
-        let sgk = b * 0.14;
-        let iss = b * 0.01;
-        let matrah = b - sgk - iss;
-        let gv = matrah * 0.15;
-        let dv = b * 0.00759;
-        // 2026 İstisna Tahmini
-        let istisna = 3500; 
-        let net = b - (sgk + iss + gv + dv) + istisna;
-
-        document.getElementById("sonuc-box").style.display = "block";
-        document.getElementById("sgk").innerText = sgk.toLocaleString() + " TL";
-        document.getElementById("iss").innerText = iss.toLocaleString() + " TL";
-        document.getElementById("matrah").innerText = matrah.toLocaleString() + " TL";
-        document.getElementById("dv").innerText = dv.toLocaleString() + " TL";
-        document.getElementById("net").innerText = net.toLocaleString() + " TL";
+    function calc(){
+        let b=document.getElementById("b").value; if(!b)return;
+        document.getElementById("res").style.display="block";
+        document.getElementById("s").innerText=(b*0.14).toLocaleString()+" TL";
+        document.getElementById("n").innerText=(b*0.75+3500).toLocaleString()+" TL";
     }
 </script>
 </body>
