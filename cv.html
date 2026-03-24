@@ -8,39 +8,32 @@
 </head>
 <body>
 <nav>
-    <a href="index.html" class="logo-link"><div class="logo" style="font-weight:800; color:white; font-size:1.4rem;">HESAPLA<span style="color:#fbbf24;">360</span></div></a>
-    <ul><li><a href="cv.html" class="active">CV Oluşturucu</a></li></ul>
-    <button id="theme-toggle">☀️</button>
+    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
+    <ul class="nav-menu"><li><a href="cv.html" class="active">CV</a></li></ul>
+    <div class="theme-switch-wrapper"><label class="theme-switch"><input type="checkbox" id="theme-checkbox"><span class="slider"></span></label></div>
 </nav>
 
 <div class="container">
-    <h1>Ücretsiz CV Oluşturucu</h1>
+    <h2>Ücretsiz CV</h2>
     <input type="text" id="ad" placeholder="Ad Soyad" style="margin-bottom:10px;">
-    <input type="text" id="meslek" placeholder="Meslek" style="margin-bottom:10px;">
-    <input type="text" id="iletisim" placeholder="Telefon | E-posta" style="margin-bottom:10px;">
-    <textarea id="deneyim" placeholder="Deneyimlerinizden bahsedin..." style="width:100%; border-radius:10px; padding:10px; height:100px; border:2px solid var(--input-border);"></textarea>
-    <button onclick="pdfIndir()" style="margin-top:20px;">CV'yi PDF İndir</button>
-
-    <div id="cv-template" style="position:absolute; left:-9999px; width:190mm; padding:20mm; background:white; color:black;">
-        <h1 id="p-ad" style="color:#4f46e5;"></h1>
-        <h3 id="p-meslek"></h3>
-        <p id="p-iletisim"></p>
-        <hr>
-        <h4>İŞ DENEYİMİ</h4>
-        <p id="p-deneyim"></p>
-    </div>
+    <textarea id="bilgi" placeholder="Deneyimler..." style="width:100%; height:100px; padding:10px; border-radius:10px; border:1px solid var(--input-border); background:var(--card-bg); color:var(--text-color);"></textarea>
+    <button onclick="indir()">PDF İndir</button>
 </div>
-<script src="script.js"></script>
+
+<div id="cv-p" style="position:absolute; left:-9999px; width:190mm; padding:20px; background:white; color:black;">
+    <h1 id="p-ad"></h1><hr><p id="p-bilgi"></p>
+</div>
+
 <script>
-function pdfIndir() {
-    document.getElementById("p-ad").innerText = document.getElementById("ad").value;
-    document.getElementById("p-meslek").innerText = document.getElementById("meslek").value;
-    document.getElementById("p-iletisim").innerText = document.getElementById("iletisim").value;
-    document.getElementById("p-deneyim").innerText = document.getElementById("deneyim").value;
-    
-    const element = document.getElementById('cv-template');
-    html2pdf().from(element).save(document.getElementById("ad").value + "_CV.pdf");
-}
+    const checkbox = document.getElementById('theme-checkbox');
+    if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark'); checkbox.checked = true; }
+    checkbox.addEventListener('change', () => { document.body.classList.toggle('dark'); localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light'); });
+
+    function indir() {
+        document.getElementById("p-ad").innerText = document.getElementById("ad").value;
+        document.getElementById("p-bilgi").innerText = document.getElementById("bilgi").value;
+        html2pdf().from(document.getElementById('cv-p')).save("CV.pdf");
+    }
 </script>
 </body>
 </html>
