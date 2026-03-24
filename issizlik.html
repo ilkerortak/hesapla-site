@@ -3,73 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | İşsizlik Ödeneği</title>
+    <title>H360 | İşsizlik Ödeneği Analizi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .calculation-container { max-width: 600px; margin: 120px auto 60px; padding: 0 20px; }
+        .form-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 30px; border-radius: 20px; backdrop-filter: blur(10px);
+        }
+        .input-group { margin-bottom: 20px; }
+        label { color: var(--accent); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 8px; }
+        input[type="number"] {
+            width: 100%; padding: 15px; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border); border-radius: 10px; color: #fff; font-size: 1.1rem; outline: none;
+        }
+        input[type="number"]:focus { border-color: var(--accent); }
+        .btn-calc {
+            width: 100%; padding: 15px; background: var(--accent); color: #fff;
+            border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .btn-calc:hover { opacity: 0.9; transform: scale(0.98); }
+        .res-area { margin-top: 30px; padding-top: 20px; border-top: 1px dashed var(--border); display: none; }
+        .res-val { font-size: 2.2rem; font-weight: 700; color: var(--accent); margin: 10px 0; }
+        .info-text { font-size: 0.75rem; color: var(--text-dim); line-height: 1.5; margin-top: 15px; }
+        .detail-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-dim); }
+    </style>
 </head>
 <body>
 
-<nav>
-    <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
-    <div class="nav-container">
-        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
-        <div class="dropdown-menu" id="navMenu">
-            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
-            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
-            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
-            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
-            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
-            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+<nav class="glass-nav">
+    <div class="nav-left">
+        <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    </div>
+    <div class="nav-right">
+        <div class="menu-container">
+            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
+            <div class="dropdown-menu" id="navMenu">
+                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
+                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
+                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
+                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
+                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
+                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+            </div>
         </div>
     </div>
 </nav>
 
-<div class="hero-section">
-    <h2>İşsizlik Ödeneği</h2>
-    <p>SÜRE VE MAAŞ ANALİZ SİSTEMİ</p>
-</div>
+<div class="calculation-container">
+    <header class="hero premium-header" style="padding: 0 0 40px 0;">
+        <h1 class="premium-title" style="font-size: 1.8rem;">İŞSİZLİK ÖDENEĞİ</h1>
+        <p class="premium-status">SÜRE VE TUTAR ANALİZİ</p>
+    </header>
 
-<div class="form-box">
-    <label>SON 4 AY BRÜT ORTALAMASI</label>
-    <input type="number" id="ortBrut" placeholder="Örn: 40.000">
-    
-    <button class="btn-calc" onclick="hesaplaIssizlik()">ÖDENEK SORGULA</button>
+    <div class="form-card">
+        <div class="input-group">
+            <label>SON 4 AY BRÜT MAAŞ ORTALAMASI</label>
+            <input type="number" id="ortBrut" placeholder="Örn: 45000">
+        </div>
+        
+        <button class="btn-calc" onclick="hesaplaIssizlik()">HESAPLAMAYI BAŞLAT</button>
 
-    <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.75rem; font-weight:800;">AYLIK ALINACAK ÖDENEK</p>
-        <div class="res-val" id="odenek">0 ₺</div>
-        <p style="font-size:0.7rem; color:#444; margin-top:15px; border-top: 1px solid #1c212c; padding-top: 10px;">
-            * Brüt maaşın %40'ı hesaplanır, asgari ücretin %80'ini geçemez.
-        </p>
+        <div id="res" class="res-area">
+            <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim);">AYLIK ALINACAK NET ÖDENEK</p>
+            <div class="res-val" id="odenek">0 ₺</div>
+            
+            <div class="detail-row"><span>Hesaplanan Tutar (%40)</span> <b id="hamOdenek" style="color:#fff">0</b></div>
+            <div class="detail-row"><span>Yasal Tavan Limit</span> <b style="color:#fff">15.998 ₺</b></div>
+            
+            <p class="info-text">
+                * Ödenek, brüt maaşın %40'ıdır ancak asgari ücretin %80'ini geçemez. Damga vergisi kesintisi dahildir.
+            </p>
+        </div>
     </div>
 </div>
 
 <script>
-    // Menü Fonksiyonu
-    function toggleMenu() { 
-        document.getElementById('navMenu').classList.toggle('active'); 
-    }
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
     
-    // İşsizlik Hesaplama Fonksiyonu
     function hesaplaIssizlik() {
         const ort = parseFloat(document.getElementById('ortBrut').value) || 0;
-        // 2026 Tahmini tavan (Asgari ücrete göre güncellenmeli)
-        let odenek = ort * 0.4;
-        if (odenek > 15998) odenek = 15998; 
         
-        document.getElementById('odenek').innerText = Math.round(odenek).toLocaleString() + " ₺";
+        // 2026 Tahmini Parametreler
+        const tavan = 15998; 
+        let brutOdenek = ort * 0.4;
+        
+        // Tavan kontrolü
+        if (brutOdenek > tavan) brutOdenek = tavan;
+        
+        const damgaVergisi = brutOdenek * 0.00759;
+        const netOdenek = brutOdenek - damgaVergisi;
+        
+        document.getElementById('odenek').innerText = Math.round(netOdenek).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('hamOdenek').innerText = Math.round(brutOdenek).toLocaleString('tr-TR') + " ₺";
+        
         document.getElementById('res').style.display = "block";
     }
 
-    // Menü dışına tıklandığında kapatma
-    window.onclick = function(event) {
-        if (!event.target.matches('.menu-btn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-menu");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('active')) {
-                    openDropdown.classList.remove('active');
-                }
-            }
+    window.onclick = function(e) { 
+        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
+            const menu = document.getElementById('navMenu');
+            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
         }
     }
 </script>
