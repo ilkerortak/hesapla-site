@@ -1,10 +1,48 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8"><title>H360 | KDV Hesapla</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H360 | KDV Hesaplama</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* KDV Oranı seçimi için özel stil dokunuşu */
+        select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            width: 100%;
+            margin-bottom: 30px;
+            outline: none;
+            border-bottom: 2px solid #1c212c;
+            padding-bottom: 10px;
+            cursor: pointer;
+            appearance: none;
+        }
+        option { background: #12161e; color: white; }
+    </style>
 </head>
 <body>
+
+<nav>
+    <a href="/" class="logo">
+        <div class="logo-box">H360</div> 
+        HESAPLA<span>360</span>
+    </a>
+    <div class="nav-container">
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
+            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
+            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
+            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
+            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
+            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+        </div>
+    </div>
+</nav>
+
 <div class="hero-section">
     <h2>KDV Hesaplama</h2>
     <p>TİCARİ İŞLEMLER VE VERGİ MATRAH ANALİZİ</p>
@@ -15,7 +53,7 @@
     <input type="number" id="amt" placeholder="Örn: 10.000">
     
     <label>KDV ORANI (%)</label>
-    <select id="rate" style="background: #161a23; color: white; border-bottom: 1px solid #1c212c; margin-bottom: 25px;">
+    <select id="rate">
         <option value="20">%20 (Genel)</option>
         <option value="10">%10 (Gıda/Tekstil)</option>
         <option value="1">%1 (Temel Gıda)</option>
@@ -24,9 +62,9 @@
     <button class="btn-calc" onclick="calcKdv()">HESAPLAMAYI YAP</button>
 
     <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.7rem; font-weight:800;">KDV DAHİL TOPLAM</p>
+        <p style="color:#555; font-size:0.75rem; font-weight:800;">KDV DAHİL TOPLAM</p>
         <div class="res-val" id="kdvDahil">0 ₺</div>
-        <div style="display:flex; justify-content:space-between; margin-top:15px; font-size:0.8rem; color:#888;">
+        <div style="display:flex; justify-content:space-between; margin-top:20px; font-size:0.85rem; color:#888; border-top: 1px solid #1c212c; padding-top: 15px;">
             <span>Sadece KDV: <b id="kdvAmt" style="color:#007bff">0 ₺</b></span>
             <span>KDV Hariç: <b id="kdvHaric" style="color:#fff">0 ₺</b></span>
         </div>
@@ -34,14 +72,36 @@
 </div>
 
 <script>
+    // Menü Fonksiyonları
+    function toggleMenu() { 
+        document.getElementById('navMenu').classList.toggle('active'); 
+    }
+
+    // KDV Hesaplama Motoru
     function calcKdv() {
         const amt = parseFloat(document.getElementById('amt').value) || 0;
         const rate = parseFloat(document.getElementById('rate').value) / 100;
-        const kdv = amt * rate;
-        document.getElementById('kdvDahil').innerText = (amt + kdv).toLocaleString() + " ₺";
-        document.getElementById('kdvAmt').innerText = kdv.toLocaleString() + " ₺";
-        document.getElementById('kdvHaric').innerText = amt.toLocaleString() + " ₺";
-        document.getElementById('res').style.display = "block";
+        
+        if(amt > 0) {
+            const kdv = amt * rate;
+            document.getElementById('kdvDahil').innerText = (amt + kdv).toLocaleString() + " ₺";
+            document.getElementById('kdvAmt').innerText = kdv.toLocaleString() + " ₺";
+            document.getElementById('kdvHaric').innerText = amt.toLocaleString() + " ₺";
+            document.getElementById('res').style.display = "block";
+        }
+    }
+
+    // Menü dışına tıklandığında kapatma
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('active')) {
+                    openDropdown.classList.remove('active');
+                }
+            }
+        }
     }
 </script>
 </body>
