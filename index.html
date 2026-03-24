@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hesapla 360 Finansal Uzman</title>
+    <title>Hesapla360 Finansal Analiz Merkezi</title>
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23007bff%22/><path d=%22M25 70 L40 50 L55 60 L75 30%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22/><path d=%22M80 30 L80 50 M80 30 L60 30%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22/><circle cx=%2250%22 cy=%2250%22 r=%2235%22 fill=%22none%22 stroke=%22white%22 stroke-width=%223%22 stroke-dasharray=%2210 5%22 opacity=%220.5%22/></svg>">
     
@@ -32,11 +32,11 @@
 
 <div class="hero-section">
     <div class="welcome-text">
-        <h2 id="greeting">İyi Günler, İlker!</h2>
-        <p id="liveTime">Yükleniyor...</p>
+        <h2>Finansal Analiz Merkezi</h2>
+        <p id="systemStatus">Sistem Durumu: Aktif | Yükleniyor...</p>
     </div>
     <div class="search-box">
-        <input type="text" id="quickSearch" placeholder="Hızlıca bir hesaplama ara..." autocomplete="off">
+        <input type="text" id="quickSearch" placeholder="İşlem veya modül ara..." autocomplete="off">
     </div>
 </div>
 
@@ -53,14 +53,16 @@
 </div>
 
 <script>
-    // 1. CANLI SAAT
-    function updateClock() {
+    // 1. KURUMSAL DURUM VE SAAT
+    function updateSystemStatus() {
         const now = new Date();
-        document.getElementById('liveTime').innerText = now.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const dateStr = now.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('systemStatus').innerText = `Sistem Durumu: Aktif | ${dateStr} - ${timeStr}`;
     }
-    setInterval(updateClock, 1000); updateClock();
+    setInterval(updateSystemStatus, 1000); updateSystemStatus();
 
-    // 2. GELİŞMİŞ ARAMA (Türkçe Karakter Destekli)
+    // 2. GELİŞMİŞ ARAMA (Türkçe Karakter Duyarlı)
     document.getElementById('quickSearch').addEventListener('input', function(e) {
         let term = e.target.value.toLowerCase()
             .replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g')
@@ -75,7 +77,7 @@
         });
     });
 
-    // 3. FİNANS VERİLERİ (Trend Okları İle)
+    // 3. FİNANS VERİLERİ
     let prevGold = 0;
     async function updateRates() {
         try {
@@ -97,6 +99,5 @@
     }
     setInterval(updateRates, 60000); updateRates();
 </script>
-
 </body>
 </html>
