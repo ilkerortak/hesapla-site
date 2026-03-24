@@ -1,164 +1,98 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Tazminat Analizi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .calculation-container { max-width: 600px; margin: 120px auto 60px; padding: 0 20px; }
-        .form-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            padding: 30px; border-radius: 20px; backdrop-filter: blur(10px);
-        }
-        .input-group { margin-bottom: 20px; }
-        label { color: var(--accent); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 8px; }
-        input[type="number"] {
-            width: 100%; padding: 15px; background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border); border-radius: 10px; color: #fff; font-size: 1.1rem; outline: none;
-        }
-        input[type="number"]:focus { border-color: var(--accent); }
-        .btn-calc {
-            width: 100%; padding: 15px; background: var(--accent); color: #fff;
-            border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s;
-        }
-        .btn-calc:hover { opacity: 0.9; transform: scale(0.98); }
-        .res-area { margin-top: 30px; padding-top: 20px; border-top: 1px dashed var(--border); display: none; }
-        .res-val { font-size: 2.2rem; font-weight: 700; color: var(--accent); margin: 10px 0; }
-        .detail-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-dim); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H360 | Tazminat</title>
 
-        #extra {
-            border-top: 1px dashed var(--border);
-            margin-top: 10px;
-            padding-top: 10px;
-        }
-    </style>
+<link rel="stylesheet" href="style.css">
+
+<style>
+.calculation-container { max-width:600px; margin:120px auto; }
+.form-card { background:var(--card-bg); padding:30px; border-radius:20px; }
+
+input {
+width:100%; padding:15px; margin:10px 0;
+background:rgba(255,255,255,0.05);
+border:1px solid var(--border);
+color:#fff;
+}
+
+.btn-calc {
+width:100%; padding:15px;
+background:var(--accent);
+color:#fff; border:none;
+position:relative;
+}
+
+/* LOADING */
+.btn-calc.loading span { visibility:hidden; }
+.btn-calc.loading::after {
+content:"";
+width:18px;height:18px;
+border:2px solid #fff;
+border-top:2px solid transparent;
+border-radius:50%;
+position:absolute;
+left:50%;top:50%;
+transform:translate(-50%,-50%);
+animation:spin .6s linear infinite;
+}
+@keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg);} }
+
+.res-area { display:none; margin-top:20px; }
+</style>
 </head>
+
 <body>
 
-<nav class="glass-nav">
-    <div class="nav-left">
-        <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
-    </div>
-    <div class="nav-right">
-        <div class="menu-container">
-            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
-            <div class="dropdown-menu" id="navMenu">
-                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
-                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
-                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
-                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-            </div>
-        </div>
-    </div>
-</nav>
-
 <div class="calculation-container">
-    <header class="hero premium-header" style="padding: 0 0 40px 0;">
-        <h1 class="premium-title" style="font-size: 2rem;">TAZMİNAT ANALİZİ</h1>
-        <p class="premium-status">KIDEM VE İHBAR HESAPLAMA</p>
-    </header>
 
-    <div class="form-card">
-        <div class="input-group">
-            <label>SON BRÜT MAAŞ (TL)</label>
-            <input type="number" id="sonBrut" placeholder="Örn: 55000">
-        </div>
-        <div class="input-group">
-            <label>ÇALIŞILAN YIL</label>
-            <input type="number" id="yil" placeholder="Örn: 5">
-        </div>
-        
-        <button class="btn-calc" onclick="hesaplaTazminat()">HESAPLAMAYI BAŞLAT</button>
+<div class="form-card">
 
-        <div id="res" class="res-area">
-            <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim);">TOPLAM NET KIDEM TAZMİNATI</p>
-            <div class="res-val" id="toplamTazminat">0 ₺</div>
-            
-            <div class="detail-row"><span>Kıdem Tavanı (2026)</span> <b style="color:#fff">35.058 ₺</b></div>
-            <div class="detail-row"><span>Hesaplanan Süre</span> <b id="sureBilgi" style="color:#fff">-</b></div>
-            <div class="detail-row"><span>Damga Vergisi Kesintisi</span> <b id="kesinti" style="color:#fff">0</b></div>
-        </div>
-    </div>
+<input type="number" id="maas" placeholder="Son maaş">
+<input type="number" id="yil" placeholder="Yıl">
+
+<button class="btn-calc" onclick="hesapla()">
+<span>HESAPLA</span>
+</button>
+
+<div id="res" class="res-area">
+<h2 id="sonuc">0 ₺</h2>
+<div id="extra"></div>
+</div>
+
+</div>
 </div>
 
 <script>
-function toggleMenu() {
-    document.getElementById('navMenu').classList.toggle('active');
-}
+function hesapla(){
+const btn=document.querySelector(".btn-calc");
+btn.classList.add("loading");
 
-function hesaplaTazminat() {
-    const maas = parseFloat(document.getElementById('sonBrut').value);
-    const yil = parseFloat(document.getElementById('yil').value);
+setTimeout(()=>{
+const m=parseFloat(document.getElementById('maas').value);
+const y=parseFloat(document.getElementById('yil').value);
 
-    if (!maas || !yil || maas <= 0 || yil <= 0) return;
+if(!m||!y){btn.classList.remove("loading");return;}
 
-    const kidemTavan = 35058;
-    const esasMaas = (maas > kidemTavan ? kidemTavan : maas);
+const tavan=35058;
+const esas=Math.min(m,tavan);
 
-    const brutKidem = esasMaas * yil;
-    const damgaVergisi = brutKidem * 0.00759;
-    const netKidem = brutKidem - damgaVergisi;
+const brut=esas*y;
+const damga=brut*0.00759;
+const net=brut-damga;
 
-    const yaz = (id, val) => {
-        document.getElementById(id).innerText = Math.round(val).toLocaleString('tr-TR') + " ₺";
-    };
+document.getElementById("sonuc").innerText=Math.round(net)+" ₺";
 
-    yaz("toplamTazminat", netKidem);
-    yaz("kesinti", damgaVergisi);
+document.getElementById("extra").innerHTML=`
+<div>Kesinti: ${Math.round(damga)} ₺</div>
+<div>Brüt: ${Math.round(brut)} ₺</div>
+`;
 
-    document.getElementById('sureBilgi').innerText = yil + " Yıl";
-
-    // EXTRA ANALİZ
-    let extra = document.getElementById("extra");
-    if (!extra) {
-        extra = document.createElement("div");
-        extra.id = "extra";
-        document.getElementById("res").appendChild(extra);
-    }
-
-    const aylikKarsilik = netKidem / (yil * 12);
-    const oran = (esasMaas / maas) * 100;
-
-    extra.innerHTML = `
-        <div class="detail-row">
-            <span>Tavana Takılma Oranı</span>
-            <b style="color:#fff">%${oran.toFixed(1)}</b>
-        </div>
-        <div class="detail-row">
-            <span>Aylık Karşılığı</span>
-            <b style="color:#fff">${Math.round(aylikKarsilik).toLocaleString('tr-TR')} ₺</b>
-        </div>
-        <div class="detail-row">
-            <span>Brüt Tazminat</span>
-            <b style="color:#fff">${Math.round(brutKidem).toLocaleString('tr-TR')} ₺</b>
-        </div>
-    `;
-
-    document.getElementById('res').style.display = "block";
-}
-
-// SAYFA YÜKLENDİKTEN SONRA
-document.addEventListener("DOMContentLoaded", () => {
-    const m = document.getElementById("sonBrut");
-    const y = document.getElementById("yil");
-
-    if (m && y) {
-        m.addEventListener("input", hesaplaTazminat);
-        y.addEventListener("input", hesaplaTazminat);
-    }
-});
-
-// Menü dışı tıklama
-window.onclick = function(e) { 
-    if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-        const menu = document.getElementById('navMenu');
-        if(menu && menu.classList.contains('active')) menu.classList.remove('active');
-    }
+document.getElementById("res").style.display="block";
+btn.classList.remove("loading");
+},1000);
 }
 </script>
 
