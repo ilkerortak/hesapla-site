@@ -2,125 +2,45 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Profesyonel CV Oluşturucu 2026</title>
+    <title>CV Oluşturucu - Hesapla360</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 <nav>
-    <ul>
-        <li><a href="index.html">Ana Sayfa</a></li>
-        <li><a href="netmaas.html">Net Maaş</a></li>
-        <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
-        <li><a href="kredi.html">Kredi Hesaplama</a></li>
-        <li><a href="yas.html">Yaş Hesaplama</a></li>
-        <li><a href="cv.html" class="active">CV Oluşturucu</a></li>
-    </ul>
+    <a href="index.html" class="logo-link"><div class="logo" style="font-weight:800; color:white; font-size:1.4rem;">HESAPLA<span style="color:#fbbf24;">360</span></div></a>
+    <ul><li><a href="cv.html" class="active">CV Oluşturucu</a></li></ul>
     <button id="theme-toggle">☀️</button>
 </nav>
 
 <div class="container">
-    <h1>Profesyonel CV Oluşturucu 2026</h1>
-    
-    <div class="cv-form">
-        <div class="input-group">
-            <input type="text" id="ad_soyad" placeholder="Ad Soyad">
-            <input type="text" id="meslek" placeholder="Meslek (Örn: Kıdemli Yazılım Geliştirici)">
-            <input type="text" id="telefon" placeholder="Telefon">
-            <input type="text" id="email" placeholder="E-mail Adresi">
-        </div>
+    <h1>Ücretsiz CV Oluşturucu</h1>
+    <input type="text" id="ad" placeholder="Ad Soyad" style="margin-bottom:10px;">
+    <input type="text" id="meslek" placeholder="Meslek" style="margin-bottom:10px;">
+    <input type="text" id="iletisim" placeholder="Telefon | E-posta" style="margin-bottom:10px;">
+    <textarea id="deneyim" placeholder="Deneyimlerinizden bahsedin..." style="width:100%; border-radius:10px; padding:10px; height:100px; border:2px solid var(--input-border);"></textarea>
+    <button onclick="pdfIndir()" style="margin-top:20px;">CV'yi PDF İndir</button>
 
-        <h3>İş Deneyimleri</h3>
-        <div id="deneyimler-container">
-            <div class="deneyim-item">
-                <input type="text" class="firma" placeholder="Firma Adı">
-                <input type="text" class="pozisyon" placeholder="Pozisyon">
-                <input type="text" class="sure" placeholder="Yıl (Örn: 2022 - Günümüz)">
-            </div>
-        </div>
-        
-        <div class="button-group">
-            <button class="secondary-btn" onclick="yeniDeneyim()">+ Yeni Deneyim</button>
-            <button class="primary-btn" onclick="pdfIndir()">CV'yi PDF Olarak İndir</button>
-        </div>
-    </div>
-
-    <div id="cv-preview" style="position: absolute; left: -9999px; width: 210mm; background: white; color: black; padding: 40px; font-family: 'Arial';">
-        <h1 id="p-ad" style="color: #4f46e5; margin: 0;"></h1>
-        <h3 id="p-meslek" style="color: #666; margin-top: 5px;"></h3>
+    <div id="cv-template" style="position:absolute; left:-9999px; width:190mm; padding:20mm; background:white; color:black;">
+        <h1 id="p-ad" style="color:#4f46e5;"></h1>
+        <h3 id="p-meslek"></h3>
+        <p id="p-iletisim"></p>
         <hr>
-        <p id="p-iletisim" style="font-size: 14px;"></p>
-        <h2 style="border-bottom: 2px solid #4f46e5; padding-bottom: 5px;">Deneyimler</h2>
-        <div id="p-deneyimler"></div>
+        <h4>İŞ DENEYİMİ</h4>
+        <p id="p-deneyim"></p>
     </div>
 </div>
-
+<script src="script.js"></script>
 <script>
-function yeniDeneyim() {
-    const container = document.getElementById("deneyimler-container");
-    const div = document.createElement("div");
-    div.className = "deneyim-item";
-    div.style.marginTop = "10px";
-    div.innerHTML = `
-        <hr>
-        <input type="text" class="firma" placeholder="Firma Adı">
-        <input type="text" class="pozisyon" placeholder="Pozisyon">
-        <input type="text" class="sure" placeholder="Yıl">
-    `;
-    container.appendChild(div);
-}
-
 function pdfIndir() {
-    // Verileri Önizlemeye Aktar
-    const adVal = document.getElementById("ad_soyad").value;
-    document.getElementById("p-ad").innerText = adVal;
+    document.getElementById("p-ad").innerText = document.getElementById("ad").value;
     document.getElementById("p-meslek").innerText = document.getElementById("meslek").value;
-    document.getElementById("p-iletisim").innerText = `📞 ${document.getElementById("telefon").value} | ✉️ ${document.getElementById("email").value}`;
-
-    const deneyimler = document.querySelectorAll(".deneyim-item");
-    let deneyimHTML = "";
-    deneyimler.forEach(d => {
-        const f = d.querySelector(".firma").value;
-        const p = d.querySelector(".pozisyon").value;
-        const s = d.querySelector(".sure").value;
-        if(f) {
-            deneyimHTML += `<div style="margin-bottom:15px;"><strong>${f}</strong><br><em>${p}</em> | ${s}</div>`;
-        }
-    });
-    document.getElementById("p-deneyimler").innerHTML = deneyimHTML;
-
-    // PDF Oluşturma Ayarları
-    const element = document.getElementById('cv-preview');
-    const opt = {
-        margin:       10,
-        filename:     adVal + '_CV_2026.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(element).save();
+    document.getElementById("p-iletisim").innerText = document.getElementById("iletisim").value;
+    document.getElementById("p-deneyim").innerText = document.getElementById("deneyim").value;
+    
+    const element = document.getElementById('cv-template');
+    html2pdf().from(element).save(document.getElementById("ad").value + "_CV.pdf");
 }
-
-// Tema Yönetimi (Senin standart kodun)
-const themeToggle = document.getElementById("theme-toggle");
-if(localStorage.getItem('theme')==='dark'){
-    document.body.classList.add('dark');
-    themeToggle.textContent='🌙';
-}
-themeToggle.addEventListener('click',()=>{
-    document.body.classList.toggle('dark');
-    themeToggle.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
-    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-});
 </script>
-
-<style>
-    /* CV'ye özel ek stiller */
-    .deneyim-item { border-left: 3px solid var(--primary); padding-left: 15px; margin-bottom: 20px; }
-    .secondary-btn { background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-bottom: 10px; }
-    .secondary-btn:hover { background: var(--primary); color: white; }
-    h3 { margin-top: 30px; border-bottom: 1px solid var(--input-border); padding-bottom: 10px; }
-</style>
 </body>
 </html>
