@@ -5,52 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HESAPLA360 | Finansal Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-<nav>
-    <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
-    <div class="nav-container">
-        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
-        <div class="dropdown-menu" id="navMenu">
-            <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-            <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-            <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
-            <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
-            <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
-            <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+<nav class="glass-nav">
+    <div class="nav-left">
+        <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    </div>
+    
+    <div class="nav-center rate-bar" id="rateBar">
+        <div class="rate-item"><i class="fa-solid fa-dollar-sign"></i> <span id="usdVal">--.--</span> ₺</div>
+        <div class="rate-item"><i class="fa-solid fa-euro-sign"></i> <span id="eurVal">--.--</span> ₺</div>
+        <div class="rate-item gold"><i class="fa-solid fa-coins"></i> <span id="goldVal">----.--</span> ₺</div>
+    </div>
+
+    <div class="nav-right">
+        <div class="nav-container">
+            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="dropdown-menu" id="navMenu">
+                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
+                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
+                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
+                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
+                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
+                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+            </div>
         </div>
     </div>
 </nav>
 
-<div class="rate-bar" id="rateBar">
-    <span class="rate-usd">🇺🇸 USD: <b id="usdVal">--.-- ₺</b></span>
-    <span class="rate-eur">🇪🇺 EUR: <b id="eurVal">--.-- ₺</b></span>
-    <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN: <b id="goldVal">--.-- ₺</b></span>
-</div>
+<header class="hero">
+    <h1>Finansal Analiz Merkezi</h1>
+    <p class="status-badge">SİSTEM AKTİF | 24 MART 2026</p>
+</header>
 
 <div class="grid-container">
-    <a href="netmaas.html" class="feature-card"><span class="icon">💰</span><h3>Maaş</h3><p>Bordro & Net Analizi</p></a>
-    <a href="tazminat.html" class="feature-card"><span class="icon">💼</span><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></a>
-    <a href="issizlik.html" class="feature-card"><span class="icon">📅</span><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></a>
+    <a href="netmaas.html" class="feature-card"><span class="icon">💰</span><div class="card-info"><h3>Maaş</h3><p>Bordro & Net Analizi</p></div></a>
+    <a href="tazminat.html" class="feature-card"><span class="icon">💼</span><div class="card-info"><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></div></a>
+    <a href="issizlik.html" class="feature-card"><span class="icon">📅</span><div class="card-info"><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></div></a>
     
-    <a href="faiz.html" class="feature-card"><span class="icon">📈</span><h3>Faiz</h3><p>Bileşik Getiri Analizi</p></a>
-    <a href="yakit.html" class="feature-card"><span class="icon">⛽</span><h3>Yakıt</h3><p>Yol Maliyeti & Tüketim</p></a>
-    <a href="enflasyon.html" class="feature-card"><span class="icon">📉</span><h3>Enflasyon</h3><p>Alım Gücü Kaybı</p></a>
+    <a href="faiz.html" class="feature-card"><span class="icon">📈</span><div class="card-info"><h3>Faiz</h3><p>Bileşik Getiri Analizi</p></div></a>
+    <a href="yakit.html" class="feature-card"><span class="icon">⛽</span><div class="card-info"><h3>Yakıt</h3><p>Yol Maliyeti & Tüketim</p></div></a>
+    <a href="enflasyon.html" class="feature-card"><span class="icon">📉</span><div class="card-info"><h3>Enflasyon</h3><p>Alım Gücü Kaybı</p></div></a>
 
-    <a href="kredi.html" class="feature-card"><span class="icon">🏦</span><h3>Kredi</h3><p>Banka Ödeme Planı</p></a>
-    <a href="yas.html" class="feature-card"><span class="icon">🎂</span><h3>Yaş</h3><p>Kronolojik Analiz</p></a>
-    <a href="doviz.html" class="feature-card"><span class="icon">💱</span><h3>Döviz</h3><p>Global Kur Çeviri</p></a>
+    <a href="kredi.html" class="feature-card"><span class="icon">🏦</span><div class="card-info"><h3>Kredi</h3><p>Banka Ödeme Planı</p></div></a>
+    <a href="yas.html" class="feature-card"><span class="icon">🎂</span><div class="card-info"><h3>Yaş</h3><p>Kronolojik Analiz</p></div></a>
+    <a href="doviz.html" class="feature-card"><span class="icon">💱</span><div class="card-info"><h3>Döviz</h3><p>Global Kur Çeviri</p></div></a>
 
-    <a href="kdv.html" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Vergi Matrah Hesabı</p></a>
-    <a href="mesai.html" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></a>
-    <a href="cv.html" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></a>
+    <a href="kdv.html" class="feature-card"><span class="icon">🧾</span><div class="card-info"><h3>KDV</h3><p>Vergi Matrah Hesabı</p></div></a>
+    <a href="mesai.html" class="feature-card"><span class="icon">🕒</span><div class="card-info"><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></div></a>
+    <a href="cv.html" class="feature-card"><span class="icon">📄</span><div class="card-info"><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></div></a>
 </div>
 
 <script>
     function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
     window.onclick = function(e) { 
-        if(!e.target.matches('.menu-btn')) {
+        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
             const menu = document.getElementById('navMenu');
             if(menu && menu.classList.contains('active')) menu.classList.remove('active');
         }
@@ -64,12 +75,12 @@
             const eurRate = data.rates.EUR;
             const xauUsd = data.rates.XAU;
 
-            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
-            document.getElementById('eurVal').innerText = (tryVal / eurRate).toFixed(2) + " ₺";
+            document.getElementById('usdVal').innerText = tryVal.toFixed(2);
+            document.getElementById('eurVal').innerText = (tryVal / eurRate).toFixed(2);
 
             if (xauUsd) {
                 const goldPrice = ((1 / xauUsd) / 31.1034) * tryVal;
-                document.getElementById('goldVal').innerText = goldPrice.toFixed(2) + " ₺";
+                document.getElementById('goldVal').innerText = goldPrice.toFixed(0);
             }
         } catch (err) { console.error("Veri hatası"); }
     }
