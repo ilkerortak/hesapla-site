@@ -3,26 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>H360 | Tazminat</title>
+<title>H360 | Tazminat Analizi</title>
 
 <link rel="stylesheet" href="style.css">
 
 <style>
 .calculation-container { max-width:600px; margin:120px auto; }
-.form-card { background:var(--card-bg); padding:30px; border-radius:20px; }
+
+.form-card {
+    background:var(--card-bg);
+    padding:30px;
+    border-radius:20px;
+}
 
 input {
-width:100%; padding:15px; margin:10px 0;
-background:rgba(255,255,255,0.05);
-border:1px solid var(--border);
-color:#fff;
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    background:rgba(255,255,255,0.05);
+    border:1px solid var(--border);
+    color:#fff;
 }
 
 .btn-calc {
-width:100%; padding:15px;
-background:var(--accent);
-color:#fff; border:none;
-position:relative;
+    width:100%;
+    padding:15px;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    position:relative;
 }
 
 /* LOADING */
@@ -54,12 +63,11 @@ animation:spin .6s linear infinite;
 <input type="number" id="yil" placeholder="Yıl">
 
 <button class="btn-calc" onclick="hesapla()">
-<span>HESAPLA</span>
+<span>HESAPLAMAYI BAŞLAT</span>
 </button>
 
 <div id="res" class="res-area">
 <h2 id="sonuc">0 ₺</h2>
-<div id="extra"></div>
 </div>
 
 </div>
@@ -71,10 +79,9 @@ const btn=document.querySelector(".btn-calc");
 btn.classList.add("loading");
 
 setTimeout(()=>{
-const m=parseFloat(document.getElementById('maas').value);
-const y=parseFloat(document.getElementById('yil').value);
 
-if(!m||!y){btn.classList.remove("loading");return;}
+const m=parseFloat(document.getElementById('maas').value)||0;
+const y=parseFloat(document.getElementById('yil').value)||0;
 
 const tavan=35058;
 const esas=Math.min(m,tavan);
@@ -83,15 +90,12 @@ const brut=esas*y;
 const damga=brut*0.00759;
 const net=brut-damga;
 
-document.getElementById("sonuc").innerText=Math.round(net)+" ₺";
-
-document.getElementById("extra").innerHTML=`
-<div>Kesinti: ${Math.round(damga)} ₺</div>
-<div>Brüt: ${Math.round(brut)} ₺</div>
-`;
+document.getElementById("sonuc").innerText=Math.round(net).toLocaleString('tr-TR')+" ₺";
 
 document.getElementById("res").style.display="block";
+
 btn.classList.remove("loading");
+
 },1000);
 }
 </script>
