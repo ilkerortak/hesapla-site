@@ -1,58 +1,107 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Kredi Hesaplama 2026</title>
-<link rel="stylesheet" href="style.css">
-<meta name="description" content="Kredi hesaplama aracını kullanarak aylık ödeme ve toplam maliyeti hesaplayın.">
+    <meta charset="UTF-8">
+    <title>Kredi Hesaplama 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <nav>
-  <ul>
-    <li><a href="index.html">Ana Sayfa</a></li>
-    <li><a href="netmaas.html">Net Maaş</a></li>
-    <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
-    <li><a href="kredi.html">Kredi Hesaplama</a></li>
-    <li><a href="yas.html">Yaş Hesaplama</a></li>
-    <li><a href="cv.html">CV Oluşturucu</a></li>
-  </ul>
-  <button id="theme-toggle">☀️</button>
+    <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="netmaas.html">Net Maaş</a></li>
+        <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
+        <li><a href="kredi.html" class="active">Kredi Hesaplama</a></li>
+        <li><a href="yas.html">Yaş Hesaplama</a></li>
+        <li><a href="cv.html">CV Oluşturucu</a></li>
+    </ul>
+    <button id="theme-toggle">☀️</button>
 </nav>
 
 <div class="container">
-<h1>Kredi Hesaplama 2026</h1>
-<p>Kredi tutarı, vade ve faiz oranını girin:</p>
-<input type="number" id="tutar" placeholder="Kredi Tutarı">
-<input type="number" id="vade" placeholder="Vade (ay)">
-<input type="number" id="faiz" placeholder="Faiz (%)">
-<button onclick="hesapla()">Hesapla</button>
-<h2 id="sonuc"></h2>
+    <div class="calculator-card">
+        <h1>Kredi Hesaplama 2026</h1>
+        
+        <div class="input-group">
+            <p>Kredi Tutarı:</p>
+            <div class="input-wrapper">
+                <input type="number" id="tutar" placeholder="Örn: 100000">
+                <span>TL</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <p>Vade (Ay):</p>
+            <div class="input-wrapper">
+                <input type="number" id="vade" placeholder="Örn: 12">
+                <span>Ay</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <p>Aylık Faiz Oranı (%):</p>
+            <div class="input-wrapper">
+                <input type="number" id="faiz" step="0.01" placeholder="Örn: 3.85">
+                <span>%</span>
+            </div>
+        </div>
+
+        <button onclick="hesapla()">Taksit Hesapla</button>
+        
+        <div id="kredi-sonuc" style="display:none;">
+            <div class="result-item">
+                <span>Aylık Taksit Tutarı:</span>
+                <strong id="aylik-taksit">0 TL</strong>
+            </div>
+            <div class="result-details">
+                <p>Toplam Geri Ödeme: <span id="toplam-odeme">0 TL</span></p>
+                <p>Toplam Faiz Yükü: <span id="toplam-faiz">0 TL</span></p>
+                <p>Vergiler Dahil (BSMV+KKDF): <span>Dahildir</span></p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-function hesapla(){
-  let tutar = parseFloat(document.getElementById("tutar").value);
-  let vade = parseFloat(document.getElementById("vade").value);
-  let faiz = parseFloat(document.getElementById("faiz").value)/100;
-  let aylik = tutar * (1 + faiz)/vade;
-  document.getElementById("sonuc").innerText = "Aylık Ödeme: " + aylik.toFixed(2) + " TL";
+function hesapla() {
+    let tutar = parseFloat(document.getElementById("tutar").value);
+    let vade = parseFloat(document.getElementById("vade").value);
+    let aylikFaizYuzde = parseFloat(document.getElementById("faiz").value);
+
+    if (!tutar || !vade || !aylikFaizYuzde) {
+        alert("Lütfen tüm alanları doldurun.");
+        return;
+    }
+
+    // Türkiye'de kredilerde vergiler (Konut hariç genel: %15 BSMV + %15 KKDF = %30 vergi payı)
+    // Faiz oranını vergiyle brütleştiriyoruz
+    let brutFaiz = (aylikFaizYuzde / 100) * 1.30; 
+
+    // Bankacılık Standart Taksit Formülü (Anüite)
+    // Taksit = [Anapara * Faiz * (1+Faiz)^Vade] / [(1+Faiz)^Vade - 1]
+    let taksit = (tutar * brutFaiz * Math.pow(1 + brutFaiz, vade)) / (Math.pow(1 + brutFaiz, vade) - 1);
+    
+    let toplamGeriOdeme = taksit * vade;
+    let toplamFaiz = toplamGeriOdeme - tutar;
+
+    // Sonuçları göster
+    document.getElementById("kredi-sonuc").style.display = "block";
+    document.getElementById("aylik-taksit").innerText = taksit.toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " TL";
+    document.getElementById("toplam-odeme").innerText = toplamGeriOdeme.toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " TL";
+    document.getElementById("toplam-faiz").innerText = toplamFaiz.toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " TL";
 }
 
-// Tema persist
+// Tema Yönetimi
 const themeToggle = document.getElementById("theme-toggle");
 if(localStorage.getItem('theme')==='dark'){
     document.body.classList.add('dark');
     themeToggle.textContent='🌙';
-}else{ themeToggle.textContent='☀️'; }
+}
 themeToggle.addEventListener('click',()=>{
     document.body.classList.toggle('dark');
-    if(document.body.classList.contains('dark')){
-        themeToggle.textContent='🌙';
-        localStorage.setItem('theme','dark');
-    }else{
-        themeToggle.textContent='☀️';
-        localStorage.setItem('theme','light');
-    }
+    themeToggle.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 });
 </script>
 </body>
