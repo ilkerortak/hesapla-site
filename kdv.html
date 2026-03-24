@@ -4,103 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H360 | KDV Hesaplama</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* KDV Oranı seçimi için özel stil dokunuşu */
-        select {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.4rem;
+        /* Sayfayı mermi gibi ortalayan ve patlamayı önleyen özel CSS */
+        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
+        .main-wrapper { 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; 
+        }
+        .calc-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px;
             width: 100%;
-            margin-bottom: 30px;
-            outline: none;
-            border-bottom: 2px solid #1c212c;
-            padding-bottom: 10px;
-            cursor: pointer;
+            max-width: 450px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .header-area { text-align: center; margin-bottom: 35px; }
+        .header-area h1 { font-size: 1.6rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
+        .header-area p { color: #007bff; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; }
+        
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px; }
+        
+        .input-group input, .input-group select {
+            width: 100%; padding: 16px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
             appearance: none;
         }
-        option { background: #12161e; color: white; }
+        .input-group select { 
+            cursor: pointer; 
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23007bff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); 
+            background-repeat: no-repeat; 
+            background-position: right 15px center; 
+            background-size: 18px; 
+        }
+        .input-group option { background: #12161e; color: #fff; }
+        .input-group input:focus, .input-group select:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
+        
+        .calc-btn {
+            width: 100%; padding: 18px; background: #007bff; color: #fff;
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
+            font-size: 1rem; transition: 0.3s; margin-top: 5px;
+        }
+        .calc-btn:hover { background: #0056b3; transform: translateY(-2px); }
+        
+        .result-box {
+            margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15);
+            display: none; text-align: center;
+        }
+        .result-label { font-size: 0.7rem; color: #888; font-weight: 800; margin-bottom: 5px; }
+        .result-main { font-size: 2.5rem; font-weight: 700; color: #fff; margin-bottom: 20px; }
+        .result-grid { display: flex; justify-content: space-between; font-size: 0.85rem; color: #aaa; }
+        .result-grid b { color: #fff; }
     </style>
 </head>
 <body>
 
-<nav>
-    <a href="/" class="logo">
-        <div class="logo-box">H360</div> 
-        HESAPLA<span>360</span>
-    </a>
-    <div class="nav-container">
-        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
-        <div class="dropdown-menu" id="navMenu">
-            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
-            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
-            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
-            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
-            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
-            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+<nav class="glass-nav">
+    <div class="nav-left">
+        <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    </div>
+    <div class="nav-right">
+        <div class="menu-container">
+            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
+            <div class="dropdown-menu" id="navMenu">
+                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
+                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
+                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
+                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
+                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
+                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+            </div>
         </div>
     </div>
 </nav>
 
-<div class="hero-section">
-    <h2>KDV Hesaplama</h2>
-    <p>TİCARİ İŞLEMLER VE VERGİ MATRAH ANALİZİ</p>
-</div>
+<div class="main-wrapper">
+    <div class="calc-card">
+        <div class="header-area">
+            <h1>KDV HESAPLAMA</h1>
+            <p>MATRAH VE VERGİ ANALİZİ</p>
+        </div>
 
-<div class="form-box">
-    <label>TUTAR (TL)</label>
-    <input type="number" id="amt" placeholder="Örn: 10.000">
-    
-    <label>KDV ORANI (%)</label>
-    <select id="rate">
-        <option value="20">%20 (Genel)</option>
-        <option value="10">%10 (Gıda/Tekstil)</option>
-        <option value="1">%1 (Temel Gıda)</option>
-    </select>
+        <div class="input-group">
+            <label>TUTAR (TL)</label>
+            <input type="number" id="amt" placeholder="Örn: 10000">
+        </div>
 
-    <button class="btn-calc" onclick="calcKdv()">HESAPLAMAYI YAP</button>
+        <div class="input-group">
+            <label>KDV ORANI (%)</label>
+            <select id="rate">
+                <option value="20">%20 (Genel)</option>
+                <option value="10">%10 (Gıda/Tekstil)</option>
+                <option value="1">%1 (Temel Gıda)</option>
+            </select>
+        </div>
 
-    <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.75rem; font-weight:800;">KDV DAHİL TOPLAM</p>
-        <div class="res-val" id="kdvDahil">0 ₺</div>
-        <div style="display:flex; justify-content:space-between; margin-top:20px; font-size:0.85rem; color:#888; border-top: 1px solid #1c212c; padding-top: 15px;">
-            <span>Sadece KDV: <b id="kdvAmt" style="color:#007bff">0 ₺</b></span>
-            <span>KDV Hariç: <b id="kdvHaric" style="color:#fff">0 ₺</b></span>
+        <button class="calc-btn" onclick="calcKdv()">HESAPLA</button>
+
+        <div id="res" class="result-box">
+            <div class="result-label">KDV DAHİL TOPLAM</div>
+            <div class="result-main" id="kdvDahil">0 ₺</div>
+            <div class="result-grid">
+                <span>Sadece KDV: <b id="kdvAmt" style="color:#007bff">0 ₺</b></span>
+                <span>KDV Hariç: <b id="kdvHaric">0 ₺</b></span>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Menü Fonksiyonları
-    function toggleMenu() { 
-        document.getElementById('navMenu').classList.toggle('active'); 
-    }
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 
-    // KDV Hesaplama Motoru
     function calcKdv() {
         const amt = parseFloat(document.getElementById('amt').value) || 0;
         const rate = parseFloat(document.getElementById('rate').value) / 100;
         
         if(amt > 0) {
             const kdv = amt * rate;
-            document.getElementById('kdvDahil').innerText = (amt + kdv).toLocaleString() + " ₺";
-            document.getElementById('kdvAmt').innerText = kdv.toLocaleString() + " ₺";
-            document.getElementById('kdvHaric').innerText = amt.toLocaleString() + " ₺";
+            document.getElementById('kdvDahil').innerText = Math.round(amt + kdv).toLocaleString('tr-TR') + " ₺";
+            document.getElementById('kdvAmt').innerText = Math.round(kdv).toLocaleString('tr-TR') + " ₺";
+            document.getElementById('kdvHaric').innerText = Math.round(amt).toLocaleString('tr-TR') + " ₺";
             document.getElementById('res').style.display = "block";
         }
     }
 
-    // Menü dışına tıklandığında kapatma
-    window.onclick = function(event) {
-        if (!event.target.matches('.menu-btn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-menu");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('active')) {
-                    openDropdown.classList.remove('active');
-                }
-            }
+    window.onclick = function(e) { 
+        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
+            const menu = document.getElementById('navMenu');
+            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
         }
     }
 </script>
