@@ -1,25 +1,16 @@
-/* Hesapla360.com - Minimalist Edition 2026 */
+/* Hesapla360.com - Dark Minimalist Edition 2026 */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
     --primary: #6366f1;
-    --bg-color: #fcfcfd;
-    --card-bg: #ffffff;
-    --text-color: #0f172a;
-    --nav-bg: #ffffff;
-    --nav-text: #475569;
-    --input-border: #e2e8f0;
-    --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 10px 15px -5px rgba(0,0,0,0.05);
-}
-
-body.dark {
-    --bg-color: #0b0f1a;
+    --primary-hover: #4f46e5;
+    --bg-color: #0b0f1a; /* Derin Gece Mavisi */
     --card-bg: #161b2a;
     --text-color: #f8fafc;
     --nav-bg: #161b2a;
     --nav-text: #94a3b8;
     --input-border: #2d3748;
-    --shadow: 0 10px 30px rgba(0,0,0,0.3);
+    --shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,10 +19,10 @@ body {
     font-family: 'Inter', sans-serif;
     background: var(--bg-color);
     color: var(--text-color);
-    transition: all 0.3s ease;
+    line-height: 1.6;
 }
 
-/* --- MİNİMALİST NAV --- */
+/* --- NAV --- */
 nav {
     height: 70px;
     padding: 0 10%;
@@ -43,7 +34,7 @@ nav {
     position: sticky; top: 0; z-index: 1000;
 }
 
-.logo { font-weight: 700; font-size: 1.2rem; color: var(--text-color); text-decoration: none; }
+.logo { font-weight: 700; font-size: 1.2rem; color: #fff; text-decoration: none; }
 .logo span { color: var(--primary); }
 
 .nav-menu { display: flex; gap: 24px; list-style: none; }
@@ -51,27 +42,9 @@ nav {
     text-decoration: none; color: var(--nav-text); 
     font-size: 0.9rem; font-weight: 500; transition: 0.2s;
 }
-.nav-menu a:hover { color: var(--primary); }
+.nav-menu a:hover, .nav-menu a.active { color: #fff; }
 
-/* --- MİNİMAL TEMA SWITCHER --- */
-.theme-switch-wrapper { display: flex; align-items: center; }
-.theme-switch {
-    position: relative; width: 48px; height: 24px;
-}
-.theme-switch input { display: none; }
-.slider {
-    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #e2e8f0; transition: .3s; border-radius: 24px;
-}
-.slider:before {
-    position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
-    background-color: white; transition: .3s; border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-input:checked + .slider { background-color: var(--primary); }
-input:checked + .slider:before { transform: translateX(24px); }
-
-/* --- KARTLAR & FORM --- */
+/* --- GRID & CONTAINER --- */
 .grid-container {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px; max-width: 1000px; margin: 60px auto; padding: 0 20px;
@@ -80,29 +53,31 @@ input:checked + .slider:before { transform: translateX(24px); }
 .feature-card {
     background: var(--card-bg); padding: 32px; border-radius: 16px;
     text-decoration: none; color: inherit; border: 1px solid var(--input-border);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s, border-color 0.2s;
 }
-.feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.feature-card:hover { transform: translateY(-4px); border-color: var(--primary); }
 
 .container {
     max-width: 600px; margin: 60px auto; padding: 40px;
     background: var(--card-bg); border-radius: 20px; border: 1px solid var(--input-border);
 }
 
-input, select, button {
+/* --- FORM ELEMANLARI --- */
+input, select, textarea {
     width: 100%; padding: 12px 16px; border-radius: 10px; margin-top: 8px;
-    border: 1px solid var(--input-border); background: var(--card-bg);
-    color: var(--text-color); font-family: inherit; font-size: 0.95rem;
+    border: 1px solid var(--input-border); background: #1f2937;
+    color: #fff; font-family: inherit; font-size: 0.95rem; outline: none;
 }
+input:focus { border-color: var(--primary); }
 
 button {
     background: var(--primary); color: white; border: none; font-weight: 600;
-    margin-top: 24px; cursor: pointer; transition: 0.2s;
+    padding: 14px; border-radius: 10px; margin-top: 24px; cursor: pointer; transition: 0.2s;
 }
-button:hover { opacity: 0.9; }
+button:hover { background: var(--primary-hover); transform: translateY(-2px); }
 
 .result-item {
     margin-top: 32px; padding: 24px; border-radius: 12px;
-    background: rgba(99, 102, 241, 0.05); border: 1px solid var(--primary);
+    background: rgba(99, 102, 241, 0.1); border: 1px dashed var(--primary);
     text-align: center;
 }
