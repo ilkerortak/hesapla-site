@@ -6,13 +6,20 @@
     <title>H360 | Maaş Analizi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* Bu sayfaya özel ek düzenlemeler */
+        :root {
+            --accent: #00d2ff;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-dim: #a0a0a0;
+        }
+
+        /* Mevcut stillerine eklemeler */
         .calculation-container {
             max-width: 600px;
             margin: 120px auto 60px;
             padding: 0 20px;
+            font-family: 'Inter', sans-serif;
         }
         .form-card {
             background: var(--card-bg);
@@ -20,6 +27,7 @@
             padding: 30px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         input[type="number"] {
             width: 100%;
@@ -31,118 +39,172 @@
             font-size: 1.2rem;
             margin: 15px 0;
             outline: none;
+            box-sizing: border-box;
         }
-        input[type="number"]:focus { border-color: var(--accent); }
+        input[type="number"]:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
         
         .btn-calc {
             width: 100%;
             padding: 15px;
             background: var(--accent);
-            color: #fff;
+            color: #000; /* Daha okunabilir olması için koyu renk */
             border: none;
             border-radius: 10px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .btn-calc:hover { opacity: 0.9; transform: scale(0.98); }
+        .btn-calc:hover { opacity: 0.9; transform: translateY(-2px); }
 
         .res-area {
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px dashed var(--border);
-            display: none; /* Başta gizli */
+            display: none;
+            animation: fadeIn 0.5s ease-out;
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .res-val {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
             color: var(--accent);
-            margin: 10px 0;
+            margin: 5px 0 20px 0;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
         }
         .detail-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
             color: var(--text-dim);
+        }
+        .info-tag {
+            font-size: 0.65rem;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
 
-<nav class="glass-nav">
-    <div class="nav-left">
-        <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
-    </div>
-    <div class="nav-right">
-        <div class="menu-container">
-            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
-            <div class="dropdown-menu" id="navMenu">
-                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
-                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
-                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
-                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-            </div>
-        </div>
-    </div>
-</nav>
-
 <div class="calculation-container">
-    <header class="hero premium-header" style="padding: 0 0 40px 0;">
-        <h1 class="premium-title" style="font-size: 2rem;">MAAŞ ANALİZİ</h1>
-        <p class="premium-status">2026 GÜNCEL VERGİ DİLİMLERİ</p>
+    <header style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #fff; font-size: 2rem; margin-bottom: 5px;">MAAŞ ANALİZİ</h1>
+        <p style="color: var(--accent); font-weight: 600; font-size: 0.8rem; letter-spacing: 2px;">
+            <i class="fa-solid fa-shield-check"></i> 2026 VERGİ MUAFİYETLERİ DAHİL
+        </p>
     </header>
 
     <div class="form-card">
-        <label style="color: var(--accent); font-weight: 700; font-size: 0.8rem;">AYLIK BRÜT MAAŞ (TL)</label>
-        <input type="number" id="brut" placeholder="Örn: 65000">
+        <label style="color: var(--accent); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px;">AYLIK BRÜT MAAŞ (TL)</label>
+        <input type="number" id="brut" placeholder="Örn: 75000" autofocus>
         
-        <button class="btn-calc" onclick="hesaplaMaas()">HESAPLAMAYI BAŞLAT</button>
+        <button class="btn-calc" onclick="hesaplaMaas()">HESAPLAMAYI ANALİZ ET</button>
 
         <div id="res" class="res-area">
-            <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim);">TAHMİNİ NET ELE GEÇEN</p>
+            <p style="font-size:0.75rem; font-weight:800; color: var(--text-dim); letter-spacing: 1px;">NET ELE GEÇEN (AYLIK ORTALAMA)</p>
             <div class="res-val" id="net">0 ₺</div>
             
-            <div class="detail-row"><span>SGK İşçi Payı (%14)</span> <b id="sgk" style="color:#fff">0</b></div>
-            <div class="detail-row"><span>İşsizlik Sigortası (%1)</span> <b id="issiz" style="color:#fff">0</b></div>
-            <div class="detail-row"><span>Gelir Vergisi (%15)</span> <b id="vergi" style="color:#fff">0</b></div>
-            <div class="detail-row"><span>Damga Vergisi</span> <b id="damga" style="color:#fff">0</b></div>
+            <div class="detail-row"><span>SGK İşçi Payı <span class="info-tag">%14</span></span> <b id="sgk" style="color:#fff">0</b></div>
+            <div class="detail-row"><span>İşsizlik Sigortası <span class="info-tag">%1</span></span> <b id="issiz" style="color:#fff">0</b></div>
+            <div class="detail-row"><span>Gelir Vergisi <span id="vergiOrani" class="info-tag">%15</span></span> <b id="vergi" style="color:#fff">0</b></div>
+            <div class="detail-row"><span>Damga Vergisi <span class="info-tag">0.00759</span></span> <b id="damga" style="color:#fff">0</b></div>
+            <div class="detail-row" style="border-top: 1px solid var(--border); padding-top: 10px; margin-top: 10px;">
+                <span>Vergi İstisnası <i class="fa-solid fa-circle-info" title="Asgari ücret kadar olan kısım vergiden muaftır."></i></span> 
+                <b id="istisna" style="color:#4caf50">+ 0 ₺</b>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-    
     function hesaplaMaas() {
-        const brut = parseFloat(document.getElementById('brut').value) || 0;
+        const brutInput = document.getElementById('brut');
+        const brut = parseFloat(brutInput.value) || 0;
         
-        // 2026 Standart Hesaplama Parametreleri
-        const sgk = brut * 0.14;
-        const issizlik = brut * 0.01;
-        const damga = brut * 0.00759;
+        if(brut <= 0) {
+            alert("Lütfen geçerli bir maaş giriniz.");
+            return;
+        }
+
+        // --- 2026 PARAMETRELERİ (Temsili/Tahmini) ---
+        const asgariBrut = 35000; // 2026 için tahmini asgari ücret
+        const sgkOrani = 0.14;
+        const issizlikOrani = 0.01;
+        const damgaOrani = 0.00759;
+
+        // 1. Kesintiler
+        const sgk = brut * sgkOrani;
+        const issizlik = brut * issizlikOrani;
         const matrah = brut - sgk - issizlik;
-        const gelirVergisi = matrah * 0.15; // İlk dilim
         
-        const net = brut - (sgk + issizlik + damga + gelirVergisi);
+        // 2. Vergi Dilimi Hesaplama (Basitleştirilmiş Yıllık Geçiş)
+        // Maaş çok yüksekse dilimi %20'den hesaplayalım (ortalama bir yıl baz alınmıştır)
+        let gelirVergisiOrani = 0.15;
+        if (matrah > 60000) gelirVergisiOrani = 0.20;
+        if (matrah > 150000) gelirVergisiOrani = 0.27;
+
+        let hamGelirVergisi = matrah * gelirVergisiOrani;
+        let hamDamgaVergisi = brut * damgaOrani;
+
+        // 3. Asgari Ücret İstisnası (Türkiye Vergi Sistemi)
+        // Asgari ücretin vergisi kadar kısım düşülür
+        const asgariSgk = asgariBrut * sgkOrani;
+        const asgariIssizlik = asgariBrut * issizlikOrani;
+        const asgariMatrah = asgariBrut - asgariSgk - asgariIssizlik;
         
-        // Değerleri Yazdır
-        document.getElementById('net').innerText = Math.round(net).toLocaleString('tr-TR') + " ₺";
+        const gvIstisnası = asgariMatrah * 0.15;
+        const dvIstisnası = asgariBrut * damgaOrani;
+
+        // Ödenecek vergiler (İstisna sonrası)
+        const vergi = Math.max(0, hamGelirVergisi - gvIstisnası);
+        const damga = Math.max(0, hamDamgaVergisi - dvIstisnası);
+        
+        // 4. Net Maaş
+        const net = brut - sgk - issizlik - vergi - damga;
+
+        // UI Güncelleme
+        animateValue("net", net, " ₺");
         document.getElementById('sgk').innerText = Math.round(sgk).toLocaleString('tr-TR') + " ₺";
         document.getElementById('issiz').innerText = Math.round(issizlik).toLocaleString('tr-TR') + " ₺";
-        document.getElementById('vergi').innerText = Math.round(gelirVergisi).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('vergi').innerText = Math.round(vergi).toLocaleString('tr-TR') + " ₺";
         document.getElementById('damga').innerText = Math.round(damga).toLocaleString('tr-TR') + " ₺";
-        
-        // Sonuç alanını göster
+        document.getElementById('istisna').innerText = "+ " + Math.round(gvIstisnası + dvIstisnası).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('vergiOrani').innerText = "%" + (gelirVergisiOrani * 100);
+
         document.getElementById('res').style.display = "block";
     }
 
-    // Enter tuşu desteği
-    document.getElementById('brut').addEventListener('keypress', function (e) {
+    // Sayıların akıcı artması için küçük bir fonksiyon
+    function animateValue(id, endValue, suffix) {
+        const obj = document.getElementById(id);
+        let startValue = 0;
+        let duration = 800;
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * endValue).toLocaleString('tr-TR') + suffix;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    document.getElementById('brut').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') hesaplaMaas();
     });
 </script>
+
 </body>
 </html>
