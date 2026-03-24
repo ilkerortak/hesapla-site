@@ -1,51 +1,39 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8"><title>H360 | Yakıt Analizi</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<nav>
-    <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
-    <div class="nav-container"><button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
-        <div class="dropdown-menu" id="navMenu"> </div>
-    </div>
-</nav>
-
-<div class="hero-section"><h2>Yakıt Analizi</h2><p>YOL MALİYET VE LOJİSTİK PLANLAMA</p></div>
+<div class="hero-section">
+    <h2>Yakıt Tüketim Analizi</h2>
+    <p>YOL MALİYET VE LOJİSTİK PLANLAMA</p>
+</div>
 
 <div class="form-box">
-    <label>Mesafe (KM)</label>
+    <label>GİDİLECEK MESAFE (KM)</label>
     <input type="number" id="dist" placeholder="Örn: 450">
-    <label>Ortalama Tüketim (L/100KM)</label>
+    
+    <label>ORTALAMA TÜKETİM (L/100KM)</label>
     <input type="number" id="cons" placeholder="Örn: 6.5">
-    <label>Litre Fiyatı (TL)</label>
+
+    <label>YAKIT LİTRE FİYATI (TL)</label>
     <input type="number" id="price" placeholder="Örn: 44.50">
 
-    <button class="btn-calc" onclick="calcFuel()">MALİYETİ HESAPLA</button>
+    <button class="btn-calc" onclick="calcFuel()">MALİYET ANALİZİ YAP</button>
 
     <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.8rem; font-weight:700;">TOPLAM GİDER</p>
-        <div class="res-val" id="total">0 ₺</div>
-        <div style="display:flex; justify-content:space-between; margin-top:15px; font-size:0.85rem; color:#888;">
-            <span>Yakıt: <b id="lit">0</b> L</span>
-            <span>KM Başı: <b id="km">0</b> ₺</span>
+        <p style="color:#555; font-size:0.7rem; font-weight:800;">TOPLAM YAKIT GİDERİ</p>
+        <div class="res-val" id="fTotal">0 ₺</div>
+        <div style="display:flex; justify-content:space-between; margin-top:15px; font-size:0.8rem; color:#888;">
+            <span>Toplam Yakıt: <b id="liters" style="color:#fff">0 L</b></span>
+            <span>KM Başı: <b id="perKm" style="color:#fff">0 ₺</b></span>
         </div>
     </div>
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
     function calcFuel() {
         const d = parseFloat(document.getElementById('dist').value) || 0;
         const c = parseFloat(document.getElementById('cons').value) || 0;
         const p = parseFloat(document.getElementById('price').value) || 0;
         const total = (d * c / 100) * p;
-        document.getElementById('total').innerText = total.toLocaleString() + " ₺";
-        document.getElementById('lit').innerText = (d * c / 100).toFixed(1);
-        document.getElementById('km').innerText = (total / d).toFixed(2);
+        document.getElementById('fTotal').innerText = Math.round(total).toLocaleString() + " ₺";
+        document.getElementById('liters').innerText = (d * c / 100).toFixed(1);
+        document.getElementById('perKm').innerText = (total / d).toFixed(2);
         document.getElementById('res').style.display = "block";
     }
 </script>
-</body>
-</html>
