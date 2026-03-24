@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Net Maaş Hesaplama 2026 - Hesapla360</title>
+    <title>Detaylı Maaş Hesaplama - Hesapla360</title>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -10,34 +10,58 @@
 <nav>
     <a href="index.html" class="logo">HESAPLA<span>360</span></a>
     <ul class="nav-menu">
-        <li><a href="netmaas.html" class="active">Maaş</a></li>
-        <li><a href="tazminat.html">Tazminat</a></li>
-        <li><a href="issizlik.html">İşsizlik</a></li>
-        <li><a href="kredi.html">Kredi</a></li>
-        <li><a href="cv.html">CV</a></li>
+        <li><a href="netmaas.html" class="active">💰 Maaş</a></li>
+        <li><a href="tazminat.html">💼 Tazminat</a></li>
+        <li><a href="issizlik.html">📅 İşsizlik</a></li>
+        <li><a href="kredi.html">🏦 Kredi</a></li>
+        <li><a href="cv.html">📄 CV</a></li>
     </ul>
 </nav>
 
 <div class="container">
-    <h2>Net Maaş Hesapla</h2>
+    <h2>💰 Maaş Analizi</h2>
     <div class="input-group">
         <label>Brüt Maaş Tutarı (TL)</label>
-        <input type="number" id="brut" placeholder="Örn: 45000">
+        <input type="number" id="brut" placeholder="Örn: 50000">
     </div>
-    <button onclick="maasHesapla()">Hesapla</button>
+    <button onclick="maasHesapla()">Detaylı Hesapla</button>
+
     <div id="sonuc-box" style="display:none;" class="result-item">
-        <p style="opacity:0.7;">Tahmini Net Maaş</p>
+        <p style="opacity:0.7;">Elinize Geçecek Net Tutar</p>
         <strong id="net-sonuc">0 TL</strong>
+        
+        <div style="text-align: left; margin-top: 20px; border-top: 1px dashed var(--border); pt-3;">
+            <p style="font-size: 0.85rem; margin-top: 15px;">📉 SGK İşçi Payı (%14): <span id="sgk" style="float:right">0 TL</span></p>
+            <p style="font-size: 0.85rem;">📉 İşsizlik Sigortası (%1): <span id="issizlik" style="float:right">0 TL</span></p>
+            <p style="font-size: 0.85rem;">📉 Gelir Vergisi (%15): <span id="g-vergi" style="float:right">0 TL</span></p>
+            <p style="font-size: 0.85rem;">📉 Damga Vergisi (%0.759): <span id="d-vergi" style="float:right">0 TL</span></p>
+            <p style="font-size: 0.9rem; font-weight: 700; margin-top: 10px; color: #fbbf24;">⚠️ Vergi İstisnası Uygulanmıştır (Asgari Ücret Kadar).</p>
+        </div>
     </div>
 </div>
 
 <script>
     function maasHesapla() {
-        let brut = parseFloat(document.getElementById("brut").value);
-        if(!brut) return;
-        let net = brut * 0.782; 
+        let b = parseFloat(document.getElementById("brut").value);
+        if(!b) return;
+
+        let sgk = b * 0.14;
+        let issizlik = b * 0.01;
+        let gvMatrah = b - sgk - issizlik;
+        let gv = gvMatrah * 0.15; // 2026 ilk dilim varsayılan
+        let dv = b * 0.00759;
+        
+        // Basit bir istisna mantığı (2026 tahmini asgari ücret istisnası)
+        let istisna = 3500; 
+        let toplamKesinti = (sgk + issizlik + gv + dv) - istisna;
+        let net = b - toplamKesinti;
+
         document.getElementById("sonuc-box").style.display = "block";
-        document.getElementById("net-sonuc").innerText = net.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " TL";
+        document.getElementById("net-sonuc").innerText = net.toLocaleString('tr-TR') + " TL";
+        document.getElementById("sgk").innerText = sgk.toLocaleString('tr-TR') + " TL";
+        document.getElementById("issizlik").innerText = issizlik.toLocaleString('tr-TR') + " TL";
+        document.getElementById("g-vergi").innerText = gv.toLocaleString('tr-TR') + " TL";
+        document.getElementById("d-vergi").innerText = dv.toLocaleString('tr-TR') + " TL";
     }
 </script>
 </body>
