@@ -1,66 +1,32 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>CV Oluştur - Hesapla360</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js"></script>
 </head>
 <body>
-<nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <div class="nav-menu">
-        <a href="netmaas.html">💰 Maaş</a>
-        <a href="tazminat.html">💼 Tazminat</a>
-        <a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html">🏦 Kredi</a>
-        <a href="yas.html">🎂 Yaş</a>
-        <a href="cv.html" class="active">📄 CV</a>
-    </div>
-</nav>
-
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
+    <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
+    <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
+    <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html" class="active">📄 CV</a>
+</div></nav>
 <div class="container">
-    <h2>📄 Profesyonel CV Hazırla</h2>
-    <div class="input-group">
-        <label>Ad Soyad</label>
-        <input type="text" id="ad" placeholder="Örn: İlker Ortak">
-    </div>
-    <div class="input-group">
-        <label>Ünvan / Meslek</label>
-        <input type="text" id="unvan" placeholder="Örn: Full Stack Developer">
-    </div>
-    <div class="input-group">
-        <label>Deneyimler & Bilgiler</label>
-        <textarea id="bilgi" placeholder="Çalıştığınız yerler, projeleriniz..." style="height:140px;"></textarea>
-    </div>
-    <button onclick="indirPDF()">PDF CV İndir</button>
+    <h2>📄 CV Oluşturucu</h2>
+    <div class="input-group"><label>Ad Soyad</label><input type="text" id="a"></div>
+    <div class="input-group"><label>Deneyimler & Eğitim</label><textarea id="b" style="height:150px;"></textarea></div>
+    <button onclick="pdf()">PDF Olarak Kaydet</button>
 </div>
-
 <script>
-    function indirPDF() {
-        const ad = document.getElementById("ad").value;
-        const unvan = document.getElementById("unvan").value;
-        const bilgi = document.getElementById("bilgi").value;
-
-        if(!ad) { alert("Lütfen adınızı girin."); return; }
-
-        const docDefinition = {
-            content: [
-                { text: ad.toUpperCase(), fontSize: 24, bold: true, color: '#6366f1' },
-                { text: unvan, fontSize: 14, color: '#444', margin: [0, 5, 0, 15] },
-                { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 515, y2: 5, lineWidth: 1, lineColor: '#eee' }] },
-                { text: '\nBİLGİLER & DENEYİMLER', bold: true, color: '#333', margin: [0, 10] },
-                { text: bilgi, lineHeight: 1.5, fontSize: 11, color: '#333' },
-                { text: '\n\nHesapla360.com ile üretilmiştir.', style: 'footer' }
-            ],
-            styles: {
-                footer: { fontSize: 8, italic: true, alignment: 'center', color: '#aaa', margin: [0, 50, 0, 0] }
-            }
-        };
-
-        pdfMake.createPdf(docDefinition).download(ad + "_CV.pdf");
-    }
+function pdf(){
+    let a=document.getElementById("a").value, b=document.getElementById("b").value; if(!a)return;
+    let doc = {
+        content: [
+            {text: a.toUpperCase(), fontSize: 22, bold: true, color: '#a855f7'},
+            {text: '\n' + b, fontSize: 12}
+        ]
+    };
+    pdfMake.createPdf(doc).download(a + "_CV.pdf");
+}
 </script>
-</body>
-</html>
+</body></html>
