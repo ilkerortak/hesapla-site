@@ -1,40 +1,86 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>İşsizlik Maaşı Hesaplama 2026</title>
-<link rel="stylesheet" href="style.css">
-<meta name="description" content="2026 yılı işsizlik maaşı hesaplama aracını kullanarak yaklaşık işsizlik maaşınızı öğrenin.">
+    <meta charset="UTF-8">
+    <title>İşsizlik Maaşı Hesaplama 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="2026 yılı işsizlik maaşı hesaplama aracını kullanarak yaklaşık işsizlik maaşınızı öğrenin.">
 </head>
 <body>
 <nav>
-  <ul>
-    <li><a href="index.html">Ana Sayfa</a></li>
-    <li><a href="netmaas.html">Net Maaş</a></li>
-    <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
-    <li><a href="kredi.html">Kredi Hesaplama</a></li>
-    <li><a href="yas.html">Yaş Hesaplama</a></li>
-    <li><a href="cv.html">CV Oluşturucu</a></li>
-  </ul>
-  <button id="theme-toggle">☀️</button>
+    <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="netmaas.html">Net Maaş</a></li>
+        <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
+        <li><a href="kredi.html">Kredi Hesaplama</a></li>
+        <li><a href="yas.html">Yaş Hesaplama</a></li>
+        <li><a href="cv.html">CV Oluşturucu</a></li>
+    </ul>
+    <button id="theme-toggle">☀️</button>
 </nav>
 
 <div class="container">
-<h1>İşsizlik Maaşı Hesaplama 2026</h1>
-<p>Brüt maaşınızı girin:</p>
-<input type="number" id="brut" placeholder="Örn: 20000">
-<button onclick="hesapla()">Hesapla</button>
-<h2 id="sonuc"></h2>
+    <h1>İşsizlik Maaşı Hesaplama 2026</h1>
+    
+    <div class="input-group">
+        <p>Son 4 aylık Brüt Maaş ortalamanız:</p>
+        <input type="number" id="brut" placeholder="Örn: 35000">
+    </div>
+
+    <div class="input-group">
+        <p>Son 3 yıldaki toplam prim gün sayınız:</p>
+        <select id="prim_gun">
+            <option value="180">600 - 899 gün (6 Ay ödeme)</option>
+            <option value="240">900 - 1079 gün (8 Ay ödeme)</option>
+            <option value="300">1080 gün ve üzeri (10 Ay ödeme)</option>
+        </select>
+    </div>
+
+    <button onclick="hesapla()">Hesapla</button>
+    
+    <div id="sonuc-box" style="margin-top: 20px; display: none;">
+        <h2 id="sonuc"></h2>
+        <p id="detay" style="font-size: 0.9em; opacity: 0.8;"></p>
+    </div>
 </div>
 
 <script>
 function hesapla(){
-  let brut = document.getElementById("brut").value;
-  let net = brut * 0.50;
-  document.getElementById("sonuc").innerText = "Yaklaşık İşsizlik Maaşı: " + net + " TL";
+    let brut = parseFloat(document.getElementById("brut").value);
+    let primGun = document.getElementById("prim_gun").value;
+    
+    if(!brut || brut <= 0) {
+        alert("Lütfen geçerli bir brüt maaş girin.");
+        return;
+    }
+
+    // 2026 Yasal Verileri
+    const ASGARI_BRUT_2026 = 33030; // 2026 tahmini brüt
+    const TAVAN_MAAS = ASGARI_BRUT_2026 * 0.80; // Maksimum alınabilecek tutar (26.424 TL)
+    
+    // İşsizlik maaşı brüt maaşın %40'ıdır
+    let hamMaas = brut * 0.40;
+    
+    // Damga vergisi kesintisi (%0.00759)
+    let damgaVergisi = hamMaas * 0.00759;
+    let netMaas = hamMaas - damgaVergisi;
+
+    // Tavan kontrolü: Maaş ne kadar yüksek olursa olsun tavanı geçemez
+    if(netMaas > TAVAN_MAAS) {
+        netMaas = TAVAN_MAAS;
+    }
+
+    // Sonuçları göster
+    const sonucBox = document.getElementById("sonuc-box");
+    sonucBox.style.display = "block";
+    
+    document.getElementById("sonuc").innerText = "Aylık İşsizlik Maaşınız: " + netMaas.toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " TL";
+    
+    let sure = primGun === "180" ? "6 ay" : (primGun === "240" ? "8 ay" : "10 ay");
+    document.getElementById("detay").innerText = "Bu maaşı toplam " + sure + " boyunca almaya hak kazandınız.";
 }
 
-// Tema persist
+// Tema persist (Senin kodun aynen korunmuştur)
 const themeToggle = document.getElementById("theme-toggle");
 if(localStorage.getItem('theme')==='dark'){
     document.body.classList.add('dark');
