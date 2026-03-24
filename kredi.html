@@ -3,57 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Kredi Planlama</title>
+    <title>H360 | Pro Kredi Planlama</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS dosyasındaki olası kaymaları engelleyen mermi gibi stiller */
         body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
-        .main-wrapper { 
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; 
-        }
+        .main-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; }
         .calc-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 40px;
-            width: 100%;
-            max-width: 480px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px; padding: 35px; width: 100%; max-width: 600px;
+            backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
-        .header-area { text-align: center; margin-bottom: 35px; }
-        .header-area h1 { font-size: 1.6rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
-        .header-area p { color: #007bff; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; }
-        
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px; }
-        .input-group input {
-            width: 100%; padding: 16px; background: rgba(255,255,255,0.05);
+        .header-area { text-align: center; margin-bottom: 30px; }
+        .header-area h1 { font-size: 1.5rem; letter-spacing: 1px; margin: 0; }
+        .header-area p { color: #007bff; font-size: 0.7rem; font-weight: 800; margin-top: 5px; text-transform: uppercase; }
+
+        .input-group { margin-bottom: 18px; }
+        .input-group label { display: block; color: #007bff; font-size: 0.65rem; font-weight: 800; margin-bottom: 8px; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
+            color: #fff; font-size: 1rem; outline: none; box-sizing: border-box;
         }
-        .input-group input:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
+
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
         
-        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        
+        .tax-info { font-size: 0.65rem; color: #666; margin-top: 8px; display: flex; gap: 10px; }
+        .tax-info b { color: #888; }
+
         .calc-btn {
             width: 100%; padding: 18px; background: #007bff; color: #fff;
-            border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
-            font-size: 1rem; transition: 0.3s; margin-top: 10px;
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 15px; transition: 0.3s;
         }
-        .calc-btn:hover { background: #0056b3; transform: translateY(-2px); }
-        
-        .result-box {
-            margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15);
-            display: none;
+        .calc-btn:hover { background: #0056b3; transform: scale(1.01); }
+
+        /* Sonuç Paneli */
+        .result-box { margin-top: 30px; display: none; animation: fadeIn 0.5s ease; }
+        .main-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .res-item-big { 
+            background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; 
+            text-align: center; border: 1px solid rgba(255,255,255,0.05); 
         }
-        .result-label { font-size: 0.7rem; color: #888; font-weight: 800; text-align: center; margin-bottom: 5px; }
-        .result-main { font-size: 2.2rem; font-weight: 700; color: #fff; text-align: center; margin-bottom: 20px; }
-        .result-footer { display: flex; justify-content: space-between; font-size: 0.85rem; color: #aaa; }
-        .result-footer b { color: #fff; }
+        .res-item-big span { font-size: 0.65rem; color: #888; font-weight: 800; display: block; margin-bottom: 8px; }
+        .res-item-big b { font-size: 1.6rem; color: #fff; }
+
+        /* Ödeme Planı Tablosu */
+        .table-container { 
+            margin-top: 20px; max-height: 300px; overflow-y: auto; 
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); 
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.75rem; text-align: left; }
+        th { background: #007bff; color: #fff; padding: 12px; sticky: top; position: sticky; top: 0; }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.03); color: #ccc; }
+        tr:hover td { background: rgba(255,255,255,0.02); color: #fff; }
+
+        .chart-visual {
+            height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; 
+            margin: 20px 0; overflow: hidden; display: flex;
+        }
+        .chart-fill.principal { background: #2ecc71; height: 100%; }
+        .chart-fill.interest { background: #e74c3c; height: 100%; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -63,51 +75,82 @@
         <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
     </div>
     <div class="nav-right">
-        <div class="menu-container">
-            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
-            <div class="dropdown-menu" id="navMenu">
-                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
-                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
-                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
-                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-            </div>
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
         </div>
-    </div>
 </nav>
 
 <div class="main-wrapper">
     <div class="calc-card">
         <div class="header-area">
-            <h1>KREDİ PLANLAMA</h1>
-            <p>BANKA TAKSİT VE MALİYET ANALİZİ</p>
+            <h1>KREDİ ANALİZİ</h1>
+            <p>BANKA ÖDEME PLANI VE MALİYET TABLOSU</p>
         </div>
 
         <div class="input-group">
-            <label>KREDİ TUTARI (TL)</label>
-            <input type="number" id="kt" placeholder="Örn: 250000">
+            <label>ÇEKİLECEK TUTAR (TL)</label>
+            <input type="number" id="kt" placeholder="Örn: 100000">
         </div>
 
-        <div class="grid-inputs">
+        <div class="grid-3">
             <div class="input-group">
                 <label>AYLIK FAİZ (%)</label>
-                <input type="number" id="kf" placeholder="Örn: 3.99">
+                <input type="number" id="kf" step="0.01" placeholder="3.99">
             </div>
             <div class="input-group">
                 <label>VADE (AY)</label>
-                <input type="number" id="kv" placeholder="Örn: 12">
+                <input type="number" id="kv" placeholder="12">
+            </div>
+            <div class="input-group">
+                <label>KREDİ TÜRÜ</label>
+                <select id="kType">
+                    <option value="ihtiyac">İhtiyaç</option>
+                    <option value="konut">Konut (Vergisiz)</option>
+                    <option value="tasit">Taşıt</option>
+                </select>
             </div>
         </div>
 
-        <button class="calc-btn" onclick="calcKredi()">TAKSİT HESAPLA</button>
+        <div class="tax-info">
+            <span><i class="fa-solid fa-shield-halved"></i> KKDF: <b id="kkdfRate">%15</b></span>
+            <span><i class="fa-solid fa-building-columns"></i> BSMV: <b id="bsmvRate">%5</b></span>
+        </div>
+
+        <button class="calc-btn" onclick="calculateKredi()">PLANLAMAYI OLUŞTUR</button>
 
         <div id="res" class="result-box">
-            <div class="result-label">AYLIK TAKSİT TUTARI</div>
-            <div class="result-main" id="taksit">0 ₺</div>
-            <div class="result-footer">
-                <span>Toplam Ödeme: <b id="totalPay">0 ₺</b></span>
-                <span>Faiz Yükü: <b id="totalInterest" style="color: #e74c3c;">0 ₺</b></span>
+            <div class="main-res-grid">
+                <div class="res-item-big" style="border-bottom: 3px solid #007bff;">
+                    <span>AYLIK TAKSİT</span>
+                    <b id="resTaksit" style="color: #007bff;">0 ₺</b>
+                </div>
+                <div class="res-item-big" style="border-bottom: 3px solid #2ecc71;">
+                    <span>GERİ ÖDEME</span>
+                    <b id="resTotal" style="color: #2ecc71;">0 ₺</b>
+                </div>
+            </div>
+
+            <div class="chart-visual">
+                <div id="barAna" class="chart-fill principal" style="width: 50%;"></div>
+                <div id="barFaiz" class="chart-fill interest" style="width: 50%;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.65rem; margin-bottom: 20px;">
+                <span><i class="fa-solid fa-circle" style="color:#2ecc71"></i> Ana Para</span>
+                <span><i class="fa-solid fa-circle" style="color:#e74c3c"></i> Toplam Faiz+Vergi</span>
+            </div>
+
+            <div class="table-container">
+                <table id="planTable">
+                    <thead>
+                        <tr>
+                            <th>Taksit</th>
+                            <th>Taksit Tutarı</th>
+                            <th>Ana Para</th>
+                            <th>Faiz+Vergi</th>
+                            <th>Kalan Borç</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -116,27 +159,56 @@
 <script>
     function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 
-    function calcKredi() {
-        const t = parseFloat(document.getElementById('kt').value) || 0;
-        const r = (parseFloat(document.getElementById('kf').value) / 100);
-        const v = parseInt(document.getElementById('kv').value) || 0;
-        
-        if(t > 0 && r > 0 && v > 0) {
-            const m = (t * r * Math.pow(1+r, v)) / (Math.pow(1+r, v) - 1);
-            const total = m * v;
-            
-            document.getElementById('taksit').innerText = Math.round(m).toLocaleString('tr-TR') + " ₺";
-            document.getElementById('totalPay').innerText = Math.round(total).toLocaleString('tr-TR') + " ₺";
-            document.getElementById('totalInterest').innerText = Math.round(total - t).toLocaleString('tr-TR') + " ₺";
-            document.getElementById('res').style.display = "block";
-        }
-    }
+    function calculateKredi() {
+        const t = parseFloat(document.getElementById('kt').value);
+        const rawF = parseFloat(document.getElementById('kf').value);
+        const v = parseInt(document.getElementById('kv').value);
+        const type = document.getElementById('kType').value;
 
-    window.onclick = function(e) { 
-        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
+        if(!t || !rawF || !v) return;
+
+        // Vergi oranları (Konut kredisinde vergiler 0'dır)
+        let kkdf = type === "konut" ? 0 : 0.15;
+        let bsmv = type === "konut" ? 0 : 0.05;
+        
+        // Brüt Faiz Oranı = Net Faiz * (1 + KKDF + BSMV)
+        const brütFaiz = (rawF / 100) * (1 + kkdf + bsmv);
+        
+        // Taksit Formülü: [Tutar * Faiz * (1+Faiz)^Vade] / [(1+Faiz)^Vade - 1]
+        const taksit = (t * brütFaiz * Math.pow(1 + brütFaiz, v)) / (Math.pow(1 + brütFaiz, v) - 1);
+        const toplamGeriOdeme = taksit * v;
+        const toplamFaiz = toplamGeriOdeme - t;
+
+        // UI Güncelleme
+        document.getElementById('resTaksit').innerText = Math.round(taksit).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('resTotal').innerText = Math.round(toplamGeriOdeme).toLocaleString('tr-TR') + " ₺";
+        
+        // Grafik Güncelleme
+        const anaParaYuzde = (t / toplamGeriOdeme) * 100;
+        document.getElementById('barAna').style.width = anaParaYuzde + "%";
+        document.getElementById('barFaiz').style.width = (100 - anaParaYuzde) + "%";
+
+        // Tablo Oluşturma
+        const tbody = document.querySelector('#planTable tbody');
+        tbody.innerHTML = "";
+        let kalanBorc = t;
+
+        for(let i = 1; i <= v; i++) {
+            let odenecekFaiz = kalanBorc * brütFaiz;
+            let odenecekAnaPara = taksit - odenecekFaiz;
+            kalanBorc -= odenecekAnaPara;
+
+            const row = `<tr>
+                <td>${i}</td>
+                <td>${Math.round(taksit).toLocaleString('tr-TR')} ₺</td>
+                <td>${Math.round(odenecekAnaPara).toLocaleString('tr-TR')} ₺</td>
+                <td>${Math.round(odenecekFaiz).toLocaleString('tr-TR')} ₺</td>
+                <td>${Math.max(0, Math.round(kalanBorc)).toLocaleString('tr-TR')} ₺</td>
+            </tr>`;
+            tbody.innerHTML += row;
         }
+
+        document.getElementById('res').style.display = "block";
     }
 </script>
 </body>
