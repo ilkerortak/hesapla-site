@@ -24,12 +24,20 @@
         
         .input-group { margin-bottom: 20px; }
         .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 8px; }
+        
+        /* Input ve Select Tasarımı */
         .input-group input, .input-group select {
             width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
             color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
         }
-        .input-group select { cursor: pointer; color: #ccc; }
+
+        /* OKUNURLUK DÜZELTMESİ: Select seçenekleri için özel stil */
+        select option {
+            background-color: #161b22; /* Koyu arka plan */
+            color: #ffffff;           /* Beyaz yazı */
+        }
+        
         .input-group input:focus, .input-group select:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
         
         .calc-btn {
@@ -38,18 +46,21 @@
         }
 
         .result-box { margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15); display: none; }
-        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        
+        .total-banner { 
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(46, 204, 113, 0.1));
+            padding: 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 20px;
+        }
+        .total-banner span { font-size: 0.7rem; color: #888; font-weight: 800; display: block; }
+        .total-banner b { font-size: 2.2rem; color: #2ecc71; display: block; margin-top: 5px; }
+
+        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .res-item { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
         .res-item span { font-size: 0.65rem; color: #888; font-weight: 800; display: block; margin-bottom: 5px; }
         .res-item b { font-size: 1.4rem; color: #fff; }
         
-        .total-banner { 
-            background: linear-gradient(135deg, rgba(0, 123, 255, 0.2), rgba(46, 204, 113, 0.2));
-            padding: 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .total-banner b { font-size: 2.2rem; color: #2ecc71; display: block; }
-        
-        .info-box { font-size: 0.65rem; color: #555; margin-top: 20px; line-height: 1.5; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; }
+        .info-box { font-size: 0.65rem; color: #555; margin-top: 20px; line-height: 1.5; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -83,10 +94,10 @@
         <div class="input-group">
             <label>SON 3 YILDAKİ TOPLAM PRİM GÜNÜ</label>
             <select id="primGun">
-                <option value="0">Seçiniz...</option>
-                <option value="600">600 - 899 Gün</option>
-                <option value="900">900 - 1079 Gün</option>
-                <option value="1080">1080 Gün ve Üzeri</option>
+                <option value="0" disabled selected>Lütfen seçiniz...</option>
+                <option value="600">600 - 899 Gün (6 Ay Ödeme)</option>
+                <option value="900">900 - 1079 Gün (8 Ay Ödeme)</option>
+                <option value="1080">1080 Gün ve Üzeri (10 Ay Ödeme)</option>
             </select>
         </div>
 
@@ -98,7 +109,7 @@
                 <b id="netOdenek">0 ₺</b>
             </div>
 
-            <div class="res-grid" style="margin-top: 15px;">
+            <div class="res-grid">
                 <div class="res-item">
                     <span>ÖDEME SÜRESİ</span>
                     <b id="sure">0 Ay</b>
@@ -110,7 +121,7 @@
             </div>
 
             <div class="info-box">
-                <i class="fa-solid fa-circle-info"></i> <b>Şartlar:</b> Son 120 gün hizmet akdine tabi olmak ve son 3 yılda en az 600 gün işsizlik sigortası primi ödemiş olmak gerekir. Tavan ücret 2026 asgari ücretinin %80'i (Tahmini 15.998 ₺) olarak hesaplanmıştır.
+                <i class="fa-solid fa-circle-info"></i> <b>Bilgi:</b> Ödenek, brüt maaşın %40'ı kadardır ancak asgari ücretin %80'ini (2026 Tahmini 15.998 ₺) geçemez. Damga vergisi kesintisi hesaplamaya dahildir.
             </div>
         </div>
     </div>
@@ -122,21 +133,19 @@
     function hesapla() {
         const ort = parseFloat(document.getElementById('ortBrut').value) || 0;
         const prim = parseInt(document.getElementById('primGun').value);
-        const TAVAN_BRUT = 15998.13; // 2026 Tahmini tavan
+        const TAVAN_BRUT = 15998.13;
 
-        if(ort <= 0 || prim === 0) {
-            alert("Lütfen maaşınızı ve prim gününüzü seçin.");
+        if(ort <= 0 || !prim) {
+            alert("Lütfen tüm alanları doldurun.");
             return;
         }
 
-        // 1. Tutar Hesaplama
         let hesaplananBrut = ort * 0.40;
         if(hesaplananBrut > TAVAN_BRUT) hesaplananBrut = TAVAN_BRUT;
         
         const damgaVergisi = hesaplananBrut * 0.00759;
         const netAylik = hesaplananBrut - damgaVergisi;
 
-        // 2. Süre Hesaplama
         let aySure = 0;
         if(prim === 600) aySure = 6;
         else if(prim === 900) aySure = 8;
@@ -144,12 +153,18 @@
 
         const toplamKazanc = netAylik * aySure;
 
-        // UI Güncelleme
         document.getElementById('netOdenek').innerText = Math.round(netAylik).toLocaleString('tr-TR') + " ₺";
         document.getElementById('sure').innerText = aySure + " Ay";
         document.getElementById('toplamKazan').innerText = Math.round(toplamKazanc).toLocaleString('tr-TR') + " ₺";
         
         document.getElementById('res').style.display = "block";
+    }
+
+    window.onclick = function(e) { 
+        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
+            const menu = document.getElementById('navMenu');
+            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
+        }
     }
 </script>
 </body>
