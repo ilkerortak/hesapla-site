@@ -49,5 +49,37 @@ function olustur() {
 }
 function toggleTheme() { document.body.classList.toggle("dark"); }
 </script>
+<script>
+async function olustur() {
+  const { jsPDF } = window.jspdf;
+  let doc = new jsPDF();
+
+  let ad = document.getElementById("ad").value;
+  let soyad = document.getElementById("soyad").value;
+  let meslek = document.getElementById("meslek").value;
+  let telefon = document.getElementById("telefon").value;
+  let email = document.getElementById("email").value;
+
+  doc.setFontSize(22);
+  doc.setTextColor(79, 70, 229);
+  doc.text(`${ad} ${soyad}`, 20, 30);
+
+  doc.setFontSize(16);
+  doc.setTextColor(0,0,0);
+  doc.text(`Meslek: ${meslek}`, 20, 50);
+  doc.text(`Telefon: ${telefon}`, 20, 60);
+  doc.text(`Email: ${email}`, 20, 70);
+
+  doc.setFontSize(18);
+  doc.setTextColor(79, 70, 229);
+  doc.text("Deneyim", 20, 90);
+  doc.setFontSize(14);
+  doc.setTextColor(0,0,0);
+  doc.text("- Örnek Firma | 2020-2023 | İş Tanımı", 20, 100);
+  doc.text("- Örnek Firma 2 | 2018-2020 | İş Tanımı", 20, 110);
+
+  doc.save(`${ad}_${soyad}_CV.pdf`);
+}
+</script>
 </body>
 </html>
