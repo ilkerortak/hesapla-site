@@ -1,83 +1,103 @@
-/* Hesapla360.com - Dark Minimalist Edition 2026 */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
 :root {
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --bg-color: #0b0f1a; /* Derin Gece Mavisi */
-    --card-bg: #161b2a;
-    --text-color: #f8fafc;
-    --nav-bg: #161b2a;
-    --nav-text: #94a3b8;
-    --input-border: #2d3748;
-    --shadow: 0 10px 30px rgba(0,0,0,0.4);
+    --primary: #818cf8;
+    --primary-hover: #6366f1;
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+    --border: #334155;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.6;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* --- NAV --- */
 nav {
-    height: 70px;
-    padding: 0 10%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--nav-bg);
-    border-bottom: 1px solid var(--input-border);
-    position: sticky; top: 0; z-index: 1000;
+    padding: 20px 10%;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
 }
 
-.logo { font-weight: 700; font-size: 1.2rem; color: #fff; text-decoration: none; }
+.logo { font-size: 1.5rem; font-weight: 800; color: #fff; text-decoration: none; }
 .logo span { color: var(--primary); }
 
-.nav-menu { display: flex; gap: 24px; list-style: none; }
+.nav-menu { display: flex; gap: 25px; list-style: none; }
 .nav-menu a { 
-    text-decoration: none; color: var(--nav-text); 
-    font-size: 0.9rem; font-weight: 500; transition: 0.2s;
+    text-decoration: none; color: var(--text-dim); 
+    font-size: 0.9rem; font-weight: 600; transition: 0.3s;
 }
-.nav-menu a:hover, .nav-menu a.active { color: #fff; }
+.nav-menu a:hover, .nav-menu a.active { color: var(--primary); }
 
-/* --- GRID & CONTAINER --- */
+/* --- GRID --- */
 .grid-container {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px; max-width: 1000px; margin: 60px auto; padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 80px auto;
+    padding: 0 20px;
 }
 
 .feature-card {
-    background: var(--card-bg); padding: 32px; border-radius: 16px;
-    text-decoration: none; color: inherit; border: 1px solid var(--input-border);
-    transition: transform 0.2s, border-color 0.2s;
+    background: var(--card-bg);
+    padding: 40px 30px;
+    border-radius: 24px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    text-align: left;
 }
-.feature-card:hover { transform: translateY(-4px); border-color: var(--primary); }
 
+.feature-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+}
+
+.feature-card h3 { color: var(--primary); margin-bottom: 12px; font-size: 1.4rem; }
+.feature-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+
+/* --- FORM --- */
 .container {
-    max-width: 600px; margin: 60px auto; padding: 40px;
-    background: var(--card-bg); border-radius: 20px; border: 1px solid var(--input-border);
+    max-width: 550px;
+    margin: 60px auto;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 24px;
+    border: 1px solid var(--border);
 }
 
-/* --- FORM ELEMANLARI --- */
-input, select, textarea {
-    width: 100%; padding: 12px 16px; border-radius: 10px; margin-top: 8px;
-    border: 1px solid var(--input-border); background: #1f2937;
-    color: #fff; font-family: inherit; font-size: 0.95rem; outline: none;
+input, textarea {
+    width: 100%; padding: 14px; margin-top: 10px; margin-bottom: 20px;
+    border-radius: 12px; border: 1px solid var(--border);
+    background: #0f172a; color: #fff; font-family: inherit;
 }
-input:focus { border-color: var(--primary); }
 
 button {
-    background: var(--primary); color: white; border: none; font-weight: 600;
-    padding: 14px; border-radius: 10px; margin-top: 24px; cursor: pointer; transition: 0.2s;
+    width: 100%; padding: 16px; background: var(--primary);
+    color: #fff; border: none; border-radius: 12px;
+    font-weight: 700; cursor: pointer; transition: 0.3s;
 }
-button:hover { background: var(--primary-hover); transform: translateY(-2px); }
+button:hover { background: var(--primary-hover); transform: scale(1.02); }
 
 .result-item {
-    margin-top: 32px; padding: 24px; border-radius: 12px;
-    background: rgba(99, 102, 241, 0.1); border: 1px dashed var(--primary);
+    margin-top: 30px; padding: 25px; border-radius: 16px;
+    background: rgba(129, 140, 248, 0.1); border: 1px dashed var(--primary);
     text-align: center;
 }
+.result-item strong { display: block; font-size: 2rem; color: var(--primary); margin-top: 10px; }
