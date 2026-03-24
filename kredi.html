@@ -2,40 +2,69 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kredi Hesaplama - Hesapla360</title>
+    <title>Kredi Analizi - Hesapla360</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <nav>
     <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <ul class="nav-menu">
-        <li><a href="netmaas.html">Maaş</a></li>
-        <li><a href="kredi.html" class="active">Kredi</a></li>
-        <li><a href="cv.html">CV</a></li>
-    </ul>
+    <div class="nav-menu">
+        <a href="netmaas.html">💰 Maaş</a>
+        <a href="tazminat.html">💼 Tazminat</a>
+        <a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html" class="active">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
+        <a href="cv.html">📄 CV</a>
+    </div>
 </nav>
 
 <div class="container">
-    <h2>Kredi Hesaplama</h2>
-    <div class="input-group"><label>Kredi Tutarı</label><input type="number" id="tutar" placeholder="TL"></div>
-    <div class="input-group"><label>Vade (Ay)</label><input type="number" id="vade" placeholder="Ay"></div>
-    <div class="input-group"><label>Faiz Oranı (%)</label><input type="number" id="faiz" step="0.01" placeholder="Örn: 3.85"></div>
-    <button onclick="krediHesapla()">Taksitleri Gör</button>
+    <h2>🏦 Kredi Analizi</h2>
+    <div class="input-group">
+        <label>Kredi Tutarı (TL)</label>
+        <input type="number" id="tutar" placeholder="Örn: 100000">
+    </div>
+    <div class="input-group">
+        <label>Vade (Ay)</label>
+        <input type="number" id="vade" placeholder="Örn: 12">
+    </div>
+    <div class="input-group">
+        <label>Aylık Faiz Oranı (%)</label>
+        <input type="number" id="faiz" step="0.01" placeholder="Örn: 3.99">
+    </div>
+    <button onclick="hesaplaKredi()">Ödeme Planını Çıkar</button>
+
     <div id="sonuc-box" style="display:none;" class="result-item">
-        <p style="opacity:0.7;">Aylık Taksit</p>
-        <strong id="taksit">0 TL</strong>
+        <p style="opacity:0.7;">Aylık Taksit Tutarınız</p>
+        <strong id="taksit" style="color:#a855f7; font-size:1.8rem;">0 TL</strong>
+        
+        <div class="detail-row"><span>Toplam Geri Ödeme</span> <span id="toplam-odeme"></span></div>
+        <div class="detail-row"><span>Toplam Faiz + Vergi</span> <span id="toplam-faiz"></span></div>
+        <div class="detail-row"><span>KKDF + BSMV Dahil Oran</span> <span id="brut-faiz"></span></div>
+        <p style="font-size:0.7rem; color:orange; margin-top:10px;">*Bireysel kredilerde %15 KKDF ve %15 BSMV uygulanmıştır.</p>
     </div>
 </div>
 
 <script>
-    function krediHesapla() {
+    function hesaplaKredi() {
         let t = parseFloat(document.getElementById("tutar").value);
         let v = parseFloat(document.getElementById("vade").value);
-        let f = (parseFloat(document.getElementById("faiz").value) / 100) * 1.30; 
+        let f = parseFloat(document.getElementById("faiz").value);
+
         if(!t || !v || !f) return;
-        let taksit = (t * f * Math.pow(1+f, v)) / (Math.pow(1+f, v) - 1);
+
+        // Bireysel kredilerde vergilerle brüt faiz: faiz * 1.30
+        let brutFaiz = (f / 100) * 1.30;
+        let taksit = (t * brutFaiz * Math.pow(1 + brutFaiz, v)) / (Math.pow(1 + brutFaiz, v) - 1);
+        let toplam = taksit * v;
+        let faizYuku = toplam - t;
+
         document.getElementById("sonuc-box").style.display = "block";
         document.getElementById("taksit").innerText = taksit.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " TL";
+        document.getElementById("toplam-odeme").innerText = toplam.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " TL";
+        document.getElementById("toplam-faiz").innerText = faizYuku.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " TL";
+        document.getElementById("brut-faiz").innerText = "%" + (brutFaiz * 100).toFixed(2);
     }
 </script>
 </body>
