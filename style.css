@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
     --bg: #000000;
@@ -7,70 +7,59 @@
     --accent: #58a6ff;
     --text: #f0f6fc;
     --dim: #8b949e;
+    --gold: #d4af37;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-body { background: var(--bg); color: var(--text); }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+body { background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
 
 /* Profesyonel Navigasyon */
 nav {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0 4%; height: 70px; background: #010409;
-    border-bottom: 1px solid var(--border);
+    padding: 0 5%; height: 75px; background: rgba(1, 4, 9, 0.95);
+    border-bottom: 1px solid var(--border); backdrop-filter: blur(10px);
 }
 
-.logo { font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none; }
+.logo { font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -1px; }
 .logo span { color: var(--accent); }
 
-.nav-menu { display: flex; gap: 12px; }
+.nav-menu { display: flex; gap: 8px; }
 .nav-menu a {
     text-decoration: none; color: var(--dim); font-size: 0.75rem; font-weight: 600;
-    padding: 8px 12px; border-radius: 6px; transition: 0.2s;
+    padding: 10px 14px; border-radius: 10px; transition: 0.2s; display: flex; align-items: center; gap: 5px;
 }
 .nav-menu a:hover { color: #fff; background: #21262d; }
 
-/* Kur Bilgisi (Sadeleştirilmiş) */
+/* Üst Veri Barı */
 .rate-bar {
-    background: #161b22; text-align: center; padding: 8px;
+    background: #010409; text-align: center; padding: 12px;
     font-size: 0.8rem; border-bottom: 1px solid var(--border);
-    font-weight: 500; color: var(--accent);
+    font-weight: 600; color: var(--dim); display: flex; justify-content: center; gap: 25px;
 }
+.rate-bar span { display: flex; align-items: center; gap: 6px; }
+.rate-bar b { color: var(--text); }
+.rate-gold b { color: var(--gold); }
 
-/* 3x3 Grid Düzeni */
+/* 9x9 (3x3) Grid Düzeni */
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Tam 3 sütun */
-    gap: 20px;
-    max-width: 900px;
-    margin: 60px auto;
-    padding: 0 20px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; max-width: 960px; margin: 60px auto; padding: 0 20px;
 }
 
 .feature-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 35px 20px;
-    text-align: center;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.2s, background 0.2s;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 40px 20px; text-align: center;
+    text-decoration: none; color: inherit; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
-    background: #161b22;
-    border-color: #8b949e;
+    transform: translateY(-4px); background: #161b22;
+    border-color: var(--accent); box-shadow: 0 10px 30px -10px rgba(88, 166, 255, 0.2);
 }
 
-.feature-card .icon { font-size: 2rem; display: block; margin-bottom: 15px; }
-.feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
-.feature-card p { font-size: 0.8rem; color: var(--dim); }
+.feature-card .icon { font-size: 2.2rem; display: block; margin-bottom: 15px; }
+.feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; color: #fff; }
+.feature-card p { font-size: 0.75rem; color: var(--dim); font-weight: 500; }
 
-/* Formlar ve Sonuç Kutuları */
-.container { max-width: 500px; margin: 40px auto; background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
-input, select, textarea { width: 100%; padding: 12px; margin-top: 10px; border-radius: 6px; border: 1px solid var(--border); background: #010409; color: #fff; }
-button { width: 100%; padding: 14px; margin-top: 20px; border: none; border-radius: 6px; background: #238636; color: #fff; font-weight: 700; cursor: pointer; }
-button:hover { background: #2ea043; }
-.result-box { margin-top: 20px; padding: 15px; border-radius: 6px; background: #161b22; border: 1px solid var(--border); display: none; }
-.row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #30363d; font-size: 0.85rem; }
+/* Responsive */
+@media (max-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
