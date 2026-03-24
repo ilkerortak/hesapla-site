@@ -8,23 +8,28 @@
     <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
 </div></nav>
 <div class="container">
-    <h2>💼 Tazminat</h2>
-    <div class="input-group"><label>Brüt Maaş</label><input type="number" id="b"></div>
-    <div class="input-group"><label>Çalışma Yılı</label><input type="number" id="y"></div>
-    <button onclick="calc()">RGB Hesapla</button>
-    <div id="res" class="result-item">
-        <div class="detail-row"><span>Brüt Kıdem</span><span id="k"></span></div>
-        <div class="detail-row total"><span>Net Ödeme</span><span id="n"></span></div>
+    <h2>💼 Detaylı Tazminat</h2>
+    <div class="input-group"><label>Son Brüt Maaş</label><input type="number" id="b" placeholder="0.00 TL"></div>
+    <div class="input-group"><label>Hizmet Yılı</label><input type="number" id="y" placeholder="Yıl"></div>
+    <button onclick="calc()">Detaylı Hesapla</button>
+    <div id="res" class="result-box">
+        <div class="row"><span>Brüt Kıdem</span><span id="bk"></span></div>
+        <div class="row"><span>Damga Vergisi (%0.759)</span><span id="dv"></span></div>
+        <div class="row total"><span>Net Kıdem Tazminatı</span><span id="nk"></span></div>
     </div>
 </div>
 <script>
-    function calc(){
-        let b=document.getElementById("b").value, y=document.getElementById("y").value; if(!b)return;
-        let k=Math.min(b,72500)*y;
-        document.getElementById("res").style.display="block";
-        document.getElementById("k").innerText=k.toLocaleString()+" TL";
-        document.getElementById("n").innerText=(k*0.992).toLocaleString()+" TL";
-    }
+function calc(){
+    let b=parseFloat(document.getElementById("b").value), y=parseFloat(document.getElementById("y").value);
+    if(!b || !y) return;
+    let tavan = 72500; // 2026 Tahmini Tavan
+    let esasBrut = Math.min(b, tavan);
+    let brutKidem = esasBrut * y;
+    let damga = brutKidem * 0.00759;
+    document.getElementById("res").style.display="block";
+    document.getElementById("bk").innerText = brutKidem.toLocaleString() + " TL";
+    document.getElementById("dv").innerText = "-" + damga.toLocaleString() + " TL";
+    document.getElementById("nk").innerText = (brutKidem - damga).toLocaleString() + " TL";
+}
 </script>
-</body>
-</html>
+</body></html>
