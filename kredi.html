@@ -1,71 +1,17 @@
 <!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Kredi Analizi - Hesapla360</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <div class="nav-menu">
-        <a href="netmaas.html">💰 Maaş</a>
-        <a href="tazminat.html">💼 Tazminat</a>
-        <a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html" class="active">🏦 Kredi</a>
-        <a href="yas.html">🎂 Yaş</a>
-        <a href="cv.html">📄 CV</a>
-    </div>
-</nav>
-
-<div class="container">
-    <h2>🏦 Kredi Analizi</h2>
-    <div class="input-group">
-        <label>Kredi Tutarı (TL)</label>
-        <input type="number" id="tutar" placeholder="Örn: 100000">
-    </div>
-    <div class="input-group">
-        <label>Vade (Ay)</label>
-        <input type="number" id="vade" placeholder="Örn: 12">
-    </div>
-    <div class="input-group">
-        <label>Aylık Faiz Oranı (%)</label>
-        <input type="number" id="faiz" step="0.01" placeholder="Örn: 3.99">
-    </div>
-    <button onclick="hesaplaKredi()">Ödeme Planını Çıkar</button>
-
-    <div id="sonuc-box" style="display:none;" class="result-item">
-        <p style="opacity:0.7;">Aylık Taksit Tutarınız</p>
-        <strong id="taksit" style="color:#a855f7; font-size:1.8rem;">0 TL</strong>
-        
-        <div class="detail-row"><span>Toplam Geri Ödeme</span> <span id="toplam-odeme"></span></div>
-        <div class="detail-row"><span>Toplam Faiz + Vergi</span> <span id="toplam-faiz"></span></div>
-        <div class="detail-row"><span>KKDF + BSMV Dahil Oran</span> <span id="brut-faiz"></span></div>
-        <p style="font-size:0.7rem; color:orange; margin-top:10px;">*Bireysel kredilerde %15 KKDF ve %15 BSMV uygulanmıştır.</p>
-    </div>
-</div>
-
-<script>
-    function hesaplaKredi() {
-        let t = parseFloat(document.getElementById("tutar").value);
-        let v = parseFloat(document.getElementById("vade").value);
-        let f = parseFloat(document.getElementById("faiz").value);
-
-        if(!t || !v || !f) return;
-
-        // Bireysel kredilerde vergilerle brüt faiz: faiz * 1.30
-        let brutFaiz = (f / 100) * 1.30;
-        let taksit = (t * brutFaiz * Math.pow(1 + brutFaiz, v)) / (Math.pow(1 + brutFaiz, v) - 1);
-        let toplam = taksit * v;
-        let faizYuku = toplam - t;
-
-        document.getElementById("sonuc-box").style.display = "block";
-        document.getElementById("taksit").innerText = taksit.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " TL";
-        document.getElementById("toplam-odeme").innerText = toplam.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " TL";
-        document.getElementById("toplam-faiz").innerText = faizYuku.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " TL";
-        document.getElementById("brut-faiz").innerText = "%" + (brutFaiz * 100).toFixed(2);
-    }
-</script>
-</body>
-</html>
+<html lang="tr"><head><link rel="stylesheet" href="style.css"></head><body>
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu"><a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a><a href="kredi.html" class="active">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a></div></nav>
+<div class="container"><h2>🏦 Kredi Analizi</h2>
+<div class="input-group"><label>Tutar</label><input type="number" id="t"></div>
+<div class="input-group"><label>Vade</label><input type="number" id="v"></div>
+<div class="input-group"><label>Faiz %</label><input type="number" id="f" step="0.01"></div>
+<button onclick="calc()">Hesapla</button>
+<div id="res" class="result-box">
+    <div class="row"><span>Aylık Taksit</span><span id="at"></span></div>
+    <div class="row total"><span>Toplam Geri Ödeme</span><span id="go"></span></div>
+</div></div>
+<script>function calc(){let t=document.getElementById("t").value, v=document.getElementById("v").value, f=(document.getElementById("f").value/100)*1.3;
+if(!t||!v||!f)return; let tak=(t*f*Math.pow(1+f,v))/(Math.pow(1+f,v)-1);
+document.getElementById("res").style.display="block"; document.getElementById("at").innerText=tak.toLocaleString()+" TL";
+document.getElementById("go").innerText=(tak*v).toLocaleString()+" TL";}</script>
+</body></html>
