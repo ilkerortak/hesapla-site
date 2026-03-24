@@ -10,22 +10,28 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-.calculation-container { max-width: 600px; margin: 120px auto 60px; padding: 0 20px; }
+.calculation-container {
+    max-width: 600px;
+    margin: 120px auto 60px;
+    padding: 0 20px;
+}
 
 .form-card {
     background: var(--card-bg);
     border: 1px solid var(--border);
     padding: 30px;
     border-radius: 20px;
+    backdrop-filter: blur(10px);
 }
 
-input {
+input[type="number"] {
     width: 100%;
     padding: 15px;
     background: rgba(255,255,255,0.05);
     border: 1px solid var(--border);
     border-radius: 10px;
     color: #fff;
+    font-size: 1.2rem;
     margin: 15px 0;
 }
 
@@ -51,7 +57,8 @@ input {
     border-top:2px solid transparent;
     border-radius:50%;
     position:absolute;
-    left:50%; top:50%;
+    left:50%;
+    top:50%;
     transform:translate(-50%,-50%);
     animation:spin .6s linear infinite;
 }
@@ -59,7 +66,7 @@ input {
 
 .res-area { display:none; margin-top:20px; }
 .res-val { font-size:2rem; color:var(--accent); }
-.detail-row { display:flex; justify-content:space-between; font-size:0.9rem; }
+.detail-row { display:flex; justify-content:space-between; }
 </style>
 </head>
 
@@ -68,10 +75,11 @@ input {
 <div class="calculation-container">
 
 <div class="form-card">
-<input type="number" id="brut" placeholder="Brüt maaş">
+
+<input type="number" id="brut" placeholder="Örn: 65000">
 
 <button class="btn-calc" onclick="hesaplaMaas()">
-<span>HESAPLA</span>
+<span>HESAPLAMAYI BAŞLAT</span>
 </button>
 
 <div id="res" class="res-area">
@@ -82,38 +90,31 @@ input {
 <div class="detail-row"><span>Vergi</span><b id="vergi"></b></div>
 <div class="detail-row"><span>Damga</span><b id="damga"></b></div>
 
-<div id="extra"></div>
 </div>
 
 </div>
 </div>
 
 <script>
-function gelirVergisiHesapla(y){
-if(y<=110000)return y*0.15;
-if(y<=230000)return 110000*0.15+(y-110000)*0.20;
-if(y<=580000)return 110000*0.15+120000*0.20+(y-230000)*0.27;
-return 110000*0.15+120000*0.20+350000*0.27+(y-580000)*0.35;
-}
-
 function hesaplaMaas(){
 const btn=document.querySelector(".btn-calc");
 btn.classList.add("loading");
 
 setTimeout(()=>{
-const brut=parseFloat(document.getElementById('brut').value);
-if(!brut){btn.classList.remove("loading");return;}
+
+const brut=parseFloat(document.getElementById('brut').value)||0;
 
 const sgk=brut*0.14;
 const issiz=brut*0.01;
 const damga=brut*0.00759;
-
-const matrah=(brut-sgk-issiz)*12;
-const vergi=gelirVergisiHesapla(matrah)/12;
+const matrah=brut-sgk-issiz;
+const vergi=matrah*0.15;
 
 const net=brut-(sgk+issiz+damga+vergi);
 
-const yaz=(id,val)=>document.getElementById(id).innerText=Math.round(val)+" ₺";
+const yaz=(id,val)=>{
+document.getElementById(id).innerText=Math.round(val).toLocaleString('tr-TR')+" ₺";
+};
 
 yaz("net",net);
 yaz("sgk",sgk);
@@ -121,12 +122,10 @@ yaz("issiz",issiz);
 yaz("vergi",vergi);
 yaz("damga",damga);
 
-document.getElementById("extra").innerHTML=`
-<div class="detail-row"><span>Toplam Kesinti</span><b>${Math.round(brut-net)} ₺</b></div>
-`;
-
 document.getElementById("res").style.display="block";
+
 btn.classList.remove("loading");
+
 },1000);
 }
 </script>
