@@ -44,48 +44,66 @@
 <script>
     async function updateRates() {
         try {
-            // 1. Dolar ve Euro Verisi (Standart API)
+            // 1. Temel Döviz ve Yedek Altın Verisi (API)
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await res.json();
             const tryVal = data.rates.TRY;
             const eurRate = data.rates.EUR;
-            const eurTry = (tryVal / eurRate).toFixed(2);
+            const xauUsd = data.rates.XAU;
 
+            const eurTry = (tryVal / eurRate).toFixed(2);
             document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
             document.getElementById('eurVal').innerText = eurTry + " ₺";
 
-            // 2. Investing.com'dan Canlı Altın Verisi (Proxy Üzerinden)
-            // Investing doğrudan erişime izin vermediği için 'allorigins' servisini kullanıyoruz.
+            // 2. Investing.com'dan Veri Çekme Denemesi (Ana Plan)
             const targetUrl = encodeURIComponent('https://tr.investing.com/currencies/gau-try');
             const proxyUrl = `https://api.allorigins.win/get?url=${targetUrl}`;
 
-            const goldRes = await fetch(proxyUrl);
-            const goldData = await goldRes.json();
-            
-            // HTML içeriğinden fiyatın olduğu class'ı bulup veriyi ayıklıyoruz
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(goldData.contents, 'text/html');
-            
-            // Investing'in güncel fiyat seçicisi (data-test="instrument-price-last")
-            const goldPriceElement = doc.querySelector('[data-test="instrument-price-last"]');
-            
-            if (goldPriceElement) {
-                let priceText = goldPriceElement.innerText; // Örn: "2.450,55"
-                document.getElementById('goldVal').innerText = priceText + " ₺";
-            } else {
-                // Alternatif hesaplama (Eğer Investing'den veri çekilemezse)
-                const xauUsd = data.rates.XAU;
-                const fallbackGold = ((xauUsd / 31.1034) * tryVal).toFixed(2);
-                document.getElementById('goldVal').innerText = Number(fallbackGold).toLocaleString('tr-TR') + " ₺";
+            try {
+                const goldRes = await fetch(proxyUrl);
+                const goldData = await goldRes.json();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(goldData.contents, 'text/html');
+
+                // Çoklu Seçici Kontrolü (Investing yapısı değişirse diye)
+                const selectors = ['[data-test="instrument-price-last"]', '#last_last', '.main-current-data .inlineblock .text-2xl'];
+                let foundPrice = null;
+
+                for (let s of selectors) {
+                    let el = doc.querySelector(s);
+                    if (el && el.innerText.trim() !== "") {
+                        foundPrice = el.innerText.trim();
+                        break;
+                    }
+                }
+
+                if (foundPrice) {
+                    document.getElementById('goldVal').innerText = foundPrice + " ₺";
+                } else {
+                    throw new Error("Investing verisi okunamadı.");
+                }
+
+            } catch (scrapeErr) {
+                // 3. Yedek Plan: API Ons Verisiyle Hesapla (Hata anında burası çalışır)
+                if (xauUsd) {
+                    const fallbackPrice = ((xauUsd / 31.1034) * tryVal);
+                    document.getElementById('goldVal').innerText = fallbackPrice.toLocaleString('tr-TR', {
+                        minimumFractionDigits: 2, 
+                        maximumFractionDigits: 2
+                    }) + " ₺";
+                    console.warn("Investing verisi çekilemedi, hesaplama yöntemi kullanıldı.");
+                }
             }
 
-        } catch (e) {
-            console.error("Finansal veriler senkronize edilemedi:", e);
+        } catch (globalErr) {
+            console.error("Finansal veriler senkronize edilemedi:", globalErr);
+            document.getElementById('goldVal').innerText = "Hata!";
         }
     }
 
+    // Sayfa açıldığında ve her dakikada bir güncelle
     updateRates();
-    setInterval(updateRates, 60000); // Her dakika güncelle
+    setInterval(updateRates, 60000);
 </script>
 
 </body>
