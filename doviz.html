@@ -2,111 +2,129 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Global Döviz | HESAPLA360</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Döviz Çevirici | HESAPLA360</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .loading { font-size: 0.8rem; color: var(--accent); margin: 10px 0; }
-        select { cursor: pointer; }
-    </style>
 </head>
 <body>
 
 <nav>
     <a href="index.html" class="logo">HESAPLA<span>360</span></a>
     <div class="nav-menu">
-        <a href="netmaas.html">Maaş</a>
-        <a href="tazminat.html">Tazminat</a>
-        <a href="issizlik.html">İşsizlik</a>
-        <a href="kredi.html">Kredi</a>
-        <a href="yas.html">Yaş</a>
-        <a href="doviz.html" class="active">Döviz</a>
-        <a href="kdv.html">KDV</a>
-        <a href="mesai.html">Mesai</a>
-        <a href="cv.html">CV</a>
+        <a href="netmaas.html">💰 Maaş</a>
+        <a href="tazminat.html">💼 Tazminat</a>
+        <a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
+        <a href="doviz.html" class="active">💱 Döviz</a>
+        <a href="kdv.html">🧾 KDV</a>
+        <a href="mesai.html">🕒 Mesai</a>
+        <a href="cv.html">📄 CV</a>
     </div>
 </nav>
 
 <div class="container">
-    <h2>💱 Global Döviz Çevirici</h2>
-    <div id="status" class="loading">Sistem verileri senkronize ediliyor...</div>
+    <h2 style="text-align: center; margin-bottom: 20px;">💱 Global Döviz Çevirici</h2>
     
+    <div id="loadingStatus" style="font-size: 0.8rem; text-align: center; color: var(--accent); margin-bottom: 15px;">
+        Canlı veriler yükleniyor...
+    </div>
+
     <div class="input-group">
         <label>Miktar</label>
-        <input type="number" id="amount" value="1" oninput="convert()">
+        <input type="number" id="amountInput" value="1" placeholder="Miktar giriniz...">
     </div>
 
-    <div class="input-group">
-        <label>Kaynak Para Birimi</label>
-        <select id="fromCurrency" onchange="convert()"></select>
+    <div style="display: flex; gap: 10px; margin-top: 15px;">
+        <div class="input-group" style="flex: 1;">
+            <label>Kaynak</label>
+            <select id="fromCurrency"></select>
+        </div>
+        <div class="input-group" style="flex: 1;">
+            <label>Hedef</label>
+            <select id="toCurrency"></select>
+        </div>
     </div>
 
-    <div class="input-group">
-        <label>Hedef Para Birimi</label>
-        <select id="toCurrency" onchange="convert()"></select>
-    </div>
+    <button id="convertBtn" onclick="calculate()">Hesapla & Çevir</button>
 
-    <button onclick="convert()">Hesapla</button>
-
-    <div id="res" class="result-box" style="display:block;">
-        <div class="row">
-            <span id="fromDisplay">1 USD</span>
-            <span>=</span>
-            <span id="toDisplay" style="font-weight:bold; color:var(--accent);">...</span>
+    <div id="res" class="result-box" style="display: block; text-align: center; margin-top: 25px;">
+        <div id="resultDisplay" style="font-size: 1.4rem; font-weight: 800; color: var(--text);">
+            0.00
+        </div>
+        <div id="rateInfo" style="font-size: 0.75rem; color: var(--dim); margin-top: 5px;">
+            --
         </div>
     </div>
 </div>
 
 <script>
-    const fromSelect = document.getElementById('fromCurrency');
-    const toSelect = document.getElementById('toCurrency');
-    const status = document.getElementById('status');
-    let exchangeRates = {};
+    const amountInput = document.getElementById('amountInput');
+    const fromCurrency = document.getElementById('fromCurrency');
+    const toCurrency = document.getElementById('toCurrency');
+    const resultDisplay = document.getElementById('resultDisplay');
+    const rateInfo = document.getElementById('rateInfo');
+    const loadingStatus = document.getElementById('loadingStatus');
 
-    // Tüm dünyadaki para birimlerini API'den çek ve listeye ekle
-    async function loadCurrencies() {
+    let rates = {};
+
+    // API'den tüm kurları çekme
+    async function initExchange() {
         try {
             const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await response.json();
-            exchangeRates = data.rates;
-            const currencies = Object.keys(exchangeRates);
-
+            rates = data.rates;
+            
+            const currencies = Object.keys(rates);
+            
+            // Select menülerini doldur
             currencies.forEach(currency => {
-                const opt1 = document.createElement('option');
-                const opt2 = document.createElement('option');
-                opt1.value = opt2.value = currency;
-                opt1.text = opt2.text = currency;
+                const option1 = document.createElement('option');
+                const option2 = document.createElement('option');
+                option1.value = option2.value = currency;
+                option1.text = option2.text = currency;
                 
-                // Varsayılan seçimler
-                if(currency === 'USD') opt1.selected = true;
-                if(currency === 'TRY') opt2.selected = true;
+                if(currency === 'USD') option1.selected = true;
+                if(currency === 'TRY') option2.selected = true;
 
-                fromSelect.add(opt1);
-                toSelect.add(opt2);
+                fromCurrency.add(option1);
+                toCurrency.add(option2);
             });
 
-            status.innerText = "Piyasalar Aktif • Tüm Birimler Yüklendi";
-            convert();
+            loadingStatus.innerText = "● Piyasalar Aktif (Canlı Veri)";
+            calculate();
         } catch (error) {
-            status.innerText = "Bağlantı Hatası! Lütfen sayfayı yenileyin.";
-            status.style.color = "red";
+            loadingStatus.innerText = "Bağlantı Hatası!";
+            loadingStatus.style.color = "#ff4d4d";
         }
     }
 
-    function convert() {
-        const amt = document.getElementById('amount').value;
-        const from = fromSelect.value;
-        const to = toSelect.value;
+    function calculate() {
+        const amount = amountInput.value;
+        const from = fromCurrency.value;
+        const to = toCurrency.value;
 
-        if (amt && exchangeRates[from] && exchangeRates[to]) {
-            // Çapraz kur hesaplama (Base USD üzerinden)
-            const result = (amt / exchangeRates[from]) * exchangeRates[to];
-            
-            document.getElementById('fromDisplay').innerText = `${parseFloat(amt).toLocaleString()} ${from}`;
-            document.getElementById('toDisplay').innerText = `${result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})} ${to}`;
+        if (amount === "" || amount <= 0) {
+            resultDisplay.innerText = "Geçersiz Tutar";
+            return;
         }
+
+        // Çapraz Kur Hesaplama
+        const fromRate = rates[from];
+        const toRate = rates[to];
+        const result = (amount / fromRate) * toRate;
+        const singleRate = (1 / fromRate) * toRate;
+
+        resultDisplay.innerText = `${result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${to}`;
+        rateInfo.innerText = `1 ${from} = ${singleRate.toFixed(4)} ${to}`;
     }
 
-    loadCurrencies();
+    // Input değiştiğinde otomatik hesapla
+    amountInput.addEventListener('input', calculate);
+    fromCurrency.addEventListener('change', calculate);
+    toCurrency.addEventListener('change', calculate);
+
+    initExchange();
 </script>
 
 </body>
