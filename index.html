@@ -3,164 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hesapla 360 Finansal Uzman</title>
+    <title>H360 | Finansal Dashboard</title>
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23007bff%22/><path d=%22M25 70 L40 50 L55 60 L75 30%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22/><path d=%22M80 30 L80 50 M80 30 L60 30%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22/><circle cx=%2250%22 cy=%2250%22 r=%2235%22 fill=%22none%22 stroke=%22white%22 stroke-width=%223%22 stroke-dasharray=%2210 5%22 opacity=%220.5%22/></svg>">
     
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* Yeni Karşılama ve Arama Alanı */
-        .hero-section {
-            padding: 40px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .welcome-text h2 { font-size: 2rem; margin-bottom: 5px; color: #fff; }
-        .welcome-text p { color: #888; font-size: 1rem; }
-        
-        .search-box {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 12px 20px;
-            border-radius: 25px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.05);
-            color: white;
-            outline: none;
-            transition: 0.3s;
-        }
-        .search-box input:focus { border-color: #007bff; box-shadow: 0 0 15px rgba(0,123,255,0.2); }
-
-        /* Kart Efektleri */
-        .feature-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255,255,255,0.05);
-            background: rgba(255,255,255,0.03);
-            position: relative;
-            overflow: hidden;
-        }
-        .feature-card:hover {
-            transform: translateY(-12px);
-            background: rgba(255,255,255,0.07);
-            border-color: #007bff;
-        }
-        .feature-card::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: 0.5s;
-        }
-        .feature-card:hover::after { left: 100%; }
-
-        /* Trend Renkleri */
-        .up { color: #28a745 !important; }
-        .down { color: #dc3545 !important; }
-        .rate-bar b { transition: color 0.5s ease; }
-    </style>
 </head>
 <body>
 
 <nav>
-    <a href="index.html" class="logo">
+    <a href="/" class="logo">
         <div class="logo-box">H360</div>
         HESAPLA<span>360</span>
     </a>
     <div class="nav-menu">
-        </div>
+        <a href="/netmaas">💰 Maaş</a>
+        <a href="/tazminat">💼 Tazminat</a>
+        <a href="/issizlik">📅 İşsizlik</a>
+        <a href="/cv">📄 CV</a>
+    </div>
 </nav>
 
 <div class="rate-bar" id="rateBar">
-    <span class="rate-usd">🇺🇸 USD <b id="usdVal">...</b></span>
-    <span class="rate-eur">🇪🇺 EUR <b id="eurVal">...</b></span>
-    <span class="rate-gold">🟡 ALTIN/GR <b id="goldVal">...</b></span>
+    <span>🇺🇸 USD <b id="usdVal">...</b></span>
+    <span>🇪🇺 EUR <b id="eurVal">...</b></span>
+    <span style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">...</b></span>
 </div>
 
 <div class="hero-section">
     <div class="welcome-text">
-        <h2 id="greeting">İyi Günler</h2>
+        <h2 id="greeting">İyi Günler, İlker!</h2>
         <p id="liveTime">Yükleniyor...</p>
     </div>
     <div class="search-box">
-        <input type="text" id="quickSearch" placeholder="Hızlıca bir hesaplama ara...">
+        <input type="text" id="quickSearch" placeholder="Hızlıca bir hesaplama ara..." autocomplete="off">
     </div>
 </div>
 
 <div class="grid-container" id="cardGrid">
-    <a href="netmaas.html" class="feature-card"><span class="icon">💰</span><h3>Maaş</h3><p>Bordro & Net Analizi</p></a>
-    <a href="tazminat.html" class="feature-card"><span class="icon">💼</span><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></a>
-    <a href="issizlik.html" class="feature-card"><span class="icon">📅</span><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></a>
-    <a href="kredi.html" class="feature-card"><span class="icon">🏦</span><h3>Kredi</h3><p>Banka Ödeme Planı</p></a>
-    <a href="yas.html" class="feature-card"><span class="icon">🎂</span><h3>Yaş</h3><p>Kronolojik Analiz</p></a>
-    <a href="doviz.html" class="feature-card"><span class="icon">💱</span><h3>Döviz</h3><p>Global Kur Çeviri</p></a>
-    <a href="kdv.html" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Vergi Matrah Hesabı</p></a>
-    <a href="mesai.html" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></a>
-    <a href="cv.html" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></a>
+    <a href="/netmaas" class="feature-card"><span class="icon">💰</span><h3>Maaş</h3><p>Bordro & Net Analizi</p></a>
+    <a href="/tazminat" class="feature-card"><span class="icon">💼</span><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></a>
+    <a href="/issizlik" class="feature-card"><span class="icon">📅</span><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></a>
+    <a href="/kredi" class="feature-card"><span class="icon">🏦</span><h3>Kredi</h3><p>Banka Ödeme Planı</p></a>
+    <a href="/yas" class="feature-card"><span class="icon">🎂</span><h3>Yaş</h3><p>Kronolojik Analiz</p></a>
+    <a href="/doviz" class="feature-card"><span class="icon">💱</span><h3>Döviz</h3><p>Global Kur Çeviri</p></a>
+    <a href="/kdv" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Vergi Matrah Hesabı</p></a>
+    <a href="/mesai" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></a>
+    <a href="/cv" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></a>
 </div>
 
 <script>
-    // 1. CANLI SAAT VE TARİH
+    // 1. CANLI SAAT
     function updateClock() {
         const now = new Date();
-        const options = { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
-        document.getElementById('liveTime').innerText = now.toLocaleDateString('tr-TR', options);
+        document.getElementById('liveTime').innerText = now.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
     }
-    setInterval(updateClock, 1000);
-    updateClock();
+    setInterval(updateClock, 1000); updateClock();
 
-    // 2. HIZLI ARAMA FONKSİYONU
+    // 2. GELİŞMİŞ ARAMA (Türkçe Karakter Destekli)
     document.getElementById('quickSearch').addEventListener('input', function(e) {
-        let term = e.target.value.toLowerCase();
-        let cards = document.querySelectorAll('.feature-card');
-        cards.forEach(card => {
-            let title = card.querySelector('h3').innerText.toLowerCase();
-            card.style.display = title.includes(term) ? "block" : "none";
+        let term = e.target.value.toLowerCase()
+            .replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g')
+            .replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').trim();
+            
+        document.querySelectorAll('.feature-card').forEach(card => {
+            let title = card.querySelector('h3').innerText.toLowerCase()
+                .replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g')
+                .replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c');
+            
+            card.style.display = title.includes(term) ? "flex" : "none";
         });
     });
 
-    // 3. TREND TAKİPLİ FİYAT GÜNCELLEME
-    let prevPrices = { usd: 0, eur: 0, gold: 0 };
-
+    // 3. FİNANS VERİLERİ
+    let prevGold = 0;
     async function updateRates() {
         try {
             const res = await fetch('/api/finans');
             const data = await res.json();
+            document.getElementById('usdVal').innerText = data.usd + " ₺";
+            document.getElementById('eurVal').innerText = data.eur + " ₺";
             
-            updateElement('usdVal', data.usd, 'usd');
-            updateElement('eurVal', data.eur, 'eur');
-            updateElement('goldVal', data.gold, 'gold');
+            const goldEl = document.getElementById('goldVal');
+            const currentGold = parseFloat(data.gold.replace('.', '').replace(',', '.'));
             
+            if(prevGold > 0) {
+                if(currentGold > prevGold) goldEl.innerHTML = `${data.gold} ₺ <span class="up">↑</span>`;
+                else if(currentGold < prevGold) goldEl.innerHTML = `${data.gold} ₺ <span class="down">↓</span>`;
+                else goldEl.innerText = data.gold + " ₺";
+            } else { goldEl.innerText = data.gold + " ₺"; }
+            prevGold = currentGold;
         } catch (e) { console.error("Veri hatası"); }
     }
-
-    function updateElement(id, newVal, key) {
-        const el = document.getElementById(id);
-        const numericVal = parseFloat(newVal.replace('.', '').replace(',', '.'));
-        
-        if (prevPrices[key] !== 0) {
-            if (numericVal > prevPrices[key]) {
-                el.innerHTML = `${newVal} ₺ <span class="up">↑</span>`;
-            } else if (numericVal < prevPrices[key]) {
-                el.innerHTML = `${newVal} ₺ <span class="down">↓</span>`;
-            } else {
-                el.innerText = newVal + " ₺";
-            }
-        } else {
-            el.innerText = newVal + " ₺";
-        }
-        prevPrices[key] = numericVal;
-    }
-
-    setInterval(updateRates, 60000);
-    updateRates();
+    setInterval(updateRates, 60000); updateRates();
 </script>
 
 </body>
