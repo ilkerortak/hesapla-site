@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>İşsizlik Maaşı - Hesapla360</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<head><link rel="stylesheet" href="style.css"></head>
 <body>
-<nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <ul class="nav-menu">
-        <li><a href="issizlik.html" class="active">İşsizlik</a></li>
-        <li><a href="kredi.html">Kredi</a></li>
-        <li><a href="cv.html">CV</a></li>
-    </ul>
-</nav>
-
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a></nav>
 <div class="container">
-    <h2>İşsizlik Maaşı</h2>
-    <div class="input-group"><label>Brüt Maaş Ortalaması</label><input type="number" id="b-ort" placeholder="TL"></div>
-    <button onclick="issizlik()">Hesapla</button>
+    <h2>📅 İşsizlik Maaşı</h2>
+    <div class="input-group"><label>Son 4 Aylık Brüt Maaş Ortalaması</label><input type="number" id="b-ort"></div>
+    <button onclick="hesapla()">Hesapla</button>
     <div id="sonuc-box" style="display:none;" class="result-item">
-        <p style="opacity:0.7;">Aylık Ödeme</p>
-        <strong id="i-sonuc">0 TL</strong>
+        <div class="detail-row"><span>Hesaplanan (%40)</span> <span id="h-oran"></span></div>
+        <div class="detail-row"><span>Damga Vergisi Kesintisi</span> <span id="dv"></span></div>
+        <div class="detail-row total"><span>Net Aylık Ödeme</span> <span id="net"></span></div>
+        <p style="font-size:0.7rem; color:orange; margin-top:10px;">*Maaş, asgari ücretin %80'ini geçemez.</p>
     </div>
 </div>
-
 <script>
-    function issizlik() {
+    function hesapla() {
         let b = parseFloat(document.getElementById("b-ort").value);
-        let net = (b * 0.40);
-        const max = 26424; 
-        if(net > max) net = max;
+        if(!b) return;
+        let ham = b * 0.40;
+        let tavan = 26424; // 2026 Tahmini
+        let son = ham > tavan ? tavan : ham;
+        let dv = son * 0.00759;
         document.getElementById("sonuc-box").style.display = "block";
-        document.getElementById("i-sonuc").innerText = net.toLocaleString('tr-TR') + " TL";
+        document.getElementById("h-oran").innerText = ham.toLocaleString() + " TL";
+        document.getElementById("dv").innerText = "-" + dv.toLocaleString() + " TL";
+        document.getElementById("net").innerText = (son - dv).toLocaleString() + " TL";
     }
 </script>
 </body>
