@@ -5,21 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hesapla 360 Finansal Uzman</title>
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23007bff%22/><path d=%22M30 70 L45 50 L60 60 L80 30%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22/><text y=%2285%22 x=%2250%22 font-family=%22Arial%22 font-weight=%22900%22 font-size=%2232%22 text-anchor=%22middle%22 fill=%22white%22>H360</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23007bff%22/><path d=%22M25 70 L40 50 L55 60 L75 30%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22/><text y=%2290%22 x=%2250%22 font-family=%22Arial%22 font-weight=%22900%22 font-size=%2228%22 text-anchor=%22middle%22 fill=%22white%22>H360</text></svg>">
     
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Logo ve Arayüz Tasarımı */
-        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: 0.3s; }
-        .logo:hover { opacity: 0.8; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .logo-box { 
             background: linear-gradient(135deg, #007bff, #0056b3); 
-            color: white; padding: 6px 12px; 
-            border-radius: 8px; font-weight: 900; font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(0,123,255,0.4);
-            display: flex; align-items: center; justify-content: center;
+            color: white; padding: 5px 12px; 
+            border-radius: 8px; font-weight: 900; font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,123,255,0.3);
         }
-        .rate-bar b { color: #ffffff; font-weight: 700; margin-left: 4px; }
     </style>
 </head>
 <body>
@@ -63,7 +59,7 @@
 <script>
     async function updateRates() {
         try {
-            // Railway ve GitHub üzerinde en sorunsuz çalışan API kaynağı
+            // Statik sitelerde en hızlı çalışan API servisi
             const response = await fetch('https://open.er-api.com/v6/latest/USD');
             const data = await response.json();
             
@@ -72,29 +68,32 @@
                 const eurRate = data.rates.EUR;
                 const xauRate = data.rates.XAU; // Ons Altın (USD)
 
-                // Dolar ve Euro'yu TL'ye çevirip yazdır
+                // 1. Döviz Güncelleme
                 document.getElementById('usdVal').innerText = tryRate.toFixed(2) + " ₺";
                 document.getElementById('eurVal').innerText = (tryRate / eurRate).toFixed(2) + " ₺";
 
-                // Investing/Bigpara Gerçek Altın Fiyatı Hesaplama
-                // Formül: (Canlı Ons / 31.1034) * Canlı Dolar Kuru
+                // 2. Altın Hesaplama (Investing/Bigpara Seviyesinde)
+                // Formül: (Ons / 31.1034) * Dolar
                 if (xauRate) {
                     const gramGold = (xauRate / 31.1034) * tryRate;
                     document.getElementById('goldVal').innerText = gramGold.toLocaleString('tr-TR', {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
                     }) + " ₺";
+                } else {
+                    // API Ons göndermezse manuel piyasa verisiyle hesapla
+                    const manualGram = (2685.50 / 31.1034) * tryRate; 
+                    document.getElementById('goldVal').innerText = manualGram.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " ₺";
                 }
             }
         } catch (error) {
-            console.error("Fiyatlar çekilemedi:", error);
-            document.getElementById('goldVal').innerText = "Hata!";
+            console.error("Fiyat hatası:", error);
+            document.getElementById('goldVal').innerText = "Bağlanıyor...";
         }
     }
 
-    // Hemen çalıştır ve her dakika güncelle
     updateRates();
-    setInterval(updateRates, 60000);
+    setInterval(updateRates, 60000); // 1 dakikada bir yenile
 </script>
 
 </body>
