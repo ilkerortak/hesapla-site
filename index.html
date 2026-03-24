@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Net Maaş Hesaplama 2026</title>
+</head>
+<body>
+
+<h1>Net Maaş Hesaplama</h1>
+
+<input type="number" id="brut" placeholder="Brüt maaş">
+<button onclick="hesapla()">Hesapla</button>
+
+<h2 id="sonuc"></h2>
+
+<script>
+function hesapla() {
+  let brut = document.getElementById("brut").value;
+  let net = brut * 0.75;
+  document.getElementById("sonuc").innerText = "Net Maaş: " + net + " TL";
+}
+</script>
+
+</body>
+</html>
