@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HESAPLA360 Finansal Uzman</title>
+    <title>HESAPLA360 | Finansal Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,9 +24,9 @@
 </nav>
 
 <div class="rate-bar" id="rateBar">
-    <span class="rate-usd">🇺🇸 <b id="usdVal">Yükleniyor...</b></span>
-    <span class="rate-eur">🇪🇺 <b id="eurVal">Yükleniyor...</b></span>
-    <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">Yükleniyor...</b></span>
+    <span class="rate-usd">🇺🇸 USD <b id="usdVal">...</b></span>
+    <span class="rate-eur">🇪🇺 EUR <b id="eurVal">...</b></span>
+    <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">...</b></span>
 </div>
 
 <div class="grid-container">
@@ -44,47 +44,39 @@
 <script>
     async function updateRates() {
         try {
-            // Alternatif ve daha hızlı bir API (Frankfurter + Metal verisi için yedekli yapı)
-            const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-            if (!res.ok) throw new Error('API hatası');
+            // API'den veriyi alıyoruz
+            const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            const data = await response.json();
             
-            const data = await res.json();
-            
-            const tryRate = data.rates.TRY; 
-            const eurRate = data.rates.EUR; 
-            const xauRate = data.rates.XAU; // Ons Altın (USD bazında)
+            const tryPrice = data.rates.TRY;
+            const eurRate = data.rates.EUR;
+            const xauPrice = data.rates.XAU; // Ons Altın (USD)
 
-            // 1. Doları Güncelle
-            document.getElementById('usdVal').innerText = tryRate.toFixed(2) + " ₺";
-            
-            // 2. Euroyu Güncelle (Çapraz Kur)
-            const eurTry = (tryRate / eurRate).toFixed(2);
+            // 1. Doları Yazdır
+            document.getElementById('usdVal').innerText = tryPrice.toFixed(2) + " ₺";
+
+            // 2. Euroyu Hesapla (USD/TRY / USD/EUR)
+            const eurTry = (tryPrice / eurRate).toFixed(2);
             document.getElementById('eurVal').innerText = eurTry + " ₺";
 
-            // 3. Gram Altın Hesapla (Ons / 31.1034768 * Dolar)
-            // Bu formül piyasadaki gerçek gram altın fiyatını verir.
-            if (xauRate && tryRate) {
-                const gramPrice = (xauRate / 31.1034768) * tryRate;
-                
-                document.getElementById('goldVal').innerText = gramPrice.toLocaleString('tr-TR', {
+            // 3. Gram Altın (Ons / 31.1035 * Dolar Kuru)
+            if (xauPrice) {
+                const gramGold = (xauPrice / 31.1035) * tryPrice;
+                document.getElementById('goldVal').innerText = gramGold.toLocaleString('tr-TR', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 }) + " ₺";
-            } else {
-                document.getElementById('goldVal').innerText = "Piyasa Kapalı";
             }
-
-        } catch (e) {
-            console.error("Hata oluştu:", e);
-            document.getElementById('goldVal').innerText = "Bağlanıyor...";
+        } catch (error) {
+            console.log("Veri çekilemedi:", error);
+            document.getElementById('goldVal').innerText = "Yükleniyor...";
         }
     }
 
-    // Hemen çalıştır
+    // İlk yüklemede çalıştır
     updateRates();
-    
-    // Her 60 saniyede bir otomatik yenile
-    setInterval(updateRates, 60000);
+    // 5 dakikada bir güncelle
+    setInterval(updateRates, 300000);
 </script>
 
 </body>
