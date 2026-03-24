@@ -1,87 +1,35 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js"></script>
-    <title>CV Oluşturucu | Hesapla360</title>
-</head>
-<body>
+<div class="hero-section">
+    <h2>Hızlı CV Oluşturucu</h2>
+    <p>PROFESYONEL ÖZET VE KİMLİK KARTI</p>
+</div>
 
-<nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <div class="nav-menu">
-        <a href="netmaas.html">💰 Maaş</a>
-        <a href="tazminat.html">💼 Tazminat</a>
-        <a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html">🏦 Kredi</a>
-        <a href="yas.html">🎂 Yaş</a>
-        <a href="doviz.html">💱 Döviz</a>
-        <a href="kdv.html">🧾 KDV</a>
-        <a href="mesai.html">🕒 Mesai</a>
-        <a href="cv.html" class="active">📄 CV</a>
-    </div>
-</nav>
-
-<div style="max-width: 650px; margin: 60px auto; padding: 0 20px;">
+<div class="form-box">
+    <label>AD SOYAD</label>
+    <input type="text" id="name" placeholder="İlker Ortak">
     
-    <div style="text-align: center; margin-bottom: 30px;">
-        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px;">CV <span style="color: var(--accent);">Oluşturucu</span></h2>
-        <p style="color: var(--dim); font-size: 0.85rem; margin-top: 5px;">Hızlıca profesyonel bir döküman hazırlayın ve PDF olarak indirin.</p>
-    </div>
+    <label>UNVAN / UZMANLIK</label>
+    <input type="text" id="job" placeholder="Software Developer">
 
-    <div class="feature-card" style="text-align: left; cursor: default; transform: none; padding: 35px;">
-        
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Adınız ve Soyadınız</label>
-            <input type="text" id="a" placeholder="Örn: Johnny Depp" 
-                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s; border-color: rgba(88, 166, 255, 0.2);">
+    <label>E-POSTA</label>
+    <input type="email" id="mail" placeholder="iletisim@h360.io">
+
+    <button class="btn-calc" onclick="genCV()">KARTI OLUŞTUR</button>
+
+    <div id="res" class="res-area" style="text-align: left; background: #0b0e14; padding: 20px; border-radius: 10px;">
+        <h3 id="resName" style="color:#007bff; margin:0;">-</h3>
+        <p id="resJob" style="color:#fff; font-weight:700; font-size:0.9rem; margin-bottom:10px;">-</p>
+        <p id="resMail" style="color:#666; font-size:0.8rem;">-</p>
+        <div style="border-top: 1px solid #1c212c; margin-top:10px; padding-top:10px;">
+            <button onclick="window.print()" style="background:none; border:1px solid #007bff; color:#007bff; padding:5px 10px; border-radius:5px; font-size:0.7rem; cursor:pointer;">PDF OLARAK KAYDET</button>
         </div>
-
-        <div style="margin-bottom: 25px;">
-            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Deneyimler, Eğitim ve Yetenekler</label>
-            <textarea id="b" placeholder="Çalıştığınız yerler, okuduğunuz okullar ve bildiğiniz diller..." 
-                style="width: 100%; height: 200px; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s; resize: vertical; line-height: 1.6;"></textarea>
-        </div>
-
-        <button onclick="pdf()" 
-            style="width: 100%; background: var(--accent); color: #fff; border: none; padding: 18px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2); letter-spacing: 1px;">
-            PDF OLARAK KAYDET
-        </button>
-
-        <p style="font-size: 0.7rem; color: var(--dim); margin-top: 20px; text-align: center;">
-            * Hazırlanan PDF dosyası otomatik olarak cihazınıza indirilecektir.
-        </p>
     </div>
 </div>
 
 <script>
-function pdf(){
-    let a = document.getElementById("a").value;
-    let b = document.getElementById("b").value;
-    
-    if(!a) {
-        alert("Lütfen adınızı soyadınızı girin.");
-        return;
+    function genCV() {
+        document.getElementById('resName').innerText = document.getElementById('name').value.toUpperCase();
+        document.getElementById('resJob').innerText = document.getElementById('job').value;
+        document.getElementById('resMail').innerText = document.getElementById('mail').value;
+        document.getElementById('res').style.display = "block";
     }
-
-    // PDF Döküman Yapısı
-    let docDefinition = {
-        content: [
-            { text: a.toUpperCase(), fontSize: 24, bold: true, color: '#58a6ff', margin: [0, 0, 0, 10] },
-            { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 515, y2: 5, lineWidth: 1, lineColor: '#30363d' }] },
-            { text: '\n' + b, fontSize: 13, lineHeight: 1.5, color: '#21262d' }
-        ],
-        defaultStyle: {
-            columnGap: 20
-        }
-    };
-
-    pdfMake.createPdf(docDefinition).download(a.replace(/\s+/g, '_') + "_CV.pdf");
-}
 </script>
-
-</body>
-</html>
