@@ -1,39 +1,113 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><link rel="stylesheet" href="style.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Global Döviz | HESAPLA360</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .loading { font-size: 0.8rem; color: var(--accent); margin: 10px 0; }
+        select { cursor: pointer; }
+    </style>
+</head>
 <body>
-<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a>
-<div class="nav-menu">
-    <a href="doviz.html" style="color:#fff;">💱 Döviz</a><a href="index.html">Geri Dön</a>
-</div></nav>
+
+<nav>
+    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
+    <div class="nav-menu">
+        <a href="netmaas.html">Maaş</a>
+        <a href="tazminat.html">Tazminat</a>
+        <a href="issizlik.html">İşsizlik</a>
+        <a href="kredi.html">Kredi</a>
+        <a href="yas.html">Yaş</a>
+        <a href="doviz.html" class="active">Döviz</a>
+        <a href="kdv.html">KDV</a>
+        <a href="mesai.html">Mesai</a>
+        <a href="cv.html">CV</a>
+    </div>
+</nav>
+
 <div class="container">
-    <h2>💱 Döviz Çevirici</h2>
-    <div id="status" style="font-size:0.8rem; text-align:center; color:var(--accent); margin:10px 0;">Kur güncelleniyor...</div>
-    <input type="number" id="amt" value="1">
-    <select id="mode">
-        <option value="toTry">USD -> TRY</option>
-        <option value="toUsd">TRY -> USD</option>
-    </select>
+    <h2>💱 Global Döviz Çevirici</h2>
+    <div id="status" class="loading">Sistem verileri senkronize ediliyor...</div>
+    
+    <div class="input-group">
+        <label>Miktar</label>
+        <input type="number" id="amount" value="1" oninput="convert()">
+    </div>
+
+    <div class="input-group">
+        <label>Kaynak Para Birimi</label>
+        <select id="fromCurrency" onchange="convert()"></select>
+    </div>
+
+    <div class="input-group">
+        <label>Hedef Para Birimi</label>
+        <select id="toCurrency" onchange="convert()"></select>
+    </div>
+
     <button onclick="convert()">Hesapla</button>
-    <div id="res" class="result-box">
-        <div class="row"><span>Sonuç</span><span id="output" style="font-weight:bold;"></span></div>
+
+    <div id="res" class="result-box" style="display:block;">
+        <div class="row">
+            <span id="fromDisplay">1 USD</span>
+            <span>=</span>
+            <span id="toDisplay" style="font-weight:bold; color:var(--accent);">...</span>
+        </div>
     </div>
 </div>
+
 <script>
-    let rate = 0;
-    async function sync() {
-        const r = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-        const d = await r.json();
-        rate = d.rates.TRY;
-        document.getElementById('status').innerText = `1 USD = ${rate.toFixed(4)} ₺`;
+    const fromSelect = document.getElementById('fromCurrency');
+    const toSelect = document.getElementById('toCurrency');
+    const status = document.getElementById('status');
+    let exchangeRates = {};
+
+    // Tüm dünyadaki para birimlerini API'den çek ve listeye ekle
+    async function loadCurrencies() {
+        try {
+            const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            const data = await response.json();
+            exchangeRates = data.rates;
+            const currencies = Object.keys(exchangeRates);
+
+            currencies.forEach(currency => {
+                const opt1 = document.createElement('option');
+                const opt2 = document.createElement('option');
+                opt1.value = opt2.value = currency;
+                opt1.text = opt2.text = currency;
+                
+                // Varsayılan seçimler
+                if(currency === 'USD') opt1.selected = true;
+                if(currency === 'TRY') opt2.selected = true;
+
+                fromSelect.add(opt1);
+                toSelect.add(opt2);
+            });
+
+            status.innerText = "Piyasalar Aktif • Tüm Birimler Yüklendi";
+            convert();
+        } catch (error) {
+            status.innerText = "Bağlantı Hatası! Lütfen sayfayı yenileyin.";
+            status.style.color = "red";
+        }
     }
+
     function convert() {
-        let a = document.getElementById('amt').value;
-        let m = document.getElementById('mode').value;
-        let o = document.getElementById('output');
-        document.getElementById('res').style.display = 'block';
-        o.innerText = m === "toTry" ? (a * rate).toFixed(2) + " ₺" : (a / rate).toFixed(2) + " $";
+        const amt = document.getElementById('amount').value;
+        const from = fromSelect.value;
+        const to = toSelect.value;
+
+        if (amt && exchangeRates[from] && exchangeRates[to]) {
+            // Çapraz kur hesaplama (Base USD üzerinden)
+            const result = (amt / exchangeRates[from]) * exchangeRates[to];
+            
+            document.getElementById('fromDisplay').innerText = `${parseFloat(amt).toLocaleString()} ${from}`;
+            document.getElementById('toDisplay').innerText = `${result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})} ${to}`;
+        }
     }
-    sync();
+
+    loadCurrencies();
 </script>
-</body></html>
+
+</body>
+</html>
