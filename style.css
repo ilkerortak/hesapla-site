@@ -1,16 +1,17 @@
+/* Hesapla360 - Emojili & Canlı Tasarım 2026 */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
 :root {
-    --primary: #818cf8;
-    --primary-hover: #6366f1;
-    --bg-color: #0f172a;
-    --card-bg: #1e293b;
+    --primary-grad: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    --bg-color: #0b0f1a;
+    --card-bg: #161b2a;
     --text-main: #f8fafc;
     --text-dim: #94a3b8;
-    --border: #334155;
+    --border: #2d3748;
+    --shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
 
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -26,78 +27,95 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 10%;
-    background: rgba(15, 23, 42, 0.8);
+    padding: 0 10%;
+    height: 80px;
+    background: rgba(22, 27, 42, 0.9);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; z-index: 100;
+    position: sticky; top: 0; z-index: 1000;
 }
 
-.logo { font-size: 1.5rem; font-weight: 800; color: #fff; text-decoration: none; }
-.logo span { color: var(--primary); }
+.logo { font-size: 1.6rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -1px; }
+.logo span { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-.nav-menu { display: flex; gap: 25px; list-style: none; }
+.nav-menu { display: flex; gap: 20px; list-style: none; }
 .nav-menu a { 
-    text-decoration: none; color: var(--text-dim); 
-    font-size: 0.9rem; font-weight: 600; transition: 0.3s;
+    text-decoration: none; color: var(--nav-text); 
+    font-size: 0.9rem; font-weight: 600; padding: 10px 15px; border-radius: 12px; transition: 0.3s;
 }
-.nav-menu a:hover, .nav-menu a.active { color: var(--primary); }
+.nav-menu a:hover, .nav-menu a.active { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* --- HERO --- */
+.hero { text-align: center; margin-top: 80px; padding: 0 20px; }
+.hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 10px; }
+.hero h1 span { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 1.1rem; color: var(--text-dim); max-width: 600px; margin: 0 auto; }
 
 /* --- GRID --- */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    max-width: 1100px;
-    margin: 80px auto;
-    padding: 0 20px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 25px;
 }
 
 .feature-card {
     background: var(--card-bg);
-    padding: 40px 30px;
-    border-radius: 24px;
+    padding: 50px 35px;
+    border-radius: 32px;
     text-decoration: none;
+    color: inherit;
     border: 1px solid var(--border);
-    transition: all 0.3s ease;
-    text-align: left;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center;
 }
 
 .feature-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--primary);
-    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+    transform: translateY(-15px) scale(1.03);
+    border-color: #a855f7;
+    box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.3);
 }
 
-.feature-card h3 { color: var(--primary); margin-bottom: 12px; font-size: 1.4rem; }
-.feature-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+.feature-card .icon { font-size: 4.5rem; margin-bottom: 25px; }
+.feature-card h3 { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.6rem; margin-bottom: 15px; font-weight: 700; }
+.feature-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
 
-/* --- FORM --- */
+/* --- FORM & CONTAINER --- */
 .container {
-    max-width: 550px;
+    max-width: 600px;
     margin: 60px auto;
     background: var(--card-bg);
-    padding: 40px;
-    border-radius: 24px;
+    padding: 50px;
+    border-radius: 32px;
     border: 1px solid var(--border);
+    box-shadow: var(--shadow);
 }
 
-input, textarea {
-    width: 100%; padding: 14px; margin-top: 10px; margin-bottom: 20px;
-    border-radius: 12px; border: 1px solid var(--border);
-    background: #0f172a; color: #fff; font-family: inherit;
+.container h2 { font-size: 2rem; font-weight: 800; margin-bottom: 30px; text-align: center; }
+
+.input-group { margin-bottom: 25px; }
+.input-group label { display: block; font-weight: 600; margin-bottom: 10px; font-size: 0.9rem; color: var(--text-main); }
+input, select, textarea {
+    width: 100%; padding: 15px 18px; border-radius: 14px;
+    border: 2px solid var(--border); background: rgba(0,0,0,0.2);
+    color: #fff; font-family: inherit; font-size: 1rem;
 }
+input:focus { border-color: #a855f7; }
 
 button {
-    width: 100%; padding: 16px; background: var(--primary);
-    color: #fff; border: none; border-radius: 12px;
-    font-weight: 700; cursor: pointer; transition: 0.3s;
+    width: 100%; padding: 18px; background: var(--primary-grad);
+    color: white; border: none; border-radius: 16px;
+    font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.3s;
+    margin-top: 15px;
 }
-button:hover { background: var(--primary-hover); transform: scale(1.02); }
+button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(168, 85, 247, 0.5); }
 
 .result-item {
-    margin-top: 30px; padding: 25px; border-radius: 16px;
-    background: rgba(129, 140, 248, 0.1); border: 1px dashed var(--primary);
+    margin-top: 35px; padding: 30px; border-radius: 20px;
+    background: rgba(168, 85, 247, 0.1); border: 2px dashed #a855f7;
     text-align: center;
 }
-.result-item strong { display: block; font-size: 2rem; color: var(--primary); margin-top: 10px; }
+.result-item strong { display: block; font-size: 2.5rem; background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 15px 0; }
