@@ -8,25 +8,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ETKİLEŞİM ELEMENTLERİ */
-input, select, button, a {
-    position: relative;
-    z-index: 10;
-    pointer-events: auto !important;
-}
-
-/* KURUMSAL FORM ELEMENTLERİ */
-select {
-    background-color: #1a1d24 !important;
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    padding: 12px;
-    border-radius: 8px;
-    outline: none;
-    font-size: 0.9rem;
-}
-
-/* NAVİGASYON */
+/* NAVİGASYON VE LOGO */
 nav {
     background: rgba(18, 22, 30, 0.95);
     backdrop-filter: blur(10px);
@@ -35,92 +17,66 @@ nav {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    position: sticky; top: 0; z-index: 1000;
 }
 
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; font-weight: 800; }
 .logo-box { background: #007bff; padding: 5px 12px; border-radius: 8px; }
 .logo span { color: #007bff; }
 
-.nav-menu a { color: #888; text-decoration: none; margin-left: 20px; font-size: 0.85rem; font-weight: 600; transition: 0.3s; }
-.nav-menu a:hover { color: #fff; }
-
-/* ANA SAYFADA ÜST MENÜYÜ GİZLE */
-.home-page .nav-menu { display: none; }
-
-/* FİNANS BANDI */
-.rate-bar {
-    background: #12161e;
-    padding: 12px 5%;
-    display: flex;
-    gap: 30px;
-    font-size: 0.85rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.up { color: #2ecc71; font-weight: bold; }
-.down { color: #e74c3c; font-weight: bold; }
-
-/* KURUMSAL HERO */
-.hero-section {
-    max-width: 1200px;
-    margin: 50px auto 30px;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.welcome-text h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 5px; }
-.welcome-text p { color: #007bff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; }
-
-.search-box input {
-    background: #161a21;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px 25px;
-    border-radius: 30px;
-    color: white;
-    width: 320px;
-    outline: none;
+/* SAĞ ÜST MENÜ */
+.nav-container { position: relative; }
+.menu-btn {
+    background: #111; border: 1px solid #222; color: #fff;
+    padding: 10px 18px; border-radius: 8px; cursor: pointer;
+    font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 8px;
     transition: 0.3s;
 }
+.menu-btn:hover { border-color: #007bff; }
 
-.search-box input:focus { border-color: #007bff; box-shadow: 0 0 20px rgba(0,123,255,0.15); width: 350px; }
+.dropdown-menu {
+    position: absolute; top: 50px; right: 0; background: #0b0e14;
+    border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px;
+    width: 240px; display: none; flex-direction: column;
+    z-index: 1001; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    opacity: 0; transform: translateY(-10px); transition: all 0.3s ease;
+}
+.dropdown-menu.active { display: flex; opacity: 1; transform: translateY(0); }
+.dropdown-menu a {
+    padding: 12px 20px; color: #888; text-decoration: none;
+    font-size: 0.85rem; font-weight: 600; border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    transition: 0.2s;
+}
+.dropdown-menu a:hover { background: rgba(0, 123, 255, 0.1); color: #fff; padding-left: 25px; }
 
-/* IZGARA VE KARTLAR */
+/* DASHBOARD & KARTLAR */
+.hero-section { max-width: 1200px; margin: 40px auto 20px; padding: 0 20px; text-align: center; }
+.welcome-text h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+.welcome-text p { color: #007bff; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    max-width: 1200px;
-    margin: 20px auto 80px;
-    padding: 0 20px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; max-width: 1200px; margin: 30px auto; padding: 0 20px;
 }
 
 .feature-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 35px 25px;
-    border-radius: 12px;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.3s ease;
+    background: #12161e; border: 1px solid rgba(255,255,255,0.03);
+    padding: 40px 30px; border-radius: 15px; text-decoration: none;
+    transition: 0.3s; display: flex; flex-direction: column;
 }
+.feature-card:hover { transform: translateY(-5px); border-color: #007bff; background: #161a23; }
 
-.feature-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    transform: translateY(-5px);
-    border-color: rgba(0, 123, 255, 0.4);
+/* INPUT VE BUTONLAR (ESKİ TARZ) */
+input {
+    background: transparent; border: none; color: #fff;
+    font-size: 1.5rem; width: 100%; outline: none; margin-bottom: 10px;
 }
-
-.feature-card .icon { font-size: 2.2rem; margin-bottom: 20px; }
-.feature-card h3 { color: #fff; font-size: 1.2rem; margin-bottom: 8px; }
-.feature-card p { color: #666; font-size: 0.85rem; }
-
-@media (max-width: 768px) {
-    .hero-section { flex-direction: column; align-items: flex-start; gap: 25px; }
-    .search-box input { width: 100%; }
+label { color: #444; font-weight: 800; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 15px; display: block; }
+.btn-main {
+    background: #0b0e14; border: 1px solid #222; color: #fff;
+    padding: 18px; border-radius: 12px; font-weight: 800;
+    cursor: pointer; width: 100%; margin-top: 10px; transition: 0.3s;
 }
+.btn-main:hover { background: #007bff; border-color: #007bff; }
+
+.result { margin-top: 20px; font-weight: 800; color: #007bff; text-align: center; font-size: 1.2rem; display: none; }
