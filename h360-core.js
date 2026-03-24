@@ -1,13 +1,16 @@
 /**
- * H360 ELITE - CORE ENGINE v5.3
- * [Favicon + Real Logo + AdSense + Menu]
+ * H360 ELITE - CORE ENGINE v5.4
+ * [Logo & Favicon Integration + Ads + Menu]
  */
 
-// 1. Favicon ve AdSense Yükleme
+// 1. Tarayıcı Sekmesi (Favicon) Ayarı - Sayfa yüklenmeden önce çalışır
 const favicon = document.createElement('link');
-favicon.rel = 'icon'; favicon.type = 'image/png'; favicon.href = 'logo.png';
+favicon.rel = 'icon'; 
+favicon.type = 'image/png'; 
+favicon.href = './logo.png?v=1.1'; // Versiyon ekleyerek cache (önbellek) sorununu aşarız
 document.head.appendChild(favicon);
 
+// 2. Google Adsense Scripti
 const adScript = document.createElement('script');
 adScript.async = true;
 adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426";
@@ -15,11 +18,11 @@ adScript.crossOrigin = "anonymous";
 document.head.appendChild(adScript);
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 2. TEMİZLİK
+    // 3. TEMİZLİK
     const old = document.querySelectorAll('.h3-header, .h3-overlay, .ad-sidebar, nav, .glass-nav');
     old.forEach(el => el.remove());
 
-    // 3. CSS
+    // 4. CSS GÜNCELLEME (Logo Boyutları Dahil)
     const style = document.createElement('style');
     style.textContent = `
         :root { 
@@ -38,15 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
             border-bottom: 1px solid var(--border);
         }
 
-        .h3-logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-        .h3-logo img { 
-            height: 55px; width: auto; 
-            filter: drop-shadow(0 0 8px var(--accent-glow));
-            transition: 0.3s;
+        .h3-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        
+        /* Gerçek Logo Görseli Stili */
+        .h3-logo img {
+            height: 50px; /* Header yüksekliğine göre ideal boyut */
+            width: auto;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+            transition: transform 0.3s ease;
         }
         .h3-logo:hover img { transform: scale(1.05); }
 
-        .logo-text { color: #fff; font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
+        .logo-text { color: #fff; font-weight: 800; font-size: 1.3rem; letter-spacing: -1px; }
         .logo-text span { color: var(--accent); font-weight: 300; }
 
         .h3-trigger {
@@ -71,12 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         .ad-left { left: 20px; }
         .ad-right { right: 20px; }
+        .ad-label { position: absolute; top: 5px; font-size: 9px; color: #444; }
 
         #h3-main-content, .main-container, main, .content, .container {
             max-width: 1000px !important;
             margin: 0 auto !important;
-            padding-top: 130px !important;
+            padding-top: 130px !important; /* Header payı artırıldı */
             position: relative;
+            z-index: 1;
         }
 
         .h3-overlay {
@@ -104,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         @media (max-width: 1400px) {
             .ad-sidebar { display: none !important; }
+            #h3-main-content, .main-container, main, .content, .container { max-width: 95% !important; }
         }
         @media (max-width: 768px) {
             .h3-grid { grid-template-columns: repeat(2, 1fr); }
@@ -112,11 +121,11 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.head.appendChild(style);
 
-    // 4. HTML INJECTION
+    // 5. HTML INJECTION (Logo Div'i <img> Etiketiyle Değiştirildi)
     const uiHTML = `
         <header class="h3-header">
             <a href="index.html" class="h3-logo">
-                <img src="logo.png" alt="H360">
+                <img src="./logo.png" alt="H360 Logo">
                 <div class="logo-text">HESAPLA<span>360</span></div>
             </a>
             <button class="h3-trigger" id="h3Btn">
@@ -125,8 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
         </header>
 
-        <div class="ad-sidebar ad-left"></div>
-        <div class="ad-sidebar ad-right"></div>
+        <div class="ad-sidebar ad-left"><span class="ad-label">REKLAM</span></div>
+        <div class="ad-sidebar ad-right"><span class="ad-label">REKLAM</span></div>
 
         <div class="h3-overlay" id="h3Overlay">
             <div class="h3-grid">
@@ -151,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.body.insertAdjacentHTML('afterbegin', uiHTML);
 
-    // 5. MANTIK
+    // 6. MANTIK
     const btn = document.getElementById('h3Btn');
     const overlay = document.getElementById('h3Overlay');
     const ads = document.querySelectorAll('.ad-sidebar');
