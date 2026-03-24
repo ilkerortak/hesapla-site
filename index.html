@@ -32,7 +32,7 @@
     <div class="ticker-item">🇺🇸 <b>USD:</b> 32.54 ₺</div>
     <div class="ticker-item">🇪🇺 <b>EUR:</b> 35.18 ₺</div>
     <div class="ticker-item">🟡 <b>ALTIN:</b> 2.450 ₺</div>
-    <div class="ticker-item" style="color: #f7931a; border-right: none;">₿ <b>BITCOIN:</b> 2.154.200 ₺</div>
+    <div class="ticker-item btc-item">₿ <b>BITCOIN:</b> 2.154.200 ₺</div>
 </div>
 
 <div class="grid-container">
@@ -55,9 +55,7 @@
 </div>
 
 <script>
-    function toggleMenu() { 
-        document.getElementById('navMenu').classList.toggle('active'); 
-    }
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
     window.onclick = function(e) { 
         if(!e.target.matches('.menu-btn')) {
             document.getElementById('navMenu').classList.remove('active');
