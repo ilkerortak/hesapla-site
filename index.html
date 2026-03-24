@@ -2,6 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HESAPLA360 | Finansal Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -25,7 +26,7 @@
 <div class="rate-bar" id="rateBar">
     <span class="rate-usd">🇺🇸 <b id="usdVal">--.-- ₺</b></span>
     <span class="rate-eur">🇪🇺 <b id="eurVal">--.-- ₺</b></span>
-    <span class="rate-gold">🟡 ALTIN/GR <b id="goldVal">--.-- ₺</b></span>
+    <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">--.-- ₺</b></span>
 </div>
 
 <div class="grid-container">
@@ -43,29 +44,49 @@
 <script>
     async function updateRates() {
         try {
-            // Döviz Kurları (USD ve EUR)
+            // 1. Dolar ve Euro Verisi (Standart API)
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await res.json();
-            
             const tryVal = data.rates.TRY;
-            const eurVal = (tryVal / data.rates.EUR).toFixed(2);
-            
-            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
-            document.getElementById('eurVal').innerText = eurVal + " ₺";
+            const eurRate = data.rates.EUR;
+            const eurTry = (tryVal / eurRate).toFixed(2);
 
-            // Canlı Gram Altın Hesaplama (Global ONS & USD/TRY)
-            // Örnek ONS: 2150. Binlik ayraçlı gösterim.
-            const goldOns = 2150; // Örnek ONS
-            const goldGr = ((goldOns / 31.10) * tryVal).toFixed(2);
+            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
+            document.getElementById('eurVal').innerText = eurTry + " ₺";
+
+            // 2. Investing.com'dan Canlı Altın Verisi (Proxy Üzerinden)
+            // Investing doğrudan erişime izin vermediği için 'allorigins' servisini kullanıyoruz.
+            const targetUrl = encodeURIComponent('https://tr.investing.com/currencies/gau-try');
+            const proxyUrl = `https://api.allorigins.win/get?url=${targetUrl}`;
+
+            const goldRes = await fetch(proxyUrl);
+            const goldData = await goldRes.json();
             
-            document.getElementById('goldVal').innerText = Number(goldGr).toLocaleString('tr-TR') + " ₺";
+            // HTML içeriğinden fiyatın olduğu class'ı bulup veriyi ayıklıyoruz
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(goldData.contents, 'text/html');
+            
+            // Investing'in güncel fiyat seçicisi (data-test="instrument-price-last")
+            const goldPriceElement = doc.querySelector('[data-test="instrument-price-last"]');
+            
+            if (goldPriceElement) {
+                let priceText = goldPriceElement.innerText; // Örn: "2.450,55"
+                document.getElementById('goldVal').innerText = priceText + " ₺";
+            } else {
+                // Alternatif hesaplama (Eğer Investing'den veri çekilemezse)
+                const xauUsd = data.rates.XAU;
+                const fallbackGold = ((xauUsd / 31.1034) * tryVal).toFixed(2);
+                document.getElementById('goldVal').innerText = Number(fallbackGold).toLocaleString('tr-TR') + " ₺";
+            }
 
         } catch (e) {
-            console.error("Finansal veriler senkronize edilemedi.");
+            console.error("Finansal veriler senkronize edilemedi:", e);
         }
     }
+
     updateRates();
-    setInterval(updateRates, 60000); // Her 1 dakikada bir otomatik tazele
+    setInterval(updateRates, 60000); // Her dakika güncelle
 </script>
+
 </body>
 </html>
