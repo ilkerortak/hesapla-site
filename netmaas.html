@@ -1,17 +1,32 @@
 <!DOCTYPE html>
-<html lang="tr"><head><link rel="stylesheet" href="style.css"></head><body>
-<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu"><a href="netmaas.html" class="active">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a><a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a></div></nav>
-<div class="container"><h2>💰 Maaş Analizi</h2>
-<div class="input-group"><label>Brüt Maaş</label><input type="number" id="b" placeholder="0.00 TL"></div>
-<button onclick="calc()">Hesapla</button>
-<div id="res" class="result-box">
-    <div class="row"><span>SGK (%14)</span><span id="s"></span></div>
-    <div class="row"><span>İşsizlik (%1)</span><span id="i"></span></div>
-    <div class="row"><span>Gelir Vergisi</span><span id="g"></span></div>
-    <div class="row total"><span>Net Maaş</span><span id="n"></span></div>
-</div></div>
-<script>function calc(){let b=parseFloat(document.getElementById("b").value); if(!b)return; let s=b*0.14, i=b*0.01, g=(b-s-i)*0.15;
-document.getElementById("res").style.display="block"; document.getElementById("s").innerText="-"+s.toLocaleString()+" TL";
-document.getElementById("i").innerText="-"+i.toLocaleString()+" TL"; document.getElementById("g").innerText="-"+g.toLocaleString()+" TL";
-document.getElementById("n").innerText=(b-s-i-g+3500).toLocaleString()+" TL";}</script>
+<html lang="tr">
+<head><link rel="stylesheet" href="style.css"></head>
+<body>
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
+<a href="netmaas.html" class="active">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
+<a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
+<a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+</div></nav>
+<div class="container">
+    <h2>💰 Maaş Analizi</h2>
+    <div class="input-group"><label>Brüt Maaş</label><input type="number" id="b" placeholder="Tutar giriniz"></div>
+    <button onclick="calc()">Dökümü Getir</button>
+    <div id="res" class="result-box">
+        <div class="row"><span>SGK İşçi (%14)</span><span id="s"></span></div>
+        <div class="row"><span>İşsizlik Payı (%1)</span><span id="i"></span></div>
+        <div class="row"><span>Gelir Vergisi (%15)</span><span id="g"></span></div>
+        <div class="row total"><span>Net Maaş (Tahmini)</span><span id="n"></span></div>
+    </div>
+</div>
+<script>
+function calc(){
+    let b=parseFloat(document.getElementById("b").value); if(!b) return;
+    let s=b*0.14, i=b*0.01, g=(b-s-i)*0.15;
+    document.getElementById("res").style.display="block";
+    document.getElementById("s").innerText="-"+s.toLocaleString()+" TL";
+    document.getElementById("i").innerText="-"+i.toLocaleString()+" TL";
+    document.getElementById("g").innerText="-"+g.toLocaleString()+" TL";
+    document.getElementById("n").innerText=(b-s-i-g+3500).toLocaleString()+" TL";
+}
+</script>
 </body></html>
