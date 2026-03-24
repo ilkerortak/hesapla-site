@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tazminat Hesaplama 2026 - Hesapla360</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<nav>
+    <a href="index.html" class="logo-link">
+        <div class="logo" style="font-weight:800; color:white; font-size:1.4rem;">HESAPLA<span style="color:#fbbf24;">360</span></div>
+    </a>
+    <ul>
+        <li><a href="netmaas.html">Maaş</a></li>
+        <li><a href="tazminat.html" class="active">Tazminat</a></li>
+        <li><a href="kredi.html">Kredi</a></li>
+        <li><a href="cv.html">CV</a></li>
+    </ul>
+    <button id="theme-toggle">☀️</button>
+</nav>
+
+<div class="container">
+    <h1>Kıdem ve İhbar Tazminatı</h1>
+    
+    <div class="input-group">
+        <p>Son Brüt Maaşınız (Aylık):</p>
+        <div class="input-wrapper">
+            <input type="number" id="brut-maas" placeholder="Örn: 45000">
+            <span>TL</span>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <p>Toplam Çalışma Süresi:</p>
+        <div style="display: flex; gap: 10px;">
+            <input type="number" id="yil" placeholder="Yıl" style="flex: 2;">
+            <input type="number" id="ay" placeholder="Ay" style="flex: 1;">
+            <input type="number" id="gun" placeholder="Gün" style="flex: 1;">
+        </div>
+    </div>
+
+    <button onclick="tazminatHesapla()">Hesapla</button>
+
+    <div id="sonuc-box" style="display:none;" class="result-item">
+        <div style="margin-bottom: 15px;">
+            <span style="font-size: 0.9rem; opacity: 0.8;">Net Kıdem Tazminatı:</span>
+            <strong id="kidem-tutar">0 TL</strong>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <span style="font-size: 0.9rem; opacity: 0.8;">Net İhbar Tazminatı:</span>
+            <strong id="ihbar-tutar">0 TL</strong>
+        </div>
+        <hr style="border: 0; border-top: 1px solid var(--input-border); margin: 15px 0;">
+        <span style="font-size: 1rem; font-weight: bold;">Toplam Alınacak Net:</span>
+        <strong id="toplam-tazminat" style="color: #10b981; font-size: 2.2rem;">0 TL</strong>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+function tazminatHesapla() {
+    const brut = parseFloat(document.getElementById("brut-maas").value);
+    const yil = parseFloat(document.getElementById("yil").value) || 0;
+    const ay = parseFloat(document.getElementById("ay").value) || 0;
+    const gun = parseFloat(document.getElementById("gun").value) || 0;
+
+    if (!brut || (yil === 0 && ay === 0 && gun === 0)) {
+        alert("Lütfen maaş ve çalışma süresini giriniz.");
+        return;
+    }
+
+    // 2026 Kıdem Tazminatı Tavanı (Tahmini)
+    const KIDEM_TAVANI_2026 = 72500; 
+    const DAMGA_VERGISI = 0.00759;
+    const GELIR_VERGISI = 0.15; // İhbar tazminatı için (Kıdemde gelir vergisi yok)
+
+    // 1. Kıdem Tazminatı Hesaplama
+    let esasBrut = brut > KIDEM_TAVANI_2026 ? KIDEM_TAVANI_2026 : brut;
+    let toplamYil = yil + (ay / 12) + (gun / 365);
+    
+    if (yil < 1) {
+        alert("Kıdem tazminatı için en az 1 yıl çalışmış olmanız gerekir.");
+        // Yine de ihbarı hesaplayalım diye devam ediyoruz ama kıdem 0 olacak
+    }
+    
+    let brutKidem = yil >= 1 ? (esasBrut * toplamYil) : 0;
+    let netKidem = brutKidem * (1 - DAMGA_VERGISI);
+
+    // 2. İhbar Tazminatı Hesaplama (Çalışma süresine göre hafta)
+    let ihbarHafta = 2;
+    if (toplamYil >= 0.5 && toplamYil < 1.5) ihbarHafta = 4;
+    else if (toplamYil >= 1.5 && toplamYil < 3) ihbarHafta = 6;
+    else if (toplamYil >= 3) ihbarHafta = 8;
+
+    let gunlukBrut = brut / 30;
+    let brutIhbar = gunlukBrut * (ihbarHafta * 7);
+    // İhbarda hem Gelir hem Damga vergisi kesilir
+    let netIhbar = brutIhbar * (1 - (GELIR_VERGISI + DAMGA_VERGISI));
+
+    // Sonuçları Göster
+    document.getElementById("sonuc-box").style.display = "block";
+    document.getElementById("kidem-tutar").innerText = netKidem.toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " TL";
+    document.getElementById("ihbar-tutar").innerText = netIhbar.toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " TL";
+    document.getElementById("toplam-tazminat").innerText = (netKidem + netIhbar).toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " TL";
+}
+</script>
+</body>
+</html>
