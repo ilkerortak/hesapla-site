@@ -1,9 +1,13 @@
 /**
- * H360 ELITE - CORE ENGINE v5.2
- * [Google Ads Auto + Menu + Legal Pages + Layout Control]
+ * H360 ELITE - CORE ENGINE v5.3
+ * [Favicon + Real Logo + AdSense + Menu]
  */
 
-// 1. Google Adsense Ana Scripti
+// 1. Favicon ve AdSense Yükleme
+const favicon = document.createElement('link');
+favicon.rel = 'icon'; favicon.type = 'image/png'; favicon.href = 'logo.png';
+document.head.appendChild(favicon);
+
 const adScript = document.createElement('script');
 adScript.async = true;
 adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426";
@@ -15,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const old = document.querySelectorAll('.h3-header, .h3-overlay, .ad-sidebar, nav, .glass-nav');
     old.forEach(el => el.remove());
 
-    // 3. CSS - TASARIM & YASAL SAYFA UYUMU
+    // 3. CSS
     const style = document.createElement('style');
     style.textContent = `
         :root { 
@@ -34,14 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
             border-bottom: 1px solid var(--border);
         }
 
-        .h3-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon {
-            width: 42px; height: 42px; background: var(--accent);
-            border-radius: 11px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 20px var(--accent-glow);
-            font-weight: 900; color: #fff; font-size: 1.1rem;
+        .h3-logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .h3-logo img { 
+            height: 55px; width: auto; 
+            filter: drop-shadow(0 0 8px var(--accent-glow));
+            transition: 0.3s;
         }
-        .logo-text { color: #fff; font-weight: 800; font-size: 1.3rem; letter-spacing: -1px; }
+        .h3-logo:hover img { transform: scale(1.05); }
+
+        .logo-text { color: #fff; font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
         .logo-text span { color: var(--accent); font-weight: 300; }
 
         .h3-trigger {
@@ -66,14 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         .ad-left { left: 20px; }
         .ad-right { right: 20px; }
-        .ad-label { position: absolute; top: 5px; font-size: 9px; color: #444; }
 
         #h3-main-content, .main-container, main, .content, .container {
             max-width: 1000px !important;
             margin: 0 auto !important;
-            padding-top: 120px !important;
+            padding-top: 130px !important;
             position: relative;
-            z-index: 1;
         }
 
         .h3-overlay {
@@ -97,12 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .h3-item b { color: #fff; font-size: 0.7rem; font-weight: 700; text-align: center; text-transform: uppercase; }
         .h3-item:hover { background: rgba(59, 130, 246, 0.1); border-color: var(--accent); transform: translateY(-3px); }
 
-        /* Yasal Sayfalar İçin Özel Stil */
         .legal-item { border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05); }
 
         @media (max-width: 1400px) {
             .ad-sidebar { display: none !important; }
-            #h3-main-content, .main-container, main, .content, .container { max-width: 95% !important; }
         }
         @media (max-width: 768px) {
             .h3-grid { grid-template-columns: repeat(2, 1fr); }
@@ -111,11 +112,11 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.head.appendChild(style);
 
-    // 4. HTML INJECTION (Menüye Yasal Sayfalar Eklendi)
+    // 4. HTML INJECTION
     const uiHTML = `
         <header class="h3-header">
             <a href="index.html" class="h3-logo">
-                <div class="logo-icon">H</div>
+                <img src="logo.png" alt="H360">
                 <div class="logo-text">HESAPLA<span>360</span></div>
             </a>
             <button class="h3-trigger" id="h3Btn">
@@ -124,8 +125,8 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
         </header>
 
-        <div class="ad-sidebar ad-left"><span class="ad-label">REKLAM</span></div>
-        <div class="ad-sidebar ad-right"><span class="ad-label">REKLAM</span></div>
+        <div class="ad-sidebar ad-left"></div>
+        <div class="ad-sidebar ad-right"></div>
 
         <div class="h3-overlay" id="h3Overlay">
             <div class="h3-grid">
