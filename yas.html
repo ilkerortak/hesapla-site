@@ -1,3 +1,32 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H360 | Yaş Analizi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <a href="/" class="logo">
+        <div class="logo-box">H360</div> 
+        HESAPLA<span>360</span>
+    </a>
+    
+    <div class="nav-container">
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
+            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
+            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
+            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
+            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
+            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+        </div>
+    </div>
+</nav>
+
 <div class="hero-section">
     <h2>Yaş Analizi</h2>
     <p>KİŞİSEL KRONOLOJİK VERİ SORGULAMA</p>
@@ -10,9 +39,9 @@
     <button class="btn-calc" onclick="calcAge()">ANALİZ ET</button>
 
     <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.7rem; font-weight:800;">MEVCUT YAŞINIZ</p>
+        <p style="color:#555; font-size:0.75rem; font-weight:800;">MEVCUT YAŞINIZ</p>
         <div class="res-val" id="ageVal">0</div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:15px; font-size:0.8rem; color:#888;">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px; font-size:0.85rem; color:#888; border-top: 1px solid #1c212c; padding-top: 15px;">
             <span>Toplam Gün: <b id="days" style="color:#fff">0</b></span>
             <span>Hafta: <b id="weeks" style="color:#fff">0</b></span>
         </div>
@@ -20,8 +49,13 @@
 </div>
 
 <script>
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+    
     function calcAge() {
-        const birth = new Date(document.getElementById('birthDate').value);
+        const birthInput = document.getElementById('birthDate').value;
+        if(!birthInput) return;
+        
+        const birth = new Date(birthInput);
         const now = new Date();
         const diff = now - birth;
         
@@ -35,3 +69,5 @@
         document.getElementById('res').style.display = "block";
     }
 </script>
+</body>
+</html>
