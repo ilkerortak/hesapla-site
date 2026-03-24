@@ -1,3 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H360 | Mesai Hesaplama</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <a href="/" class="logo">
+        <div class="logo-box">H360</div> 
+        HESAPLA<span>360</span>
+    </a>
+    <div class="nav-container">
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
+            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
+            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
+            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
+            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
+            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+        </div>
+    </div>
+</nav>
+
 <div class="hero-section">
     <h2>Mesai Hesaplama</h2>
     <p>EK ÇALIŞMA SÜRESİ VE GELİR ANALİZİ</p>
@@ -13,24 +41,49 @@
     <button class="btn-calc" onclick="calcMesai()">EK KAZANCI GÖR</button>
 
     <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.7rem; font-weight:800;">ALINACAK EK ÜCRET</p>
+        <p style="color:#555; font-size:0.75rem; font-weight:800;">ALINACAK EK ÜCRET</p>
         <div class="res-val" id="ekUcret">0 ₺</div>
-        <p style="font-size:0.75rem; color:#888; margin-top:10px;">
+        <div style="margin-top:20px; font-size:0.85rem; color:#888; border-top: 1px solid #1c212c; padding-top: 15px;">
             Saatlik Mesai Ücreti: <b id="saatlik" style="color:#fff">0 ₺</b>
-        </p>
+        </div>
+        <p style="font-size:0.65rem; color:#444; margin-top:10px;">* Yasal çalışma 225 saat üzerinden %50 zamlı (1.5 çarpan) hesaplanır.</p>
     </div>
 </div>
 
 <script>
+    // Menü Fonksiyonları
+    function toggleMenu() { 
+        document.getElementById('navMenu').classList.toggle('active'); 
+    }
+
+    // Mesai Hesaplama Motoru
     function calcMesai() {
         const maas = parseFloat(document.getElementById('maas').value) || 0;
         const saat = parseFloat(document.getElementById('saat').value) || 0;
-        // Yasal çalışma 225 saat üzerinden 1.5 çarpanla
-        const saatlikMesai = (maas / 225) * 1.5;
-        const sonuc = saatlikMesai * saat;
         
-        document.getElementById('ekUcret').innerText = Math.round(sonuc).toLocaleString() + " ₺";
-        document.getElementById('saatlik').innerText = saatlikMesai.toFixed(2) + " ₺";
-        document.getElementById('res').style.display = "block";
+        if(maas > 0 && saat > 0) {
+            // Yasal çalışma 225 saat üzerinden 1.5 çarpanla
+            const saatlikMesai = (maas / 225) * 1.5;
+            const sonuc = saatlikMesai * saat;
+            
+            document.getElementById('ekUcret').innerText = Math.round(sonuc).toLocaleString() + " ₺";
+            document.getElementById('saatlik').innerText = saatlikMesai.toFixed(2) + " ₺";
+            document.getElementById('res').style.display = "block";
+        }
+    }
+
+    // Menü dışına tıklandığında kapatma
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('active')) {
+                    openDropdown.classList.remove('active');
+                }
+            }
+        }
     }
 </script>
+</body>
+</html>
