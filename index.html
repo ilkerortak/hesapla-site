@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HESAPLA ^360</title>
+    <title>Hesapla 360 Finansal Uzman </title>
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23007bff%22/><text y=%22.9em%22 x=%225%22 font-family=%22sans-serif%22 font-weight=%22800%22 font-size=%2250%22 fill=%22white%22>H360</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23007bff%22/><text y=%2265%22 x=%2210%22 font-family=%22Arial%22 font-weight=%22900%22 font-size=%2245%22 fill=%22white%22>H360</text></svg>">
     
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Logo ve Arayüz Düzenlemeleri */
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .logo-box { 
-            background: #007bff; color: white; padding: 4px 8px; 
-            border-radius: 4px; font-weight: 800; font-size: 0.9rem;
-            letter-spacing: 1px;
+            background: #007bff; color: white; padding: 5px 10px; 
+            border-radius: 6px; font-weight: 900; font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,123,255,0.3);
         }
-        .rate-bar b { color: #fff; margin-left: 5px; }
     </style>
 </head>
 <body>
@@ -40,9 +38,9 @@
 </nav>
 
 <div class="rate-bar" id="rateBar">
-    <span class="rate-usd">🇺🇸 USD <b id="usdVal">--.-- ₺</b></span>
-    <span class="rate-eur">🇪🇺 EUR <b id="eurVal">--.-- ₺</b></span>
-    <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">--.-- ₺</b></span>
+    <span class="rate-usd">🇺🇸 USD <b id="usdVal">Yükleniyor...</b></span>
+    <span class="rate-eur">🇪🇺 EUR <b id="eurVal">Yükleniyor...</b></span>
+    <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">Yükleniyor...</b></span>
 </div>
 
 <div class="grid-container">
@@ -60,46 +58,38 @@
 <script>
     async function updateRates() {
         try {
-            // Döviz Verileri
+            // En stabil API kaynağına geçtik (CORS hatası vermez)
             const res = await fetch('https://open.er-api.com/v6/latest/USD');
             const data = await res.json();
-            const tryVal = data.rates.TRY;
-            const eurVal = data.rates.EUR;
+            
+            if(data && data.rates) {
+                const tryRate = data.rates.TRY;
+                const eurRate = data.rates.EUR;
+                const xauRate = data.rates.XAU; // Ons Altın (USD)
 
-            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
-            document.getElementById('eurVal').innerText = (tryVal / eurVal).toFixed(2) + " ₺";
+                // 1. Dolar ve Euro Güncelleme
+                document.getElementById('usdVal').innerText = tryRate.toFixed(2) + " ₺";
+                document.getElementById('eurVal').innerText = (tryRate / eurRate).toFixed(2) + " ₺";
 
-            // ALTIN FİYATI ÇÖZÜMÜ:
-            // Investing/Bigpara fiyatını (6000+ TL bandını) yakalamak için
-            // Proxy üzerinden Bigpara'nın ham verisini çekiyoruz.
-            const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://bigpara.hurriyet.com.tr/altin/gram-altin-fiyati/');
-            
-            const goldRes = await fetch(proxyUrl);
-            const goldData = await goldRes.json();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(goldData.contents, 'text/html');
-            
-            // Bigpara'daki canlı fiyat hücresini bul
-            const priceElement = doc.querySelector('.lastPrice');
-            
-            if (priceElement && priceElement.innerText.includes(',')) {
-                // Eğer Bigpara'dan veri gelirse doğrudan onu yaz (En garantisi budur)
-                document.getElementById('goldVal').innerText = priceElement.innerText.trim() + " ₺";
-            } else {
-                // Yedek Plan: Eğer Scraper takılırsa, güncel ONS (Örn: 3200$) üzerinden hesapla
-                // Buradaki 3200 rakamını Investing'deki güncel ONS ile değiştirebilirsin.
-                const manualOns = 3215.50; 
-                const fallbackGram = (manualOns / 31.1034) * tryVal;
-                document.getElementById('goldVal').innerText = fallbackGram.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " ₺";
+                // 2. Gram Altın Hesaplama
+                // Investing'deki 6.200 TL bandını yakalamak için formül:
+                // (Ons / 31.1034) * Dolar Kuru
+                if (xauRate) {
+                    const gramGold = (xauRate / 31.1034) * tryRate;
+                    document.getElementById('goldVal').innerText = gramGold.toLocaleString('tr-TR', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) + " ₺";
+                }
             }
-
         } catch (e) {
             console.error("Hata:", e);
+            document.getElementById('goldVal').innerText = "Hata!";
         }
     }
 
     updateRates();
-    setInterval(updateRates, 60000);
+    setInterval(updateRates, 60000); // Her dakika tazele
 </script>
 
 </body>
