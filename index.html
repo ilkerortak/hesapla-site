@@ -2,256 +2,45 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Hesapla360 - 2026 Güncel Hesaplama Portalı</title>
+    <title>Hesapla360 - 2026</title>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <nav>
-    <a href="index.html" class="logo-link">
-        <div class="logo">HESAPLA<span>360</span></div>
-    </a>
+    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
     <ul class="nav-menu">
         <li><a href="netmaas.html">Maaş</a></li>
         <li><a href="tazminat.html">Tazminat</a></li>
         <li><a href="issizlik.html">İşsizlik</a></li>
         <li><a href="kredi.html">Kredi</a></li>
-        <li><a href="yas.html">Yaş</a></li>
         <li><a href="cv.html">CV</a></li>
     </ul>
-    
-    <div class="theme-switch-wrapper">
-        <label class="theme-switch" for="checkbox">
-            <input type="checkbox" id="checkbox" />
-            <div class="slider round">
-                <span class="mode-text sun">☀️ GÜNDÜZ</span>
-                <span class="mode-text moon">🌙 GECE</span>
-            </div>
-        </label>
-    </div>
 </nav>
-
-<header class="hero-section">
-    <h1>Hesapla<span>360</span> Portalı</h1>
-    <p>2026 yılının en güncel verileri ve yasal limitleriyle tüm hesaplama araçları tek çatı altında.</p>
-</header>
 
 <div class="grid-container">
     <a href="netmaas.html" class="feature-card">
-        <div class="icon">💰</div>
-        <h3>Net Maaş</h3>
-        <p>Vergi dilimleri ve istisnalar dahil güncel maaş hesabı.</p>
+        <h3 style="color:var(--primary); margin-bottom:8px;">Net Maaş</h3>
+        <p style="font-size:0.85rem; opacity:0.6;">2026 vergi dilimleri ile hızlı hesaplama.</p>
     </a>
-
     <a href="tazminat.html" class="feature-card">
-        <div class="icon">💼</div>
-        <h3>Tazminat</h3>
-        <p>Kıdem ve ihbar tazminatını tavan ücretlere göre öğren.</p>
+        <h3 style="color:var(--primary); margin-bottom:8px;">Tazminat</h3>
+        <p style="font-size:0.85rem; opacity:0.6;">Kıdem ve ihbar tazminatı analizi.</p>
     </a>
-
     <a href="issizlik.html" class="feature-card">
-        <div class="icon">📅</div>
-        <h3>İşsizlik Maaşı</h3>
-        <p>İşten ayrılma durumunda alacağın destek tutarı ve süresi.</p>
+        <h3 style="color:var(--primary); margin-bottom:8px;">İşsizlik Maaşı</h3>
+        <p style="font-size:0.85rem; opacity:0.6;">Güncel limitlere göre destek tutarı.</p>
     </a>
-
     <a href="kredi.html" class="feature-card">
-        <div class="icon">🏦</div>
-        <h3>Kredi Hesapla</h3>
-        <p>Banka faiz oranları ve vergiler dahil taksit planı.</p>
+        <h3 style="color:var(--primary); margin-bottom:8px;">Kredi</h3>
+        <p style="font-size:0.85rem; opacity:0.6;">Banka faiz ve taksit planlayıcı.</p>
     </a>
-
-    <a href="yas.html" class="feature-card">
-        <div class="icon">🎂</div>
-        <h3>Yaş Analizi</h3>
-        <p>Kaç gündür hayattasın? Burcun ve doğum günü sayacı.</p>
-    </a>
-
     <a href="cv.html" class="feature-card">
-        <div class="icon">📄</div>
-        <h3>CV Oluşturucu</h3>
-        <p>Profesyonel bilgilerini gir, saniyeler içinde PDF CV'ni indir.</p>
+        <h3 style="color:var(--primary); margin-bottom:8px;">CV Oluştur</h3>
+        <p style="font-size:0.85rem; opacity:0.6;">Profesyonel PDF CV hazırlayıcı.</p>
     </a>
 </div>
-
-<footer class="footer">
-    <p>&copy; 2026 Hesapla360.com | <span style="color:var(--primary)">İlker Ortak</span> imzasıyla.</p>
-</footer>
-
-<script>
-    // Gelişmiş Tema Yönetimi
-    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
-    const currentTheme = localStorage.getItem('theme');
-
-    if (currentTheme) {
-        document.body.classList.toggle('dark', currentTheme === 'dark');
-        if (currentTheme === 'dark') {
-            toggleSwitch.checked = true;
-        }
-    }
-
-    toggleSwitch.addEventListener('change', (e) => {
-        if (e.target.checked) {
-            document.body.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.body.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
-    });
-</script>
-
-<style>
-/* 🌟 EKSTRA GÜZELLEŞTİRİLMİŞ STİLLER */
-:root {
-    --primary: #4f46e5;
-    --primary-light: #818cf8;
-    --nav-bg: #4f46e5;
-    --nav-text: #ffffff;
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
-    --text-color: #1e293b;
-    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-body.dark {
-    --bg-color: #0f172a;
-    --card-bg: #1e293b;
-    --text-color: #f1f5f9;
-    --nav-bg: #020617;
-    --shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-}
-
-body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 🌙 KOCAMAN TEMA SWITCHER */
-.theme-switch-wrapper {
-    display: flex;
-    align-items: center;
-}
-
-.theme-switch {
-    display: inline-block;
-    height: 44px;
-    position: relative;
-    width: 120px;
-}
-
-.theme-switch input { display: none; }
-
-.slider {
-    background-color: rgba(255, 255, 255, 0.2);
-    bottom: 0;
-    cursor: pointer;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: .4s;
-    border-radius: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 0 5px;
-    border: 1px solid rgba(255,255,255,0.3);
-}
-
-.slider:before {
-    background-color: #fff;
-    bottom: 4px;
-    content: "";
-    height: 34px;
-    left: 4px;
-    position: absolute;
-    transition: .4s;
-    width: 50px;
-    border-radius: 30px;
-    z-index: 1;
-}
-
-input:checked + .slider:before {
-    transform: translateX(58px);
-    background-color: #fbbf24;
-}
-
-.mode-text {
-    font-size: 10px;
-    font-weight: 800;
-    z-index: 2;
-    pointer-events: none;
-    letter-spacing: 0.5px;
-}
-
-.sun { color: #ffffff; }
-.moon { color: #ffffff; }
-input:checked + .slider .sun { opacity: 0.5; }
-input:not(:checked) + .slider .moon { opacity: 0.5; }
-
-/* NAV & GRID */
-nav {
-    background: var(--nav-bg);
-    padding: 0 5%;
-    height: 85px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.logo { font-size: 1.8rem; font-weight: 800; color: #fff; }
-.logo span { color: #fbbf24; }
-
-.nav-menu { list-style: none; display: flex; gap: 20px; }
-.nav-menu a {
-    text-decoration: none; color: #fff; font-weight: 600;
-    padding: 10px 15px; border-radius: 12px; transition: 0.3s;
-    font-size: 0.95rem;
-}
-.nav-menu a:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 60px auto;
-    padding: 0 25px;
-}
-
-.feature-card {
-    background: var(--card-bg);
-    padding: 45px 35px;
-    border-radius: 32px;
-    text-decoration: none;
-    color: var(--text-color);
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(255,255,255,0.05);
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.feature-card:hover {
-    transform: translateY(-15px) scale(1.02);
-    border-color: var(--primary-light);
-}
-
-.feature-card .icon { font-size: 4rem; margin-bottom: 25px; }
-.feature-card h3 { color: var(--primary); font-size: 1.5rem; margin-bottom: 12px; }
-
-.footer { text-align: center; padding: 40px; opacity: 0.7; font-weight: 600; }
-
-@media (max-width: 900px) {
-    .nav-menu { display: none; }
-    .theme-switch { width: 100px; }
-}
-</style>
 
 </body>
 </html>
