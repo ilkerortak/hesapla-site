@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><link rel="stylesheet" href="style.css"></head>
+<body>
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a></nav>
+<div class="container">
+    <h2>🧾 KDV Hesaplayıcı</h2>
+    <div class="input-group"><label>Tutar (TL)</label><input type="number" id="tutar"></div>
+    <div class="input-group">
+        <label>KDV Oranı (%)</label>
+        <select id="oran" style="width:100%; padding:12px; border-radius:10px; background:rgba(0,0,0,0.2); color:#fff; border:2px solid var(--border);">
+            <option value="20">%20 (Genel)</option>
+            <option value="10">%10 (Gıda vb.)</option>
+            <option value="1">%1 (Temel Gıda)</option>
+        </select>
+    </div>
+    <div style="display:flex; gap:10px; margin-bottom:20px;">
+        <button onclick="hesapla('dahil')" style="background:#a855f7;">KDV Dahil Et</button>
+        <button onclick="hesapla('haric')">KDV Hariç Çıkar</button>
+    </div>
+
+    <div id="sonuc-box" style="display:none;" class="result-item">
+        <div class="detail-row"><span>Matrah (Net Tutar)</span> <span id="matrah"></span></div>
+        <div class="detail-row"><span>Hesaplanan KDV</span> <span id="kdv-tutar"></span></div>
+        <div class="detail-row total"><span>Genel Toplam</span> <span id="toplam" style="color:#a855f7; font-size:1.4rem;"></span></div>
+    </div>
+</div>
+<script>
+    function hesapla(tip) {
+        let t = parseFloat(document.getElementById("tutar").value);
+        let o = parseFloat(document.getElementById("oran").value) / 100;
+        if(!t) return;
+        let matrah, kdv, toplam;
+
+        if(tip === 'dahil') {
+            matrah = t;
+            kdv = t * o;
+            toplam = t + kdv;
+        } else {
+            toplam = t;
+            matrah = t / (1 + o);
+            kdv = t - matrah;
+        }
+        document.getElementById("sonuc-box").style.display = "block";
+        document.getElementById("matrah").innerText = matrah.toLocaleString() + " TL";
+        document.getElementById("kdv-tutar").innerText = kdv.toLocaleString() + " TL";
+        document.getElementById("toplam").innerText = toplam.toLocaleString() + " TL";
+    }
+</script>
+</body>
+</html>
