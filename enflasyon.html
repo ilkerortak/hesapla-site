@@ -4,77 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H360 | Enflasyon Analizi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
-    <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
-    <div class="nav-container">
-        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
-        <div class="dropdown-menu" id="navMenu">
-            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
-            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
-            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
-            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
-            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
-            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+<nav class="glass-nav">
+    <div class="nav-left">
+        <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    </div>
+    <div class="nav-right">
+        <div class="menu-container">
+            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
+            <div class="dropdown-menu" id="navMenu">
+                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
+                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
+                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
+                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
+                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
+                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+            </div>
         </div>
     </div>
 </nav>
 
-<div class="hero-section">
-    <h2>Enflasyon Analizi</h2>
-    <p>SATIN ALMA GÜCÜ VE DEĞER KAYBI SORGULAMA</p>
-</div>
+<div class="calculation-container">
+    <header class="premium-header" style="margin-bottom: 30px;">
+        <h1 class="premium-title" style="font-size: 1.8rem;">ENFLASYON ANALİZİ</h1>
+        <p class="premium-status">SATIN ALMA GÜCÜ ANALİZİ</p>
+    </header>
 
-<div class="form-box">
-    <label>BAŞLANGIÇ TUTARI (TL)</label>
-    <input type="number" id="amt" placeholder="Örn: 100.000">
-    
-    <label>YILLIK ENFLASYON ORANI (%)</label>
-    <input type="number" id="inf" placeholder="Örn: 65">
+    <div class="form-card">
+        <div class="input-group">
+            <label>BAŞLANGIÇ TUTARI (TL)</label>
+            <input type="number" id="amt" placeholder="Örn: 100000">
+        </div>
+        
+        <div class="input-group">
+            <label>YILLIK ENFLASYON ORANI (%)</label>
+            <input type="number" id="inf" placeholder="Örn: 65">
+        </div>
 
-    <button class="btn-calc" onclick="calcInf()">PARANIN DEĞERİNİ ÖLÇ</button>
+        <button class="btn-calc" onclick="calcInf()">PARANIN DEĞERİNİ ÖLÇ</button>
 
-    <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.75rem; font-weight:800;">1 YIL SONRAKİ REEL DEĞER</p>
-        <div class="res-val" id="reel">0 ₺</div>
-        <div style="margin-top:20px; font-size:0.9rem; color:#e74c3c; font-weight:700; border-top: 1px solid #1c212c; padding-top: 15px;">
-            Hissedilen Kayıp: - <span id="loss">0</span> ₺
+        <div id="res" class="res-area">
+            <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim); text-transform: uppercase;">1 YIL SONRAKİ REEL DEĞER</p>
+            <div class="res-val" id="reel" style="color: #fff;">0 ₺</div>
+            
+            <div style="margin-top:20px; font-size:0.9rem; color:#e74c3c; font-weight:700; border-top: 1px dashed var(--border); padding-top: 15px;">
+                Hissedilen Değer Kaybı: - <span id="loss">0</span> ₺
+            </div>
+            <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 10px; line-height: 1.4;">
+                * Bu hesaplama, paranın mevcut mal ve hizmet sepeti karşısındaki satın alma gücü kaybını gösterir.
+            </p>
         </div>
     </div>
 </div>
 
 <script>
-    // Menü kontrolü
-    function toggleMenu() { 
-        document.getElementById('navMenu').classList.toggle('active'); 
-    }
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 
-    // Enflasyon hesaplama motoru
     function calcInf() {
         const a = parseFloat(document.getElementById('amt').value) || 0;
         const r = parseFloat(document.getElementById('inf').value) / 100;
         
         if(a > 0 && r > 0) {
+            // Reel değer formülü: Mevcut Tutar / (1 + Enflasyon Oranı)
             const reelVal = a / (1 + r);
-            document.getElementById('reel').innerText = Math.round(reelVal).toLocaleString() + " ₺";
-            document.getElementById('loss').innerText = Math.round(a - reelVal).toLocaleString();
+            
+            document.getElementById('reel').innerText = Math.round(reelVal).toLocaleString('tr-TR') + " ₺";
+            document.getElementById('loss').innerText = Math.round(a - reelVal).toLocaleString('tr-TR');
             document.getElementById('res').style.display = "block";
         }
     }
 
-    // Menü dışı tıklama kapatma
-    window.onclick = function(event) {
-        if (!event.target.matches('.menu-btn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-menu");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('active')) {
-                    openDropdown.classList.remove('active');
-                }
-            }
+    window.onclick = function(e) { 
+        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
+            const menu = document.getElementById('navMenu');
+            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
         }
     }
 </script>
