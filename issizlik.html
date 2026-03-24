@@ -1,31 +1,53 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><link rel="stylesheet" href="style.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <title>İşsizlik Maaşı - Hesapla360</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <body>
-<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a></nav>
+<nav>
+    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
+    <div class="nav-menu">
+        <a href="netmaas.html">💰 Maaş</a>
+        <a href="tazminat.html">💼 Tazminat</a>
+        <a href="issizlik.html" class="active">📅 İşsizlik</a>
+        <a href="kredi.html">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
+        <a href="cv.html">📄 CV</a>
+    </div>
+</nav>
+
 <div class="container">
-    <h2>📅 İşsizlik Maaşı</h2>
-    <div class="input-group"><label>Son 4 Aylık Brüt Maaş Ortalaması</label><input type="number" id="b-ort"></div>
-    <button onclick="hesapla()">Hesapla</button>
+    <h2>📅 İşsizlik Maaşı Analizi</h2>
+    <div class="input-group">
+        <label>Son 4 Aylık Brüt Maaş Ortalaması</label>
+        <input type="number" id="b-ort" placeholder="Örn: 40000">
+    </div>
+    <button onclick="hesaplaIssizlik()">Hesapla</button>
+
     <div id="sonuc-box" style="display:none;" class="result-item">
-        <div class="detail-row"><span>Hesaplanan (%40)</span> <span id="h-oran"></span></div>
+        <div class="detail-row"><span>Brüt İşsizlik Maaşı (%40)</span> <span id="h-oran"></span></div>
         <div class="detail-row"><span>Damga Vergisi Kesintisi</span> <span id="dv"></span></div>
-        <div class="detail-row total"><span>Net Aylık Ödeme</span> <span id="net"></span></div>
-        <p style="font-size:0.7rem; color:orange; margin-top:10px;">*Maaş, asgari ücretin %80'ini geçemez.</p>
+        <div class="detail-row total"><span>Net Aylık Ödeme</span> <span id="net" style="color:#a855f7; font-size:1.4rem;"></span></div>
+        <p style="font-size:0.75rem; color:orange; margin-top:15px;">⚠️ Not: İşsizlik maaşı, brüt asgari ücretin %80'ini geçemez.</p>
     </div>
 </div>
+
 <script>
-    function hesapla() {
+    function hesaplaIssizlik() {
         let b = parseFloat(document.getElementById("b-ort").value);
         if(!b) return;
         let ham = b * 0.40;
-        let tavan = 26424; // 2026 Tahmini
+        let tavan = 26424; // 2026 Tahmini Üst Limit
         let son = ham > tavan ? tavan : ham;
         let dv = son * 0.00759;
+        
         document.getElementById("sonuc-box").style.display = "block";
-        document.getElementById("h-oran").innerText = ham.toLocaleString() + " TL";
-        document.getElementById("dv").innerText = "-" + dv.toLocaleString() + " TL";
-        document.getElementById("net").innerText = (son - dv).toLocaleString() + " TL";
+        document.getElementById("h-oran").innerText = ham.toLocaleString('tr-TR') + " TL";
+        document.getElementById("dv").innerText = "-" + dv.toLocaleString('tr-TR') + " TL";
+        document.getElementById("net").innerText = (son - dv).toLocaleString('tr-TR') + " TL";
     }
 </script>
 </body>
