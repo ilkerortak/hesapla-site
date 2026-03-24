@@ -2,53 +2,34 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>CV Oluşturucu - Hesapla360</title>
+    <title>CV Hazırla - Hesapla360</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js"></script>
 </head>
 <body>
-<nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <ul class="nav-menu">
-        <li><a href="netmaas.html">💰 Maaş</a></li>
-        <li><a href="cv.html" class="active">📄 CV</a></li>
-    </ul>
-</nav>
-
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a></nav>
 <div class="container">
-    <h2>Ücretsiz CV</h2>
-    <input type="text" id="ad" placeholder="Ad Soyad" style="margin-bottom:12px;">
-    <textarea id="bilgi" placeholder="Deneyimleriniz ve yetkinlikleriniz..." style="width:100%; height:120px; padding:12px; border-radius:12px;"></textarea>
-    <button onclick="indirCV()">CV'yi PDF İndir (Kesin Çözüm)</button>
+    <h2>📄 CV Oluştur</h2>
+    <input type="text" id="ad" placeholder="Ad Soyad" style="margin-bottom:15px;">
+    <textarea id="bilgi" placeholder="Deneyimleriniz..." style="height:150px;"></textarea>
+    <button onclick="indir()">PDF Olarak İndir (Kesin Çözüm)</button>
 </div>
-
 <script>
-    function indirCV() {
+    function indir() {
         const ad = document.getElementById("ad").value;
         const bilgi = document.getElementById("bilgi").value;
-        if(!ad) { alert("Lütfen adınızı girin."); return; }
-
-        // PDFMake Doküman Tanımı (Karanlık Moddan Etkilenmez, Bembeyaz Çıkar)
-        const dd = {
+        if(!ad) return alert("Ad giriniz.");
+        
+        const docDef = {
             content: [
-                { text: ad, style: 'header' },
-                { text: 'MESLEKİ DENEYİM & BİLGİLER', style: 'subheader' },
-                { text: bilgi, style: 'bodyText' },
-                { text: 'Hesapla360.com Tarafından Oluşturulmuştur. © 2026', style: 'footer', margin: [0, 50, 0, 0] }
-            ],
-            styles: {
-                header: { fontSize: 30, bold: true, color: '#6366f1', margin: [0, 0, 0, 20] },
-                subheader: { fontSize: 16, bold: true, color: '#444', margin: [0, 20, 0, 10] },
-                bodyText: { fontSize: 13, color: '#333', lineHeight: 1.6 },
-                footer: { fontSize: 9, color: '#aaa', alignment: 'center' }
-            },
-            pageSize: 'A4',
-            pageMargins: [40, 60, 40, 60]
+                { text: ad.toUpperCase(), fontSize: 22, bold: true, color: '#6366f1' },
+                { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 515, y2: 5, lineWidth: 1, lineColor: '#eee' }] },
+                { text: '\nDENEYİM VE BİLGİLER', bold: true, margin: [0, 15] },
+                { text: bilgi, lineHeight: 1.5 }
+            ]
         };
-
-        pdfMake.createPdf(dd).download(ad + '_CV.pdf');
+        pdfMake.createPdf(docDef).download(ad + "_CV.pdf");
     }
 </script>
 </body>
