@@ -8,61 +8,80 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
-        .main-wrapper { 
-            display: flex; justify-content: center; align-items: flex-start; 
-            min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; 
-        }
-        .calc-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px; padding: 40px; width: 100%; max-width: 500px;
-            backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        .header-area { text-align: center; margin-bottom: 30px; }
-        .header-area h1 { font-size: 1.6rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
-        .header-area p { color: #007bff; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; }
+        /* PARLAMA ÖNLEYİCİ DEEP NIGHT TEMASI */
+        body { background-color: #080b12; margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; }
         
-        /* Seçim Modu (Brüt/Net) */
+        /* Menü Fix: Active Class */
+        .dropdown-menu { 
+            display: none; 
+            position: absolute; 
+            top: 60px; 
+            right: 0; 
+            background: #1e293b; 
+            border: 1px solid #334155; 
+            border-radius: 12px; 
+            padding: 10px; 
+            z-index: 1000;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .dropdown-menu.active { display: block; animation: fadeIn 0.2s ease; }
+        .dropdown-menu a { display: block; color: #fff; padding: 12px; text-decoration: none; font-size: 0.85rem; border-radius: 8px; }
+        .dropdown-menu a:hover { background: #3b82f6; }
+
+        .main-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; }
+        
+        .calc-card {
+            background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px; padding: 40px; width: 100%; max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-area { text-align: center; margin-bottom: 30px; }
+        .header-area h1 { font-size: 1.4rem; letter-spacing: 2px; margin: 0; font-weight: 700; color: #fff; }
+        .header-area p { color: #3b82f6; font-size: 0.7rem; font-weight: 800; margin-top: 8px; text-transform: uppercase; }
+        
         .mode-selector {
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px;
-            background: rgba(255,255,255,0.05); padding: 5px; border-radius: 12px;
+            background: #1e293b; padding: 5px; border-radius: 14px;
         }
         .mode-btn {
-            padding: 10px; border: none; border-radius: 8px; background: transparent;
-            color: #888; cursor: pointer; font-weight: 600; transition: 0.3s;
+            padding: 12px; border: none; border-radius: 10px; background: transparent;
+            color: #64748b; cursor: pointer; font-weight: 700; font-size: 0.75rem; transition: 0.3s;
         }
-        .mode-btn.active { background: #007bff; color: #fff; }
+        .mode-btn.active { background: #3b82f6; color: #fff; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
 
         .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 8px; }
+        .input-group label { display: block; color: #3b82f6; font-size: 0.65rem; font-weight: 800; margin-bottom: 10px; }
         .input-group input {
-            width: 100%; padding: 16px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            color: #fff; font-size: 1.2rem; outline: none; transition: 0.3s; box-sizing: border-box;
+            width: 100%; padding: 16px; background: #1e293b;
+            border: 1px solid #334155; border-radius: 12px;
+            color: #fff; font-size: 1.2rem; outline: none; transition: 0.2s; box-sizing: border-box;
         }
-        .input-group input:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
-        
+        .input-group input:focus { border-color: #3b82f6; background: #243146; }
+
         .calc-btn {
-            width: 100%; padding: 18px; background: #007bff; color: #fff;
-            border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1rem;
+            width: 100%; padding: 18px; background: #3b82f6; color: #fff;
+            border: none; border-radius: 14px; font-weight: 700; cursor: pointer; font-size: 1rem;
         }
+        .calc-btn:hover { background: #2563eb; transform: translateY(-1px); }
 
         .result-box {
-            margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15);
-            display: none;
+            margin-top: 30px; padding: 25px; background: #0f172a; border-radius: 20px;
+            border: 1px solid #1e293b; display: none; border-top: 2px solid #2ecc71;
         }
         .res-main { text-align: center; margin-bottom: 25px; }
-        .res-main span { font-size: 0.7rem; color: #888; font-weight: 800; display: block; }
-        .res-main b { font-size: 2.8rem; color: #2ecc71; }
+        .res-main span { font-size: 0.7rem; color: #64748b; font-weight: 800; display: block; }
+        .res-main b { font-size: 2.5rem; color: #2ecc71; letter-spacing: -1px; }
 
-        .detail-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.85rem; color: #aaa; }
+        .detail-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.85rem; color: #94a3b8; }
         .detail-row b { color: #fff; }
         
         .tax-warning {
             background: rgba(243, 156, 18, 0.1); color: #f39c12;
-            padding: 12px; border-radius: 8px; font-size: 0.75rem; margin-top: 20px; line-height: 1.4;
+            padding: 15px; border-radius: 12px; font-size: 0.7rem; margin-top: 20px; line-height: 1.5; border: 1px solid rgba(243, 156, 18, 0.1);
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -72,11 +91,18 @@
         <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
     </div>
     <div class="nav-right">
-        <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
-        <div class="dropdown-menu" id="navMenu">
-            <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-            <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-            <a href="cv.html">📄 CV</a>
+        <div class="menu-container" style="position: relative;">
+            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
+            <div class="dropdown-menu" id="navMenu">
+                <a href="netmaas.html">💰 Maaş</a>
+                <a href="tazminat.html">💼 Tazminat</a>
+                <a href="issizlik.html">📅 İşsizlik</a>
+                <a href="faiz.html">📈 Faiz</a>
+                <a href="doviz.html">💱 Döviz</a>
+                <a href="kdv.html">🧾 KDV</a>
+                <a href="mesai.html">🕒 Mesai</a>
+                <a href="cv.html">📄 CV</a>
+            </div>
         </div>
     </div>
 </nav>
@@ -95,7 +121,7 @@
 
         <div class="input-group">
             <label id="inputLabel">AYLIK BRÜT MAAŞ (TL)</label>
-            <input type="number" id="salaryInput" placeholder="Örn: 65000">
+            <input type="number" id="salaryInput" placeholder="0.00">
         </div>
 
         <button class="calc-btn" onclick="hesapla()">ANALİZİ TAMAMLA</button>
@@ -122,7 +148,7 @@
 
 <script>
     let currentMode = 'brut';
-    const ASGARI_BRUT = 30000; // 2026 Tahmini Asgari Ücret
+    const ASGARI_BRUT = 30000; 
 
     function setMode(mode, btn) {
         currentMode = mode;
@@ -132,7 +158,23 @@
         document.getElementById('resLabel').innerText = mode === 'brut' ? 'TAHMİNİ NET ELE GEÇEN' : 'GEREKEN BRÜT MAAŞ';
     }
 
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+    // MENÜ FONKSİYONU - HATASIZ
+    function toggleMenu() {
+        document.getElementById('navMenu').classList.toggle('active');
+    }
+
+    // DIŞARI TIKLANDIĞINDA KAPATMA
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn') && !event.target.closest('.menu-btn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('active')) {
+                    openDropdown.classList.remove('active');
+                }
+            }
+        }
+    }
 
     function hesapla() {
         const val = parseFloat(document.getElementById('salaryInput').value) || 0;
@@ -147,20 +189,14 @@
             const matrah = brut - sgk - issizlik;
             gelirVergisi = matrah * 0.15;
             damga = brut * 0.00759;
-
-            // İstisna Hesaplama (Asgari ücret üzerinden)
             const asgariSgk = ASGARI_BRUT * 0.14;
             const asgariIssizlik = ASGARI_BRUT * 0.01;
             const asgariMatrah = ASGARI_BRUT - asgariSgk - asgariIssizlik;
             istisna = (asgariMatrah * 0.15) + (ASGARI_BRUT * 0.00759);
-
-            // Vergi netten düşülürken istisna eklenir (İstisna vergiden fazla olamaz)
             let odenecekVergi = (gelirVergisi + damga) - istisna;
             if(odenecekVergi < 0) odenecekVergi = 0;
-
             net = brut - sgk - issizlik - odenecekVergi;
         } else {
-            // Basit Netten Brüte Çarpanı (Yaklaşık)
             brut = val / 0.71; 
             net = val;
             sgk = brut * 0.14;
