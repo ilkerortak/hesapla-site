@@ -1,74 +1,112 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Yaş Hesaplama 2026</title>
-<link rel="stylesheet" href="style.css">
-<meta name="description" content="Doğum tarihinizden tam yaşınızı (yıl, ay, gün) hesaplayın.">
+    <meta charset="UTF-8">
+    <title>Detaylı Yaş Hesaplama 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <nav>
-  <ul>
-    <li><a href="index.html">Ana Sayfa</a></li>
-    <li><a href="netmaas.html">Net Maaş</a></li>
-    <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
-    <li><a href="kredi.html">Kredi Hesaplama</a></li>
-    <li><a href="yas.html">Yaş Hesaplama</a></li>
-    <li><a href="cv.html">CV Oluşturucu</a></li>
-  </ul>
-  <button id="theme-toggle">☀️</button>
+    <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="netmaas.html">Net Maaş</a></li>
+        <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
+        <li><a href="kredi.html">Kredi Hesaplama</a></li>
+        <li><a href="yas.html" class="active">Yaş Hesaplama</a></li>
+        <li><a href="cv.html">CV Oluşturucu</a></li>
+    </ul>
+    <button id="theme-toggle">☀️</button>
 </nav>
 
 <div class="container">
-<h1>Detaylı Yaş Hesaplama 2026</h1>
-<p>Doğum tarihinizi seçin:</p>
-<input type="date" id="dogum">
-<button onclick="hesapla()">Hesapla</button>
-<h2 id="sonuc"></h2>
+    <div class="calculator-card">
+        <h1>Detaylı Yaş Hesaplama 2026</h1>
+        <p>Doğum tarihinizi seçin:</p>
+        <div class="input-group">
+            <input type="date" id="dogum">
+        </div>
+        <button class="calc-btn" onclick="hesapla()">Analiz Et</button>
+        
+        <div id="yas-sonuc" style="display:none;">
+            <div class="result-item">
+                <span>Şu anki Tam Yaşınız:</span>
+                <strong id="tam-yas">0 Yıl, 0 Ay, 0 Gün</strong>
+            </div>
+            
+            <div class="result-details">
+                <p>Toplam Hayatta Kalınan Gün: <span id="toplam-gun">0</span></p>
+                <p>Burcunuz: <span id="burc">-</span></p>
+                <p>Sıradaki Doğum Gününe: <span id="kalan-gun">0 gün kaldı</span></p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-function hesapla(){
-  const dogumInput = document.getElementById("dogum").value;
-  if(!dogumInput){
-    alert("Lütfen doğum tarihinizi girin!");
-    return;
-  }
-
-  const dogumTarihi = new Date(dogumInput);
-  const bugun = new Date("2026-03-24"); // Sabit 2026 tarihi, güncel tarih için: new Date()
-  
-  let yil = bugun.getFullYear() - dogumTarihi.getFullYear();
-  let ay = bugun.getMonth() - dogumTarihi.getMonth();
-  let gun = bugun.getDate() - dogumTarihi.getDate();
-
-  if(gun < 0){
-    ay -= 1;
-    gun += new Date(bugun.getFullYear(), bugun.getMonth(), 0).getDate(); // önceki ayın gün sayısı
-  }
-  if(ay < 0){
-    yil -= 1;
-    ay += 12;
-  }
-
-  document.getElementById("sonuc").innerText = `Yaşınız: ${yil} yıl, ${ay} ay, ${gun} gün`;
+function getBurc(gun, ay) {
+    const burclar = ["Oğlak", "Kova", "Balık", "Koç", "Boğa", "İkizler", "Yengeç", "Aslan", "Başak", "Terazi", "Akrep", "Yay", "Oğlak"];
+    const sınırlar = [20, 19, 20, 20, 21, 21, 22, 23, 23, 23, 22, 21];
+    return gun > sınırlar[ay] ? burclar[ay + 1] : burclar[ay];
 }
 
-// Tema persist
+function hesapla() {
+    const dogumInput = document.getElementById("dogum").value;
+    if (!dogumInput) {
+        alert("Lütfen doğum tarihinizi girin!");
+        return;
+    }
+
+    const dogumTarihi = new Date(dogumInput);
+    const bugun = new Date(); // 2026 Mart ayı içindeyiz
+
+    // 1. Temel Yaş Hesaplama
+    let yil = bugun.getFullYear() - dogumTarihi.getFullYear();
+    let ay = bugun.getMonth() - dogumTarihi.getMonth();
+    let gun = bugun.getDate() - dogumTarihi.getDate();
+
+    if (gun < 0) {
+        ay -= 1;
+        gun += new Date(bugun.getFullYear(), bugun.getMonth(), 0).getDate();
+    }
+    if (ay < 0) {
+        yil -= 1;
+        ay += 12;
+    }
+
+    // 2. Toplam Gün Hesaplama
+    const farkZaman = Math.abs(bugun - dogumTarihi);
+    const toplamGun = Math.ceil(farkZaman / (1000 * 60 * 60 * 24));
+
+    // 3. Bir Sonraki Doğum Gününe Kalan Gün
+    let gelecekDogumGunu = new Date(bugun.getFullYear(), dogumTarihi.getMonth(), dogumTarihi.getDate());
+    if (bugun > gelecekDogumGunu) {
+        gelecekDogumGunu.setFullYear(bugun.getFullYear() + 1);
+    }
+    const kalanZaman = gelecekDogumGunu - bugun;
+    const kalanGun = Math.ceil(kalanZaman / (1000 * 60 * 60 * 24));
+
+    // 4. Burç Hesaplama
+    const burcSonuc = getBurc(dogumTarihi.getDate(), dogumTarihi.getMonth());
+
+    // Sonuçları Göster
+    document.getElementById("yas-sonuc").style.display = "block";
+    document.getElementById("tam-yas").innerText = `${yil} Yıl, ${ay} Ay, ${gun} Gün`;
+    document.getElementById("toplam-gun").innerText = toplamGun.toLocaleString() + " Gün";
+    document.getElementById("burc").innerText = burcSonuc;
+    document.getElementById("kalan-gun").innerText = kalanGun + " Gün Kaldı";
+}
+
+// Tema Yönetimi
 const themeToggle = document.getElementById("theme-toggle");
 if(localStorage.getItem('theme')==='dark'){
     document.body.classList.add('dark');
     themeToggle.textContent='🌙';
-}else{ themeToggle.textContent='☀️'; }
+}
 themeToggle.addEventListener('click',()=>{
     document.body.classList.toggle('dark');
-    if(document.body.classList.contains('dark')){
-        themeToggle.textContent='🌙';
-        localStorage.setItem('theme','dark');
-    }else{
-        themeToggle.textContent='☀️';
-        localStorage.setItem('theme','light');
-    }
+    themeToggle.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 });
 </script>
 </body>
