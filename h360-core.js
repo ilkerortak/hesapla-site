@@ -1,9 +1,9 @@
 /**
- * H360 ELITE - CORE ENGINE v5.1
- * [Google Ads Auto-Loader + Menu + Ads + Layout]
+ * H360 ELITE - CORE ENGINE v5.2
+ * [Google Ads Auto + Menu + Legal Pages + Layout Control]
  */
 
-// 1. Google Adsense Ana Scriptini En Başta Yükle
+// 1. Google Adsense Ana Scripti
 const adScript = document.createElement('script');
 adScript.async = true;
 adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426";
@@ -11,11 +11,11 @@ adScript.crossOrigin = "anonymous";
 document.head.appendChild(adScript);
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 2. ESKİ KALINTILARI TEMİZLE
+    // 2. TEMİZLİK
     const old = document.querySelectorAll('.h3-header, .h3-overlay, .ad-sidebar, nav, .glass-nav');
     old.forEach(el => el.remove());
 
-    // 3. CSS - FULL INTERFACE & DYNAMIC LAYOUT
+    // 3. CSS - TASARIM & YASAL SAYFA UYUMU
     const style = document.createElement('style');
     style.textContent = `
         :root { 
@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
             --border: rgba(255, 255, 255, 0.08);
         }
         
-        /* Header */
         .h3-header {
             position: fixed; top: 0; left: 0; right: 0; height: 90px;
             display: flex; align-items: center; justify-content: space-between;
@@ -58,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .h3-trigger.active .b-1 { transform: translateY(5px) rotate(45deg); }
         .h3-trigger.active .b-2 { transform: translateY(-5px) rotate(-45deg); width: 100%; }
 
-        /* REKLAM ALANLARI */
         .ad-sidebar {
             position: fixed; top: 120px; width: 160px; height: 600px;
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
@@ -70,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .ad-right { right: 20px; }
         .ad-label { position: absolute; top: 5px; font-size: 9px; color: #444; }
 
-        /* OTOMATİK ORTA BLOK SINIRLAMA */
         #h3-main-content, .main-container, main, .content, .container {
             max-width: 1000px !important;
             margin: 0 auto !important;
@@ -79,11 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
             z-index: 1;
         }
 
-        /* Menü Overlay */
         .h3-overlay {
             position: fixed; inset: 0; background: var(--glass-menu);
             z-index: 10000; opacity: 0; visibility: hidden; transition: 0.5s ease;
-            overflow-y: auto; -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
         }
         .h3-overlay.open { opacity: 1; visibility: visible; backdrop-filter: blur(40px); }
 
@@ -93,27 +89,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         .h3-item {
             background: rgba(255,255,255,0.02); border: 1px solid var(--border);
-            padding: 35px 15px; border-radius: 28px; text-decoration: none;
-            display: flex; flex-direction: column; align-items: center; gap: 15px;
-            transition: 0.3s; opacity: 0;
+            padding: 30px 10px; border-radius: 24px; text-decoration: none;
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
+            transition: 0.3s;
         }
-        .h3-overlay.open .h3-item { opacity: 1; }
-        .h3-item i { font-size: 1.8rem; color: var(--accent); }
-        .h3-item b { color: #fff; font-size: 0.75rem; font-weight: 700; text-align: center; }
+        .h3-item i { font-size: 1.6rem; color: var(--accent); }
+        .h3-item b { color: #fff; font-size: 0.7rem; font-weight: 700; text-align: center; text-transform: uppercase; }
+        .h3-item:hover { background: rgba(59, 130, 246, 0.1); border-color: var(--accent); transform: translateY(-3px); }
 
-        /* RESPONSIVE */
+        /* Yasal Sayfalar İçin Özel Stil */
+        .legal-item { border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05); }
+
         @media (max-width: 1400px) {
             .ad-sidebar { display: none !important; }
             #h3-main-content, .main-container, main, .content, .container { max-width: 95% !important; }
         }
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .h3-grid { grid-template-columns: repeat(2, 1fr); }
             .logo-text { display: none; }
         }
     `;
     document.head.appendChild(style);
 
-    // 4. HTML INJECTION
+    // 4. HTML INJECTION (Menüye Yasal Sayfalar Eklendi)
     const uiHTML = `
         <header class="h3-header">
             <a href="index.html" class="h3-logo">
@@ -126,33 +124,33 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
         </header>
 
-        <div class="ad-sidebar ad-left">
-            <span class="ad-label">REKLAM</span>
-            </div>
-        <div class="ad-sidebar ad-right">
-            <span class="ad-label">REKLAM</span>
-            </div>
+        <div class="ad-sidebar ad-left"><span class="ad-label">REKLAM</span></div>
+        <div class="ad-sidebar ad-right"><span class="ad-label">REKLAM</span></div>
 
         <div class="h3-overlay" id="h3Overlay">
             <div class="h3-grid">
-                <a href="netmaas.html" class="h3-item"><i class="fa-solid fa-money-bill-wave"></i><b>MAAŞ</b></a>
-                <a href="tazminat.html" class="h3-item"><i class="fa-solid fa-briefcase"></i><b>TAZMİNAT</b></a>
-                <a href="issizlik.html" class="h3-item"><i class="fa-solid fa-calendar-day"></i><b>İŞSİZLİK</b></a>
-                <a href="faiz.html" class="h3-item"><i class="fa-solid fa-chart-line"></i><b>FAİZ</b></a>
-                <a href="yakit.html" class="h3-item"><i class="fa-solid fa-gas-pump"></i><b>YAKIT</b></a>
-                <a href="enflasyon.html" class="h3-item"><i class="fa-solid fa-chart-area"></i><b>ENFLASYON</b></a>
-                <a href="kredi.html" class="h3-item"><i class="fa-solid fa-building-columns"></i><b>KREDİ</b></a>
-                <a href="yas.html" class="h3-item"><i class="fa-solid fa-cake-candles"></i><b>YAŞ</b></a>
-                <a href="doviz.html" class="h3-item"><i class="fa-solid fa-money-bill-transfer"></i><b>DÖVİZ</b></a>
+                <a href="netmaas.html" class="h3-item"><i class="fa-solid fa-money-bill-wave"></i><b>Maaş</b></a>
+                <a href="tazminat.html" class="h3-item"><i class="fa-solid fa-briefcase"></i><b>Tazminat</b></a>
+                <a href="issizlik.html" class="h3-item"><i class="fa-solid fa-calendar-day"></i><b>İşsizlik</b></a>
+                <a href="faiz.html" class="h3-item"><i class="fa-solid fa-chart-line"></i><b>Faiz</b></a>
+                <a href="yakit.html" class="h3-item"><i class="fa-solid fa-gas-pump"></i><b>Yakit</b></a>
+                <a href="enflasyon.html" class="h3-item"><i class="fa-solid fa-chart-area"></i><b>Enflasyon</b></a>
+                <a href="kredi.html" class="h3-item"><i class="fa-solid fa-building-columns"></i><b>Kredi</b></a>
+                <a href="yas.html" class="h3-item"><i class="fa-solid fa-cake-candles"></i><b>Yaş</b></a>
+                <a href="doviz.html" class="h3-item"><i class="fa-solid fa-money-bill-transfer"></i><b>Döviz</b></a>
                 <a href="kdv.html" class="h3-item"><i class="fa-solid fa-file-invoice-dollar"></i><b>KDV</b></a>
-                <a href="mesai.html" class="h3-item"><i class="fa-solid fa-clock"></i><b>MESAİ</b></a>
-                <a href="cv.html" class="h3-item"><i class="fa-solid fa-file-pdf"></i><b>CV</b></a>
+                <a href="mesai.html" class="h3-item"><i class="fa-solid fa-clock"></i><b>Mesai</b></a>
+                <a href="cv.html" class="h3-item"><i class="fa-solid fa-file-pdf"></i><b>CV Oluştur</b></a>
+                
+                <a href="hakkimizda.html" class="h3-item legal-item"><i class="fa-solid fa-circle-info"></i><b>Hakkımızda</b></a>
+                <a href="gizlilik-politikasi.html" class="h3-item legal-item"><i class="fa-solid fa-shield-halved"></i><b>Gizlilik</b></a>
+                <a href="iletisim.html" class="h3-item legal-item"><i class="fa-solid fa-envelope"></i><b>İletişim</b></a>
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML('afterbegin', uiHTML);
 
-    // 5. LOGIC
+    // 5. MANTIK
     const btn = document.getElementById('h3Btn');
     const overlay = document.getElementById('h3Overlay');
     const ads = document.querySelectorAll('.ad-sidebar');
@@ -161,13 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.stopPropagation();
         btn.classList.toggle('active');
         overlay.classList.toggle('open');
-        
-        if(overlay.classList.contains('open')) {
-            document.body.style.overflow = 'hidden';
-            ads.forEach(ad => ad.style.opacity = '0');
-        } else {
-            document.body.style.overflow = '';
-            ads.forEach(ad => ad.style.opacity = '1');
-        }
+        document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
+        ads.forEach(ad => ad.style.opacity = overlay.classList.contains('open') ? '0' : '1');
     };
 });
