@@ -2,13 +2,15 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Net Maaş Hesaplama 2026</title>
+<title>Ana Sayfa - Hesapla Site 2026</title>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="2026 yılı için hesaplama araçları. Net maaş, işsizlik maaşı, kredi hesaplama, yaş hesaplama ve CV oluşturucu araçları burada.">
 </head>
-  <link rel="stylesheet" href="style.css">
-  <nav>
+<body>
+<nav>
   <ul>
     <li><a href="index.html">Ana Sayfa</a></li>
-    <li><a href="netmaas.html">Net Maaş Hesaplama</a></li>
+    <li><a href="netmaas.html">Net Maaş</a></li>
     <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
     <li><a href="kredi.html">Kredi Hesaplama</a></li>
     <li><a href="yas.html">Yaş Hesaplama</a></li>
@@ -16,22 +18,7 @@
   </ul>
 </nav>
 <hr>
-<body>
-
-<h1>Net Maaş Hesaplama</h1>
-
-<input type="number" id="brut" placeholder="Brüt maaş">
-<button onclick="hesapla()">Hesapla</button>
-
-<h2 id="sonuc"></h2>
-
-<script>
-function hesapla() {
-  let brut = document.getElementById("brut").value;
-  let net = brut * 0.75;
-  document.getElementById("sonuc").innerText = "Net Maaş: " + net + " TL";
-}
-</script>
-
+<h1>Hesapla Site 2026</h1>
+<p>2026 yılı için hazırlanmış en güncel hesaplama araçlarına ulaşmak için menüden seçim yapın.</p>
 </body>
 </html>
