@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hesapla360 Finansal Uzman</title>
-    
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23007bff%22/><path d=%22M25 70 L40 50 L55 60 L75 30%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22/><path d=%22M80 30 L80 50 M80 30 L60 30%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22/><circle cx=%2250%22 cy=%2250%22 r=%2235%22 fill=%22none%22 stroke=%22white%22 stroke-width=%223%22 stroke-dasharray=%2210 5%22 opacity=%220.5%22/></svg>">
-    
+    <title>H360 | Finansal Analiz Merkezi</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="home-page">
@@ -50,10 +47,13 @@
     <a href="/kdv" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Vergi Matrah Hesabı</p></a>
     <a href="/mesai" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></a>
     <a href="/cv" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></a>
+    
+    <a href="/faiz" class="feature-card"><span class="icon">📈</span><h3>Bileşik Faiz</h3><p>Yatırım Getiri Projeksiyonu</p></a>
+    <a href="/yakit" class="feature-card"><span class="icon">⛽</span><h3>Yakıt</h3><p>Yol Maliyet & Tüketim Analizi</p></a>
+    <a href="/enflasyon" class="feature-card"><span class="icon">📉</span><h3>Enflasyon</h3><p>Satın Alma Gücü Kaybı</p></a>
 </div>
 
 <script>
-    // 1. KURUMSAL DURUM VE SAAT
     function updateSystemStatus() {
         const now = new Date();
         const dateStr = now.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -62,42 +62,24 @@
     }
     setInterval(updateSystemStatus, 1000); updateSystemStatus();
 
-    // 2. GELİŞMİŞ ARAMA (Türkçe Karakter Duyarlı)
     document.getElementById('quickSearch').addEventListener('input', function(e) {
-        let term = e.target.value.toLowerCase()
-            .replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g')
-            .replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').trim();
-            
+        let term = e.target.value.toLowerCase().replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').trim();
         document.querySelectorAll('.feature-card').forEach(card => {
-            let title = card.querySelector('h3').innerText.toLowerCase()
-                .replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g')
-                .replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c');
-            
+            let title = card.querySelector('h3').innerText.toLowerCase().replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c');
             card.style.display = title.includes(term) ? "flex" : "none";
         });
     });
 
-    // 3. FİNANS VERİLERİ
-    let prevGold = 0;
     async function updateRates() {
         try {
             const res = await fetch('/api/finans');
             const data = await res.json();
             document.getElementById('usdVal').innerText = data.usd + " ₺";
             document.getElementById('eurVal').innerText = data.eur + " ₺";
-            
-            const goldEl = document.getElementById('goldVal');
-            const currentGold = parseFloat(data.gold.replace('.', '').replace(',', '.'));
-            
-            if(prevGold > 0) {
-                if(currentGold > prevGold) goldEl.innerHTML = `${data.gold} ₺ <span class="up">↑</span>`;
-                else if(currentGold < prevGold) goldEl.innerHTML = `${data.gold} ₺ <span class="down">↓</span>`;
-                else goldEl.innerText = data.gold + " ₺";
-            } else { goldEl.innerText = data.gold + " ₺"; }
-            prevGold = currentGold;
+            document.getElementById('goldVal').innerText = data.gold + " ₺";
         } catch (e) { console.error("Veri hatası"); }
     }
-    setInterval(updateRates, 60000); updateRates();
+    updateRates(); setInterval(updateRates, 60000);
 </script>
 </body>
 </html>
