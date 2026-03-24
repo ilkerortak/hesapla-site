@@ -28,6 +28,13 @@
     <p>SİSTEM AKTİF | 24 MART 2026</p>
 </div>
 
+<div class="live-ticker">
+    <div class="ticker-item">🇺🇸 <b>USD:</b> 32.54 ₺</div>
+    <div class="ticker-item">🇪🇺 <b>EUR:</b> 35.18 ₺</div>
+    <div class="ticker-item">🟡 <b>ALTIN:</b> 2.450 ₺</div>
+    <div class="ticker-item" style="color: #f7931a; border-right: none;">₿ <b>BITCOIN:</b> 2.154.200 ₺</div>
+</div>
+
 <div class="grid-container">
     <a href="/netmaas" class="feature-card"><h3>💰 Maaş</h3><p>Bordro & Net Analizi</p></a>
     <a href="/tazminat" class="feature-card"><h3>💼 Tazminat</h3><p>Kıdem & İhbar Hesabı</p></a>
@@ -37,32 +44,23 @@
     <a href="/enflasyon" class="feature-card"><h3>📉 Enflasyon</h3><p>Alım Gücü Kaybı</p></a>
     <a href="/kredi" class="feature-card"><h3>🏦 Kredi</h3><p>Banka Ödeme Planı</p></a>
     <a href="/yas" class="feature-card"><h3>🎂 Yaş</h3><p>Kronolojik Analiz</p></a>
-    
-    <a href="/doviz" class="feature-card"><h3>💱 Döviz & Altın</h3><p>Anlık Kur ve Varlık Çeviri</p></a>
-    
+    <a href="/doviz" class="feature-card"><h3>💱 Döviz & Altın</h3><p>Anlık Kur Çeviri</p></a>
     <a href="/bitcoin" class="feature-card" style="border-bottom: 2px solid #f7931a;">
         <h3 style="color: #f7931a;">₿ Bitcoin</h3>
         <p>Kripto Varlık Analizi</p>
     </a>
-
     <a href="/kdv" class="feature-card"><h3>🧾 KDV</h3><p>Vergi Matrah Hesabı</p></a>
     <a href="/mesai" class="feature-card"><h3>🕒 Mesai</h3><p>Ek Kazanç Tablosu</p></a>
     <a href="/cv" class="feature-card"><h3>📄 CV</h3><p>Hızlı PDF Oluşturucu</p></a>
 </div>
 
 <script>
-    // Menü Aç/Kapat
     function toggleMenu() { 
-        const menu = document.getElementById('navMenu');
-        menu.classList.toggle('active'); 
+        document.getElementById('navMenu').classList.toggle('active'); 
     }
-
-    // HATA TARAMASI: Menü dışına tıklandığında kapanmama hatası düzeltildi
     window.onclick = function(e) { 
-        const menu = document.getElementById('navMenu');
-        // Eğer tıklanan yer menü butonu değilse ve menü açıksa kapat
-        if(!e.target.matches('.menu-btn') && menu.classList.contains('active')) {
-            menu.classList.remove('active'); 
+        if(!e.target.matches('.menu-btn')) {
+            document.getElementById('navMenu').classList.remove('active');
         }
     }
 </script>
