@@ -1,12 +1,13 @@
 /**
- * H360 ELITE - CORE ENGINE v3.1 (Mobile & Branding Edition)
+ * H360 ELITE - CORE ENGINE v3.0 (Branding & High-End UI)
+ * Tam sürüm - Eksiksiz ve Hataları Giderilmiş Mod
  */
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. ESKİLERİ TEMİZLE
-    const old = document.querySelectorAll('.glass-nav, .dropdown-menu, nav, .menu-container, .h3-header, .h3-overlay');
-    old.forEach(el => el.remove());
+    // 1. ESKİ KALINTILARI TEMİZLE
+    const oldMenus = document.querySelectorAll('.glass-nav, .dropdown-menu, nav, .menu-container, .h360-header, .h360-menu-overlay');
+    oldMenus.forEach(el => el.remove());
 
-    // 2. MOBİL UYUMLU PREMIUM CSS
+    // 2. PREMIUM CSS
     const style = document.createElement('style');
     style.textContent = `
         :root { 
@@ -17,65 +18,78 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         .h3-header {
-            position: fixed; top: 0; left: 0; right: 0; height: 80px;
+            position: fixed; top: 0; left: 0; right: 0; height: 100px;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 5%; z-index: 10000;
+            padding: 0 6%; z-index: 10000;
             background: linear-gradient(180deg, rgba(11, 15, 25, 1) 0%, rgba(11, 15, 25, 0) 100%);
-            backdrop-filter: blur(10px);
+            pointer-events: none;
         }
+        .h3-header * { pointer-events: auto; }
 
-        .h3-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .logo-icon {
-            width: 38px; height: 38px; background: var(--accent);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 15px var(--accent-glow);
-            font-weight: 900; color: #fff; font-size: 1rem;
+        .h3-logo { 
+            display: flex; align-items: center; gap: 15px; text-decoration: none; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .logo-text { color: #fff; font-weight: 800; font-size: 1.1rem; letter-spacing: -1px; }
+        .h3-logo:hover { transform: scale(1.05); }
+        
+        .logo-icon {
+            width: 45px; height: 45px; background: var(--accent);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px var(--accent-glow);
+            font-weight: 900; color: #fff; font-size: 1.2rem;
+            position: relative; overflow: hidden;
+        }
+        .logo-icon::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%); transition: 0.6s;
+        }
+        .h3-logo:hover .logo-icon::after { transform: translateX(100%); }
+
+        .logo-text { color: #fff; font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
         .logo-text span { color: var(--accent); font-weight: 300; }
 
         .h3-trigger {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
-            padding: 8px 16px; border-radius: 12px; cursor: pointer;
-            display: flex; align-items: center; gap: 8px; z-index: 10001;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+            padding: 10px 22px; border-radius: 14px; cursor: pointer;
+            backdrop-filter: blur(10px); display: flex; align-items: center; gap: 12px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .h3-trigger span { color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; }
+        .h3-trigger:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--accent); }
+        .h3-trigger span { color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px; opacity: 0.8; }
         
-        .h3-burger { width: 18px; height: 10px; position: relative; }
-        .h3-burger div { position: absolute; height: 2px; background: #fff; border-radius: 10px; transition: 0.3s; width: 100%; }
-        .b-1 { top: 0; } .b-2 { bottom: 0; width: 60%; right: 0; }
-        .h3-trigger.active .b-1 { transform: translateY(4px) rotate(45deg); }
-        .h3-trigger.active .b-2 { transform: translateY(-4px) rotate(-45deg); width: 100%; }
+        .h3-burger { width: 18px; height: 12px; position: relative; }
+        .h3-burger div { position: absolute; height: 2px; background: #fff; border-radius: 10px; transition: 0.4s; }
+        .b-1 { top: 0; width: 100%; } .b-2 { bottom: 0; width: 60%; right: 0; }
+        .h3-trigger.active .b-1 { transform: translateY(5px) rotate(45deg); width: 100%; }
+        .h3-trigger.active .b-2 { transform: translateY(-5px) rotate(-45deg); width: 100%; }
 
         .h3-overlay {
-            position: fixed; inset: 0; background: rgba(8, 12, 21, 0.95);
-            backdrop-filter: blur(30px); z-index: 9999;
+            position: fixed; inset: 0; background: rgba(8, 12, 21, 0.8);
+            backdrop-filter: blur(0px); z-index: 9999;
             display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; transition: 0.4s ease;
+            opacity: 0; visibility: hidden; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .h3-overlay.open { opacity: 1; visibility: visible; }
+        .h3-overlay.open { opacity: 1; visibility: visible; backdrop-filter: blur(40px); }
 
         .h3-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-            width: 90%; max-height: 80vh; overflow-y: auto; padding: 20px 0;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;
+            width: 85%; max-width: 1000px; transform: scale(0.9); transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        .h3-overlay.open .h3-grid { transform: scale(1); }
 
         .h3-item {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-            padding: 20px 10px; border-radius: 20px; text-decoration: none;
-            display: flex; flex-direction: column; align-items: center; gap: 12px;
-            transition: 0.3s;
+            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+            padding: 35px 20px; border-radius: 28px; text-decoration: none;
+            display: flex; flex-direction: column; align-items: center; gap: 18px;
+            transition: 0.3s; opacity: 0; transform: translateY(20px);
         }
-        .h3-item i { font-size: 1.4rem; color: var(--accent); }
-        .h3-item b { color: #fff; font-size: 0.65rem; font-weight: 700; text-align: center; }
+        .h3-overlay.open .h3-item { opacity: 1; transform: translateY(0); }
+        .h3-item:hover { background: rgba(59, 130, 246, 0.1); border-color: var(--accent); transform: translateY(-10px); }
+        .h3-item i { font-size: 1.8rem; color: var(--accent); filter: drop-shadow(0 0 10px var(--accent-glow)); }
+        .h3-item b { color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
 
-        /* MOBİL ÖZEL AYARLAR */
-        @media (max-width: 600px) {
-            .h3-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .h3-header { height: 70px; }
-            .logo-text { display: none; } /* Mobilde sadece H ikon kalsın, alan kazanalım */
-            .h3-item { padding: 25px 10px; }
-        }
+        @media (max-width: 900px) { .h3-grid { grid-template-columns: repeat(2, 1fr); } }
     `;
     document.head.appendChild(style);
 
@@ -95,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="h3-overlay" id="h3Overlay">
             <div class="h3-grid">
                 <a href="netmaas.html" class="h3-item"><i class="fa-solid fa-money-bill-wave"></i><b>MAAŞ</b></a>
-                <a href="tazminat.html" class="h3-item"><i class="fa-solid fa-briefcase"></i><b>TAZMINAT</b></a>
+                <a href="tazminat.html" class="h3-item"><i class="fa-solid fa-briefcase"></i><b>TAZMİNAT</b></a>
                 <a href="issizlik.html" class="h3-item"><i class="fa-solid fa-calendar-day"></i><b>İŞSİZLİK</b></a>
                 <a href="faiz.html" class="h3-item"><i class="fa-solid fa-chart-line"></i><b>FAİZ</b></a>
                 <a href="yakit.html" class="h3-item"><i class="fa-solid fa-gas-pump"></i><b>YAKIT</b></a>
@@ -111,17 +125,19 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.body.insertAdjacentHTML('afterbegin', uiHTML);
 
+    // 4. FUNCTIONALITY
     const btn = document.getElementById('h3Btn');
     const overlay = document.getElementById('h3Overlay');
     
-    // Tıklama ve Dokunma Desteği
-    const toggle = (e) => {
-        e.preventDefault();
+    btn.onclick = (e) => {
+        e.stopPropagation();
         btn.classList.toggle('active');
         overlay.classList.toggle('open');
         document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
     };
 
-    btn.addEventListener('click', toggle);
-    btn.addEventListener('touchstart', toggle, {passive: false});
+    // Staggered Animation
+    document.querySelectorAll('.h3-item').forEach((item, i) => {
+        item.style.transitionDelay = (0.05 + (i * 0.03)) + 's';
+    });
 });
