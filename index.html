@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hesapla 360 Finansal Uzman </title>
+    <title>Hesapla 360 Finansal Uzman</title>
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23007bff%22/><text y=%2265%22 x=%2210%22 font-family=%22Arial%22 font-weight=%22900%22 font-size=%2245%22 fill=%22white%22>H360</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23007bff%22/><path d=%22M30 70 L45 50 L60 60 L80 30%22 fill=%22none%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22/><text y=%2285%22 x=%2250%22 font-family=%22Arial%22 font-weight=%22900%22 font-size=%2232%22 text-anchor=%22middle%22 fill=%22white%22>H360</text></svg>">
     
     <link rel="stylesheet" href="style.css">
     <style>
-        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        /* Logo ve Arayüz Tasarımı */
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: 0.3s; }
+        .logo:hover { opacity: 0.8; }
         .logo-box { 
-            background: #007bff; color: white; padding: 5px 10px; 
-            border-radius: 6px; font-weight: 900; font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(0,123,255,0.3);
+            background: linear-gradient(135deg, #007bff, #0056b3); 
+            color: white; padding: 6px 12px; 
+            border-radius: 8px; font-weight: 900; font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,123,255,0.4);
+            display: flex; align-items: center; justify-content: center;
         }
+        .rate-bar b { color: #ffffff; font-weight: 700; margin-left: 4px; }
     </style>
 </head>
 <body>
@@ -38,9 +43,9 @@
 </nav>
 
 <div class="rate-bar" id="rateBar">
-    <span class="rate-usd">🇺🇸 USD <b id="usdVal">Yükleniyor...</b></span>
-    <span class="rate-eur">🇪🇺 EUR <b id="eurVal">Yükleniyor...</b></span>
-    <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">Yükleniyor...</b></span>
+    <span class="rate-usd">🇺🇸 USD <b id="usdVal">...</b></span>
+    <span class="rate-eur">🇪🇺 EUR <b id="eurVal">...</b></span>
+    <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">...</b></span>
 </div>
 
 <div class="grid-container">
@@ -58,22 +63,21 @@
 <script>
     async function updateRates() {
         try {
-            // En stabil API kaynağına geçtik (CORS hatası vermez)
-            const res = await fetch('https://open.er-api.com/v6/latest/USD');
-            const data = await res.json();
+            // Railway ve GitHub üzerinde en sorunsuz çalışan API kaynağı
+            const response = await fetch('https://open.er-api.com/v6/latest/USD');
+            const data = await response.json();
             
             if(data && data.rates) {
                 const tryRate = data.rates.TRY;
                 const eurRate = data.rates.EUR;
                 const xauRate = data.rates.XAU; // Ons Altın (USD)
 
-                // 1. Dolar ve Euro Güncelleme
+                // Dolar ve Euro'yu TL'ye çevirip yazdır
                 document.getElementById('usdVal').innerText = tryRate.toFixed(2) + " ₺";
                 document.getElementById('eurVal').innerText = (tryRate / eurRate).toFixed(2) + " ₺";
 
-                // 2. Gram Altın Hesaplama
-                // Investing'deki 6.200 TL bandını yakalamak için formül:
-                // (Ons / 31.1034) * Dolar Kuru
+                // Investing/Bigpara Gerçek Altın Fiyatı Hesaplama
+                // Formül: (Canlı Ons / 31.1034) * Canlı Dolar Kuru
                 if (xauRate) {
                     const gramGold = (xauRate / 31.1034) * tryRate;
                     document.getElementById('goldVal').innerText = gramGold.toLocaleString('tr-TR', {
@@ -82,14 +86,15 @@
                     }) + " ₺";
                 }
             }
-        } catch (e) {
-            console.error("Hata:", e);
+        } catch (error) {
+            console.error("Fiyatlar çekilemedi:", error);
             document.getElementById('goldVal').innerText = "Hata!";
         }
     }
 
+    // Hemen çalıştır ve her dakika güncelle
     updateRates();
-    setInterval(updateRates, 60000); // Her dakika tazele
+    setInterval(updateRates, 60000);
 </script>
 
 </body>
