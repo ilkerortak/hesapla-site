@@ -17,14 +17,18 @@
     <li><a href="cv.html">CV Oluşturucu</a></li>
   </ul>
 </nav>
-<hr>
+
+<div class="container">
 <h1>Kredi Hesaplama 2026</h1>
+<button onclick="toggleTheme()">Koyu/Açık Tema</button>
 <p>Kredi tutarı, vade ve faiz oranını girin:</p>
 <input type="number" id="tutar" placeholder="Kredi Tutarı">
 <input type="number" id="vade" placeholder="Vade (ay)">
 <input type="number" id="faiz" placeholder="Faiz (%)">
 <button onclick="hesapla()">Hesapla</button>
 <h2 id="sonuc"></h2>
+</div>
+
 <script>
 function hesapla() {
   let tutar = parseFloat(document.getElementById("tutar").value);
@@ -33,6 +37,7 @@ function hesapla() {
   let aylik = tutar * (1 + faiz) / vade;
   document.getElementById("sonuc").innerText = "Aylık Ödeme: " + aylik.toFixed(2) + " TL";
 }
+function toggleTheme() { document.body.classList.toggle("dark"); }
 </script>
 </body>
 </html>
