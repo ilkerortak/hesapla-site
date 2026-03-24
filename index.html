@@ -10,20 +10,15 @@
 
 <nav>
     <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
-    
     <div class="nav-container">
         <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
-        
         <div class="dropdown-menu" id="navMenu">
-            <a href="netmaas.html">💰 Maaş</a>
-            <a href="tazminat.html">💼 Tazminat</a>
-            <a href="issizlik.html">📅 İşsizlik</a>
-            <a href="kredi.html">🏦 Kredi</a>
-            <a href="yas.html">🎂 Yaş</a>
-            <a href="doviz.html">💱 Döviz</a>
-            <a href="kdv.html">🧾 KDV</a>
-            <a href="mesai.html">🕒 Mesai</a>
-            <a href="cv.html">📄 CV</a>
+            <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
+            <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
+            <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
+            <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
+            <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
+            <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
         </div>
     </div>
 </nav>
@@ -38,31 +33,29 @@
     <a href="netmaas.html" class="feature-card"><span class="icon">💰</span><h3>Maaş</h3><p>Bordro & Net Analizi</p></a>
     <a href="tazminat.html" class="feature-card"><span class="icon">💼</span><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></a>
     <a href="issizlik.html" class="feature-card"><span class="icon">📅</span><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></a>
+    
+    <a href="faiz.html" class="feature-card"><span class="icon">📈</span><h3>Faiz</h3><p>Bileşik Getiri Analizi</p></a>
+    <a href="yakit.html" class="feature-card"><span class="icon">⛽</span><h3>Yakıt</h3><p>Yol Maliyeti & Tüketim</p></a>
+    <a href="enflasyon.html" class="feature-card"><span class="icon">📉</span><h3>Enflasyon</h3><p>Alım Gücü Kaybı</p></a>
+
     <a href="kredi.html" class="feature-card"><span class="icon">🏦</span><h3>Kredi</h3><p>Banka Ödeme Planı</p></a>
     <a href="yas.html" class="feature-card"><span class="icon">🎂</span><h3>Yaş</h3><p>Kronolojik Analiz</p></a>
     <a href="doviz.html" class="feature-card"><span class="icon">💱</span><h3>Döviz</h3><p>Global Kur Çeviri</p></a>
+
     <a href="kdv.html" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Vergi Matrah Hesabı</p></a>
     <a href="mesai.html" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></a>
     <a href="cv.html" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></a>
 </div>
 
 <script>
-    // MENÜ KONTROLÜ
-    function toggleMenu() {
-        document.getElementById('navMenu').classList.toggle('active');
-    }
-
-    // Menü dışına tıklandığında kapatma (Hata Taraması Yapıldı)
-    window.onclick = function(e) {
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+    window.onclick = function(e) { 
         if(!e.target.matches('.menu-btn')) {
             const menu = document.getElementById('navMenu');
-            if(menu && menu.classList.contains('active')) {
-                menu.classList.remove('active');
-            }
+            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
         }
     }
 
-    // CANLI VERİ FONKSİYONU
     async function updateRates() {
         try {
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
@@ -71,21 +64,17 @@
             const eurRate = data.rates.EUR;
             const xauUsd = data.rates.XAU;
 
-            const eurTry = (tryVal / eurRate).toFixed(2);
             document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
-            document.getElementById('eurVal').innerText = eurTry + " ₺";
+            document.getElementById('eurVal').innerText = (tryVal / eurRate).toFixed(2) + " ₺";
 
-            // Altın Verisi (Ons/USD üzerinden TL Gram hesaplama)
             if (xauUsd) {
                 const goldPrice = ((1 / xauUsd) / 31.1034) * tryVal;
                 document.getElementById('goldVal').innerText = goldPrice.toFixed(2) + " ₺";
             }
-        } catch (err) { console.error("Veri çekme hatası:", err); }
+        } catch (err) { console.error("Veri hatası"); }
     }
-
     updateRates();
     setInterval(updateRates, 60000);
 </script>
-
 </body>
 </html>
