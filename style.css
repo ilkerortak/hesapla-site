@@ -37,11 +37,22 @@ nav {
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* HERO BAŞLIKLAR */
-.hero-section { text-align: center; margin: 60px auto 30px; }
+.hero-section { text-align: center; margin: 60px auto 10px; }
 .hero-section h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 5px; color: #fff; }
 .hero-section p { color: #007bff; font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1.5px; }
 
-/* ANA SAYFA GRID YAPISI (image_d39f0b.png) */
+/* YENİ: YATAY ŞERİT (TICKER) TASARIMI */
+.live-ticker {
+    display: flex; justify-content: center; gap: 30px;
+    background: #0d1117; padding: 15px 0;
+    border-top: 1px solid #1c212c; border-bottom: 1px solid #1c212c;
+    margin-bottom: 40px;
+}
+.ticker-item { font-size: 0.8rem; font-weight: 600; color: #fff; white-space: nowrap; }
+.ticker-item b { color: #555; margin-right: 5px; }
+.btc-item { color: #f7931a !important; }
+
+/* ANA SAYFA GRID YAPISI */
 .grid-container {
     display: grid; 
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -56,7 +67,7 @@ nav {
 .feature-card h3 { color: #fff; font-size: 1.2rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
 .feature-card p { color: #555; font-size: 0.85rem; font-weight: 600; }
 
-/* İÇ SAYFA FORM YAPISI (image_c9b220.png) */
+/* İÇ SAYFA FORM YAPISI */
 .form-box {
     max-width: 550px; margin: 40px auto; background: #12161e; 
     border: 1px solid #1c212c; padding: 50px; border-radius: 20px;
@@ -85,6 +96,7 @@ nav {
 
 /* MOBİL UYUM */
 @media (max-width: 768px) {
+    .live-ticker { justify-content: flex-start; overflow-x: auto; padding: 15px 20px; }
     .grid-container { grid-template-columns: 1fr; }
     .hero-section h2 { font-size: 1.8rem; }
     .form-box { margin: 20px; padding: 30px; }
