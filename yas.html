@@ -1,32 +1,88 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><link rel="stylesheet" href="style.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Yaş Analizi | Hesapla360</title>
+</head>
 <body>
-<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
-    <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
-    <a href="kredi.html">🏦 Kredi</a><a href="yas.html" class="active">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
-    <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-</div></nav>
-<div class="container">
-    <h2>🎂 Yaş Analizi</h2>
-    <div class="input-group"><label>Doğum Tarihi</label><input type="date" id="d"></div>
-    <button onclick="calc()">Zamanı Hesapla</button>
-    <div id="res" class="result-box">
-        <div class="row"><span>Geçen Yıl</span><span id="y"></span></div>
-        <div class="row"><span>Toplam Ay</span><span id="a"></span></div>
-        <div class="row"><span>Toplam Hafta</span><span id="h"></span></div>
-        <div class="row total"><span>Toplam Gün</span><span id="g"></span></div>
+
+<nav>
+    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
+    <div class="nav-menu">
+        <a href="netmaas.html">💰 Maaş</a>
+        <a href="tazminat.html">💼 Tazminat</a>
+        <a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html">🏦 Kredi</a>
+        <a href="yas.html" class="active">🎂 Yaş</a>
+        <a href="doviz.html">💱 Döviz</a>
+        <a href="kdv.html">🧾 KDV</a>
+        <a href="mesai.html">🕒 Mesai</a>
+        <a href="cv.html">📄 CV</a>
+    </div>
+</nav>
+
+<div style="max-width: 600px; margin: 60px auto; padding: 0 20px;">
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px;">Yaş <span style="color: var(--accent);">Analizi</span></h2>
+        <p style="color: var(--dim); font-size: 0.85rem; margin-top: 5px;">Hayatınızın detaylı zaman dökümü.</p>
+    </div>
+
+    <div class="feature-card" style="text-align: left; cursor: default; transform: none; padding: 35px;">
+        
+        <div style="margin-bottom: 25px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Doğum Tarihiniz</label>
+            <input type="date" id="d" 
+                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s; color-scheme: dark;">
+        </div>
+
+        <button onclick="calc()" 
+            style="width: 100%; background: var(--accent); color: #fff; border: none; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);">
+            ZAMANI HESAPLA
+        </button>
+
+        <div id="res" style="display: none; margin-top: 35px; padding-top: 25px; border-top: 1px dotted var(--border);">
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Geçen Yıl</span>
+                <span id="y" style="color: #fff; font-weight: 600;"></span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Toplam Ay</span>
+                <span id="a" style="color: #fff; font-weight: 600;"></span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Toplam Hafta</span>
+                <span id="h" style="color: #fff; font-weight: 600;"></span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding: 20px; background: rgba(88, 166, 255, 0.05); border-radius: 12px; border: 1px solid rgba(88, 166, 255, 0.1);">
+                <span style="color: #fff; font-weight: 700; font-size: 1.1rem;">Toplam Gün</span>
+                <span id="g" style="color: var(--accent); font-weight: 800; font-size: 1.5rem;"></span>
+            </div>
+        </div>
     </div>
 </div>
+
 <script>
 function calc(){
-    let d=new Date(document.getElementById("d").value), b=new Date(); if(isNaN(d))return;
-    let diff=b-d;
-    document.getElementById("res").style.display="block";
-    document.getElementById("y").innerText=Math.floor(diff/31557600000)+" Yıl";
-    document.getElementById("a").innerText=Math.floor(diff/2629800000).toLocaleString();
-    document.getElementById("h").innerText=Math.floor(diff/604800000).toLocaleString();
-    document.getElementById("g").innerText=Math.floor(diff/86400000).toLocaleString();
+    let d = new Date(document.getElementById("d").value);
+    let now = new Date();
+    if(isNaN(d)) return;
+    
+    let diff = now - d;
+    
+    document.getElementById("res").style.display = "block";
+    document.getElementById("y").innerText = Math.floor(diff / 31557600000) + " Yıl";
+    document.getElementById("a").innerText = Math.floor(diff / 2629800000).toLocaleString() + " Ay";
+    document.getElementById("h").innerText = Math.floor(diff / 604800000).toLocaleString() + " Hafta";
+    document.getElementById("g").innerText = Math.floor(diff / 86400000).toLocaleString() + " Gün";
 }
 </script>
-</body></html>
+
+</body>
+</html>
