@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8"><title>H360 | Kredi Planlama</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H360 | Kredi Planlama</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<nav>
+    <a href="/" class="logo">
+        <div class="logo-box">H360</div> 
+        HESAPLA<span>360</span>
+    </a>
+    <div class="nav-container">
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
+            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
+            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
+            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
+            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
+            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+        </div>
+    </div>
+</nav>
+
 <div class="hero-section">
     <h2>Kredi Planlama</h2>
     <p>BANKA TAKSİT VE TOPLAM MALİYET ANALİZİ</p>
@@ -23,9 +44,9 @@
     <button class="btn-calc" onclick="calcKredi()">TAKSİT HESAPLA</button>
 
     <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.7rem; font-weight:800;">AYLIK TAKSİT TUTARI</p>
+        <p style="color:#555; font-size:0.75rem; font-weight:800;">AYLIK TAKSİT TUTARI</p>
         <div class="res-val" id="taksit">0 ₺</div>
-        <div style="display:flex; justify-content:space-between; margin-top:15px; font-size:0.8rem; color:#888;">
+        <div style="display:flex; justify-content:space-between; margin-top:20px; font-size:0.85rem; color:#888; border-top: 1px solid #1c212c; padding-top: 15px;">
             <span>Toplam Ödeme: <b id="totalPay" style="color:#fff">0 ₺</b></span>
             <span>Faiz Yükü: <b id="totalInterest" style="color:#e74c3c">0 ₺</b></span>
         </div>
@@ -33,18 +54,39 @@
 </div>
 
 <script>
+    // Menü Fonksiyonu
+    function toggleMenu() { 
+        document.getElementById('navMenu').classList.toggle('active'); 
+    }
+
+    // Kredi Hesaplama Motoru
     function calcKredi() {
         const t = parseFloat(document.getElementById('kt').value) || 0;
         const r = (parseFloat(document.getElementById('kf').value) / 100);
         const v = parseInt(document.getElementById('kv').value) || 0;
         
         if(t > 0 && r > 0 && v > 0) {
+            // Standart banka kredi taksit formülü
             const m = (t * r * Math.pow(1+r, v)) / (Math.pow(1+r, v) - 1);
             const total = m * v;
+            
             document.getElementById('taksit').innerText = Math.round(m).toLocaleString() + " ₺";
             document.getElementById('totalPay').innerText = Math.round(total).toLocaleString() + " ₺";
             document.getElementById('totalInterest').innerText = Math.round(total - t).toLocaleString() + " ₺";
             document.getElementById('res').style.display = "block";
+        }
+    }
+
+    // Menü dışına tıklandığında otomatik kapatma
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('active')) {
+                    openDropdown.classList.remove('active');
+                }
+            }
         }
     }
 </script>
