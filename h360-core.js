@@ -1,13 +1,13 @@
 /**
- * H360 ELITE - CORE ENGINE v4.5
- * [Menü + Logo + Mobil Fix + Sağ/Sol Reklam Alanları]
+ * H360 ELITE - CORE ENGINE v5.0
+ * [Menü + Logo + Reklam Alanları + Otomatik Orta Blok Sınırlama]
  */
 document.addEventListener("DOMContentLoaded", () => {
     // 1. ESKİ KALINTILARI TEMİZLE
     const old = document.querySelectorAll('.h3-header, .h3-overlay, .ad-sidebar, nav, .glass-nav');
     old.forEach(el => el.remove());
 
-    // 2. CSS - FULL INTERFACE & ADS
+    // 2. CSS - FULL INTERFACE & DYNAMIC LAYOUT
     const style = document.createElement('style');
     style.textContent = `
         :root { 
@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
             padding: 12px 22px; border-radius: 14px; cursor: pointer;
             display: flex; align-items: center; gap: 10px; z-index: 10002; transition: 0.3s;
         }
-        .h3-trigger:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
         .h3-trigger span { color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
 
         .h3-burger { width: 18px; height: 12px; position: relative; }
@@ -51,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .h3-trigger.active .b-1 { transform: translateY(5px) rotate(45deg); }
         .h3-trigger.active .b-2 { transform: translateY(-5px) rotate(-45deg); width: 100%; }
 
-        /* REKLAM ALANLARI (Sticky Banner) */
+        /* REKLAM ALANLARI */
         .ad-sidebar {
             position: fixed; top: 120px; width: 160px; height: 600px;
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
@@ -61,7 +60,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         .ad-left { left: 20px; }
         .ad-right { right: 20px; }
-        .ad-label { position: absolute; top: 5px; font-size: 9px; color: #444; letter-spacing: 1px; }
+        .ad-label { position: absolute; top: 5px; font-size: 9px; color: #444; }
+
+        /* OTOMATİK ORTA BLOK SINIRLAMA (İşte istediğin yer) */
+        #h3-main-content, .main-container, main, .content {
+            max-width: 1000px !important;
+            margin: 0 auto !important;
+            padding-top: 120px !important;
+            position: relative;
+            z-index: 1;
+        }
 
         /* Menü Overlay */
         .h3-overlay {
@@ -74,10 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .h3-grid {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;
             width: 90%; max-width: 1100px; margin: 0 auto; padding: 120px 0 60px;
-            transform: scale(0.95); transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .h3-overlay.open .h3-grid { transform: scale(1); }
-
         .h3-item {
             background: rgba(255,255,255,0.02); border: 1px solid var(--border);
             padding: 35px 15px; border-radius: 28px; text-decoration: none;
@@ -85,23 +90,17 @@ document.addEventListener("DOMContentLoaded", () => {
             transition: 0.3s; opacity: 0;
         }
         .h3-overlay.open .h3-item { opacity: 1; }
-        .h3-item:hover { background: rgba(59, 130, 246, 0.1); border-color: var(--accent); transform: translateY(-8px); }
-        .h3-item i { font-size: 1.8rem; color: var(--accent); filter: drop-shadow(0 0 10px var(--accent-glow)); }
+        .h3-item i { font-size: 1.8rem; color: var(--accent); }
         .h3-item b { color: #fff; font-size: 0.75rem; font-weight: 700; text-align: center; }
 
-        /* RESPONSIVE & AD-LOGIC */
+        /* RESPONSIVE */
         @media (max-width: 1400px) {
-            .ad-sidebar { display: none; } /* Reklamlar tablet ve mobilde gizlenir */
+            .ad-sidebar { display: none !important; }
+            #h3-main-content, .main-container, main, .content { max-width: 95% !important; }
         }
-
-        @media (max-width: 900px) {
-            .h3-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
         @media (max-width: 600px) {
-            .h3-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .h3-grid { grid-template-columns: repeat(2, 1fr); }
             .logo-text { display: none; }
-            .h3-item { padding: 25px 10px; }
         }
     `;
     document.head.appendChild(style);
@@ -153,15 +152,10 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if(overlay.classList.contains('open')) {
             document.body.style.overflow = 'hidden';
-            ads.forEach(ad => ad.style.opacity = '0'); // Menü varken reklam gizle
+            ads.forEach(ad => ad.style.opacity = '0');
         } else {
             document.body.style.overflow = '';
             ads.forEach(ad => ad.style.opacity = '1');
         }
     };
-
-    // Staggered Delay
-    document.querySelectorAll('.h3-item').forEach((item, i) => {
-        item.style.transitionDelay = (0.05 + (i * 0.03)) + 's';
-    });
 });
