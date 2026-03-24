@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>HESAPLA360 | Finansal Araçlar</title>
+    <title>HESAPLA360 | Finansal Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,45 +10,60 @@
 <nav>
     <a href="index.html" class="logo">HESAPLA<span>360</span></a>
     <div class="nav-menu">
-        <a href="netmaas.html">Maaş</a>
-        <a href="tazminat.html">Tazminat</a>
-        <a href="issizlik.html">İşsizlik</a>
-        <a href="kredi.html">Kredi</a>
-        <a href="yas.html">Yaş</a>
-        <a href="doviz.html">Döviz</a>
-        <a href="kdv.html">KDV</a>
-        <a href="mesai.html">Mesai</a>
-        <a href="cv.html">CV</a>
+        <a href="netmaas.html">💰 Maaş</a>
+        <a href="tazminat.html">💼 Tazminat</a>
+        <a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
+        <a href="doviz.html">💱 Döviz</a>
+        <a href="kdv.html">🧾 KDV</a>
+        <a href="mesai.html">🕒 Mesai</a>
+        <a href="cv.html">📄 CV</a>
     </div>
 </nav>
 
-<div class="rate-bar" id="rateBar">Döviz kurları senkronize ediliyor...</div>
+<div class="rate-bar" id="rateBar">
+    <span class="rate-usd">🇺🇸 USD <b id="usdVal">--.-- ₺</b></span>
+    <span class="rate-eur">🇪🇺 EUR <b id="eurVal">--.-- ₺</b></span>
+    <span class="rate-gold">🟡 ALTIN/GR <b id="goldVal">--.-- ₺</b></span>
+</div>
 
 <div class="grid-container">
-    <a href="netmaas.html" class="feature-card"><span class="icon">💰</span><h3>Maaş</h3><p>Bordro Analizi</p></a>
-    <a href="tazminat.html" class="feature-card"><span class="icon">💼</span><h3>Tazminat</h3><p>Kıdem & İhbar</p></a>
-    <a href="issizlik.html" class="feature-card"><span class="icon">📅</span><h3>İşsizlik</h3><p>Ödenek Süresi</p></a>
-    <a href="kredi.html" class="feature-card"><span class="icon">🏦</span><h3>Kredi</h3><p>Ödeme Planı</p></a>
-    <a href="yas.html" class="feature-card"><span class="icon">🎂</span><h3>Yaş</h3><p>Zaman Analizi</p></a>
-    <a href="doviz.html" class="feature-card"><span class="icon">💱</span><h3>Döviz</h3><p>Canlı Kurlar</p></a>
-    <a href="kdv.html" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Matrah Hesabı</p></a>
-    <a href="mesai.html" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç</p></a>
-    <a href="cv.html" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>PDF Kaydet</p></a>
+    <a href="netmaas.html" class="feature-card"><span class="icon">💰</span><h3>Maaş</h3><p>Bordro & Net Analizi</p></a>
+    <a href="tazminat.html" class="feature-card"><span class="icon">💼</span><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></a>
+    <a href="issizlik.html" class="feature-card"><span class="icon">📅</span><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></a>
+    <a href="kredi.html" class="feature-card"><span class="icon">🏦</span><h3>Kredi</h3><p>Banka Ödeme Planı</p></a>
+    <a href="yas.html" class="feature-card"><span class="icon">🎂</span><h3>Yaş</h3><p>Kronolojik Analiz</p></a>
+    <a href="doviz.html" class="feature-card"><span class="icon">💱</span><h3>Döviz</h3><p>Global Kur Çeviri</p></a>
+    <a href="kdv.html" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Vergi Matrah Hesabı</p></a>
+    <a href="mesai.html" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></a>
+    <a href="cv.html" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></a>
 </div>
 
 <script>
-    async function getRates() {
+    async function updateRates() {
         try {
-            const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-            const data = await response.json();
-            const usd = data.rates.TRY.toFixed(2);
-            const eur = (data.rates.TRY / data.rates.EUR).toFixed(2);
-            document.getElementById('rateBar').innerHTML = `USD: ${usd} ₺ • EUR: ${eur} ₺ • Piyasalar Açık`;
+            // Döviz Kurları
+            const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            const data = await res.json();
+            const tryVal = data.rates.TRY;
+            const eurVal = (tryVal / data.rates.EUR).toFixed(2);
+            
+            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
+            document.getElementById('eurVal').innerText = eurVal + " ₺";
+
+            // Altın Verisi (Tahmini/Sembolik API - Gerçek Altın verisi için özel key gerekebilir)
+            // Genel API'lerden ONS üzerinden hesaplama:
+            const goldOns = 2150; // Örnek Ons
+            const goldGr = ((goldOns / 31.10) * tryVal).toFixed(2);
+            document.getElementById('goldVal').innerText = goldGr + " ₺";
+
         } catch (e) {
-            document.getElementById('rateBar').innerHTML = "Kur verileri alınamadı.";
+            console.error("Kurlar yüklenemedi.");
         }
     }
-    getRates();
+    updateRates();
+    setInterval(updateRates, 60000); // 1 dakikada bir güncelle
 </script>
 </body>
 </html>
