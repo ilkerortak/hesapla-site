@@ -1,3 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H360 | İşsizlik Ödeneği</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    <div class="nav-container">
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
+            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
+            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
+            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
+            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
+            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+        </div>
+    </div>
+</nav>
+
 <div class="hero-section">
     <h2>İşsizlik Ödeneği</h2>
     <p>SÜRE VE MAAŞ ANALİZ SİSTEMİ</p>
@@ -10,20 +35,43 @@
     <button class="btn-calc" onclick="hesaplaIssizlik()">ÖDENEK SORGULA</button>
 
     <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.7rem; font-weight:800;">AYLIK ALINACAK ÖDENEK</p>
+        <p style="color:#555; font-size:0.75rem; font-weight:800;">AYLIK ALINACAK ÖDENEK</p>
         <div class="res-val" id="odenek">0 ₺</div>
-        <p style="font-size:0.7rem; color:#444; margin-top:10px;">* Brüt maaşın %40'ı hesaplanır, asgari ücretin %80'ini geçemez.</p>
+        <p style="font-size:0.7rem; color:#444; margin-top:15px; border-top: 1px solid #1c212c; padding-top: 10px;">
+            * Brüt maaşın %40'ı hesaplanır, asgari ücretin %80'ini geçemez.
+        </p>
     </div>
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+    // Menü Fonksiyonu
+    function toggleMenu() { 
+        document.getElementById('navMenu').classList.toggle('active'); 
+    }
+    
+    // İşsizlik Hesaplama Fonksiyonu
     function hesaplaIssizlik() {
         const ort = parseFloat(document.getElementById('ortBrut').value) || 0;
+        // 2026 Tahmini tavan (Asgari ücrete göre güncellenmeli)
         let odenek = ort * 0.4;
-        if (odenek > 15998) odenek = 15998; // Örnek tavan fiyat
+        if (odenek > 15998) odenek = 15998; 
         
         document.getElementById('odenek').innerText = Math.round(odenek).toLocaleString() + " ₺";
         document.getElementById('res').style.display = "block";
     }
+
+    // Menü dışına tıklandığında kapatma
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('active')) {
+                    openDropdown.classList.remove('active');
+                }
+            }
+        }
+    }
 </script>
+</body>
+</html>
