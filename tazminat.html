@@ -8,44 +8,89 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
-        .main-wrapper { 
-            display: flex; justify-content: center; align-items: flex-start; 
-            min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; 
+        /* PARLAMA ÖNLEYİCİ & ANİMASYONLU ANA TEMA */
+        body { background-color: #080b12; margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; overflow-x: hidden; }
+        
+        /* Gelişmiş Dropdown Menü (12 Sayfa + Animasyon) */
+        .dropdown-menu { 
+            display: none; 
+            position: absolute; 
+            top: 70px; 
+            right: 0; 
+            background: #111827; 
+            border: 1px solid #1f2937; 
+            border-radius: 16px; 
+            padding: 12px; 
+            z-index: 1000;
+            width: 240px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+            transform-origin: top right;
         }
+        
+        .dropdown-menu.active { 
+            display: grid; 
+            grid-template-columns: 1fr;
+            animation: slideDown 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; 
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: scale(0.9) translateY(-20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .dropdown-menu a { 
+            display: flex; 
+            align-items: center;
+            color: #94a3b8; 
+            padding: 10px 15px; 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            font-weight: 600;
+            border-radius: 10px; 
+            transition: 0.2s;
+        }
+        .dropdown-menu a i { width: 25px; font-size: 0.9rem; color: #3b82f6; }
+        .dropdown-menu a:hover { background: #1e293b; color: #fff; transform: translateX(5px); }
+
+        /* Kart ve Tasarım */
+        .main-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; }
         .calc-card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px; padding: 40px; width: 100%; max-width: 550px;
-            backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: #0f172a; border: 1px solid #1e293b;
+            border-radius: 28px; padding: 40px; width: 100%; max-width: 550px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
+
         .header-area { text-align: center; margin-bottom: 30px; }
-        .header-area h1 { font-size: 1.6rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
-        .header-area p { color: #007bff; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; }
+        .header-area h1 { font-size: 1.4rem; letter-spacing: 2px; margin: 0; font-weight: 700; color: #fff; }
+        .header-area p { color: #3b82f6; font-size: 0.7rem; font-weight: 800; margin-top: 8px; text-transform: uppercase; }
         
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 8px; }
+        .input-group label { display: block; color: #3b82f6; font-size: 0.65rem; font-weight: 800; margin-bottom: 10px; }
         .input-group input {
-            width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
+            width: 100%; padding: 18px; background: #111827;
+            border: 1px solid #1f2937; border-radius: 14px;
+            color: #fff; font-size: 1rem; outline: none; transition: 0.2s; box-sizing: border-box;
         }
-        .input-group input:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
-        
+        .input-group input:focus { border-color: #3b82f6; }
+
         .calc-btn {
-            width: 100%; padding: 18px; background: #007bff; color: #fff;
-            border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1rem;
+            width: 100%; padding: 20px; background: #3b82f6; color: #fff;
+            border: none; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1rem;
         }
 
-        .result-box { margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15); display: none; }
-        .res-item { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
-        .res-item span { font-size: 0.7rem; color: #888; font-weight: 800; display: block; margin-bottom: 5px; }
-        .res-item b { font-size: 1.6rem; color: #fff; }
-        .res-total { text-align: center; padding: 20px; background: rgba(46, 204, 113, 0.1); border-radius: 15px; border: 1px solid rgba(46, 204,  green, 0.2); }
-        .res-total b { color: #2ecc71; font-size: 2.2rem; }
+        /* Sonuç Alanı */
+        .result-box { margin-top: 30px; padding-top: 25px; border-top: 1px dashed #1f2937; display: none; }
+        .res-item { background: #111827; padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 1px solid #1e293b; }
+        .res-item span { font-size: 0.65rem; color: #3b82f6; font-weight: 800; display: block; margin-bottom: 8px; }
+        .res-item b { font-size: 1.8rem; color: #fff; letter-spacing: -1px; }
+        
+        .res-total { text-align: center; padding: 25px; background: rgba(16, 185, 129, 0.05); border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.1); }
+        .res-total span { color: #64748b; font-size: 0.75rem; font-weight: 700; display: block; margin-bottom: 5px; }
+        .res-total b { color: #10b981; font-size: 2.4rem; letter-spacing: -1px; }
 
-        .detail-row { display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; color: #aaa; padding: 0 5px; }
-        .info-tag { font-size: 0.65rem; color: #555; margin-top: 15px; text-align: center; line-height: 1.4; }
+        .detail-row { display: flex; justify-content: space-between; margin-top: 12px; font-size: 0.8rem; color: #64748b; }
+        .info-tag { font-size: 0.65rem; color: #475569; margin-top: 20px; text-align: center; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -55,11 +100,22 @@
         <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
     </div>
     <div class="nav-right">
-        <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
-        <div class="dropdown-menu" id="navMenu">
-            <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-            <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-            <a href="cv.html">📄 CV</a>
+        <div class="menu-container" style="position: relative;">
+            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered" style="margin-left: 8px;"></i></button>
+            <div class="dropdown-menu" id="navMenu">
+                <a href="netmaas.html"><i class="fa-solid fa-wallet"></i> Maaş</a>
+                <a href="tazminat.html"><i class="fa-solid fa-briefcase"></i> Tazminat</a>
+                <a href="issizlik.html"><i class="fa-solid fa-calendar-check"></i> İşsizlik</a>
+                <a href="faiz.html"><i class="fa-solid fa-chart-line"></i> Faiz</a>
+                <a href="yakit.html"><i class="fa-solid fa-gas-pump"></i> Yakıt</a>
+                <a href="enflasyon.html"><i class="fa-solid fa-arrow-down-wide-short"></i> Enflasyon</a>
+                <a href="kredi.html"><i class="fa-solid fa-building-columns"></i> Kredi</a>
+                <a href="yas.html"><i class="fa-solid fa-cake-candles"></i> Yaş</a>
+                <a href="doviz.html"><i class="fa-solid fa-money-bill-transfer"></i> Döviz</a>
+                <a href="kdv.html"><i class="fa-solid fa-receipt"></i> KDV</a>
+                <a href="mesai.html"><i class="fa-solid fa-clock"></i> Mesai</a>
+                <a href="cv.html"><i class="fa-solid fa-file-invoice"></i> CV</a>
+            </div>
         </div>
     </div>
 </nav>
@@ -72,8 +128,8 @@
         </div>
 
         <div class="input-group">
-            <label>BRÜT MAAŞ + DÜZENLİ YARDIMLAR (TL)</label>
-            <input type="number" id="brut" placeholder="Örn: 60000">
+            <label>BRÜT MAAŞ + YAN HAKLAR (TL)</label>
+            <input type="number" id="brut" placeholder="0.00">
         </div>
 
         <div class="input-row">
@@ -93,13 +149,13 @@
             <div class="res-item">
                 <span>NET KIDEM TAZMİNATI</span>
                 <b id="kidemRes">0 ₺</b>
-                <div class="detail-row">Vergi Kesintisi: <span id="kidemVergi">0 ₺</span></div>
+                <div class="detail-row">Damga Vergisi Kesintisi: <span id="kidemVergi" style="color:#fff">0 ₺</span></div>
             </div>
 
             <div class="res-item">
                 <span>NET İHBAR TAZMİNATI</span>
                 <b id="ihbarRes">0 ₺</b>
-                <div class="detail-row">Süre: <span id="ihbarHafta">0 Hafta</span></div>
+                <div class="detail-row">Yasal Süre: <span id="ihbarHafta" style="color:#fff">0 Hafta</span></div>
             </div>
 
             <div class="res-total">
@@ -108,15 +164,24 @@
             </div>
 
             <div class="info-tag">
-                * Kıdem tavanı (35.058,58 ₺) otomatik uygulanır.<br>
-                * İhbar tazminatından Gelir Vergisi (%15) ve Damga Vergisi kesilmiştir.
+                * Kıdem tavanı (35.058,58 ₺) otomatik olarak uygulanmıştır.<br>
+                * İhbar tazminatından Gelir Vergisi (%15) ve Damga Vergisi düşülmüştür.
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+    function toggleMenu() {
+        document.getElementById('navMenu').classList.toggle('active');
+    }
+
+    window.onclick = function(e) {
+        if (!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
+            const menu = document.getElementById('navMenu');
+            if (menu.classList.contains('active')) menu.classList.remove('active');
+        }
+    }
 
     function hesapla() {
         const brut = parseFloat(document.getElementById('brut').value) || 0;
@@ -126,14 +191,12 @@
 
         if(brut <= 0) return;
 
-        // 1. Kıdem Hesaplama
         const esasBrut = brut > KIDEM_TAVAN ? KIDEM_TAVAN : brut;
         const toplamYil = yil + (ay / 12);
         const brutKidem = esasBrut * toplamYil;
         const kidemDamga = brutKidem * 0.00759;
         const netKidem = brutKidem - kidemDamga;
 
-        // 2. İhbar Hesaplama
         let ihbarHafta = 2;
         if (toplamYil >= 0.5 && toplamYil < 1.5) ihbarHafta = 4;
         else if (toplamYil >= 1.5 && toplamYil < 3) ihbarHafta = 6;
@@ -141,19 +204,13 @@
 
         const gunlukBrut = brut / 30;
         const brutIhbar = gunlukBrut * (ihbarHafta * 7);
-        const ihbarGelirVergi = brutIhbar * 0.15;
-        const ihbarDamga = brutIhbar * 0.00759;
-        const netIhbar = brutIhbar - ihbarGelirVergi - ihbarDamga;
+        const netIhbar = brutIhbar - (brutIhbar * 0.15) - (brutIhbar * 0.00759);
 
-        // Yazdır
         document.getElementById('kidemRes').innerText = Math.round(netKidem).toLocaleString('tr-TR') + " ₺";
         document.getElementById('kidemVergi').innerText = Math.round(kidemDamga).toLocaleString('tr-TR') + " ₺";
-        
         document.getElementById('ihbarRes').innerText = Math.round(netIhbar).toLocaleString('tr-TR') + " ₺";
         document.getElementById('ihbarHafta').innerText = ihbarHafta + " Hafta";
-        
         document.getElementById('toplamRes').innerText = Math.round(netKidem + netIhbar).toLocaleString('tr-TR') + " ₺";
-        
         document.getElementById('res').style.display = "block";
     }
 </script>
