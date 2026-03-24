@@ -3,69 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Döviz Çevirici</title>
+    <title>H360 | Global Döviz Analizi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
+        /* Parlamayı Sıfırlayan "Deep Night" Teması */
+        body { background-color: #080b12; margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; }
         .main-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; }
         
         .calc-card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px; padding: 35px; width: 100%; max-width: 500px;
-            backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: #0f172a; /* Parlamayan solid koyu gri-mavi */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px; padding: 40px; width: 100%; max-width: 550px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .header-area { text-align: center; margin-bottom: 30px; }
-        .header-area h1 { font-size: 1.5rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
-        .header-area p { color: #007bff; font-size: 0.7rem; font-weight: 800; margin-top: 8px; text-transform: uppercase; }
+        .header-area h1 { font-size: 1.4rem; letter-spacing: 2px; margin: 0; font-weight: 700; color: #fff; }
+        .header-area p { color: #3b82f6; font-size: 0.7rem; font-weight: 800; margin-top: 8px; text-transform: uppercase; }
         
-        /* Çevrim Modu Switcher */
+        /* Mod Seçici */
         .mode-switcher {
-            display: flex; background: rgba(255,255,255,0.05); border-radius: 12px;
-            padding: 5px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.08);
+            display: flex; background: #1e293b; border-radius: 14px;
+            padding: 4px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.03);
         }
         .mode-btn {
-            flex: 1; padding: 10px; border: none; background: transparent;
-            color: #888; font-size: 0.75rem; font-weight: 700; cursor: pointer;
-            border-radius: 8px; transition: 0.3s;
+            flex: 1; padding: 12px; border: none; background: transparent;
+            color: #64748b; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+            border-radius: 10px; transition: 0.3s;
         }
-        .mode-btn.active { background: #007bff; color: #fff; }
+        .mode-btn.active { background: #3b82f6; color: #fff; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
 
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; color: #007bff; font-size: 0.65rem; font-weight: 800; margin-bottom: 8px; }
+        .input-group { margin-bottom: 22px; }
+        .input-group label { display: block; color: #3b82f6; font-size: 0.65rem; font-weight: 800; margin-bottom: 10px; }
         
-        .input-wrapper { position: relative; display: flex; align-items: center; }
-        .input-wrapper i { position: absolute; left: 15px; color: #555; font-size: 0.9rem; }
-        
+        .input-wrapper { position: relative; }
         .input-group input, .input-group select {
-            width: 100%; padding: 16px 16px 16px 45px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
+            width: 100%; padding: 16px; background: #1e293b;
+            border: 1px solid #334155; border-radius: 12px;
+            color: #fff; font-size: 1rem; outline: none; transition: 0.2s; box-sizing: border-box;
         }
-        .input-group select { padding-left: 15px; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,..."); }
-        .input-group input:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
-
-        .swap-icon { text-align: center; margin: -10px 0 10px; color: #007bff; font-size: 1.2rem; opacity: 0.5; }
+        .input-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; }
+        
+        .input-group input:focus, .input-group select:focus { border-color: #3b82f6; background: #243146; }
 
         .calc-btn {
-            width: 100%; padding: 18px; background: #007bff; color: #fff;
-            border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
-            font-size: 1rem; transition: 0.3s;
+            width: 100%; padding: 18px; background: #3b82f6; color: #fff;
+            border: none; border-radius: 14px; font-weight: 700; cursor: pointer;
+            font-size: 1rem; transition: 0.3s; margin-top: 5px;
         }
-        .calc-btn:hover { background: #0056b3; transform: translateY(-2px); }
+        .calc-btn:hover { background: #2563eb; transform: translateY(-1px); }
         
+        /* Sonuç Paneli */
         .result-box {
-            margin-top: 30px; padding: 25px; background: rgba(46, 204, 113, 0.05);
-            border-radius: 20px; border: 1px solid rgba(46, 204, 113, 0.1);
-            display: none; text-align: center; animation: fadeIn 0.4s ease;
+            margin-top: 30px; padding: 25px; background: #0f172a;
+            border-radius: 20px; border: 1px solid #1e293b;
+            display: none; text-align: center; border-top: 2px solid #3b82f6;
         }
-        .result-label { font-size: 0.7rem; color: #2ecc71; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
-        .result-main { font-size: 2.2rem; font-weight: 700; color: #fff; margin-bottom: 5px; }
-        .result-sub { font-size: 0.8rem; color: #888; }
+        .result-main { font-size: 2.4rem; font-weight: 800; color: #fff; margin: 10px 0; letter-spacing: -1px; }
+        .result-sub { font-size: 0.75rem; color: #64748b; font-weight: 500; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Mobil Uyumluluk */
+        @media (max-width: 480px) { .calc-card { padding: 25px; } .result-main { font-size: 1.8rem; } }
     </style>
 </head>
 <body>
@@ -82,8 +82,8 @@
 <div class="main-wrapper">
     <div class="calc-card">
         <div class="header-area">
-            <h1>DÖVİZ ÇEVİRİCİ</h1>
-            <p>ANLIK KUR VE VARLIK HESAPLAMA</p>
+            <h1>DÖVİZ MERKEZİ</h1>
+            <p>GLOBAL KUR VE VARLIK HESAPLAMA</p>
         </div>
 
         <div class="mode-switcher">
@@ -93,35 +93,38 @@
 
         <div class="input-group">
             <label id="inputLabel">DÖVİZ TUTARI</label>
-            <div class="input-wrapper">
-                <i class="fa-solid fa-money-bill-1-wave" id="inputIcon"></i>
-                <input type="number" id="amount" placeholder="0.00">
-            </div>
+            <input type="number" id="amount" placeholder="0.00" step="any">
         </div>
 
-        <div class="swap-icon"><i class="fa-solid fa-repeat"></i></div>
-
         <div class="input-group">
-            <label>HEDEF PARA BİRİMİ</label>
+            <label>PARA BİRİMİ SEÇİMİ</label>
             <select id="currency">
-                <option value="32.85" data-code="USD">🇺🇸 USD - Amerikan Doları</option>
-                <option value="35.60" data-code="EUR">🇪🇺 EUR - Euro</option>
-                <option value="41.40" data-code="GBP">🇬🇧 GBP - İngiliz Sterlini</option>
-                <option value="36.20" data-code="CHF">🇨🇭 CHF - İsviçre Frangı</option>
-                <option value="21.50" data-code="CAD">🇨🇦 CAD - Kanada Doları</option>
-                <option value="8.95" data-code="SAR">🇸🇦 SAR - Suudi Arabistan Riyali</option>
-                <option value="0.21" data-code="JPY">🇯🇵 JPY - Japon Yeni (100)</option>
-                <option value="4.55" data-code="CNY">🇨🇳 CNY - Çin Yuanı</option>
-                <option value="8.35" data-code="PLN">🇵🇱 PLN - Polonya Zlotisi</option>
+                <optgroup label="Majör Birimler">
+                    <option value="32.95" data-code="USD">🇺🇸 USD - Amerikan Doları</option>
+                    <option value="35.75" data-code="EUR">🇪🇺 EUR - Euro</option>
+                    <option value="41.60" data-code="GBP">🇬🇧 GBP - İngiliz Sterlini</option>
+                    <option value="36.40" data-code="CHF">🇨🇭 CHF - İsviçre Frangı</option>
+                </optgroup>
+                <optgroup label="Diğer Birimler">
+                    <option value="8.42" data-code="PLN">🇵🇱 PLN - Polonya Zlotisi</option>
+                    <option value="21.70" data-code="CAD">🇨🇦 CAD - Kanada Doları</option>
+                    <option value="21.35" data-code="AUD">🇦🇺 AUD - Avustralya Doları</option>
+                    <option value="8.98" data-code="SAR">🇸🇦 SAR - Suudi Arabistan Riyali</option>
+                    <option value="8.94" data-code="AED">🇦🇪 AED - BAE Dirhemi</option>
+                    <option value="0.21" data-code="JPY">🇯🇵 JPY - Japon Yeni (100)</option>
+                    <option value="4.58" data-code="CNY">🇨🇳 CNY - Çin Yuanı</option>
+                    <option value="0.34" data-code="RUB">🇷🇺 RUB - Rus Rublesi</option>
+                    <option value="1.75" data-code="NOK">🇳🇴 NOK - Norveç Kronu</option>
+                    <option value="107.50" data-code="KWD">🇰🇼 KWD - Kuveyt Dinarı</option>
+                </optgroup>
             </select>
         </div>
 
-        <button class="calc-btn" onclick="convert()">HESAPLA</button>
+        <button class="calc-btn" onclick="convert()">ANALİZİ ÇALIŞTIR</button>
 
         <div id="res" class="result-box">
-            <div class="result-label" id="resLabel">HESAPLANAN TUTAR</div>
-            <div class="result-main" id="resVal">0.00</div>
-            <div class="result-sub" id="resInfo">1 USD = 32.85 TL</div>
+            <div id="resVal" class="result-main">0.00</div>
+            <div id="resInfo" class="result-sub">--</div>
         </div>
     </div>
 </div>
@@ -133,17 +136,7 @@
         currentMode = mode;
         document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        
-        const label = document.getElementById('inputLabel');
-        const icon = document.getElementById('inputIcon');
-        
-        if(mode === 'toTL') {
-            label.innerText = "DÖVİZ TUTARI";
-            icon.className = "fa-solid fa-money-bill-1-wave";
-        } else {
-            label.innerText = "TL TUTARI";
-            icon.className = "fa-solid fa-turkish-lira-sign";
-        }
+        document.getElementById('inputLabel').innerText = mode === 'toTL' ? "DÖVİZ TUTARI" : "TL TUTARI";
     }
 
     function convert() {
@@ -155,23 +148,20 @@
         if(amt <= 0) return;
 
         let result;
-        let infoText;
-        
         if(currentMode === 'toTL') {
             result = amt * rate;
             document.getElementById('resVal').innerText = result.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
-            infoText = `1 ${code} = ${rate} TL`;
+            document.getElementById('resInfo').innerText = `Kur: 1 ${code} = ${rate} TL`;
         } else {
             result = amt / rate;
             document.getElementById('resVal').innerText = result.toLocaleString('en-US', {minimumFractionDigits: 2}) + " " + code;
-            infoText = `${amt} TL / ${rate} (Kur)`;
+            document.getElementById('resInfo').innerText = `Hesaplanan Kur: ${rate} TL`;
         }
 
-        document.getElementById('resInfo').innerText = infoText;
         document.getElementById('res').style.display = "block";
     }
 
-    function toggleMenu() { /* Ana navigasyon tetikleyicisi */ }
+    function toggleMenu() { /* Menü JS kodun buraya gelecek */ }
 </script>
 </body>
 </html>
