@@ -3,57 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Yakıt Analizi</title>
+    <title>H360 | Gelişmiş Yakıt Analizi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS dosyasında hata olsa bile burası kurtaracak */
         body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
-        .main-wrapper { 
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; padding-top: 80px; box-sizing: border-box; 
-        }
+        .main-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; }
         .yakit-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 40px;
-            width: 100%;
-            max-width: 500px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px; padding: 35px; width: 100%; max-width: 550px;
+            backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
-        .header-area { text-align: center; margin-bottom: 35px; }
-        .header-area h1 { font-size: 1.6rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
-        .header-area p { color: #007bff; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; }
-        
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px; }
+        .header-area { text-align: center; margin-bottom: 30px; }
+        .header-area h1 { font-size: 1.5rem; letter-spacing: 2px; margin: 0; }
+        .header-area p { color: #007bff; font-size: 0.7rem; font-weight: 800; margin-top: 5px; text-transform: uppercase; }
+
+        .input-group { margin-bottom: 18px; }
+        .input-group label { display: block; color: #007bff; font-size: 0.65rem; font-weight: 800; margin-bottom: 8px; }
         .input-group input {
-            width: 100%; padding: 16px; background: rgba(255,255,255,0.05);
+            width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
+            color: #fff; font-size: 1rem; outline: none; box-sizing: border-box;
         }
-        .input-group input:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
-        
-        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        .quick-tags { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+        .q-tag { 
+            background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; 
+            font-size: 0.7rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: 0.2s;
+        }
+        .q-tag:hover { background: #007bff; border-color: #007bff; }
+
+        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         
         .calc-btn {
-            width: 100%; padding: 18px; background: #007bff; color: #fff;
-            border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
-            font-size: 1rem; transition: 0.3s; margin-top: 10px;
+            width: 100%; padding: 16px; background: #007bff; color: #fff;
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px;
         }
-        .calc-btn:hover { background: #0056b3; transform: translateY(-2px); }
+
+        .result-box { margin-top: 25px; display: none; }
+        .main-res { 
+            background: rgba(46, 204, 113, 0.1); padding: 20px; border-radius: 15px; 
+            text-align: center; border: 1px solid rgba(46, 204, 113, 0.2); margin-bottom: 15px;
+        }
+        .main-res b { font-size: 2rem; color: #2ecc71; display: block; }
         
-        .result-box {
-            margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15);
-            display: none; text-align: center;
-        }
-        .result-label { font-size: 0.7rem; color: #888; font-weight: 800; margin-bottom: 10px; }
-        .result-main { font-size: 2.2rem; font-weight: 700; color: #2ecc71; margin-bottom: 15px; }
-        .result-stats { display: flex; justify-content: space-between; font-size: 0.85rem; color: #bbb; }
-        .result-stats b { color: #fff; }
+        .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .stat-card { background: rgba(255,255,255,0.02); padding: 12px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .stat-card small { font-size: 0.6rem; color: #888; display: block; margin-bottom: 4px; }
+        .stat-card span { font-size: 0.9rem; font-weight: 700; color: #fff; }
     </style>
 </head>
 <body>
@@ -63,16 +61,10 @@
         <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
     </div>
     <div class="nav-right">
-        <div class="menu-container">
-            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
-            <div class="dropdown-menu" id="navMenu">
-                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
-                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
-                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
-                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-            </div>
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="yakit.html">⛽ Yakıt</a><a href="issizlik.html">📅 İşsizlik</a>
+            <a href="faiz.html">📈 Faiz</a><a href="cv.html">📄 CV</a>
         </div>
     </div>
 </nav>
@@ -81,33 +73,64 @@
     <div class="yakit-card">
         <div class="header-area">
             <h1>YAKIT ANALİZİ</h1>
-            <p>YOL MALİYETİ VE TÜKETİM HESABI</p>
+            <p>DETAYLI YOLCULUK MALİYETİ</p>
         </div>
 
         <div class="input-group">
-            <label>GİDİLECEK MESAFE (KM)</label>
-            <input type="number" id="dist" placeholder="Örn: 450">
+            <label>TOPLAM MESAFE (KM)</label>
+            <input type="number" id="dist" placeholder="Mesafe girin">
+            <div class="quick-tags">
+                <span class="q-tag" onclick="setVal('dist', 150)">Sakarya-İst</span>
+                <span class="q-tag" onclick="setVal('dist', 450)">Ankara</span>
+                <span class="q-tag" onclick="setVal('dist', 800)">Antalya</span>
+            </div>
         </div>
 
         <div class="grid-inputs">
             <div class="input-group">
-                <label>TÜKETİM (L/100KM)</label>
-                <input type="number" id="cons" placeholder="Örn: 6.5">
+                <label>ORT. TÜKETİM (L/100KM)</label>
+                <input type="number" id="cons" step="0.1" placeholder="6.5">
+                <div class="quick-tags">
+                    <span class="q-tag" onclick="setVal('cons', 5.5)">Ekonomik</span>
+                    <span class="q-tag" onclick="setVal('cons', 8.5)">Performans</span>
+                </div>
             </div>
             <div class="input-group">
                 <label>LİTRE FİYATI (₺)</label>
-                <input type="number" id="price" placeholder="Örn: 42.50">
+                <input type="number" id="price" step="0.01" placeholder="42.50">
+                <div class="quick-tags">
+                    <span class="q-tag" onclick="setVal('price', 43.50)">Benzin</span>
+                    <span class="q-tag" onclick="setVal('price', 41.20)">Dizel</span>
+                </div>
             </div>
         </div>
 
-        <button class="calc-btn" onclick="calcFuel()">MALİYETİ HESAPLA</button>
+        <div class="input-group">
+            <label>YOLCU SAYISI (MASRAF BÖLÜŞÜMÜ)</label>
+            <input type="number" id="ppl" value="1" min="1">
+        </div>
+
+        <button class="calc-btn" onclick="calculate()">HESAPLAMAYI BAŞLAT</button>
 
         <div id="res" class="result-box">
-            <div class="result-label">TOPLAM YAKIT GİDERİ</div>
-            <div class="result-main" id="fTotal">0 ₺</div>
-            <div class="result-stats">
-                <span>Toplam: <b id="liters">0 L</b></span>
-                <span>KM Başı: <b id="perKm" style="color:#2ecc71">0 ₺</b></span>
+            <div class="main-res">
+                <small style="color:#888; font-weight:800; font-size:0.7rem;">TOPLAM YOL MALİYETİ</small>
+                <b id="resTotal">0 ₺</b>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card">
+                    <small>KM BAŞI</small>
+                    <span id="resKm" style="color:#2ecc71">0 ₺</span>
+                </div>
+                <div class="stat-card">
+                    <small>TOPLAM YAKIT</small>
+                    <span id="resLitre">0 L</span>
+                </div>
+                <div class="stat-card">
+                    <small>KİŞİ BAŞI</small>
+                    <span id="resPpl" style="color:#007bff">0 ₺</span>
+                </div>
             </div>
         </div>
     </div>
@@ -115,26 +138,28 @@
 
 <script>
     function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+    
+    function setVal(id, val) { document.getElementById(id).value = val; }
 
-    function calcFuel() {
+    function calculate() {
         const d = parseFloat(document.getElementById('dist').value) || 0;
         const c = parseFloat(document.getElementById('cons').value) || 0;
         const p = parseFloat(document.getElementById('price').value) || 0;
-        
-        if(d > 0 && c > 0 && p > 0) {
-            const total = (d * c / 100) * p;
-            document.getElementById('fTotal').innerText = Math.round(total).toLocaleString('tr-TR') + " ₺";
-            document.getElementById('liters').innerText = (d * c / 100).toFixed(1) + " L";
-            document.getElementById('perKm').innerText = (total / d).toFixed(2) + " ₺";
-            document.getElementById('res').style.display = "block";
-        }
-    }
+        const ppl = parseInt(document.getElementById('ppl').value) || 1;
 
-    window.onclick = function(e) { 
-        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
-        }
+        if(d <= 0 || c <= 0 || p <= 0) return;
+
+        const totalLitre = (d * c) / 100;
+        const totalTl = totalLitre * p;
+        const kmTl = totalTl / d;
+        const perPerson = totalTl / ppl;
+
+        document.getElementById('resTotal').innerText = Math.round(totalTl).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('resKm').innerText = kmTl.toFixed(2) + " ₺";
+        document.getElementById('resLitre').innerText = totalLitre.toFixed(1) + " L";
+        document.getElementById('resPpl').innerText = Math.round(perPerson).toLocaleString('tr-TR') + " ₺";
+
+        document.getElementById('res').style.display = "block";
     }
 </script>
 </body>
