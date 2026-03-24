@@ -1,5 +1,6 @@
 /**
  * H360 ELITE - CORE ENGINE v3.0 (Branding & High-End UI)
+ * Tam sürüm - Eksiksiz ve Hataları Giderilmiş Mod
  */
 document.addEventListener("DOMContentLoaded", () => {
     // 1. ESKİ KALINTILARI TEMİZLE
@@ -16,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
             --glass-border: rgba(255, 255, 255, 0.08);
         }
         
-        /* Premium Header */
         .h3-header {
             position: fixed; top: 0; left: 0; right: 0; height: 100px;
             display: flex; align-items: center; justify-content: space-between;
@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         .h3-header * { pointer-events: auto; }
 
-        /* YENİ LOGO TASARIMI */
         .h3-logo { 
             display: flex; align-items: center; gap: 15px; text-decoration: none; 
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -50,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .logo-text { color: #fff; font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
         .logo-text span { color: var(--accent); font-weight: 300; }
 
-        /* MODERN TRIGGER BUTONU */
         .h3-trigger {
             background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
             padding: 10px 22px; border-radius: 14px; cursor: pointer;
@@ -60,14 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
         .h3-trigger:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--accent); }
         .h3-trigger span { color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px; opacity: 0.8; }
         
-        /* Burger Animasyonu */
         .h3-burger { width: 18px; height: 12px; position: relative; }
         .h3-burger div { position: absolute; height: 2px; background: #fff; border-radius: 10px; transition: 0.4s; }
         .b-1 { top: 0; width: 100%; } .b-2 { bottom: 0; width: 60%; right: 0; }
         .h3-trigger.active .b-1 { transform: translateY(5px) rotate(45deg); width: 100%; }
         .h3-trigger.active .b-2 { transform: translateY(-5px) rotate(-45deg); width: 100%; }
 
-        /* FULL SCREEN BLUR OVERLAY */
         .h3-overlay {
             position: fixed; inset: 0; background: rgba(8, 12, 21, 0.8);
             backdrop-filter: blur(0px); z-index: 9999;
@@ -111,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </header>
 
         <div class="h3-overlay" id="h3Overlay">
-            <div class="h3-grid" id="h3Grid">
+            <div class="h3-grid">
                 <a href="netmaas.html" class="h3-item"><i class="fa-solid fa-money-bill-wave"></i><b>MAAŞ</b></a>
                 <a href="tazminat.html" class="h3-item"><i class="fa-solid fa-briefcase"></i><b>TAZMİNAT</b></a>
                 <a href="issizlik.html" class="h3-item"><i class="fa-solid fa-calendar-day"></i><b>İŞSİZLİK</b></a>
@@ -133,13 +129,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById('h3Btn');
     const overlay = document.getElementById('h3Overlay');
     
-    btn.onclick = () => {
+    btn.onclick = (e) => {
+        e.stopPropagation();
         btn.classList.toggle('active');
         overlay.classList.toggle('open');
         document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
     };
 
-    // Staggered Animation (Sıralı Giriş)
+    // Staggered Animation
     document.querySelectorAll('.h3-item').forEach((item, i) => {
         item.style.transitionDelay = (0.05 + (i * 0.03)) + 's';
     });
+});
