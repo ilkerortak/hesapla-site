@@ -2,42 +2,167 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Hesapla360 - Ana Sayfa</title>
+    <title>Hesapla360 - 2026 Güncel Hesaplama Portalı</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="2026 yılı güncel maaş, kredi, tazminat, işsizlik maaşı ve yaş hesaplama araçları. Ücretsiz CV oluşturucu Hesapla360'ta.">
 </head>
 <body>
+
 <nav>
     <a href="index.html" class="logo-link">
-        <div style="font-weight:800; color:white; font-size:1.4rem;">HESAPLA<span style="color:#fbbf24;">360</span></div>
+        <div class="logo">HESAPLA<span>360</span></div>
     </a>
     <ul>
         <li><a href="netmaas.html">Maaş</a></li>
+        <li><a href="tazminat.html">Tazminat</a></li>
         <li><a href="kredi.html">Kredi</a></li>
+        <li><a href="yas.html">Yaş</a></li>
         <li><a href="cv.html">CV</a></li>
     </ul>
     <button id="theme-toggle">☀️</button>
 </nav>
 
-<div style="text-align:center; margin-top:50px;">
-    <h1>Hesapla<span style="color:#4f46e5;">360</span> Portalı</h1>
-    <p>2026 Güncel Verileriyle Tüm Hesaplamalar Tek Noktada</p>
+<header class="hero-section">
+    <h1>Hesapla<span>360</span> Portalı</h1>
+    <p>2026 yılının en güncel verileri ve yasal limitleriyle hızlı, güvenilir hesaplamalar.</p>
+</header>
+
+<div class="grid-container">
+    <a href="netmaas.html" class="feature-card">
+        <div class="icon">💰</div>
+        <h3>Net Maaş</h3>
+        <p>2026 vergi dilimleri ve AGİ/İstisna durumlarına göre net maaşını hesapla.</p>
+    </a>
+
+    <a href="tazminat.html" class="feature-card">
+        <div class="icon">💼</div>
+        <h3>Tazminat</h3>
+        <p>Kıdem ve ihbar tazminatını 2026 tavan ücretlerine göre kuruşu kuruşuna öğren.</p>
+    </a>
+
+    <a href="kredi.html" class="feature-card">
+        <div class="icon">🏦</div>
+        <h3>Kredi Hesapla</h3>
+        <p>Banka faiz oranları, KKDF ve BSMV dahil taksit planını anında oluştur.</p>
+    </a>
+
+    <a href="issizlik.html" class="feature-card">
+        <div class="icon">📅</div>
+        <h3>İşsizlik Maaşı</h3>
+        <p>İşten ayrılma durumunda alacağın destek tutarını ve süresini hesapla.</p>
+    </a>
+
+    <a href="yas.html" class="feature-card">
+        <div class="icon">🎂</div>
+        <h3>Yaş Analizi</h3>
+        <p>Kaç gündür hayattasın? Burcun ne? Bir sonraki doğum gününe ne kadar kaldı?</p>
+    </a>
+
+    <a href="cv.html" class="feature-card">
+        <div class="icon">📄</div>
+        <h3>CV Oluşturucu</h3>
+        <p>Bilgilerini gir, modern ve profesyonel PDF CV'ne saniyeler içinde sahip ol.</p>
+    </a>
 </div>
 
-<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px; max-width:900px; margin:40px auto; padding:20px;">
-    <a href="netmaas.html" class="container" style="text-decoration:none; text-align:center; margin:0;">
-        <div style="font-size:3rem;">💰</div>
-        <h3>Net Maaş</h3>
-    </a>
-    <a href="kredi.html" class="container" style="text-decoration:none; text-align:center; margin:0;">
-        <div style="font-size:3rem;">🏦</div>
-        <h3>Kredi</h3>
-    </a>
-    <a href="cv.html" class="container" style="text-decoration:none; text-align:center; margin:0;">
-        <div style="font-size:3rem;">📄</div>
-        <h3>CV Oluştur</h3>
-    </a>
-</div>
+<footer style="text-align: center; margin-top: 50px; padding: 20px; opacity: 0.6; font-size: 0.8rem;">
+    <p>&copy; 2026 Hesapla360.com | Sakarya'dan Sevgilerle.</p>
+</footer>
 
 <script src="script.js"></script>
+
+<style>
+/* Index Sayfasına Özel Tasarım Dokunuşları */
+.hero-section {
+    text-align: center;
+    margin-top: 60px;
+    padding: 0 20px;
+}
+
+.hero-section h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    font-weight: 800;
+}
+
+.hero-section h1 span {
+    color: var(--primary);
+}
+
+.hero-section p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.8;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    padding: 40px 30px;
+    border-radius: 24px;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: var(--shadow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(0,0,0,0.03);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 30px -10px rgba(79, 70, 229, 0.2);
+    border-color: var(--primary);
+}
+
+.feature-card .icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    margin-bottom: 12px;
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+
+.feature-card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.7;
+}
+
+/* Nav Logo Stili */
+.logo {
+    font-weight: 800;
+    color: var(--nav-text);
+    font-size: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: #fbbf24;
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+    .hero-section h1 { font-size: 2rem; }
+    nav ul { display: none; } /* Mobil menü istersen ekleyebiliriz */
+    .grid-container { grid-template-columns: 1fr; }
+}
+</style>
+
 </body>
 </html>
