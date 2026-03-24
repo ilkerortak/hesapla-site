@@ -1,82 +1,69 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background-color: #0b0e14; color: #ffffff; line-height: 1.6; overflow-x: hidden; }
 
-body {
-    background-color: #0b0e14;
-    color: #ffffff;
-    overflow-x: hidden;
-}
-
-/* NAVİGASYON VE LOGO */
+/* NAV & ANIMATED MENU */
 nav {
-    background: rgba(18, 22, 30, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 15px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: #0b0e14; padding: 15px 5%; display: flex; 
+    justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1d24;
     position: sticky; top: 0; z-index: 1000;
 }
-
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; font-weight: 800; }
-.logo-box { background: #007bff; padding: 5px 12px; border-radius: 8px; }
+.logo-box { background: #007bff; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; }
 .logo span { color: #007bff; }
 
-/* SAĞ ÜST MENÜ */
 .nav-container { position: relative; }
 .menu-btn {
-    background: #111; border: 1px solid #222; color: #fff;
-    padding: 10px 18px; border-radius: 8px; cursor: pointer;
-    font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 8px;
-    transition: 0.3s;
+    background: #161a23; border: 1px solid #222; color: #fff; padding: 8px 16px;
+    border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.75rem; transition: 0.2s;
 }
 .menu-btn:hover { border-color: #007bff; }
 
 .dropdown-menu {
-    position: absolute; top: 50px; right: 0; background: #0b0e14;
-    border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px;
-    width: 240px; display: none; flex-direction: column;
-    z-index: 1001; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    position: absolute; top: 45px; right: 0; background: #161a23;
+    border: 1px solid #222; border-radius: 10px; width: 240px; display: none;
+    flex-direction: column; z-index: 1001; box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     opacity: 0; transform: translateY(-10px); transition: all 0.3s ease;
 }
 .dropdown-menu.active { display: flex; opacity: 1; transform: translateY(0); }
-.dropdown-menu a {
-    padding: 12px 20px; color: #888; text-decoration: none;
-    font-size: 0.85rem; font-weight: 600; border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    transition: 0.2s;
+.dropdown-menu a { 
+    padding: 12px 18px; color: #aaa; text-decoration: none; font-size: 0.8rem; 
+    border-bottom: 1px solid rgba(255,255,255,0.03); font-weight: 600;
 }
-.dropdown-menu a:hover { background: rgba(0, 123, 255, 0.1); color: #fff; padding-left: 25px; }
+.dropdown-menu a:hover { background: #007bff; color: white; padding-left: 25px; }
 
-/* DASHBOARD & KARTLAR */
-.hero-section { max-width: 1200px; margin: 40px auto 20px; padding: 0 20px; text-align: center; }
-.welcome-text h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
-.welcome-text p { color: #007bff; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+/* DASHBOARD GRID (image_c93604.png TARZI) */
+.hero-section { text-align: center; margin: 50px auto 30px; }
+.hero-section h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 5px; }
+.hero-section p { color: #007bff; font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1.5px; }
 
 .grid-container {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px; max-width: 1200px; margin: 30px auto; padding: 0 20px;
+    gap: 15px; max-width: 1200px; margin: 20px auto 80px; padding: 0 20px;
 }
-
 .feature-card {
-    background: #12161e; border: 1px solid rgba(255,255,255,0.03);
-    padding: 40px 30px; border-radius: 15px; text-decoration: none;
-    transition: 0.3s; display: flex; flex-direction: column;
+    background: #12161e; border: 1px solid #1c212c; padding: 25px;
+    border-radius: 15px; text-decoration: none; transition: 0.3s;
 }
 .feature-card:hover { transform: translateY(-5px); border-color: #007bff; background: #161a23; }
+.feature-card h3 { color: #fff; font-size: 1.1rem; margin-top: 10px; display: flex; align-items: center; gap: 10px; }
+.feature-card p { color: #555; font-size: 0.8rem; margin-top: 6px; font-weight: 600; }
 
-/* INPUT VE BUTONLAR (ESKİ TARZ) */
-input {
-    background: transparent; border: none; color: #fff;
-    font-size: 1.5rem; width: 100%; outline: none; margin-bottom: 10px;
+/* İÇ SAYFA FORM (image_c9b220.png TARZI) */
+.form-box {
+    max-width: 500px; margin: 40px auto; background: #12161e; 
+    border: 1px solid #1c212c; padding: 40px; border-radius: 20px;
 }
-label { color: #444; font-weight: 800; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 15px; display: block; }
-.btn-main {
-    background: #0b0e14; border: 1px solid #222; color: #fff;
-    padding: 18px; border-radius: 12px; font-weight: 800;
-    cursor: pointer; width: 100%; margin-top: 10px; transition: 0.3s;
+.form-box label { color: #007bff; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; display: block; margin-bottom: 5px; }
+.form-box input {
+    background: transparent; border: none; color: white; font-size: 1.6rem;
+    width: 100%; margin-bottom: 25px; outline: none; border-bottom: 1px solid #1c212c; padding-bottom: 10px;
 }
-.btn-main:hover { background: #007bff; border-color: #007bff; }
-
-.result { margin-top: 20px; font-weight: 800; color: #007bff; text-align: center; font-size: 1.2rem; display: none; }
+.btn-calc {
+    background: #0f131a; border: 1px solid #1c212c; color: white; width: 100%;
+    padding: 20px; border-radius: 15px; font-weight: 800; cursor: pointer; transition: 0.3s;
+}
+.btn-calc:hover { background: #007bff; border-color: #007bff; }
+.res-area { margin-top: 30px; display: none; text-align: center; }
+.res-val { color: #007bff; font-size: 1.8rem; font-weight: 800; }
