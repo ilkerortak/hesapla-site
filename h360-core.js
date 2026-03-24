@@ -1,18 +1,21 @@
-// Google Adsense Auto-Loader
+/**
+ * H360 ELITE - CORE ENGINE v5.1
+ * [Google Ads Auto-Loader + Menu + Ads + Layout]
+ */
+
+// 1. Google Adsense Ana Scriptini En Başta Yükle
 const adScript = document.createElement('script');
 adScript.async = true;
 adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426";
 adScript.crossOrigin = "anonymous";
-document.head.appendChild(adScript);/**
- * H360 ELITE - CORE ENGINE v5.0
- * [Menü + Logo + Reklam Alanları + Otomatik Orta Blok Sınırlama]
- */
+document.head.appendChild(adScript);
+
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. ESKİ KALINTILARI TEMİZLE
+    // 2. ESKİ KALINTILARI TEMİZLE
     const old = document.querySelectorAll('.h3-header, .h3-overlay, .ad-sidebar, nav, .glass-nav');
     old.forEach(el => el.remove());
 
-    // 2. CSS - FULL INTERFACE & DYNAMIC LAYOUT
+    // 3. CSS - FULL INTERFACE & DYNAMIC LAYOUT
     const style = document.createElement('style');
     style.textContent = `
         :root { 
@@ -67,8 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .ad-right { right: 20px; }
         .ad-label { position: absolute; top: 5px; font-size: 9px; color: #444; }
 
-        /* OTOMATİK ORTA BLOK SINIRLAMA (İşte istediğin yer) */
-        #h3-main-content, .main-container, main, .content {
+        /* OTOMATİK ORTA BLOK SINIRLAMA */
+        #h3-main-content, .main-container, main, .content, .container {
             max-width: 1000px !important;
             margin: 0 auto !important;
             padding-top: 120px !important;
@@ -101,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         /* RESPONSIVE */
         @media (max-width: 1400px) {
             .ad-sidebar { display: none !important; }
-            #h3-main-content, .main-container, main, .content { max-width: 95% !important; }
+            #h3-main-content, .main-container, main, .content, .container { max-width: 95% !important; }
         }
         @media (max-width: 600px) {
             .h3-grid { grid-template-columns: repeat(2, 1fr); }
@@ -110,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.head.appendChild(style);
 
-    // 3. HTML INJECTION
+    // 4. HTML INJECTION
     const uiHTML = `
         <header class="h3-header">
             <a href="index.html" class="h3-logo">
@@ -123,8 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
         </header>
 
-        <div class="ad-sidebar ad-left"><span class="ad-label">REKLAM</span></div>
-        <div class="ad-sidebar ad-right"><span class="ad-label">REKLAM</span></div>
+        <div class="ad-sidebar ad-left">
+            <span class="ad-label">REKLAM</span>
+            </div>
+        <div class="ad-sidebar ad-right">
+            <span class="ad-label">REKLAM</span>
+            </div>
 
         <div class="h3-overlay" id="h3Overlay">
             <div class="h3-grid">
@@ -145,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.body.insertAdjacentHTML('afterbegin', uiHTML);
 
-    // 4. LOGIC
+    // 5. LOGIC
     const btn = document.getElementById('h3Btn');
     const overlay = document.getElementById('h3Overlay');
     const ads = document.querySelectorAll('.ad-sidebar');
