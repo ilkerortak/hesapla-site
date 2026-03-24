@@ -9,28 +9,53 @@
 <body>
 <nav>
     <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <ul class="nav-menu"><li><a href="cv.html" class="active">CV</a></li></ul>
+    <ul class="nav-menu">
+        <li><a href="netmaas.html">Maaş</a></li>
+        <li><a href="cv.html" class="active">CV</a></li>
+    </ul>
 </nav>
 
 <div class="container">
-    <h2>Ücretsiz CV Hazırla</h2>
-    <input type="text" id="ad" placeholder="Ad Soyad" style="margin-bottom:12px;">
-    <textarea id="bilgi" placeholder="Deneyimleriniz ve yetkinlikleriniz..." style="width:100%; height:120px;"></textarea>
-    <button onclick="indir()">PDF İndir</button>
+    <h2>Profesyonel CV Hazırla</h2>
+    <label>Ad Soyad</label>
+    <input type="text" id="ad" placeholder="Örn: İlker Ortak">
+    
+    <label>Deneyimler & Bilgiler</label>
+    <textarea id="bilgi" placeholder="Çalıştığınız yerler, yetenekleriniz..." style="height:150px;"></textarea>
+    
+    <button onclick="indir()">CV'yi PDF Olarak İndir</button>
 </div>
 
-<div id="cv-p" style="position: absolute; left: -9999px; width: 190mm; padding: 40px; background: white; color: black;">
-    <h1 id="p-ad" style="color: #6366f1;"></h1><hr>
-    <p id="p-bilgi" style="white-space: pre-wrap; margin-top: 20px; line-height: 1.6;"></p>
+<div id="pdf-template" style="position: absolute; left: -9999px; width: 190mm; padding: 50px; background: white !important; color: black !important; font-family: sans-serif;">
+    <h1 id="p-ad" style="color: #4f46e5; font-size: 32px; border-bottom: 2px solid #4f46e5; padding-bottom: 10px;"></h1>
+    <div style="margin-top: 30px;">
+        <h3 style="color: #4f46e5; text-transform: uppercase; font-size: 16px;">Deneyim ve Yetkinlikler</h3>
+        <p id="p-bilgi" style="margin-top: 15px; line-height: 1.8; white-space: pre-wrap; font-size: 14px; color: #333;"></p>
+    </div>
 </div>
 
 <script>
     function indir() {
         const ad = document.getElementById("ad").value;
-        if(!ad) { alert("Adınızı yazın."); return; }
+        const bilgi = document.getElementById("bilgi").value;
+
+        if(!ad || !bilgi) { alert("Lütfen alanları doldurun."); return; }
+
+        // Değerleri şablona aktar
         document.getElementById("p-ad").innerText = ad;
-        document.getElementById("p-bilgi").innerText = document.getElementById("bilgi").value;
-        html2pdf().from(document.getElementById('cv-p')).save(ad + "_CV.pdf");
+        document.getElementById("p-bilgi").innerText = bilgi;
+
+        const element = document.getElementById('pdf-template');
+        
+        const opt = {
+            margin: 10,
+            filename: ad + '_CV.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, logging: false, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
     }
 </script>
 </body>
