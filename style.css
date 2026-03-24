@@ -10,12 +10,12 @@
     --gold: #d4af37;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-body { background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-/* Profesyonel Navigasyon */
+/* 3. MADDE: Navigasyon Hizalaması & High-End Menü */
 nav {
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex; justify-content: space-between; align-items: center; /* Dikeyde tam ortala */
     padding: 0 5%; height: 75px; background: rgba(1, 4, 9, 0.95);
     border-bottom: 1px solid var(--border); backdrop-filter: blur(10px);
 }
@@ -23,24 +23,24 @@ nav {
 .logo { font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -1px; }
 .logo span { color: var(--accent); }
 
-.nav-menu { display: flex; gap: 8px; }
+.nav-menu { display: flex; gap: 8px; align-items: center; /* Linkleri dikeyde ortala */ }
 .nav-menu a {
     text-decoration: none; color: var(--dim); font-size: 0.75rem; font-weight: 600;
     padding: 10px 14px; border-radius: 10px; transition: 0.2s; display: flex; align-items: center; gap: 5px;
 }
-.nav-menu a:hover { color: #fff; background: #21262d; }
+.nav-menu a:hover, .nav-menu a.active { color: #fff; background: #21262d; }
 
-/* Üst Veri Barı */
+/* 1. MADDE: Üst Veri Barı (Bayraklar & Net Boşluk) */
 .rate-bar {
     background: #010409; text-align: center; padding: 12px;
     font-size: 0.8rem; border-bottom: 1px solid var(--border);
-    font-weight: 600; color: var(--dim); display: flex; justify-content: center; gap: 25px;
+    font-weight: 600; color: var(--dim); display: flex; justify-content: center; gap: 30px; /* Boşlukları artırdık */
 }
-.rate-bar span { display: flex; align-items: center; gap: 6px; }
+.rate-bar span { display: flex; align-items: center; gap: 8px; /* Bayrak ve rakam arası mesafe */ }
 .rate-bar b { color: var(--text); }
 .rate-gold b { color: var(--gold); }
 
-/* 9x9 (3x3) Grid Düzeni */
+/* 2. MADDE: 9'lu Grid & Apple Style İkonlar */
 .grid-container {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 16px; max-width: 960px; margin: 60px auto; padding: 0 20px;
@@ -53,13 +53,11 @@ nav {
 }
 
 .feature-card:hover {
-    transform: translateY(-4px); background: #161b22;
+    transform: translateY(-5px); background: #161b22;
     border-color: var(--accent); box-shadow: 0 10px 30px -10px rgba(88, 166, 255, 0.2);
 }
 
-.feature-card .icon { font-size: 2.2rem; display: block; margin-bottom: 15px; }
+/* İkon Boyutu ve Font-Size Ayarı */
+.feature-card .icon { font-size: 2.2rem; display: block; margin-bottom: 15px; filter: grayscale(20%); /* Emojileri biraz yumuşat */ }
 .feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; color: #fff; }
 .feature-card p { font-size: 0.75rem; color: var(--dim); font-weight: 500; }
-
-/* Responsive */
-@media (max-width: 768px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
