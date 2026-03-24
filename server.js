@@ -14,11 +14,12 @@ app.get('/api/finans', async (req, res) => {
         
         const tryRate = data.rates.TRY || 0;
         const eurRate = data.rates.EUR || 1;
-        // Eğer API'den XAU gelmezse NaN olmaması için varsayılan bir ONS fiyatı koyuyoruz
+        // API'den gelen ons bazen düşük kalabiliyor, piyasa takibi için düzeltme ekledik
         const xauRate = data.rates.XAU || 2680; 
 
-        // Hesaplamayı kontrol altına alıyoruz
-        const gauPrice = (parseFloat(xauRate) / 31.10347) * parseFloat(tryRate);
+        // Türkiye Piyasa Katsayısı: Yerel fiyatı yakalamak için yaklaşık %1.03 ekleme yapıyoruz
+        const piyasaKatsayisi = 1.032; 
+        const gauPrice = ((parseFloat(xauRate) / 31.10347) * parseFloat(tryRate)) * piyasaKatsayisi;
 
         res.json({
             usd: tryRate.toFixed(2),
@@ -26,7 +27,6 @@ app.get('/api/finans', async (req, res) => {
             gold: gauPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
         });
     } catch (e) {
-        console.error("Hata oluştu:", e.message);
         res.status(500).json({ error: "Veri çekilemedi" });
     }
 });
