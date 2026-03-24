@@ -1,1 +1,27 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>İşsizlik Maaşı Hesaplama 2026</title>
+</head>
+<body>
 
+<h1>İşsizlik Maaşı Hesaplama 2026</h1>
+
+<p>Brüt maaşınızı girin:</p>
+<input type="number" id="brut">
+<button onclick="hesapla()">Hesapla</button>
+
+<h2 id="sonuc"></h2>
+
+<script>
+function hesapla() {
+  let brut = document.getElementById("brut").value;
+  let net = brut * 0.50; // yaklaşık işsizlik maaşı
+  document.getElementById("sonuc").innerText = "Yaklaşık İşsizlik Maaşı: " + net + " TL";
+}
+</script>
+
+<a href="index.html">Ana Sayfaya Dön</a>
+</body>
+</html>
