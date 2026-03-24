@@ -26,10 +26,14 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Menü */
 nav {
     background: var(--nav-bg);
     padding: 15px 30px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
@@ -43,6 +47,16 @@ nav ul li a {
 }
 nav ul li a:hover { background: rgba(255,255,255,0.2); }
 
+/* Tema butonu */
+#theme-toggle {
+    cursor: pointer;
+    font-size: 20px;
+    background: none;
+    border: none;
+    color: var(--nav-text);
+}
+
+/* Container */
 .container {
     max-width: 700px;
     margin: 40px auto;
