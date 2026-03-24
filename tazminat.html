@@ -1,38 +1,98 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>Tazminat Hesabı</title></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Tazminat Hesabı | Hesapla360</title>
+</head>
 <body>
+
 <nav>
     <a href="index.html" class="logo">HESAPLA<span>360</span></a>
     <div class="nav-menu">
-        <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html" class="active">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
-        <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+        <a href="netmaas.html">💰 Maaş</a>
+        <a href="tazminat.html" class="active">💼 Tazminat</a>
+        <a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
+        <a href="doviz.html">💱 Döviz</a>
+        <a href="kdv.html">🧾 KDV</a>
+        <a href="mesai.html">🕒 Mesai</a>
+        <a href="cv.html">📄 CV</a>
     </div>
 </nav>
 
-<div class="container">
-    <h2>💼 Kıdem Tazminatı</h2>
-    <div class="input-group"><label>Son Brüt Maaş</label><input type="number" id="b"></div>
-    <div class="input-group"><label>Çalışılan Yıl</label><input type="number" id="y"></div>
-    <button onclick="calc()">Tazminatı Hesapla</button>
-    <div id="res" class="result-box">
-        <div class="row"><span>Brüt Kıdem</span><span id="bk"></span></div>
-        <div class="row"><span>Damga Vergisi</span><span id="dv"></span></div>
-        <div class="row total"><span>Net Tazminat</span><span id="nk" style="color:var(--accent); font-weight:800;"></span></div>
+<div style="max-width: 600px; margin: 60px auto; padding: 0 20px;">
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px;">Tazminat <span style="color: var(--accent);">Hesabı</span></h2>
+        <p style="color: var(--dim); font-size: 0.85rem; margin-top: 5px;">Yasal tavan ve damga vergisi dahil net hesaplama.</p>
+    </div>
+
+    <div class="feature-card" style="text-align: left; cursor: default; transform: none; padding: 35px;">
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Son Brüt Maaş (TL)</label>
+            <input type="number" id="b" placeholder="Örn: 55.000" 
+                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s; border-color: rgba(88, 166, 255, 0.2);">
+        </div>
+
+        <div style="margin-bottom: 25px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Toplam Çalışılan Yıl</label>
+            <input type="number" id="y" placeholder="Örn: 5" 
+                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none;">
+        </div>
+
+        <button onclick="calc()" 
+            style="width: 100%; background: var(--accent); color: #fff; border: none; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);">
+            TAZMİNATI HESAPLA
+        </button>
+
+        <div id="res" style="display: none; margin-top: 35px; padding-top: 25px; border-top: 1px dotted var(--border);">
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Brüt Kıdem Toplamı</span>
+                <span id="bk" style="color: #fff; font-weight: 600;"></span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Damga Vergisi (%0.759)</span>
+                <span id="dv" style="color: #ff7b72; font-weight: 600;"></span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding: 20px; background: rgba(88, 166, 255, 0.05); border-radius: 12px; border: 1px solid rgba(88, 166, 255, 0.1);">
+                <span style="color: #fff; font-weight: 700; font-size: 1.1rem;">Net Ödenecek</span>
+                <span id="nk" style="color: var(--accent); font-weight: 800; font-size: 1.5rem;"></span>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
 function calc(){
-    let b=parseFloat(document.getElementById("b").value), y=parseFloat(document.getElementById("y").value);
-    if(!b || !y) return;
-    let brutKidem = Math.min(b, 72500) * y; // Tavan 2026 tahmini
-    let dv = brutKidem * 0.00759;
-    document.getElementById("res").style.display="block";
-    document.getElementById("bk").innerText=brutKidem.toLocaleString()+" ₺";
-    document.getElementById("dv").innerText="-"+dv.toLocaleString()+" ₺";
-    document.getElementById("nk").innerText=(brutKidem-dv).toLocaleString()+" ₺";
+    let b = parseFloat(document.getElementById("b").value);
+    let y = parseFloat(document.getElementById("y").value);
+    
+    if(!b || !y || b <= 0 || y <= 0) {
+        alert("Lütfen tüm alanları geçerli değerlerle doldurun.");
+        return;
+    }
+    
+    // 2026 Tahmini Kıdem Tazminatı Tavanı (Örn: 72.500₺)
+    let tavan = 72500; 
+    let hesaplanacakMaas = Math.min(b, tavan);
+    
+    let brutKidem = hesaplanacakMaas * y;
+    let damgaVergisi = brutKidem * 0.00759;
+    let netKidem = brutKidem - damgaVergisi;
+
+    document.getElementById("res").style.display = "block";
+    document.getElementById("bk").innerText = brutKidem.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    document.getElementById("dv").innerText = "-" + damgaVergisi.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    document.getElementById("nk").innerText = netKidem.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
 }
 </script>
-</body></html>
+
+</body>
+</html>
