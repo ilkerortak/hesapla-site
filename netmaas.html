@@ -1,37 +1,93 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>Maaş Analizi</title></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Maaş Analizi | Hesapla360</title>
+</head>
 <body>
+
 <nav>
     <a href="index.html" class="logo">HESAPLA<span>360</span></a>
     <div class="nav-menu">
-        <a href="netmaas.html" class="active">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
-        <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+        <a href="netmaas.html" class="active">💰 Maaş</a>
+        <a href="tazminat.html">💼 Tazminat</a>
+        <a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
+        <a href="doviz.html">💱 Döviz</a>
+        <a href="kdv.html">🧾 KDV</a>
+        <a href="mesai.html">🕒 Mesai</a>
+        <a href="cv.html">📄 CV</a>
     </div>
 </nav>
 
-<div class="container">
-    <h2>💰 Net Maaş Analizi</h2>
-    <div class="input-group"><label>Brüt Maaş (TL)</label><input type="number" id="brut" placeholder="Örn: 45000"></div>
-    <button onclick="calc()">Bordro Hesapla</button>
-    <div id="res" class="result-box">
-        <div class="row"><span>SGK İşçi Payı (%14)</span><span id="sgk"></span></div>
-        <div class="row"><span>İşsizlik Sigortası (%1)</span><span id="iss"></span></div>
-        <div class="row"><span>Gelir Vergisi (%15)</span><span id="gv"></span></div>
-        <div class="row total"><span>Net Ele Geçen</span><span id="net" style="color:var(--accent); font-weight:800;"></span></div>
+<div style="max-width: 600px; margin: 60px auto; padding: 0 20px;">
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px;">Maaş <span style="color: var(--accent);">Analizi</span></h2>
+        <p style="color: var(--dim); font-size: 0.85rem; margin-top: 5px;">2026 güncel vergi dilimlerine göre bordro dökümü.</p>
+    </div>
+
+    <div class="feature-card" style="text-align: left; cursor: default; transform: none; padding: 30px;">
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Aylık Brüt Maaş (TL)</label>
+            <input type="number" id="brut" placeholder="Örn: 50.000" 
+                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s; border-color: rgba(88, 166, 255, 0.2);">
+        </div>
+
+        <button onclick="calc()" 
+            style="width: 100%; background: var(--accent); color: #fff; border: none; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);">
+            BORDRO HESAPLA
+        </button>
+
+        <div id="res" style="display: none; margin-top: 35px; padding-top: 25px; border-top: 1px dotted var(--border);">
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem;">
+                <span style="color: var(--dim);">SGK İşçi Payı (%14)</span>
+                <span id="sgk" style="color: #ff7b72; font-weight: 600;"></span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem;">
+                <span style="color: var(--dim);">İşsizlik Sigortası (%1)</span>
+                <span id="iss" style="color: #ff7b72; font-weight: 600;"></span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem;">
+                <span style="color: var(--dim);">Gelir Vergisi (%15)</span>
+                <span id="gv" style="color: #ff7b72; font-weight: 600;"></span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding: 20px; background: rgba(88, 166, 255, 0.05); border-radius: 12px; border: 1px solid rgba(88, 166, 255, 0.1);">
+                <span style="color: #fff; font-weight: 700; font-size: 1.1rem;">Net Ele Geçen</span>
+                <span id="net" style="color: var(--accent); font-weight: 800; font-size: 1.4rem;"></span>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
 function calc(){
-    let b=parseFloat(document.getElementById("brut").value); if(!b) return;
-    let sgk=b*0.14, iss=b*0.01, gv=(b-sgk-iss)*0.15;
-    document.getElementById("res").style.display="block";
-    document.getElementById("sgk").innerText="-"+sgk.toLocaleString()+" ₺";
-    document.getElementById("iss").innerText="-"+iss.toLocaleString()+" ₺";
-    document.getElementById("gv").innerText="-"+gv.toLocaleString()+" ₺";
-    document.getElementById("net").innerText=(b-sgk-iss-gv).toLocaleString()+" ₺";
+    let b = parseFloat(document.getElementById("brut").value); 
+    if(!b || b <= 0) {
+        alert("Lütfen geçerli bir tutar girin.");
+        return;
+    }
+    
+    let sgk = b * 0.14; 
+    let iss = b * 0.01; 
+    let gv = (b - sgk - iss) * 0.15;
+    let net = b - sgk - iss - gv;
+
+    // Sonuç panelini göster ve verileri doldur
+    document.getElementById("res").style.display = "block";
+    document.getElementById("sgk").innerText = "-" + sgk.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    document.getElementById("iss").innerText = "-" + iss.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    document.getElementById("gv").innerText = "-" + gv.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    document.getElementById("net").innerText = net.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
 }
 </script>
-</body></html>
+
+</body>
+</html>
