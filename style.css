@@ -77,3 +77,33 @@ body { background-color: var(--bg); color: var(--text); overflow-x: hidden; }
     .premium-title { font-size: 1.8rem; }
     .glass-nav { padding: 15px 20px; }
 }
+.btn-calc {
+    position: relative;
+}
+
+.btn-calc.loading {
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+.btn-calc.loading span {
+    visibility: hidden;
+}
+
+.btn-calc.loading::after {
+    content: "";
+    width: 18px;
+    height: 18px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
