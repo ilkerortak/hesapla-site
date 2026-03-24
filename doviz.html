@@ -1,136 +1,35 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Döviz Çevirici | Hesapla360</title>
-</head>
-<body>
+<div class="hero-section">
+    <h2>Döviz Çevirici</h2>
+    <p>GÜNCEL KUR ÜZERİNDEN VARLIK ANALİZİ</p>
+</div>
 
-<nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <div class="nav-menu">
-        <a href="netmaas.html">💰 Maaş</a>
-        <a href="tazminat.html">💼 Tazminat</a>
-        <a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html">🏦 Kredi</a>
-        <a href="yas.html">🎂 Yaş</a>
-        <a href="doviz.html" class="active">💱 Döviz</a>
-        <a href="kdv.html">🧾 KDV</a>
-        <a href="mesai.html">🕒 Mesai</a>
-        <a href="cv.html">📄 CV</a>
-    </div>
-</nav>
-
-<div style="max-width: 600px; margin: 60px auto; padding: 0 20px;">
+<div class="form-box">
+    <label>TUTAR</label>
+    <input type="number" id="amount" placeholder="Örn: 1000">
     
-    <div style="text-align: center; margin-bottom: 30px;">
-        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px;">Döviz <span style="color: var(--accent);">Çevirici</span></h2>
-        <div id="loadingStatus" style="font-size: 0.8rem; color: var(--accent); margin-top: 8px; font-weight: 600;">
-            Canlı veriler yükleniyor...
-        </div>
-    </div>
+    <label>DÖVİZ CİNSİ</label>
+    <select id="currency">
+        <option value="32.50">USD ($)</option>
+        <option value="35.20">EUR (€)</option>
+        <option value="41.10">GBP (£)</option>
+    </select>
 
-    <div class="feature-card" style="text-align: left; cursor: default; transform: none; padding: 35px;">
-        
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Çevrilecek Miktar</label>
-            <input type="number" id="amountInput" value="1" placeholder="Miktar giriniz..." 
-                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s;">
-        </div>
+    <button class="btn-calc" onclick="calcDoviz()">TL KARŞILIĞINI GÖR</button>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-            <div class="input-group">
-                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Kaynak</label>
-                <select id="fromCurrency" style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 12px; border-radius: 12px; color: #fff; outline: none; cursor: pointer;"></select>
-            </div>
-            <div class="input-group">
-                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Hedef</label>
-                <select id="toCurrency" style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 12px; border-radius: 12px; color: #fff; outline: none; cursor: pointer;"></select>
-            </div>
-        </div>
-
-        <button onclick="calculate()" 
-            style="width: 100%; background: var(--accent); color: #fff; border: none; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);">
-            HESAPLA & ÇEVİR
-        </button>
-
-        <div id="res" style="margin-top: 35px; padding-top: 25px; border-top: 1px dotted var(--border); text-align: center;">
-            <div id="resultDisplay" style="font-size: 1.8rem; font-weight: 800; color: var(--text);">
-                0.00
-            </div>
-            <div id="rateInfo" style="font-size: 0.85rem; color: var(--dim); margin-top: 8px; font-weight: 500;">
-                --
-            </div>
-        </div>
+    <div id="res" class="res-area">
+        <p style="color:#555; font-size:0.7rem; font-weight:800;">TAHMİNİ TL KARŞILIĞI</p>
+        <div class="res-val" id="tlResult">0 ₺</div>
+        <p style="font-size:0.7rem; color:#444; margin-top:10px;">* Serbest piyasa kurları baz alınmıştır.</p>
     </div>
 </div>
 
 <script>
-    const amountInput = document.getElementById('amountInput');
-    const fromCurrency = document.getElementById('fromCurrency');
-    const toCurrency = document.getElementById('toCurrency');
-    const resultDisplay = document.getElementById('resultDisplay');
-    const rateInfo = document.getElementById('rateInfo');
-    const loadingStatus = document.getElementById('loadingStatus');
-
-    let rates = {};
-
-    async function initExchange() {
-        try {
-            const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-            const data = await response.json();
-            rates = data.rates;
-            
-            const currencies = Object.keys(rates);
-            
-            currencies.forEach(currency => {
-                const option1 = document.createElement('option');
-                const option2 = document.createElement('option');
-                option1.value = option2.value = currency;
-                option1.text = option2.text = currency;
-                
-                if(currency === 'USD') option1.selected = true;
-                if(currency === 'TRY') option2.selected = true;
-
-                fromCurrency.add(option1);
-                toCurrency.add(option2);
-            });
-
-            loadingStatus.innerText = "● Piyasalar Aktif (Canlı Veri)";
-            calculate();
-        } catch (error) {
-            loadingStatus.innerText = "Bağlantı Hatası!";
-            loadingStatus.style.color = "#ff4d4d";
-        }
+    function calcDoviz() {
+        const amt = parseFloat(document.getElementById('amount').value) || 0;
+        const rate = parseFloat(document.getElementById('currency').value);
+        const result = amt * rate;
+        
+        document.getElementById('tlResult').innerText = result.toLocaleString() + " ₺";
+        document.getElementById('res').style.display = "block";
     }
-
-    function calculate() {
-        const amount = amountInput.value;
-        const from = fromCurrency.value;
-        const to = toCurrency.value;
-
-        if (amount === "" || amount <= 0) {
-            resultDisplay.innerText = "Geçersiz Tutar";
-            return;
-        }
-
-        const fromRate = rates[from];
-        const toRate = rates[to];
-        const result = (amount / fromRate) * toRate;
-        const singleRate = (1 / fromRate) * toRate;
-
-        resultDisplay.innerText = `${result.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${to}`;
-        rateInfo.innerText = `1 ${from} = ${singleRate.toFixed(4)} ${to}`;
-    }
-
-    amountInput.addEventListener('input', calculate);
-    fromCurrency.addEventListener('change', calculate);
-    toCurrency.addEventListener('change', calculate);
-
-    initExchange();
 </script>
-
-</body>
-</html>
