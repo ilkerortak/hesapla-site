@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Yakıt Tüketim Analizi</title>
+    <title>H360 | Yakıt Maliyeti Analizi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -32,7 +32,7 @@
 <div class="calculation-container">
     <header class="premium-header" style="margin-bottom: 30px;">
         <h1 class="premium-title" style="font-size: 1.8rem;">YAKIT ANALİZİ</h1>
-        <p class="premium-status">YOL MALİYET VE LOJİSTİK PLANLAMA</p>
+        <p class="premium-status">YOL MALİYETİ VE TÜKETİM HESABI</p>
     </header>
 
     <div class="form-card">
@@ -43,24 +43,24 @@
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
             <div class="input-group">
-                <label>TÜKETİM (L/100KM)</label>
+                <label>ORT. TÜKETİM (L/100KM)</label>
                 <input type="number" id="cons" placeholder="Örn: 6.5">
             </div>
             <div class="input-group">
-                <label>LİTRE FİYATI (TL)</label>
-                <input type="number" id="price" placeholder="Örn: 42.50">
+                <label>YAKIT FİYATI (₺/L)</label>
+                <input type="number" id="price" placeholder="Örn: 78.36">
             </div>
         </div>
 
-        <button class="btn-calc" onclick="calcFuel()">MALİYET ANALİZİ YAP</button>
+        <button class="btn-calc" onclick="calcYakit()">YOL MALİYETİNİ HESAPLA</button>
 
         <div id="res" class="res-area">
             <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim); text-transform: uppercase;">TOPLAM YAKIT GİDERİ</p>
-            <div class="res-val" id="fTotal">0 ₺</div>
+            <div class="res-val" id="totalCost" style="color: #fff;">0 ₺</div>
             
-            <div style="display:flex; justify-content:space-between; margin-top:20px; font-size:0.85rem; color:var(--text-dim); border-top: 1px dashed var(--border); padding-top: 15px;">
-                <span>Toplam: <b id="liters" style="color:#fff">0</b> <small>Litre</small></span>
-                <span>KM Başı: <b id="perKm" style="color:#fff">0</b> <small>₺</small></span>
+            <div style="margin-top:20px; font-size:0.85rem; color:var(--text-dim); border-top: 1px dashed var(--border); padding-top: 15px; display: flex; justify-content: space-between;">
+                <span>Toplam Yakıt: <b id="totalLitre" style="color:#fff">0 L</b></span>
+                <span>KM Başına: <b id="perKm" style="color:#2ecc71">0 ₺</b></span>
             </div>
         </div>
     </div>
@@ -69,19 +69,19 @@
 <script>
     function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 
-    function calcFuel() {
+    function calcYakit() {
         const d = parseFloat(document.getElementById('dist').value) || 0;
         const c = parseFloat(document.getElementById('cons').value) || 0;
         const p = parseFloat(document.getElementById('price').value) || 0;
         
         if(d > 0 && c > 0 && p > 0) {
-            const total = (d * c / 100) * p;
-            const totalLiters = (d * c / 100);
-            const kmPrice = total / d;
-
-            document.getElementById('fTotal').innerText = Math.round(total).toLocaleString('tr-TR') + " ₺";
-            document.getElementById('liters').innerText = totalLiters.toFixed(1).replace('.', ',');
-            document.getElementById('perKm').innerText = kmPrice.toFixed(2).replace('.', ',');
+            const totalLitre = (d * c) / 100;
+            const totalCost = totalLitre * p;
+            const perKm = totalCost / d;
+            
+            document.getElementById('totalCost').innerText = Math.round(totalCost).toLocaleString('tr-TR') + " ₺";
+            document.getElementById('totalLitre').innerText = totalLitre.toFixed(2) + " L";
+            document.getElementById('perKm').innerText = perKm.toFixed(2) + " ₺";
             document.getElementById('res').style.display = "block";
         }
     }
