@@ -1,1 +1,38 @@
-
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Kredi Hesaplama 2026</title>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="Kredi hesaplama aracını kullanarak aylık ödeme ve toplam maliyeti hesaplayın.">
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="index.html">Ana Sayfa</a></li>
+    <li><a href="netmaas.html">Net Maaş</a></li>
+    <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
+    <li><a href="kredi.html">Kredi Hesaplama</a></li>
+    <li><a href="yas.html">Yaş Hesaplama</a></li>
+    <li><a href="cv.html">CV Oluşturucu</a></li>
+  </ul>
+</nav>
+<hr>
+<h1>Kredi Hesaplama 2026</h1>
+<p>Kredi tutarı, vade ve faiz oranını girin:</p>
+<input type="number" id="tutar" placeholder="Kredi Tutarı">
+<input type="number" id="vade" placeholder="Vade (ay)">
+<input type="number" id="faiz" placeholder="Faiz (%)">
+<button onclick="hesapla()">Hesapla</button>
+<h2 id="sonuc"></h2>
+<script>
+function hesapla() {
+  let tutar = parseFloat(document.getElementById("tutar").value);
+  let vade = parseFloat(document.getElementById("vade").value);
+  let faiz = parseFloat(document.getElementById("faiz").value)/100;
+  let aylik = tutar * (1 + faiz) / vade;
+  document.getElementById("sonuc").innerText = "Aylık Ödeme: " + aylik.toFixed(2) + " TL";
+}
+</script>
+</body>
+</html>
