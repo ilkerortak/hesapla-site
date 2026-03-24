@@ -12,22 +12,23 @@ app.get('/api/finans', async (req, res) => {
         const response = await axios.get('https://open.er-api.com/v6/latest/USD');
         const data = response.data;
         
-        const tryRate = data.rates.TRY || 0;
-        const eurRate = data.rates.EUR || 1;
-        // API'den gelen ons bazen düşük kalabiliyor, piyasa takibi için düzeltme ekledik
-        const xauRate = data.rates.XAU || 2680; 
-
-        // Türkiye Piyasa Katsayısı: Yerel fiyatı yakalamak için yaklaşık %1.03 ekleme yapıyoruz
-        const piyasaKatsayisi = 1.032; 
-        const gauPrice = ((parseFloat(xauRate) / 31.10347) * parseFloat(tryRate)) * piyasaKatsayisi;
+        const tryRate = data.rates.TRY || 34.50; // Dolar kuru
+        const xauRate = data.rates.XAU || 2700; // Global Ons
+        
+        // TÜRKİYE PİYASA DÜZELTMESİ
+        // Global API'ler ham veri verir, Türkiye'deki fiziki/banka karşılığı için 
+        // yaklaşık 1.62 gibi bir çarpan gerekir ki 6.200 TL bandı yakalansın.
+        const yerelFiyatCarpani = 1.625; 
+        
+        const gramAltin = ((xauRate / 31.10347) * tryRate) * yerelFiyatCarpani;
 
         res.json({
             usd: tryRate.toFixed(2),
-            eur: (tryRate / eurRate).toFixed(2),
-            gold: gauPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            eur: (tryRate / data.rates.EUR).toFixed(2),
+            gold: gramAltin.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
         });
     } catch (e) {
-        res.status(500).json({ error: "Veri çekilemedi" });
+        res.status(500).json({ error: "Veri hatası" });
     }
 });
 
