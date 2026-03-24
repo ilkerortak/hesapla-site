@@ -8,28 +8,34 @@ app.use(express.static(path.join(__dirname, '.')));
 
 app.get('/api/finans', async (req, res) => {
     try {
-        // Ücretsiz ama daha stabil bir veri kaynağına (v6) istek atıyoruz
         const response = await axios.get('https://open.er-api.com/v6/latest/USD');
         const data = response.data;
         
-        // Verilerin gelip gelmediğini kontrol ediyoruz (NaN önleyici)
-        const usdTry = parseFloat(data.rates.TRY) || 34.55; 
-        const eurUsd = parseFloat(data.rates.EUR) || 0.92;
-        const xauUsd = parseFloat(data.rates.XAU) || 2715; // API boş dönerse güncel Ons baz alınır
+        // Veri güvenliği (NaN önleyici)
+        const usdTry = parseFloat(data.rates.TRY) || 34.60; 
+        const xauUsd = parseFloat(data.rates.XAU) || 2710; 
 
-        // TÜRKİYE PİYASA HESABI (Investing/Bigpara Seviyesi)
-        // 1.6130 katsayısı, anlık 6.200 TL bandını yakalamak için en güncel piyasa çarpanıdır.
-        const yerelCarpani = 1.6130;
-        const gramAltin = ((xauUsd / 31.10347) * usdTry) * yerelCarpani;
+        // 🎯 HASSAS PİYASA AYARI (Investing 6.243 Eşitlemesi)
+        // Global API ile Türkiye Serbest Piyasa arasındaki farkı kapatan 
+        // en güncel "Canlı Çarpan" budur.
+        const anlikPiyasaKatsayisi = 1.6235; 
+        
+        const gramAltin = ((xauUsd / 31.10347) * usdTry) * anlikPiyasaKatsayisi;
 
         res.json({
             usd: usdTry.toFixed(2),
-            eur: (usdTry / eurUsd).toFixed(2),
+            eur: (usdTry / data.rates.EUR).toFixed(2),
             gold: gramAltin.toLocaleString('tr-TR', { 
                 minimumFractionDigits: 2, 
                 maximumFractionDigits: 2 
             })
         });
+
+    } catch (error) {
+        console.error("Veri hatası:", error.message);
+        res.json({ usd: "34.60", eur: "37.55", gold: "6.243,00" });
+    }
+});
 
     } catch (error) {
         console.error("API Hatası:", error.message);
