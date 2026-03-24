@@ -1,4 +1,9 @@
-/**
+// Google Adsense Auto-Loader
+const adScript = document.createElement('script');
+adScript.async = true;
+adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426";
+adScript.crossOrigin = "anonymous";
+document.head.appendChild(adScript);/**
  * H360 ELITE - CORE ENGINE v5.0
  * [Menü + Logo + Reklam Alanları + Otomatik Orta Blok Sınırlama]
  */
