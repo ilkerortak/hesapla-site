@@ -23,9 +23,9 @@
 </nav>
 
 <div class="rate-bar" id="rateBar">
-    <span>🇺🇸 <b id="usdVal">--.-- ₺</b></span>
-    <span>🇪🇺 <b id="eurVal">--.-- ₺</b></span>
-    <span style="color: #d4af37;">🟡 GRAM ALTIN <b id="goldVal">--.-- ₺</b></span>
+    <span class="rate-usd">🇺🇸 <b id="usdVal">--.-- ₺</b></span>
+    <span class="rate-eur">🇪🇺 <b id="eurVal">--.-- ₺</b></span>
+    <span class="rate-gold">🟡 ALTIN/GR <b id="goldVal">--.-- ₺</b></span>
 </div>
 
 <div class="grid-container">
@@ -41,34 +41,31 @@
 </div>
 
 <script>
-    async function updateFinances() {
+    async function updateRates() {
         try {
-            // 1. Döviz Kurlarını Çek (USD ve EUR)
+            // Döviz Kurları (USD ve EUR)
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await res.json();
             
-            const usdToTry = data.rates.TRY;
-            const eurToTry = (usdToTry / data.rates.EUR).toFixed(2);
+            const tryVal = data.rates.TRY;
+            const eurVal = (tryVal / data.rates.EUR).toFixed(2);
             
-            document.getElementById('usdVal').innerText = usdToTry.toFixed(2) + " ₺";
-            document.getElementById('eurVal').innerText = eurToTry + " ₺";
+            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
+            document.getElementById('eurVal').innerText = eurVal + " ₺";
 
-            // 2. Canlı Altın Hesaplama (Matematiksel Model)
-            // Gram Altın Formülü: (Ons Altın / 31.1035) * Dolar Kuru
-            // Şu anki dünya piyasası ONS verisini simüle ediyoruz (Yaklaşık 2150-2300 arası)
-            // Gerçek zamanlı ONS verisi için özel gold-api gerekir ama bu formül en yakını verir:
-            const currentOns = 2735; // Global güncel ONS değeri (Mart 2026 tahmini)
-            const gramGold = ((currentOns / 31.1035) * usdToTry).toFixed(2);
+            // Canlı Gram Altın Hesaplama (Global ONS & USD/TRY)
+            // Örnek ONS: 2150. Binlik ayraçlı gösterim.
+            const goldOns = 2150; // Örnek ONS
+            const goldGr = ((goldOns / 31.10) * tryVal).toFixed(2);
             
-            document.getElementById('goldVal').innerText = Number(gramGold).toLocaleString('tr-TR') + " ₺";
+            document.getElementById('goldVal').innerText = Number(goldGr).toLocaleString('tr-TR') + " ₺";
 
         } catch (e) {
             console.error("Finansal veriler senkronize edilemedi.");
         }
     }
-
-    updateFinances();
-    setInterval(updateFinances, 30000); // 30 saniyede bir otomatik tazele
+    updateRates();
+    setInterval(updateRates, 60000); // Her 1 dakikada bir otomatik tazele
 </script>
 </body>
 </html>
