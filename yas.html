@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Yaş Hesaplama 2026</title>
 <link rel="stylesheet" href="style.css">
-<meta name="description" content="Doğum tarihinizden yaşınızı kolayca hesaplayın.">
+<meta name="description" content="Doğum tarihinizden tam yaşınızı (yıl, ay, gün) hesaplayın.">
 </head>
 <body>
 <nav>
@@ -20,18 +20,38 @@
 </nav>
 
 <div class="container">
-<h1>Yaş Hesaplama 2026</h1>
-<p>Doğum yılınızı girin:</p>
-<input type="number" id="dogum" placeholder="Örn: 1990">
+<h1>Detaylı Yaş Hesaplama 2026</h1>
+<p>Doğum tarihinizi seçin:</p>
+<input type="date" id="dogum">
 <button onclick="hesapla()">Hesapla</button>
 <h2 id="sonuc"></h2>
 </div>
 
 <script>
 function hesapla(){
-  let dogum = parseInt(document.getElementById("dogum").value);
-  let yas = 2026 - dogum;
-  document.getElementById("sonuc").innerText = "Yaşınız: " + yas;
+  const dogumInput = document.getElementById("dogum").value;
+  if(!dogumInput){
+    alert("Lütfen doğum tarihinizi girin!");
+    return;
+  }
+
+  const dogumTarihi = new Date(dogumInput);
+  const bugun = new Date("2026-03-24"); // Sabit 2026 tarihi, güncel tarih için: new Date()
+  
+  let yil = bugun.getFullYear() - dogumTarihi.getFullYear();
+  let ay = bugun.getMonth() - dogumTarihi.getMonth();
+  let gun = bugun.getDate() - dogumTarihi.getDate();
+
+  if(gun < 0){
+    ay -= 1;
+    gun += new Date(bugun.getFullYear(), bugun.getMonth(), 0).getDate(); // önceki ayın gün sayısı
+  }
+  if(ay < 0){
+    yil -= 1;
+    ay += 12;
+  }
+
+  document.getElementById("sonuc").innerText = `Yaşınız: ${yil} yıl, ${ay} ay, ${gun} gün`;
 }
 
 // Tema persist
