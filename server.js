@@ -11,17 +11,22 @@ app.get('/api/finans', async (req, res) => {
     try {
         const response = await axios.get('https://open.er-api.com/v6/latest/USD');
         const data = response.data;
-        const tryRate = data.rates.TRY;
-        const xauRate = data.rates.XAU; 
-        const eurRate = data.rates.EUR;
+        
+        const tryRate = data.rates.TRY || 0;
+        const eurRate = data.rates.EUR || 1;
+        // Eğer API'den XAU gelmezse NaN olmaması için varsayılan bir ONS fiyatı koyuyoruz
+        const xauRate = data.rates.XAU || 2680; 
+
+        // Hesaplamayı kontrol altına alıyoruz
+        const gauPrice = (parseFloat(xauRate) / 31.10347) * parseFloat(tryRate);
 
         res.json({
             usd: tryRate.toFixed(2),
             eur: (tryRate / eurRate).toFixed(2),
-            gold: ((xauRate / 31.10347) * tryRate).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            gold: gauPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
         });
     } catch (e) {
-        console.error("API Hatası:", e.message);
+        console.error("Hata oluştu:", e.message);
         res.status(500).json({ error: "Veri çekilemedi" });
     }
 });
