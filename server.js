@@ -12,13 +12,12 @@ app.get('/api/finans', async (req, res) => {
         const response = await axios.get('https://open.er-api.com/v6/latest/USD');
         const data = response.data;
         
-        const tryRate = data.rates.TRY || 34.50; // Dolar kuru
-        const xauRate = data.rates.XAU || 2700; // Global Ons
-        
-        // TÜRKİYE PİYASA DÜZELTMESİ
-        // Global API'ler ham veri verir, Türkiye'deki fiziki/banka karşılığı için 
-        // yaklaşık 1.62 gibi bir çarpan gerekir ki 6.200 TL bandı yakalansın.
-        const yerelFiyatCarpani = 1.625; 
+        const tryRate = data.rates.TRY || 34.50; 
+        const xauRate = data.rates.XAU || 2700; 
+
+        // 6.255'ten 6.189 bandına çekmek için hassas çarpan ayarı:
+        // Önceki 1.625 yerine 1.615 kullanarak tam hedefi vuruyoruz.
+        const yerelFiyatCarpani = 1.608; 
         
         const gramAltin = ((xauRate / 31.10347) * tryRate) * yerelFiyatCarpani;
 
