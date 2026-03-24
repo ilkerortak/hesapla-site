@@ -2,38 +2,29 @@
 <html lang="tr">
 <head><link rel="stylesheet" href="style.css"></head>
 <body>
-<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a></nav>
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
+    <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
+    <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
+    <a href="kdv.html">🧾 KDV</a><a href="mesai.html" class="active">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+</div></nav>
 <div class="container">
-    <h2>🕒 Mesai & İzin Ücreti</h2>
-    <div class="input-group"><label>Brüt Maaş (TL)</label><input type="number" id="maas"></div>
-    <div class="input-group"><label>Mesai Saati (Hafta İçi %50)</label><input type="number" id="m1" value="0"></div>
-    <div class="input-group"><label>Mesai Saati (Pazar/Tatil %100)</label><input type="number" id="m2" value="0"></div>
-    <button onclick="hesapla()">Kazancı Hesapla</button>
-
-    <div id="sonuc-box" style="display:none;" class="result-item">
-        <div class="detail-row"><span>Saatlik Brüt Ücret</span> <span id="saatlik"></span></div>
-        <div class="detail-row"><span>Mesai Kazancı (Brüt)</span> <span id="mesai-kazanc"></span></div>
-        <div class="detail-row total"><span>Toplam Ek Kazanç</span> <span id="net-ek" style="color:#a855f7; font-size:1.4rem;"></span></div>
-        <p style="font-size:0.7rem; color:orange; margin-top:10px;">*Brüt tutarlar üzerinden hesaplanmıştır.</p>
+    <h2>🕒 Mesai Hesapla</h2>
+    <div class="input-group"><label>Brüt Maaş</label><input type="number" id="m"></div>
+    <div class="input-group"><label>Fazla Mesai Saati</label><input type="number" id="s"></div>
+    <button onclick="calc()">Kazancı Gör</button>
+    <div id="res" class="result-box">
+        <div class="row"><span>Saatlik Ücret</span><span id="su"></span></div>
+        <div class="row"><span>Mesai Çarpanı</span><span>1.5x (%50 Zam)</span></div>
+        <div class="row total"><span>Ek Kazanç (Brüt)</span><span id="ek"></span></div>
     </div>
 </div>
 <script>
-    function hesapla() {
-        let m = parseFloat(document.getElementById("maas").value);
-        let h1 = parseFloat(document.getElementById("m1").value) || 0;
-        let h2 = parseFloat(document.getElementById("m2").value) || 0;
-        if(!m) return;
-
-        let saatlik = m / 225; // Yasal aylık çalışma saati
-        let k1 = h1 * (saatlik * 1.5);
-        let k2 = h2 * (saatlik * 2.0);
-        let toplam = k1 + k2;
-
-        document.getElementById("sonuc-box").style.display = "block";
-        document.getElementById("saatlik").innerText = saatlik.toFixed(2) + " TL";
-        document.getElementById("mesai-kazanc").innerText = toplam.toLocaleString() + " TL";
-        document.getElementById("net-ek").innerText = toplam.toLocaleString() + " TL";
-    }
+function calc(){
+    let m=document.getElementById("m").value, s=document.getElementById("s").value; if(!m)return;
+    let su = m/225;
+    document.getElementById("res").style.display="block";
+    document.getElementById("su").innerText=su.toFixed(2)+" TL";
+    document.getElementById("ek").innerText=(s*su*1.5).toLocaleString()+" TL";
+}
 </script>
-</body>
-</html>
+</body></html>
