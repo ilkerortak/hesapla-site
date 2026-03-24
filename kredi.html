@@ -2,53 +2,41 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Kredi Hesaplama 2026 - Hesapla360</title>
+    <title>Kredi Hesaplama - Hesapla360</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <nav>
-    <a href="index.html" class="logo-link"><div class="logo" style="font-weight:800; color:white; font-size:1.4rem;">HESAPLA<span style="color:#fbbf24;">360</span></div></a>
-    <ul>
+    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
+    <ul class="nav-menu">
         <li><a href="netmaas.html">Maaş</a></li>
         <li><a href="kredi.html" class="active">Kredi</a></li>
-        <li><a href="yas.html">Yaş</a></li>
+        <li><a href="cv.html">CV</a></li>
     </ul>
-    <button id="theme-toggle">☀️</button>
 </nav>
 
 <div class="container">
-    <h1>Kredi Taksit Hesaplama</h1>
-    <div class="input-group">
-        <p>Kredi Tutarı:</p>
-        <div class="input-wrapper"><input type="number" id="tutar" placeholder="100000"><span>TL</span></div>
-    </div>
-    <div class="input-group">
-        <p>Vade (Ay):</p>
-        <div class="input-wrapper"><input type="number" id="vade" placeholder="12"><span>Ay</span></div>
-    </div>
-    <div class="input-group">
-        <p>Aylık Faiz Oranı:</p>
-        <div class="input-wrapper"><input type="number" id="faiz" step="0.01" placeholder="3.85"><span>%</span></div>
-    </div>
+    <h2>Kredi Hesaplama</h2>
+    <div class="input-group"><label>Kredi Tutarı</label><input type="number" id="tutar" placeholder="TL"></div>
+    <div class="input-group"><label>Vade (Ay)</label><input type="number" id="vade" placeholder="Ay"></div>
+    <div class="input-group"><label>Faiz Oranı (%)</label><input type="number" id="faiz" step="0.01" placeholder="Örn: 3.85"></div>
     <button onclick="krediHesapla()">Taksitleri Gör</button>
     <div id="sonuc-box" style="display:none;" class="result-item">
-        <span>Aylık Taksit:</span>
+        <p style="opacity:0.7;">Aylık Taksit</p>
         <strong id="taksit">0 TL</strong>
-        <p id="toplam-odeme" style="margin-top:10px; font-size:0.9rem;"></p>
     </div>
 </div>
-<script src="script.js"></script>
+
 <script>
-function krediHesapla() {
-    let t = parseFloat(document.getElementById("tutar").value);
-    let v = parseFloat(document.getElementById("vade").value);
-    let f = (parseFloat(document.getElementById("faiz").value) / 100) * 1.30; // Vergiler dahil
-    if(!t || !v || !f) return;
-    let taksit = (t * f * Math.pow(1+f, v)) / (Math.pow(1+f, v) - 1);
-    document.getElementById("sonuc-box").style.display = "block";
-    document.getElementById("taksit").innerText = taksit.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " TL";
-    document.getElementById("toplam-odeme").innerText = `Toplam Geri Ödeme: ${(taksit * v).toLocaleString()} TL`;
-}
+    function krediHesapla() {
+        let t = parseFloat(document.getElementById("tutar").value);
+        let v = parseFloat(document.getElementById("vade").value);
+        let f = (parseFloat(document.getElementById("faiz").value) / 100) * 1.30; 
+        if(!t || !v || !f) return;
+        let taksit = (t * f * Math.pow(1+f, v)) / (Math.pow(1+f, v) - 1);
+        document.getElementById("sonuc-box").style.display = "block";
+        document.getElementById("taksit").innerText = taksit.toLocaleString('tr-TR', {maximumFractionDigits:2}) + " TL";
+    }
 </script>
 </body>
 </html>
