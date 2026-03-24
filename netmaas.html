@@ -13,41 +13,43 @@
         <a href="tazminat.html">💼 Tazminat</a>
         <a href="issizlik.html">📅 İşsizlik</a>
         <a href="kredi.html">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
         <a href="cv.html">📄 CV</a>
     </div>
 </nav>
 
 <div class="container">
-    <h2>💰 Maaş Analizi</h2>
-    <div class="input-group">
-        <label>Brüt Maaş Tutarı (TL)</label>
-        <input type="number" id="brut" placeholder="Örn: 50000">
-    </div>
-    <button onclick="hesapla()">Analiz Et</button>
+    <h2>💰 Detaylı Maaş Analizi</h2>
+    <div class="input-group"><label>Brüt Maaş (TL)</label><input type="number" id="brut"></div>
+    <button onclick="maasHesapla()">Hesapla</button>
 
     <div id="sonuc-box" style="display:none;" class="result-item">
         <div class="detail-row"><span>SGK İşçi Payı (%14)</span> <span id="sgk"></span></div>
-        <div class="detail-row"><span>İşsizlik Fonu (%1)</span> <span id="issizlik"></span></div>
-        <div class="detail-row"><span>Gelir Vergisi (%15)</span> <span id="gv"></span></div>
-        <div class="detail-row"><span>Damga Vergisi</span> <span id="dv"></span></div>
-        <div class="detail-row total"><span>Net Ele Geçen</span> <span id="net" style="color:#a855f7; font-size:1.4rem;"></span></div>
+        <div class="detail-row"><span>İşsizlik Sigortası (%1)</span> <span id="iss"></span></div>
+        <div class="detail-row"><span>Gelir Vergisi Matrahı</span> <span id="matrah"></span></div>
+        <div class="detail-row"><span>Damga Vergisi (%0.759)</span> <span id="dv"></span></div>
+        <div class="detail-row total"><span>Net Ele Geçen</span> <span id="net"></span></div>
+        <p style="font-size:0.7rem; color:#a855f7; margin-top:10px;">*Asgari Ücret Vergi İstisnası düşülmüştür.</p>
     </div>
 </div>
 
 <script>
-    function hesapla() {
+    function maasHesapla() {
         let b = parseFloat(document.getElementById("brut").value);
         if(!b) return;
         let sgk = b * 0.14;
         let iss = b * 0.01;
-        let gv = (b - sgk - iss) * 0.15;
+        let matrah = b - sgk - iss;
+        let gv = matrah * 0.15;
         let dv = b * 0.00759;
-        let net = b - (sgk + iss + gv + dv) + 3500; // + İstisna
-        
+        // 2026 İstisna Tahmini
+        let istisna = 3500; 
+        let net = b - (sgk + iss + gv + dv) + istisna;
+
         document.getElementById("sonuc-box").style.display = "block";
         document.getElementById("sgk").innerText = sgk.toLocaleString() + " TL";
-        document.getElementById("issizlik").innerText = iss.toLocaleString() + " TL";
-        document.getElementById("gv").innerText = gv.toLocaleString() + " TL";
+        document.getElementById("iss").innerText = iss.toLocaleString() + " TL";
+        document.getElementById("matrah").innerText = matrah.toLocaleString() + " TL";
         document.getElementById("dv").innerText = dv.toLocaleString() + " TL";
         document.getElementById("net").innerText = net.toLocaleString() + " TL";
     }
