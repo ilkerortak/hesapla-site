@@ -1,3 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H360 | Döviz Çevirici</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Döviz seçme kutusu için özel dokunuş */
+        select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            width: 100%;
+            margin-bottom: 30px;
+            outline: none;
+            border-bottom: 2px solid #1c212c;
+            padding-bottom: 10px;
+            cursor: pointer;
+            appearance: none; /* Standart ok işaretini kaldırır */
+        }
+        option { background: #12161e; color: white; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/" class="logo">
+        <div class="logo-box">H360</div> 
+        HESAPLA<span>360</span>
+    </a>
+    <div class="nav-container">
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
+            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
+            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
+            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
+            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
+            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+        </div>
+    </div>
+</nav>
+
 <div class="hero-section">
     <h2>Döviz Çevirici</h2>
     <p>GÜNCEL KUR ÜZERİNDEN VARLIK ANALİZİ</p>
@@ -17,19 +62,44 @@
     <button class="btn-calc" onclick="calcDoviz()">TL KARŞILIĞINI GÖR</button>
 
     <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.7rem; font-weight:800;">TAHMİNİ TL KARŞILIĞI</p>
+        <p style="color:#555; font-size:0.75rem; font-weight:800;">TAHMİNİ TL KARŞILIĞI</p>
         <div class="res-val" id="tlResult">0 ₺</div>
-        <p style="font-size:0.7rem; color:#444; margin-top:10px;">* Serbest piyasa kurları baz alınmıştır.</p>
+        <p style="font-size:0.7rem; color:#444; margin-top:15px; border-top: 1px solid #1c212c; padding-top: 10px;">
+            * Serbest piyasa kurları baz alınmıştır.
+        </p>
     </div>
 </div>
 
 <script>
+    // Menü Fonksiyonları
+    function toggleMenu() { 
+        document.getElementById('navMenu').classList.toggle('active'); 
+    }
+
+    // Döviz Hesaplama
     function calcDoviz() {
         const amt = parseFloat(document.getElementById('amount').value) || 0;
         const rate = parseFloat(document.getElementById('currency').value);
-        const result = amt * rate;
         
-        document.getElementById('tlResult').innerText = result.toLocaleString() + " ₺";
-        document.getElementById('res').style.display = "block";
+        if(amt > 0) {
+            const result = amt * rate;
+            document.getElementById('tlResult').innerText = result.toLocaleString() + " ₺";
+            document.getElementById('res').style.display = "block";
+        }
+    }
+
+    // Menü dışına tıklandığında otomatik kapatma
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('active')) {
+                    openDropdown.classList.remove('active');
+                }
+            }
+        }
     }
 </script>
+</body>
+</html>
