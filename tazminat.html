@@ -28,6 +28,12 @@
         .res-area { margin-top: 30px; padding-top: 20px; border-top: 1px dashed var(--border); display: none; }
         .res-val { font-size: 2.2rem; font-weight: 700; color: var(--accent); margin: 10px 0; }
         .detail-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-dim); }
+
+        #extra {
+            border-top: 1px dashed var(--border);
+            margin-top: 10px;
+            padding-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -81,35 +87,80 @@
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-    
-    function hesaplaTazminat() {
-        const maas = parseFloat(document.getElementById('sonBrut').value) || 0;
-        const yil = parseFloat(document.getElementById('yil').value) || 0;
-        
-        // 2026 Tahmini Kıdem Tazminatı Tavanı
-        const kidemTavan = 35058;
-        const esasMaas = (maas > kidemTavan ? kidemTavan : maas);
-        
-        const brutKidem = esasMaas * yil;
-        const damgaVergisi = brutKidem * 0.00759;
-        const netKidem = brutKidem - damgaVergisi;
-        
-        // Arayüz Güncelleme
-        document.getElementById('toplamTazminat').innerText = Math.round(netKidem).toLocaleString('tr-TR') + " ₺";
-        document.getElementById('sureBilgi').innerText = yil + " Yıl";
-        document.getElementById('kesinti').innerText = Math.round(damgaVergisi).toLocaleString('tr-TR') + " ₺";
-        
-        document.getElementById('res').style.display = "block";
+function toggleMenu() {
+    document.getElementById('navMenu').classList.toggle('active');
+}
+
+function hesaplaTazminat() {
+    const maas = parseFloat(document.getElementById('sonBrut').value);
+    const yil = parseFloat(document.getElementById('yil').value);
+
+    if (!maas || !yil || maas <= 0 || yil <= 0) return;
+
+    const kidemTavan = 35058;
+    const esasMaas = (maas > kidemTavan ? kidemTavan : maas);
+
+    const brutKidem = esasMaas * yil;
+    const damgaVergisi = brutKidem * 0.00759;
+    const netKidem = brutKidem - damgaVergisi;
+
+    const yaz = (id, val) => {
+        document.getElementById(id).innerText = Math.round(val).toLocaleString('tr-TR') + " ₺";
+    };
+
+    yaz("toplamTazminat", netKidem);
+    yaz("kesinti", damgaVergisi);
+
+    document.getElementById('sureBilgi').innerText = yil + " Yıl";
+
+    // EXTRA ANALİZ
+    let extra = document.getElementById("extra");
+    if (!extra) {
+        extra = document.createElement("div");
+        extra.id = "extra";
+        document.getElementById("res").appendChild(extra);
     }
 
-    // Navigasyon dışı tıklama kontrolü
-    window.onclick = function(e) { 
-        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
-        }
+    const aylikKarsilik = netKidem / (yil * 12);
+    const oran = (esasMaas / maas) * 100;
+
+    extra.innerHTML = `
+        <div class="detail-row">
+            <span>Tavana Takılma Oranı</span>
+            <b style="color:#fff">%${oran.toFixed(1)}</b>
+        </div>
+        <div class="detail-row">
+            <span>Aylık Karşılığı</span>
+            <b style="color:#fff">${Math.round(aylikKarsilik).toLocaleString('tr-TR')} ₺</b>
+        </div>
+        <div class="detail-row">
+            <span>Brüt Tazminat</span>
+            <b style="color:#fff">${Math.round(brutKidem).toLocaleString('tr-TR')} ₺</b>
+        </div>
+    `;
+
+    document.getElementById('res').style.display = "block";
+}
+
+// SAYFA YÜKLENDİKTEN SONRA
+document.addEventListener("DOMContentLoaded", () => {
+    const m = document.getElementById("sonBrut");
+    const y = document.getElementById("yil");
+
+    if (m && y) {
+        m.addEventListener("input", hesaplaTazminat);
+        y.addEventListener("input", hesaplaTazminat);
     }
+});
+
+// Menü dışı tıklama
+window.onclick = function(e) { 
+    if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
+        const menu = document.getElementById('navMenu');
+        if(menu && menu.classList.contains('active')) menu.classList.remove('active');
+    }
+}
 </script>
+
 </body>
 </html>
