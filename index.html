@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HESAPLA360 | Finansal Asistanı'nız</title>
+    <title>HESAPLA360 Finansal Asistanı'nız</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -90,6 +90,51 @@
 
     updateRates();
     setInterval(updateRates, 60000);
+
+    <script>
+    async function updateRates() {
+        try {
+            // Dünyanın en güvenilir ücretsiz döviz ve metal API'si
+            const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            const data = await res.json();
+            
+            // 1. Dolar ve Euro'yu al
+            const tryVal = data.rates.TRY; // 1 USD kaç TL?
+            const eurRate = data.rates.EUR; // 1 USD kaç EUR?
+            const xauUsd = data.rates.XAU; // 1 ONS Altın kaç USD?
+
+            // 2. Elementleri Güncelle
+            // Dolar
+            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
+            
+            // Euro (Çapraz Kur: USD/TRY / USD/EUR)
+            const eurTry = (tryVal / eurRate).toFixed(2);
+            document.getElementById('eurVal').innerText = eurTry + " ₺";
+
+            // 3. Gram Altın Hesapla (Asla Sekmez)
+            // Formül: (Ons Fiyatı / 31.1034) * Dolar Kuru
+            if (xauUsd && tryVal) {
+                const gramAltin = (xauUsd / 31.1034) * tryVal;
+                
+                // Rakamı Bigpara/Investing formatında (binlik ayraçlı) yazdır
+                document.getElementById('goldVal').innerText = gramAltin.toLocaleString('tr-TR', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }) + " ₺";
+            }
+
+        } catch (e) {
+            console.error("Finansal veri çekilemedi:", e);
+            // Hata durumunda kullanıcıya bilgi ver
+            document.getElementById('goldVal').innerText = "Güncelleniyor...";
+        }
+    }
+
+    // İlk çalıştırma
+    updateRates();
+    
+    // Her 30 saniyede bir sessizce güncelle (Sayfa kasmaması için)
+    setInterval(updateRates, 30000);
 </script>
 
 </body>
