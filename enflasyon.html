@@ -32,7 +32,7 @@
 <div class="calculation-container">
     <header class="premium-header" style="margin-bottom: 30px;">
         <h1 class="premium-title" style="font-size: 1.8rem;">ENFLASYON ANALİZİ</h1>
-        <p class="premium-status">SATIN ALMA GÜCÜ ANALİZİ</p>
+        <p class="premium-status">SATIN ALMA GÜCÜ VE DEĞER KAYBI</p>
     </header>
 
     <div class="form-card">
@@ -52,11 +52,11 @@
             <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim); text-transform: uppercase;">1 YIL SONRAKİ REEL DEĞER</p>
             <div class="res-val" id="reel" style="color: #fff;">0 ₺</div>
             
-            <div style="margin-top:20px; font-size:0.9rem; color:#e74c3c; font-weight:700; border-top: 1px dashed var(--border); padding-top: 15px;">
-                Hissedilen Değer Kaybı: - <span id="loss">0</span> ₺
+            <div style="margin-top:20px; font-size:0.95rem; color:#e74c3c; font-weight:700; border-top: 1px dashed var(--border); padding-top: 15px;">
+                Hissedilen Kayıp: - <span id="loss">0</span> ₺
             </div>
-            <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 10px; line-height: 1.4;">
-                * Bu hesaplama, paranın mevcut mal ve hizmet sepeti karşısındaki satın alma gücü kaybını gösterir.
+            <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 12px; line-height: 1.4;">
+                * Bu hesaplama, paranın mal ve hizmetler karşısındaki alım gücü erimesini gösterir.
             </p>
         </div>
     </div>
@@ -67,14 +67,16 @@
 
     function calcInf() {
         const a = parseFloat(document.getElementById('amt').value) || 0;
-        const r = parseFloat(document.getElementById('inf').value) / 100;
+        const rInput = parseFloat(document.getElementById('inf').value) || 0;
+        const r = rInput / 100;
         
         if(a > 0 && r > 0) {
-            // Reel değer formülü: Mevcut Tutar / (1 + Enflasyon Oranı)
+            // Paranın enflasyon karşısındaki yeni alım gücü (Reel Değer)
             const reelVal = a / (1 + r);
-            
+            const loss = a - reelVal;
+
             document.getElementById('reel').innerText = Math.round(reelVal).toLocaleString('tr-TR') + " ₺";
-            document.getElementById('loss').innerText = Math.round(a - reelVal).toLocaleString('tr-TR');
+            document.getElementById('loss').innerText = Math.round(loss).toLocaleString('tr-TR');
             document.getElementById('res').style.display = "block";
         }
     }
