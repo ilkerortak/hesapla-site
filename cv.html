@@ -22,15 +22,41 @@
 
 <div class="container">
 <h1>CV Oluşturucu 2026</h1>
+
 <input type="text" id="ad" placeholder="Ad">
 <input type="text" id="soyad" placeholder="Soyad">
 <input type="text" id="meslek" placeholder="Meslek">
 <input type="text" id="telefon" placeholder="Telefon">
 <input type="text" id="email" placeholder="E-mail">
+
+<h2>Deneyim Ekle</h2>
+<div id="deneyimler-container">
+  <div class="deneyim">
+    <input type="text" class="firma" placeholder="Firma Adı">
+    <input type="text" class="pozisyon" placeholder="Pozisyon / Görev">
+    <input type="text" class="sure" placeholder="Başlangıç-Bitiş Yılı (örn: 2020-2023)">
+  </div>
+</div>
+<button onclick="yeniDeneyim()">Yeni Deneyim Ekle</button>
+
 <button onclick="olustur()">CV Oluştur & PDF İndir</button>
 </div>
 
 <script>
+// Yeni deneyim satırı ekleme
+function yeniDeneyim(){
+  const container = document.getElementById("deneyimler-container");
+  const div = document.createElement("div");
+  div.classList.add("deneyim");
+  div.innerHTML = `
+    <input type="text" class="firma" placeholder="Firma Adı">
+    <input type="text" class="pozisyon" placeholder="Pozisyon / Görev">
+    <input type="text" class="sure" placeholder="Başlangıç-Bitiş Yılı (örn: 2020-2023)">
+  `;
+  container.appendChild(div);
+}
+
+// PDF Oluştur
 async function olustur(){
   const { jsPDF } = window.jspdf;
   let doc = new jsPDF();
@@ -51,13 +77,24 @@ async function olustur(){
   doc.text(`Telefon: ${telefon}`,20,60);
   doc.text(`Email: ${email}`,20,70);
 
+  // Deneyimler
   doc.setFontSize(18);
   doc.setTextColor(79,70,229);
   doc.text("Deneyim",20,90);
   doc.setFontSize(14);
   doc.setTextColor(0,0,0);
-  doc.text("- Örnek Firma | 2020-2023 | İş Tanımı",20,100);
-  doc.text("- Örnek Firma 2 | 2018-2020 | İş Tanımı",20,110);
+
+  const deneyimler = document.querySelectorAll("#deneyimler-container .deneyim");
+  let y = 100; // başlangıç Y konumu
+  deneyimler.forEach(d => {
+    const firma = d.querySelector(".firma").value;
+    const pozisyon = d.querySelector(".pozisyon").value;
+    const sure = d.querySelector(".sure").value;
+    if(firma || pozisyon || sure){
+      doc.text(`- ${firma} | ${sure} | ${pozisyon}`, 20, y);
+      y += 10;
+    }
+  });
 
   doc.save(`${ad}_${soyad}_CV.pdf`);
 }
