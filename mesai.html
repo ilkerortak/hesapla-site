@@ -1,30 +1,98 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><link rel="stylesheet" href="style.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Mesai Hesaplama | Hesapla360</title>
+</head>
 <body>
-<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
-    <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
-    <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
-    <a href="kdv.html">🧾 KDV</a><a href="mesai.html" class="active">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-</div></nav>
-<div class="container">
-    <h2>🕒 Mesai Hesapla</h2>
-    <div class="input-group"><label>Brüt Maaş</label><input type="number" id="m"></div>
-    <div class="input-group"><label>Fazla Mesai Saati</label><input type="number" id="s"></div>
-    <button onclick="calc()">Kazancı Gör</button>
-    <div id="res" class="result-box">
-        <div class="row"><span>Saatlik Ücret</span><span id="su"></span></div>
-        <div class="row"><span>Mesai Çarpanı</span><span>1.5x (%50 Zam)</span></div>
-        <div class="row total"><span>Ek Kazanç (Brüt)</span><span id="ek"></span></div>
+
+<nav>
+    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
+    <div class="nav-menu">
+        <a href="netmaas.html">💰 Maaş</a>
+        <a href="tazminat.html">💼 Tazminat</a>
+        <a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
+        <a href="doviz.html">💱 Döviz</a>
+        <a href="kdv.html">🧾 KDV</a>
+        <a href="mesai.html" class="active">🕒 Mesai</a>
+        <a href="cv.html">📄 CV</a>
+    </div>
+</nav>
+
+<div style="max-width: 600px; margin: 60px auto; padding: 0 20px;">
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px;">Mesai <span style="color: var(--accent);">Hesapla</span></h2>
+        <p style="color: var(--dim); font-size: 0.85rem; margin-top: 5px;">Fazla mesai saat ücreti ve toplam brüt kazanç dökümü.</p>
+    </div>
+
+    <div class="feature-card" style="text-align: left; cursor: default; transform: none; padding: 35px;">
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Aylık Brüt Maaş (TL)</label>
+            <input type="number" id="m" placeholder="Örn: 45.000" 
+                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s;">
+        </div>
+
+        <div style="margin-bottom: 25px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Fazla Mesai Saati</label>
+            <input type="number" id="s" placeholder="Örn: 10" 
+                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none;">
+        </div>
+
+        <button onclick="calc()" 
+            style="width: 100%; background: var(--accent); color: #fff; border: none; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);">
+            KAZANCI HESAPLA
+        </button>
+
+        <div id="res" style="display: none; margin-top: 35px; padding-top: 25px; border-top: 1px dotted var(--border);">
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Normal Saatlik Ücret</span>
+                <span id="su" style="color: #fff; font-weight: 600;"></span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Mesai Çarpanı</span>
+                <span style="color: #fff; font-weight: 600;">1.5x (%50 Zamlı)</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding: 20px; background: rgba(88, 166, 255, 0.05); border-radius: 12px; border: 1px solid rgba(88, 166, 255, 0.1);">
+                <span style="color: #fff; font-weight: 700; font-size: 1.1rem;">Mesai Kazancı (Brüt)</span>
+                <span id="ek" style="color: var(--accent); font-weight: 800; font-size: 1.5rem;"></span>
+            </div>
+
+            <p style="font-size: 0.7rem; color: var(--dim); margin-top: 15px; text-align: center;">
+                * Aylık yasal çalışma süresi 225 saat üzerinden hesaplanmıştır.
+            </p>
+        </div>
     </div>
 </div>
+
 <script>
 function calc(){
-    let m=document.getElementById("m").value, s=document.getElementById("s").value; if(!m)return;
-    let su = m/225;
-    document.getElementById("res").style.display="block";
-    document.getElementById("su").innerText=su.toFixed(2)+" TL";
-    document.getElementById("ek").innerText=(s*su*1.5).toLocaleString()+" TL";
+    let m = parseFloat(document.getElementById("m").value);
+    let s = parseFloat(document.getElementById("s").value);
+    
+    if(!m || m <= 0) {
+        alert("Lütfen geçerli bir maaş girin.");
+        return;
+    }
+    
+    if(!s) s = 0; // Mesai girilmezse 0 kabul et
+
+    let saatlikUcret = m / 225;
+    let mesaiKazanci = s * saatlikUcret * 1.5;
+
+    document.getElementById("res").style.display = "block";
+    document.getElementById("su").innerText = saatlikUcret.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " ₺";
+    document.getElementById("ek").innerText = mesaiKazanci.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " ₺";
 }
 </script>
-</body></html>
+
+</body>
+</html>
