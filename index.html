@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HESAPLA360 Finansal Uzman</title>
+    <title>HESAPLA360 | Finansal Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
+    <a href="index.html" class="logo">
+        <span class="logo-icon">📊</span>
+        HESAPLA<span>360</span>
+    </a>
     <div class="nav-menu">
         <a href="netmaas.html">💰 Maaş</a>
         <a href="tazminat.html">💼 Tazminat</a>
@@ -24,8 +27,8 @@
 </nav>
 
 <div class="rate-bar" id="rateBar">
-    <span class="rate-usd">🇺🇸 <b id="usdVal">... ₺</b></span>
-    <span class="rate-eur">🇪🇺 <b id="eurVal">... ₺</b></span>
+    <span class="rate-usd">🇺🇸 USD <b id="usdVal">... ₺</b></span>
+    <span class="rate-eur">🇪🇺 EUR <b id="eurVal">... ₺</b></span>
     <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">... ₺</b></span>
 </div>
 
@@ -44,42 +47,41 @@
 <script>
     async function updateRates() {
         try {
-            // API'den canlı verileri alıyoruz (Güvenilir ve engellenmeyen kaynak)
-            const response = await fetch('https://open.er-api.com/v6/latest/USD');
+            // API'den canlı verileri alıyoruz
+            const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await response.json();
             
             if(data && data.rates) {
                 const tryVal = data.rates.TRY;
                 const eurVal = data.rates.EUR;
-                
-                // 1. Doları Güncelle
+                const xauPrice = data.rates.XAU; // Ons Altın (USD bazında)
+
+                // 1. Doları Yazdır
                 document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
-                
-                // 2. Euroyu Güncelle (Cross Rate)
+
+                // 2. Euroyu Hesapla (USD/TRY / USD/EUR)
                 const eurTry = (tryVal / eurVal).toFixed(2);
                 document.getElementById('eurVal').innerText = eurTry + " ₺";
 
-                // 3. Altın Fiyatı (Sabitlenmiş Piyasa Onsu Üzerinden Canlı Hesaplama)
-                // Gerçek Ons fiyatı şu an yaklaşık 2200-2600 USD bandındadır. 
-                // Bu API'den 'XAU' çekilemezse dünya piyasası ortalaması olan 2185 üzerinden hesaplar.
-                const xauUsd = data.rates.XAU || 2185; 
-                const gramGold = (xauUsd / 31.1034) * tryVal;
-
-                document.getElementById('goldVal').innerText = gramGold.toLocaleString('tr-TR', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                }) + " ₺";
+                // 3. Gram Altın Hesapla (Ons / 31.1035 * Dolar Kuru)
+                if (xauPrice) {
+                    const gramGold = (xauPrice / 31.1035) * tryVal;
+                    document.getElementById('goldVal').innerText = gramGold.toLocaleString('tr-TR', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) + " ₺";
+                }
             }
-        } catch (e) {
-            console.error("Veri hatası:", e);
+        } catch (error) {
+            console.error("Veri çekilemedi:", error);
             document.getElementById('goldVal').innerText = "Bağlantı Sorunu";
         }
     }
 
     // İlk yüklemede çalıştır
     updateRates();
-    // 2 dakikada bir otomatik yenile
-    setInterval(updateRates, 120000);
+    // Her 5 dakikada bir otomatik yenile
+    setInterval(updateRates, 300000);
 </script>
 
 </body>
