@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>HESAPLA360 | Sakarya</title>
+    <title>HESAPLA360 | Finansal Araçlar</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,7 +22,7 @@
     </div>
 </nav>
 
-<div class="ticker-wrap" id="ticker">Kurlar yükleniyor...</div>
+<div class="rate-bar" id="rateBar">Döviz kurları senkronize ediliyor...</div>
 
 <div class="grid-container">
     <a href="netmaas.html" class="feature-card"><span class="icon">💰</span><h3>Maaş</h3><p>Bordro Analizi</p></a>
@@ -31,28 +31,24 @@
     <a href="kredi.html" class="feature-card"><span class="icon">🏦</span><h3>Kredi</h3><p>Ödeme Planı</p></a>
     <a href="yas.html" class="feature-card"><span class="icon">🎂</span><h3>Yaş</h3><p>Zaman Analizi</p></a>
     <a href="doviz.html" class="feature-card"><span class="icon">💱</span><h3>Döviz</h3><p>Canlı Kurlar</p></a>
-    <a href="kdv.html" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Vergi Hesabı</p></a>
+    <a href="kdv.html" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Matrah Hesabı</p></a>
     <a href="mesai.html" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç</p></a>
     <a href="cv.html" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>PDF Kaydet</p></a>
 </div>
 
 <script>
-    // Google Kurlarını (veya benzeri API) Çekme Fonksiyonu
     async function getRates() {
         try {
-            // Ücretsiz bir API üzerinden kurları çekiyoruz
             const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await response.json();
-            const usdTry = data.rates.TRY;
-            const eurTry = (usdTry / data.rates.EUR).toFixed(2);
-            
-            document.getElementById('ticker').innerHTML = `🇺🇸 USD: ${usdTry.toFixed(2)} TL | 🇪🇺 EUR: ${eurTry} TL | 🚀 Sakarya Sistem Aktif`;
-        } catch (error) {
-            document.getElementById('ticker').innerHTML = "Bağlantı Hatası!";
+            const usd = data.rates.TRY.toFixed(2);
+            const eur = (data.rates.TRY / data.rates.EUR).toFixed(2);
+            document.getElementById('rateBar').innerHTML = `USD: ${usd} ₺ • EUR: ${eur} ₺ • Piyasalar Açık`;
+        } catch (e) {
+            document.getElementById('rateBar').innerHTML = "Kur verileri alınamadı.";
         }
     }
     getRates();
 </script>
-
 </body>
 </html>
