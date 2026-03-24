@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Bileşik Faiz</title>
+    <title>H360 | Bileşik Faiz Analizi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -12,56 +12,57 @@
 
 <nav class="glass-nav">
     <div class="nav-left">
-        <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+        <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
     </div>
     <div class="nav-right">
         <div class="menu-container">
             <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
             <div class="dropdown-menu" id="navMenu">
-                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
-                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
-                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
-                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+                <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
+                <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
+                <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
+                <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
+                <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
+                <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
             </div>
         </div>
     </div>
 </nav>
 
-<div class="calculation-container">
-    <header class="premium-header" style="margin-bottom: 30px;">
-        <h1 class="premium-title" style="font-size: 1.8rem;">BİLEŞİK FAİZ ANALİZİ</h1>
-        <p class="premium-status">GELECEK SERMAYE PROJEKSİYONU</p>
+<div class="calculation-container" style="max-width: 600px; margin: 120px auto 60px; padding: 0 20px;">
+    <header class="premium-header" style="text-align: center; margin-bottom: 40px;">
+        <h1 class="premium-title" style="font-size: 2rem; letter-spacing: 2px;">BİLEŞİK FAİZ ANALİZİ</h1>
+        <p class="premium-status" style="color: #007bff; font-weight: 700; font-size: 0.8rem;">GELECEK SERMAYE PROJEKSİYONU</p>
     </header>
 
-    <div class="form-card">
-        <div class="input-group">
-            <label>BAŞLANGIÇ SERMAYESİ (TL)</label>
-            <input type="number" id="p" placeholder="Örn: 100000">
+    <div class="form-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 30px; border-radius: 20px; backdrop-filter: blur(10px);">
+        <div class="input-group" style="margin-bottom: 20px;">
+            <label style="color: #007bff; font-weight: 700; font-size: 0.75rem; display: block; margin-bottom: 8px;">BAŞLANGIÇ SERMAYESİ (TL)</label>
+            <input type="number" id="p" placeholder="Örn: 100000" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; outline: none;">
         </div>
-        <div class="input-group">
-            <label>AYLIK EKLEME (TL)</label>
-            <input type="number" id="pm" placeholder="Örn: 5000">
-        </div>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <div class="input-group">
-                <label>YILLIK GETİRİ (%)</label>
-                <input type="number" id="r" placeholder="Örn: 45">
-            </div>
-            <div class="input-group">
-                <label>VADE (YIL)</label>
-                <input type="number" id="y" placeholder="Örn: 5">
-            </div>
-        </div>
-        
-        <button class="btn-calc" onclick="calcFaiz()">YATIRIMI ANALİZ ET</button>
 
-        <div id="res" class="res-area">
-            <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim); text-transform: uppercase;">VADE SONU TOPLAM BİRİKİM</p>
-            <div class="res-val" id="total">0 ₺</div>
-            <div style="font-size:0.9rem; color:var(--text-dim); margin-top: 10px;">
+        <div class="input-group" style="margin-bottom: 20px;">
+            <label style="color: #007bff; font-weight: 700; font-size: 0.75rem; display: block; margin-bottom: 8px;">AYLIK EKLEME (TL)</label>
+            <input type="number" id="pm" placeholder="Örn: 5000" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; outline: none;">
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div class="input-group">
+                <label style="color: #007bff; font-weight: 700; font-size: 0.75rem; display: block; margin-bottom: 8px;">YILLIK GETİRİ (%)</label>
+                <input type="number" id="r" placeholder="Örn: 45" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; outline: none;">
+            </div>
+            <div class="input-group">
+                <label style="color: #007bff; font-weight: 700; font-size: 0.75rem; display: block; margin-bottom: 8px;">VADE (YIL)</label>
+                <input type="number" id="y" placeholder="Örn: 5" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; outline: none;">
+            </div>
+        </div>
+        
+        <button class="btn-calc" onclick="calcFaiz()" style="width: 100%; padding: 15px; background: #007bff; color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">ANALİZ ET</button>
+
+        <div id="res" class="res-area" style="margin-top: 30px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1); display: none;">
+            <p style="font-size:0.7rem; font-weight:800; color: #a0a0a0; text-transform: uppercase;">VADE SONU TOPLAM BİRİKİM</p>
+            <div class="res-val" id="total" style="font-size: 2.2rem; font-weight: 700; color: #2ecc71; margin: 10px 0;">0 ₺</div>
+            <div style="font-size:0.9rem; color:#a0a0a0;">
                 Net Kâr: <b id="profit" style="color:#2ecc71">0 ₺</b>
             </div>
         </div>
@@ -78,11 +79,10 @@
         const r = (rInput / 100) / 12;
         const n = (parseInt(document.getElementById('y').value) || 0) * 12;
         
-        if(n === 0) return;
+        if (n <= 0) return;
 
-        // Faiz oranı 0 ise direkt eklemeleri topla
         let fv;
-        if(r === 0) {
+        if (r === 0) {
             fv = p + (pm * n);
         } else {
             fv = p * Math.pow(1 + r, n) + (pm * (Math.pow(1 + r, n) - 1) / r);
@@ -93,14 +93,6 @@
         document.getElementById('total').innerText = Math.round(fv).toLocaleString('tr-TR') + " ₺";
         document.getElementById('profit').innerText = Math.round(fv - totalInvested).toLocaleString('tr-TR') + " ₺";
         document.getElementById('res').style.display = "block";
-    }
-
-    // Menü dışı tıklama
-    window.onclick = function(e) { 
-        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
-        }
     }
 </script>
 </body>
