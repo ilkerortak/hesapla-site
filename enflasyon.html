@@ -7,6 +7,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Patlamayı önleyen ve sayfayı mermi gibi ortalayan özel CSS */
+        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
+        .main-wrapper { 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; 
+        }
+        .calc-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .header-area { text-align: center; margin-bottom: 35px; }
+        .header-area h1 { font-size: 1.6rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
+        .header-area p { color: #007bff; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; }
+        
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px; }
+        .input-group input {
+            width: 100%; padding: 16px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
+        }
+        .input-group input:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
+        
+        .calc-btn {
+            width: 100%; padding: 18px; background: #007bff; color: #fff;
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
+            font-size: 1rem; transition: 0.3s; margin-top: 10px;
+        }
+        .calc-btn:hover { background: #0056b3; transform: translateY(-2px); }
+        
+        .result-box {
+            margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15);
+            display: none; text-align: center;
+        }
+        .result-label { font-size: 0.7rem; color: #888; font-weight: 800; margin-bottom: 10px; }
+        .result-main { font-size: 2.2rem; font-weight: 700; color: #fff; margin-bottom: 15px; }
+        .loss-val { font-size: 1rem; color: #e74c3c; font-weight: 700; }
+    </style>
 </head>
 <body>
 
@@ -29,34 +74,31 @@
     </div>
 </nav>
 
-<div class="calculation-container">
-    <header class="premium-header" style="margin-bottom: 30px;">
-        <h1 class="premium-title" style="font-size: 1.8rem;">ENFLASYON ANALİZİ</h1>
-        <p class="premium-status">SATIN ALMA GÜCÜ VE DEĞER KAYBI</p>
-    </header>
+<div class="main-wrapper">
+    <div class="calc-card">
+        <div class="header-area">
+            <h1>ENFLASYON ANALİZİ</h1>
+            <p>SATIN ALMA GÜCÜ VE DEĞER KAYBI</p>
+        </div>
 
-    <div class="form-card">
         <div class="input-group">
             <label>BAŞLANGIÇ TUTARI (TL)</label>
             <input type="number" id="amt" placeholder="Örn: 100000">
         </div>
-        
+
         <div class="input-group">
             <label>YILLIK ENFLASYON ORANI (%)</label>
             <input type="number" id="inf" placeholder="Örn: 65">
         </div>
 
-        <button class="btn-calc" onclick="calcInf()">PARANIN DEĞERİNİ ÖLÇ</button>
+        <button class="calc-btn" onclick="calcInf()">DEĞER KAYBINI ÖLÇ</button>
 
-        <div id="res" class="res-area">
-            <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim); text-transform: uppercase;">1 YIL SONRAKİ REEL DEĞER</p>
-            <div class="res-val" id="reel" style="color: #fff;">0 ₺</div>
-            
-            <div style="margin-top:20px; font-size:0.95rem; color:#e74c3c; font-weight:700; border-top: 1px dashed var(--border); padding-top: 15px;">
-                Hissedilen Kayıp: - <span id="loss">0</span> ₺
-            </div>
-            <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 12px; line-height: 1.4;">
-                * Bu hesaplama, paranın mal ve hizmetler karşısındaki alım gücü erimesini gösterir.
+        <div id="res" class="result-box">
+            <div class="result-label">1 YIL SONRAKİ REEL DEĞER</div>
+            <div class="result-main" id="reel">0 ₺</div>
+            <div class="loss-val">Hissedilen Kayıp: - <span id="loss">0</span> ₺</div>
+            <p style="font-size: 0.65rem; color: #666; margin-top: 15px; line-height: 1.4;">
+                * Bu hesaplama, paranın mal ve hizmet sepeti karşısındaki alım gücü erimesini gösterir.
             </p>
         </div>
     </div>
@@ -71,7 +113,6 @@
         const r = rInput / 100;
         
         if(a > 0 && r > 0) {
-            // Paranın enflasyon karşısındaki yeni alım gücü (Reel Değer)
             const reelVal = a / (1 + r);
             const loss = a - reelVal;
 
