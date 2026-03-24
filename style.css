@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
@@ -8,33 +8,27 @@ body {
     overflow-x: hidden;
 }
 
-/* TIKLAMA SORUNU ÇÖZÜMÜ */
+/* ETKİLEŞİM ELEMENTLERİ */
 input, select, button, a {
     position: relative;
     z-index: 10;
     pointer-events: auto !important;
 }
 
-/* SEÇME KUTUSU (KDV VB.) DÜZELTME */
+/* KURUMSAL FORM ELEMENTLERİ */
 select {
     background-color: #1a1d24 !important;
     color: white !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    padding: 10px 15px;
+    padding: 12px;
     border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
     outline: none;
-}
-
-select option {
-    background-color: #1a1d24;
-    color: white;
+    font-size: 0.9rem;
 }
 
 /* NAVİGASYON */
 nav {
-    background: rgba(18, 22, 30, 0.9);
+    background: rgba(18, 22, 30, 0.95);
     backdrop-filter: blur(10px);
     padding: 15px 5%;
     display: flex;
@@ -47,16 +41,14 @@ nav {
 }
 
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; font-weight: 800; }
-.logo-box { background: #007bff; padding: 5px 12px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,123,255,0.3); }
+.logo-box { background: #007bff; padding: 5px 12px; border-radius: 8px; }
 .logo span { color: #007bff; }
 
-.nav-menu a { color: #888; text-decoration: none; margin-left: 20px; font-size: 0.9rem; transition: 0.3s; }
+.nav-menu a { color: #888; text-decoration: none; margin-left: 20px; font-size: 0.85rem; font-weight: 600; transition: 0.3s; }
 .nav-menu a:hover { color: #fff; }
 
-/* ANA SAYFADA MENÜYÜ GİZLE */
-.home-page .nav-menu {
-    display: none;
-}
+/* ANA SAYFADA ÜST MENÜYÜ GİZLE */
+.home-page .nav-menu { display: none; }
 
 /* FİNANS BANDI */
 .rate-bar {
@@ -68,67 +60,67 @@ nav {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.up { color: #28a745; margin-left: 5px; font-weight: bold; }
-.down { color: #dc3545; margin-left: 5px; font-weight: bold; }
+.up { color: #2ecc71; font-weight: bold; }
+.down { color: #e74c3c; font-weight: bold; }
 
-/* HERO BÖLÜMÜ */
+/* KURUMSAL HERO */
 .hero-section {
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 50px auto 30px;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.welcome-text h2 { font-size: 2rem; font-weight: 800; }
-.welcome-text p { color: #666; }
+.welcome-text h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 5px; }
+.welcome-text p { color: #007bff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; }
 
 .search-box input {
-    background: rgba(255, 255, 255, 0.05);
+    background: #161a21;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px 20px;
-    border-radius: 25px;
+    padding: 12px 25px;
+    border-radius: 30px;
     color: white;
-    width: 300px;
+    width: 320px;
     outline: none;
     transition: 0.3s;
 }
 
-.search-box input:focus { width: 350px; border-color: #007bff; box-shadow: 0 0 15px rgba(0,123,255,0.2); }
+.search-box input:focus { border-color: #007bff; box-shadow: 0 0 20px rgba(0,123,255,0.15); width: 350px; }
 
-/* KARTLAR */
+/* IZGARA VE KARTLAR */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 25px;
     max-width: 1200px;
-    margin: 20px auto 60px;
+    margin: 20px auto 80px;
     padding: 0 20px;
 }
 
 .feature-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    border-radius: 15px;
+    padding: 35px 25px;
+    border-radius: 12px;
     text-decoration: none;
     display: flex;
     flex-direction: column;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .feature-card:hover {
-    transform: translateY(-8px);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: #007bff;
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-5px);
+    border-color: rgba(0, 123, 255, 0.4);
 }
 
-.feature-card .icon { font-size: 2rem; margin-bottom: 15px; }
-.feature-card h3 { color: #fff; margin-bottom: 5px; }
-.feature-card p { color: #777; font-size: 0.85rem; }
+.feature-card .icon { font-size: 2.2rem; margin-bottom: 20px; }
+.feature-card h3 { color: #fff; font-size: 1.2rem; margin-bottom: 8px; }
+.feature-card p { color: #666; font-size: 0.85rem; }
 
 @media (max-width: 768px) {
-    .hero-section { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .hero-section { flex-direction: column; align-items: flex-start; gap: 25px; }
     .search-box input { width: 100%; }
 }
