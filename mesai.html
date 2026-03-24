@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head><link rel="stylesheet" href="style.css"></head>
+<body>
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a></nav>
+<div class="container">
+    <h2>🕒 Mesai & İzin Ücreti</h2>
+    <div class="input-group"><label>Brüt Maaş (TL)</label><input type="number" id="maas"></div>
+    <div class="input-group"><label>Mesai Saati (Hafta İçi %50)</label><input type="number" id="m1" value="0"></div>
+    <div class="input-group"><label>Mesai Saati (Pazar/Tatil %100)</label><input type="number" id="m2" value="0"></div>
+    <button onclick="hesapla()">Kazancı Hesapla</button>
+
+    <div id="sonuc-box" style="display:none;" class="result-item">
+        <div class="detail-row"><span>Saatlik Brüt Ücret</span> <span id="saatlik"></span></div>
+        <div class="detail-row"><span>Mesai Kazancı (Brüt)</span> <span id="mesai-kazanc"></span></div>
+        <div class="detail-row total"><span>Toplam Ek Kazanç</span> <span id="net-ek" style="color:#a855f7; font-size:1.4rem;"></span></div>
+        <p style="font-size:0.7rem; color:orange; margin-top:10px;">*Brüt tutarlar üzerinden hesaplanmıştır.</p>
+    </div>
+</div>
+<script>
+    function hesapla() {
+        let m = parseFloat(document.getElementById("maas").value);
+        let h1 = parseFloat(document.getElementById("m1").value) || 0;
+        let h2 = parseFloat(document.getElementById("m2").value) || 0;
+        if(!m) return;
+
+        let saatlik = m / 225; // Yasal aylık çalışma saati
+        let k1 = h1 * (saatlik * 1.5);
+        let k2 = h2 * (saatlik * 2.0);
+        let toplam = k1 + k2;
+
+        document.getElementById("sonuc-box").style.display = "block";
+        document.getElementById("saatlik").innerText = saatlik.toFixed(2) + " TL";
+        document.getElementById("mesai-kazanc").innerText = toplam.toLocaleString() + " TL";
+        document.getElementById("net-ek").innerText = toplam.toLocaleString() + " TL";
+    }
+</script>
+</body>
+</html>
