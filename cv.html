@@ -1,138 +1,126 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Profesyonel CV Oluşturucu 2026</title>
-<link rel="stylesheet" href="style.css">
-<meta name="description" content="Profesyonel CV oluşturucu ile şık CV’nizi hazırlayın.">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.plugin.standard_fonts_metrics.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.plugin.ttf.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Profesyonel CV Oluşturucu 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 <nav>
-  <ul>
-    <li><a href="index.html">Ana Sayfa</a></li>
-    <li><a href="netmaas.html">Net Maaş</a></li>
-    <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
-    <li><a href="kredi.html">Kredi Hesaplama</a></li>
-    <li><a href="yas.html">Yaş Hesaplama</a></li>
-    <li><a href="cv.html">CV Oluşturucu</a></li>
-  </ul>
-  <button id="theme-toggle">☀️</button>
+    <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="netmaas.html">Net Maaş</a></li>
+        <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
+        <li><a href="kredi.html">Kredi Hesaplama</a></li>
+        <li><a href="yas.html">Yaş Hesaplama</a></li>
+        <li><a href="cv.html" class="active">CV Oluşturucu</a></li>
+    </ul>
+    <button id="theme-toggle">☀️</button>
 </nav>
 
 <div class="container">
-  <h1>Profesyonel CV Oluşturucu 2026</h1>
-  <input type="text" id="ad" placeholder="Ad">
-  <input type="text" id="soyad" placeholder="Soyad">
-  <input type="text" id="meslek" placeholder="Meslek">
-  <input type="text" id="telefon" placeholder="Telefon">
-  <input type="text" id="email" placeholder="E-mail">
+    <h1>Profesyonel CV Oluşturucu 2026</h1>
+    
+    <div class="cv-form">
+        <div class="input-group">
+            <input type="text" id="ad_soyad" placeholder="Ad Soyad">
+            <input type="text" id="meslek" placeholder="Meslek (Örn: Kıdemli Yazılım Geliştirici)">
+            <input type="text" id="telefon" placeholder="Telefon">
+            <input type="text" id="email" placeholder="E-mail Adresi">
+        </div>
 
-  <h2>Deneyim Ekle</h2>
-  <div id="deneyimler-container">
-    <div class="deneyim">
-      <input type="text" class="firma" placeholder="Firma Adı">
-      <input type="text" class="pozisyon" placeholder="Pozisyon / Görev">
-      <input type="text" class="sure" placeholder="Başlangıç-Bitiş Yılı (örn: 2020-2025)">
+        <h3>İş Deneyimleri</h3>
+        <div id="deneyimler-container">
+            <div class="deneyim-item">
+                <input type="text" class="firma" placeholder="Firma Adı">
+                <input type="text" class="pozisyon" placeholder="Pozisyon">
+                <input type="text" class="sure" placeholder="Yıl (Örn: 2022 - Günümüz)">
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button class="secondary-btn" onclick="yeniDeneyim()">+ Yeni Deneyim</button>
+            <button class="primary-btn" onclick="pdfIndir()">CV'yi PDF Olarak İndir</button>
+        </div>
     </div>
-  </div>
-  <button onclick="yeniDeneyim()">Yeni Deneyim Ekle</button>
-  <button onclick="olustur()">CV Oluştur & PDF İndir</button>
+
+    <div id="cv-preview" style="position: absolute; left: -9999px; width: 210mm; background: white; color: black; padding: 40px; font-family: 'Arial';">
+        <h1 id="p-ad" style="color: #4f46e5; margin: 0;"></h1>
+        <h3 id="p-meslek" style="color: #666; margin-top: 5px;"></h3>
+        <hr>
+        <p id="p-iletisim" style="font-size: 14px;"></p>
+        <h2 style="border-bottom: 2px solid #4f46e5; padding-bottom: 5px;">Deneyimler</h2>
+        <div id="p-deneyimler"></div>
+    </div>
 </div>
 
 <script>
-function yeniDeneyim(){
-  const container = document.getElementById("deneyimler-container");
-  const div = document.createElement("div");
-  div.classList.add("deneyim");
-  div.innerHTML = `
-    <input type="text" class="firma" placeholder="Firma Adı">
-    <input type="text" class="pozisyon" placeholder="Pozisyon / Görev">
-    <input type="text" class="sure" placeholder="Başlangıç-Bitiş Yılı (örn: 2020-2025)">
-  `;
-  container.appendChild(div);
+function yeniDeneyim() {
+    const container = document.getElementById("deneyimler-container");
+    const div = document.createElement("div");
+    div.className = "deneyim-item";
+    div.style.marginTop = "10px";
+    div.innerHTML = `
+        <hr>
+        <input type="text" class="firma" placeholder="Firma Adı">
+        <input type="text" class="pozisyon" placeholder="Pozisyon">
+        <input type="text" class="sure" placeholder="Yıl">
+    `;
+    container.appendChild(div);
 }
 
-async function olustur(){
-  const { jsPDF } = window.jspdf;
-  let doc = new jsPDF();
+function pdfIndir() {
+    // Verileri Önizlemeye Aktar
+    const adVal = document.getElementById("ad_soyad").value;
+    document.getElementById("p-ad").innerText = adVal;
+    document.getElementById("p-meslek").innerText = document.getElementById("meslek").value;
+    document.getElementById("p-iletisim").innerText = `📞 ${document.getElementById("telefon").value} | ✉️ ${document.getElementById("email").value}`;
 
-  // Roboto font base64 gömülü (placeholder kısa, gerçek base64 kullan)
-  const robotoFontBase64 = "AAEAAAALAIAAAwAwT1MvMg8S...truncated...AAK5PAA=";
-  doc.addFileToVFS("Roboto-Regular.ttf", robotoFontBase64);
-  doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
-  doc.setFont("Roboto");
+    const deneyimler = document.querySelectorAll(".deneyim-item");
+    let deneyimHTML = "";
+    deneyimler.forEach(d => {
+        const f = d.querySelector(".firma").value;
+        const p = d.querySelector(".pozisyon").value;
+        const s = d.querySelector(".sure").value;
+        if(f) {
+            deneyimHTML += `<div style="margin-bottom:15px;"><strong>${f}</strong><br><em>${p}</em> | ${s}</div>`;
+        }
+    });
+    document.getElementById("p-deneyimler").innerHTML = deneyimHTML;
 
-  let ad = document.getElementById("ad").value;
-  let soyad = document.getElementById("soyad").value;
-  let meslek = document.getElementById("meslek").value;
-  let telefon = document.getElementById("telefon").value;
-  let email = document.getElementById("email").value;
+    // PDF Oluşturma Ayarları
+    const element = document.getElementById('cv-preview');
+    const opt = {
+        margin:       10,
+        filename:     adVal + '_CV_2026.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
 
-  // Başlık
-  doc.setFontSize(26);
-  doc.setTextColor(0, 40, 85);
-  doc.setFont("Roboto", "bold");
-  doc.text(`${ad} ${soyad}`, 20, 30);
-
-  // Meslek
-  doc.setFontSize(16);
-  doc.setFont("Roboto", "normal");
-  doc.text(`${meslek}`, 20, 40);
-
-  // Çizgi
-  doc.setDrawColor(0, 40, 85);
-  doc.setLineWidth(0.5);
-  doc.line(20, 45, 190, 45);
-
-  // İletişim
-  doc.setFontSize(12);
-  doc.text(`📞 ${telefon}   ✉️ ${email}`, 20, 55);
-
-  // Deneyim Başlığı
-  doc.setFontSize(18);
-  doc.setTextColor(0, 40, 85);
-  doc.text("Deneyim", 20, 70);
-  doc.setDrawColor(0, 40, 85);
-  doc.line(20, 72, 190, 72);
-
-  // Deneyim listesi
-  const deneyimler = document.querySelectorAll("#deneyimler-container .deneyim");
-  let y = 80;
-  deneyimler.forEach(d => {
-    const firma = d.querySelector(".firma").value;
-    const pozisyon = d.querySelector(".pozisyon").value;
-    const sure = d.querySelector(".sure").value;
-    if(firma || pozisyon || sure){
-      doc.setFont("Roboto", "bold");
-      doc.text(firma, 20, y);
-      doc.setFont("Roboto", "italic");
-      doc.text(`${pozisyon} | ${sure}`, 20, y + 6);
-      y += 18;
-    }
-  });
-
-  doc.save(`${ad}_${soyad}_CV.pdf`);
+    html2pdf().set(opt).from(element).save();
 }
 
-// Tema persist
+// Tema Yönetimi (Senin standart kodun)
 const themeToggle = document.getElementById("theme-toggle");
 if(localStorage.getItem('theme')==='dark'){
     document.body.classList.add('dark');
     themeToggle.textContent='🌙';
-}else{ themeToggle.textContent='☀️'; }
+}
 themeToggle.addEventListener('click',()=>{
     document.body.classList.toggle('dark');
-    if(document.body.classList.contains('dark')){
-        themeToggle.textContent='🌙';
-        localStorage.setItem('theme','dark');
-    }else{
-        themeToggle.textContent='☀️';
-        localStorage.setItem('theme','light');
-    }
+    themeToggle.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 });
 </script>
+
+<style>
+    /* CV'ye özel ek stiller */
+    .deneyim-item { border-left: 3px solid var(--primary); padding-left: 15px; margin-bottom: 20px; }
+    .secondary-btn { background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-bottom: 10px; }
+    .secondary-btn:hover { background: var(--primary); color: white; }
+    h3 { margin-top: 30px; border-bottom: 1px solid var(--input-border); padding-bottom: 10px; }
+</style>
 </body>
 </html>
