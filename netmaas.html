@@ -1,54 +1,104 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Net Maaş Hesaplama 2026</title>
-<link rel="stylesheet" href="style.css">
-<meta name="description" content="2026 yılı net maaş hesaplama aracını kullanarak brüt maaşınızı kolayca nete çevirin.">
+    <meta charset="UTF-8">
+    <title>Net Maaş Hesaplama 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <nav>
-  <ul>
-    <li><a href="index.html">Ana Sayfa</a></li>
-    <li><a href="netmaas.html">Net Maaş</a></li>
-    <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
-    <li><a href="kredi.html">Kredi Hesaplama</a></li>
-    <li><a href="yas.html">Yaş Hesaplama</a></li>
-    <li><a href="cv.html">CV Oluşturucu</a></li>
-  </ul>
-  <button id="theme-toggle">☀️</button>
+    <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="netmaas.html" class="active">Net Maaş</a></li>
+        <li><a href="issizlik.html">İşsizlik Maaşı</a></li>
+        <li><a href="kredi.html">Kredi Hesaplama</a></li>
+        <li><a href="yas.html">Yaş Hesaplama</a></li>
+        <li><a href="cv.html">CV Oluşturucu</a></li>
+    </ul>
+    <button id="theme-toggle">☀️</button>
 </nav>
 
 <div class="container">
-<h1>Net Maaş Hesaplama 2026</h1>
-<p>Brüt maaşınızı girin:</p>
-<input type="number" id="brut" placeholder="Örn: 20000">
-<button onclick="hesapla()">Hesapla</button>
-<h2 id="sonuc"></h2>
+    <div class="calculator-card">
+        <h1>Net Maaş Hesaplama 2026</h1>
+        <p>Aylık Brüt Maaşınızı Giriniz:</p>
+        <div class="input-group">
+            <input type="number" id="brut" placeholder="Örn: 45000">
+            <span>TL</span>
+        </div>
+        <button class="calc-btn" onclick="hesapla()">Hemen Hesapla</button>
+        
+        <div id="sonuc-container" style="display:none;">
+            <hr>
+            <div class="result-item">
+                <span>Elinize Geçecek Net Maaş:</span>
+                <strong id="sonuc-net">0 TL</strong>
+            </div>
+            <div class="result-details">
+                <p>SGK İşçi Payı (%14): <span id="sgk-payi">0 TL</span></p>
+                <p>İşsizlik Sig. (%1): <span id="issizlik-payi">0 TL</span></p>
+                <p>Gelir Vergisi: <span id="gelir-vergisi">0 TL</span> <em>(İstisna Dahil)</em></p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-function hesapla(){
-  let brut = document.getElementById("brut").value;
-  let net = brut * 0.75;
-  document.getElementById("sonuc").innerText = "Net Maaş: " + net + " TL";
+function hesapla() {
+    let brut = parseFloat(document.getElementById("brut").value);
+    if (!brut || brut <= 0) {
+        alert("Lütfen geçerli bir brüt tutar girin.");
+        return;
+    }
+
+    // --- 2026 Yasal Parametreleri ---
+    const SGK_ORANI = 0.14;
+    const ISSIZLIK_ORANI = 0.01;
+    const ASGARI_UCRET_BRUT = 33030; // 2026 Tahmini/Güncel
+    
+    // 1. SGK ve İşsizlik Kesintileri
+    let sgkKesintisi = brut * SGK_ORANI;
+    let issizlikKesintisi = brut * ISSIZLIK_ORANI;
+    let vergiMatrahi = brut - sgkKesintisi - issizlikKesintisi;
+
+    // 2. Gelir Vergisi Hesaplama (Basitleştirilmiş 1. Dilim %15)
+    // Not: Yıl içi kümülatif matrah arttıkça %20 ve %27'ye geçer.
+    let hamGelirVergisi = vergiMatrahi * 0.15;
+
+    // 3. Asgari Ücret İstisnası (2022'den beri uygulanan devrimsel kural)
+    // Brüt asgari ücretin vergisi kadar miktar vergiden düşülür.
+    let asgariSgk = ASGARI_UCRET_BRUT * SGK_ORANI;
+    let asgariIssizlik = ASGARI_UCRET_BRUT * ISSIZLIK_ORANI;
+    let asgariMatrah = ASGARI_UCRET_BRUT - asgariSgk - asgariIssizlik;
+    let istisnaTutari = asgariMatrah * 0.15;
+
+    let odenecekGelirVergisi = Math.max(0, hamGelirVergisi - istisnaTutari);
+    
+    // Damga vergisi de asgari ücrete kadar istisna olduğu için yüksek maaşlarda küçük bir miktar çıkar
+    let damgaVergisi = Math.max(0, (brut * 0.00759) - (ASGARI_UCRET_BRUT * 0.00759));
+
+    // 4. Net Maaş Sonucu
+    let net = brut - sgkKesintisi - issizlikKesintisi - odenecekGelirVergisi - damgaVergisi;
+
+    // Sonuçları Ekrana Yazdır
+    document.getElementById("sonuc-container").style.display = "block";
+    document.getElementById("sonuc-net").innerText = net.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " TL";
+    document.getElementById("sgk-payi").innerText = sgkKesintisi.toLocaleString('tr-TR') + " TL";
+    document.getElementById("issizlik-payi").innerText = issizlikKesintisi.toLocaleString('tr-TR') + " TL";
+    document.getElementById("gelir-vergisi").innerText = odenecekGelirVergisi.toLocaleString('tr-TR') + " TL";
 }
 
-// Tema persist
+// Tema Yönetimi (Kodun aynen korundu)
 const themeToggle = document.getElementById("theme-toggle");
 if(localStorage.getItem('theme') === 'dark'){
     document.body.classList.add('dark');
     themeToggle.textContent='🌙';
-}else{ themeToggle.textContent='☀️'; }
+}
 themeToggle.addEventListener('click',()=>{
     document.body.classList.toggle('dark');
-    if(document.body.classList.contains('dark')){
-        themeToggle.textContent='🌙';
-        localStorage.setItem('theme','dark');
-    }else{
-        themeToggle.textContent='☀️';
-        localStorage.setItem('theme','light');
-    }
+    themeToggle.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 });
 </script>
 </body>
