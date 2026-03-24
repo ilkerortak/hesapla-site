@@ -1,85 +1,50 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hesapla 360 Finansal Uzman</title>
+    <meta charset="UTF-8"><title>H360 | Finansal Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="home-page">
-
+<body>
 <nav>
-    <a href="/" class="logo">
-        <div class="logo-box">H360</div>
-        HESAPLA<span>360</span>
-    </a>
-    <div class="nav-menu">
-        <a href="/netmaas">💰 Maaş</a>
-        <a href="/tazminat">💼 Tazminat</a>
-        <a href="/issizlik">📅 İşsizlik</a>
-        <a href="/cv">📄 CV</a>
+    <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    <div class="nav-container">
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
+            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
+            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
+            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
+            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
+            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+        </div>
     </div>
 </nav>
-
-<div class="rate-bar" id="rateBar">
-    <span>🇺🇸 USD <b id="usdVal">...</b></span>
-    <span>🇪🇺 EUR <b id="eurVal">...</b></span>
-    <span style="color: #f2ba49;">🟡 ALTIN/GR <b id="goldVal">...</b></span>
-</div>
 
 <div class="hero-section">
     <div class="welcome-text">
         <h2>Finansal Analiz Merkezi</h2>
-        <p id="systemStatus">Sistem Durumu: Aktif | Yükleniyor...</p>
-    </div>
-    <div class="search-box">
-        <input type="text" id="quickSearch" placeholder="İşlem veya modül ara..." autocomplete="off">
+        <p id="liveDate">Sistem Aktif | 24 Mart 2026</p>
     </div>
 </div>
 
-<div class="grid-container" id="cardGrid">
-    <a href="/netmaas" class="feature-card"><span class="icon">💰</span><h3>Maaş</h3><p>Bordro & Net Analizi</p></a>
-    <a href="/tazminat" class="feature-card"><span class="icon">💼</span><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></a>
-    <a href="/issizlik" class="feature-card"><span class="icon">📅</span><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></a>
-    <a href="/kredi" class="feature-card"><span class="icon">🏦</span><h3>Kredi</h3><p>Banka Ödeme Planı</p></a>
-    <a href="/yas" class="feature-card"><span class="icon">🎂</span><h3>Yaş</h3><p>Kronolojik Analiz</p></a>
-    <a href="/doviz" class="feature-card"><span class="icon">💱</span><h3>Döviz</h3><p>Global Kur Çeviri</p></a>
-    <a href="/kdv" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Vergi Matrah Hesabı</p></a>
-    <a href="/mesai" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></a>
-    <a href="/cv" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></a>
-    
-    <a href="/faiz" class="feature-card"><span class="icon">📈</span><h3>Bileşik Faiz</h3><p>Yatırım Getiri Projeksiyonu</p></a>
-    <a href="/yakit" class="feature-card"><span class="icon">⛽</span><h3>Yakıt</h3><p>Yol Maliyet & Tüketim Analizi</p></a>
-    <a href="/enflasyon" class="feature-card"><span class="icon">📉</span><h3>Enflasyon</h3><p>Satın Alma Gücü Kaybı</p></a>
+<div class="grid-container">
+    <a href="/netmaas" class="feature-card"><h3>💰 Maaş</h3><p>Bordro Analizi</p></a>
+    <a href="/tazminat" class="feature-card"><h3>💼 Tazminat</h3><p>Kıdem Hesabı</p></a>
+    <a href="/issizlik" class="feature-card"><h3>📅 İşsizlik</h3><p>Ödenek Sorgulama</p></a>
+    <a href="/faiz" class="feature-card"><h3>📈 Faiz</h3><p>Bileşik Getiri</p></a>
+    <a href="/yakit" class="feature-card"><h3>⛽ Yakıt</h3><p>Yol Maliyeti</p></a>
+    <a href="/enflasyon" class="feature-card"><h3>📉 Enflasyon</h3><p>Değer Kaybı</p></a>
+    <a href="/kredi" class="feature-card"><h3>🏦 Kredi</h3><p>Banka Planı</p></a>
+    <a href="/yas" class="feature-card"><h3>🎂 Yaş</h3><p>Kronolojik Analiz</p></a>
+    <a href="/doviz" class="feature-card"><h3>💱 Döviz</h3><p>Kur Çeviri</p></a>
+    <a href="/kdv" class="feature-card"><h3>🧾 KDV</h3><p>Vergi Hesabı</p></a>
+    <a href="/mesai" class="feature-card"><h3>🕒 Mesai</h3><p>Ek Kazanç</p></a>
+    <a href="/cv" class="feature-card"><h3>📄 CV</h3><p>PDF Oluşturucu</p></a>
 </div>
 
 <script>
-    function updateSystemStatus() {
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-        document.getElementById('systemStatus').innerText = `Sistem Durumu: Aktif | ${dateStr} - ${timeStr}`;
-    }
-    setInterval(updateSystemStatus, 1000); updateSystemStatus();
-
-    document.getElementById('quickSearch').addEventListener('input', function(e) {
-        let term = e.target.value.toLowerCase().replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').trim();
-        document.querySelectorAll('.feature-card').forEach(card => {
-            let title = card.querySelector('h3').innerText.toLowerCase().replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c');
-            card.style.display = title.includes(term) ? "flex" : "none";
-        });
-    });
-
-    async function updateRates() {
-        try {
-            const res = await fetch('/api/finans');
-            const data = await res.json();
-            document.getElementById('usdVal').innerText = data.usd + " ₺";
-            document.getElementById('eurVal').innerText = data.eur + " ₺";
-            document.getElementById('goldVal').innerText = data.gold + " ₺";
-        } catch (e) { console.error("Veri hatası"); }
-    }
-    updateRates(); setInterval(updateRates, 60000);
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+    window.onclick = function(e) { if(!e.target.matches('.menu-btn')) document.getElementById('navMenu').classList.remove('active'); }
 </script>
 </body>
 </html>
