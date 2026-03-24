@@ -1,38 +1,67 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>H360 | Bileşik Faiz</title>
+    <meta charset="UTF-8"><title>H360 | Bileşik Faiz</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav><a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a></nav>
-    <div class="hero-section" style="justify-content: center; text-align: center;">
-        <div class="welcome-text">
-            <h2 style="font-size: 2.5rem;">Bileşik Faiz Analizi</h2>
-            <p>Yatırım projeksiyonu ve gelecek değer sorgulama.</p>
+<nav>
+    <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    <div class="nav-container">
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a><a href="/issizlik">📅 İşsizlik</a>
+            <a href="/faiz">📈 Faiz</a><a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
+            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a><a href="/doviz">💱 Döviz</a>
+            <a href="/kdv">🧾 KDV</a><a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
         </div>
     </div>
+</nav>
 
-    <div class="grid-container" style="display: flex; justify-content: center;">
-        <div class="feature-card" style="width: 100%; max-width: 500px; cursor: default;">
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; color: #fff; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 15px;">Başlangıç + Aylık Ek (TL)</label>
-                <input type="number" id="p" placeholder="Örn: 50000" style="background: none; border: none; color: #fff; font-size: 1.5rem; width: 100%; outline: none;">
-                <input type="number" id="pm" placeholder="Aylık Ek: 5000" style="background: none; border: none; color: #555; font-size: 1.1rem; width: 100%; outline: none; margin-top: 10px;">
-            </div>
-            <button onclick="calc()" style="background: #111; border: 1px solid #222; color: #fff; padding: 20px; border-radius: 15px; font-weight: 800; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">ANALİZİ BAŞLAT</button>
-            <div id="res" style="margin-top: 20px; display: none; color: #007bff; font-weight: 800; text-align: center; font-size: 1.2rem;"></div>
+<div class="hero-section">
+    <h2>Bileşik Faiz Analizi</h2>
+    <p>GELECEK SERMAYE VE YATIRIM PROJEKSİYONU</p>
+</div>
+
+<div class="form-box">
+    <label>BAŞLANGIÇ SERMAYESİ (TL)</label>
+    <input type="number" id="p" placeholder="Örn: 100.000">
+    
+    <label>AYLIK EKLEME (TL)</label>
+    <input type="number" id="pm" placeholder="Örn: 5.000">
+
+    <label>YILLIK GETİRİ ORANI (%)</label>
+    <input type="number" id="r" placeholder="Örn: 45">
+
+    <label>VADE (YIL)</label>
+    <input type="number" id="y" placeholder="Örn: 5">
+
+    <button class="btn-calc" onclick="calcFaiz()">YATIRIMI ANALİZ ET</button>
+
+    <div id="res" class="res-area">
+        <p style="color:#555; font-size:0.7rem; font-weight:800;">VADE SONU TOPLAM BİRİKİM</p>
+        <div class="res-val" id="total">0 ₺</div>
+        <div style="margin-top:15px; font-size:0.8rem; color:#888;">
+            Net Kâr: <b id="profit" style="color:#2ecc71">0 ₺</b>
         </div>
     </div>
-    <script>
-        function calc() {
-            const p = parseFloat(document.getElementById('p').value) || 0;
-            const pm = parseFloat(document.getElementById('pm').value) || 0;
-            const res = p + (pm * 12); // Basit örnek gösterim, motoru arkada çalışır
-            document.getElementById('res').innerText = "Yıllık Toplam: " + res.toLocaleString() + " ₺";
-            document.getElementById('res').style.display = "block";
-        }
-    </script>
+</div>
+
+<script>
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+    function calcFaiz() {
+        const p = parseFloat(document.getElementById('p').value) || 0;
+        const pm = parseFloat(document.getElementById('pm').value) || 0;
+        const r = (parseFloat(document.getElementById('r').value) / 100) / 12;
+        const n = parseInt(document.getElementById('y').value) * 12;
+        
+        let fv = p * Math.pow(1 + r, n) + (pm * (Math.pow(1 + r, n) - 1) / r);
+        let totalInvested = p + (pm * n);
+        
+        document.getElementById('total').innerText = Math.round(fv).toLocaleString() + " ₺";
+        document.getElementById('profit').innerText = Math.round(fv - totalInvested).toLocaleString() + " ₺";
+        document.getElementById('res').style.display = "block";
+    }
+</script>
 </body>
 </html>
