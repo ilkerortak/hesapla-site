@@ -1,7 +1,6 @@
 {
-  "name": "h360-finans",
+  "name": "h360-app",
   "version": "1.0.0",
-  "description": "H360 Finansal Dashboard Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
