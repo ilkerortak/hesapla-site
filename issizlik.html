@@ -8,27 +8,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .calculation-container { max-width: 600px; margin: 120px auto 60px; padding: 0 20px; }
-        .form-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            padding: 30px; border-radius: 20px; backdrop-filter: blur(10px);
+        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
+        .main-wrapper { 
+            display: flex; justify-content: center; align-items: flex-start; 
+            min-height: 100vh; padding: 100px 20px 60px; box-sizing: border-box; 
         }
+        .calc-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px; padding: 40px; width: 100%; max-width: 550px;
+            backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .header-area { text-align: center; margin-bottom: 30px; }
+        .header-area h1 { font-size: 1.6rem; letter-spacing: 2px; margin: 0; font-weight: 700; }
+        .header-area p { color: #007bff; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; }
+        
         .input-group { margin-bottom: 20px; }
-        label { color: var(--accent); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; display: block; margin-bottom: 8px; }
-        input[type="number"] {
-            width: 100%; padding: 15px; background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border); border-radius: 10px; color: #fff; font-size: 1.1rem; outline: none;
+        .input-group label { display: block; color: #007bff; font-size: 0.7rem; font-weight: 800; margin-bottom: 8px; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            color: #fff; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box;
         }
-        input[type="number"]:focus { border-color: var(--accent); }
-        .btn-calc {
-            width: 100%; padding: 15px; background: var(--accent); color: #fff;
-            border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        .input-group select { cursor: pointer; color: #ccc; }
+        .input-group input:focus, .input-group select:focus { border-color: #007bff; background: rgba(255,255,255,0.08); }
+        
+        .calc-btn {
+            width: 100%; padding: 18px; background: #007bff; color: #fff;
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1rem;
         }
-        .btn-calc:hover { opacity: 0.9; transform: scale(0.98); }
-        .res-area { margin-top: 30px; padding-top: 20px; border-top: 1px dashed var(--border); display: none; }
-        .res-val { font-size: 2.2rem; font-weight: 700; color: var(--accent); margin: 10px 0; }
-        .info-text { font-size: 0.75rem; color: var(--text-dim); line-height: 1.5; margin-top: 15px; }
-        .detail-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-dim); }
+
+        .result-box { margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.15); display: none; }
+        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .res-item { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        .res-item span { font-size: 0.65rem; color: #888; font-weight: 800; display: block; margin-bottom: 5px; }
+        .res-item b { font-size: 1.4rem; color: #fff; }
+        
+        .total-banner { 
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.2), rgba(46, 204, 113, 0.2));
+            padding: 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .total-banner b { font-size: 2.2rem; color: #2ecc71; display: block; }
+        
+        .info-box { font-size: 0.65rem; color: #555; margin-top: 20px; line-height: 1.5; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -38,75 +59,97 @@
         <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
     </div>
     <div class="nav-right">
-        <div class="menu-container">
-            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
-            <div class="dropdown-menu" id="navMenu">
-                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
-                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
-                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
-                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
-                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
-                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
-            </div>
+        <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
+        <div class="dropdown-menu" id="navMenu">
+            <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
+            <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
+            <a href="cv.html">📄 CV</a>
         </div>
     </div>
 </nav>
 
-<div class="calculation-container">
-    <header class="hero premium-header" style="padding: 0 0 40px 0;">
-        <h1 class="premium-title" style="font-size: 1.8rem;">İŞSİZLİK ÖDENEĞİ</h1>
-        <p class="premium-status">SÜRE VE TUTAR ANALİZİ</p>
-    </header>
+<div class="main-wrapper">
+    <div class="calc-card">
+        <div class="header-area">
+            <h1>İŞSİZLİK ÖDENEĞİ</h1>
+            <p>SÜRE VE TUTAR ANALİZİ (2026)</p>
+        </div>
 
-    <div class="form-card">
         <div class="input-group">
-            <label>SON 4 AY BRÜT MAAŞ ORTALAMASI</label>
+            <label>SON 4 AYIN BRÜT MAAŞ ORTALAMASI</label>
             <input type="number" id="ortBrut" placeholder="Örn: 45000">
         </div>
-        
-        <button class="btn-calc" onclick="hesaplaIssizlik()">HESAPLAMAYI BAŞLAT</button>
 
-        <div id="res" class="res-area">
-            <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim);">AYLIK ALINACAK NET ÖDENEK</p>
-            <div class="res-val" id="odenek">0 ₺</div>
-            
-            <div class="detail-row"><span>Hesaplanan Tutar (%40)</span> <b id="hamOdenek" style="color:#fff">0</b></div>
-            <div class="detail-row"><span>Yasal Tavan Limit</span> <b style="color:#fff">15.998 ₺</b></div>
-            
-            <p class="info-text">
-                * Ödenek, brüt maaşın %40'ıdır ancak asgari ücretin %80'ini geçemez. Damga vergisi kesintisi dahildir.
-            </p>
+        <div class="input-group">
+            <label>SON 3 YILDAKİ TOPLAM PRİM GÜNÜ</label>
+            <select id="primGun">
+                <option value="0">Seçiniz...</option>
+                <option value="600">600 - 899 Gün</option>
+                <option value="900">900 - 1079 Gün</option>
+                <option value="1080">1080 Gün ve Üzeri</option>
+            </select>
+        </div>
+
+        <button class="calc-btn" onclick="hesapla()">ANALİZİ BAŞLAT</button>
+
+        <div id="res" class="result-box">
+            <div class="total-banner">
+                <span>AYLIK NET ÖDENEK</span>
+                <b id="netOdenek">0 ₺</b>
+            </div>
+
+            <div class="res-grid" style="margin-top: 15px;">
+                <div class="res-item">
+                    <span>ÖDEME SÜRESİ</span>
+                    <b id="sure">0 Ay</b>
+                </div>
+                <div class="res-item">
+                    <span>TOPLAM KAZANÇ</span>
+                    <b id="toplamKazan">0 ₺</b>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fa-solid fa-circle-info"></i> <b>Şartlar:</b> Son 120 gün hizmet akdine tabi olmak ve son 3 yılda en az 600 gün işsizlik sigortası primi ödemiş olmak gerekir. Tavan ücret 2026 asgari ücretinin %80'i (Tahmini 15.998 ₺) olarak hesaplanmıştır.
+            </div>
         </div>
     </div>
 </div>
 
 <script>
     function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-    
-    function hesaplaIssizlik() {
+
+    function hesapla() {
         const ort = parseFloat(document.getElementById('ortBrut').value) || 0;
+        const prim = parseInt(document.getElementById('primGun').value);
+        const TAVAN_BRUT = 15998.13; // 2026 Tahmini tavan
+
+        if(ort <= 0 || prim === 0) {
+            alert("Lütfen maaşınızı ve prim gününüzü seçin.");
+            return;
+        }
+
+        // 1. Tutar Hesaplama
+        let hesaplananBrut = ort * 0.40;
+        if(hesaplananBrut > TAVAN_BRUT) hesaplananBrut = TAVAN_BRUT;
         
-        // 2026 Tahmini Parametreler
-        const tavan = 15998; 
-        let brutOdenek = ort * 0.4;
-        
-        // Tavan kontrolü
-        if (brutOdenek > tavan) brutOdenek = tavan;
-        
-        const damgaVergisi = brutOdenek * 0.00759;
-        const netOdenek = brutOdenek - damgaVergisi;
-        
-        document.getElementById('odenek').innerText = Math.round(netOdenek).toLocaleString('tr-TR') + " ₺";
-        document.getElementById('hamOdenek').innerText = Math.round(brutOdenek).toLocaleString('tr-TR') + " ₺";
+        const damgaVergisi = hesaplananBrut * 0.00759;
+        const netAylik = hesaplananBrut - damgaVergisi;
+
+        // 2. Süre Hesaplama
+        let aySure = 0;
+        if(prim === 600) aySure = 6;
+        else if(prim === 900) aySure = 8;
+        else if(prim === 1080) aySure = 10;
+
+        const toplamKazanc = netAylik * aySure;
+
+        // UI Güncelleme
+        document.getElementById('netOdenek').innerText = Math.round(netAylik).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('sure').innerText = aySure + " Ay";
+        document.getElementById('toplamKazan').innerText = Math.round(toplamKazanc).toLocaleString('tr-TR') + " ₺";
         
         document.getElementById('res').style.display = "block";
-    }
-
-    window.onclick = function(e) { 
-        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
-        }
     }
 </script>
 </body>
