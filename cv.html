@@ -2,16 +2,14 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>CV Oluşturucu 2026</title>
+<title>Profesyonel CV Oluşturucu 2026</title>
 <link rel="stylesheet" href="style.css">
-<meta name="description" content="Basit CV oluşturucu ile kendi CV’nizi hemen hazırlayın.">
-<!-- jsPDF ve font pluginleri -->
+<meta name="description" content="Profesyonel CV oluşturucu ile şık CV’nizi hazırlayın.">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.plugin.standard_fonts_metrics.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.plugin.ttf.min.js"></script>
 </head>
 <body>
-
 <nav>
   <ul>
     <li><a href="index.html">Ana Sayfa</a></li>
@@ -25,8 +23,7 @@
 </nav>
 
 <div class="container">
-  <h1>CV Oluşturucu 2026</h1>
-
+  <h1>Profesyonel CV Oluşturucu 2026</h1>
   <input type="text" id="ad" placeholder="Ad">
   <input type="text" id="soyad" placeholder="Soyad">
   <input type="text" id="meslek" placeholder="Meslek">
@@ -41,7 +38,6 @@
       <input type="text" class="sure" placeholder="Başlangıç-Bitiş Yılı (örn: 2020-2025)">
     </div>
   </div>
-
   <button onclick="yeniDeneyim()">Yeni Deneyim Ekle</button>
   <button onclick="olustur()">CV Oluştur & PDF İndir</button>
 </div>
@@ -63,9 +59,8 @@ async function olustur(){
   const { jsPDF } = window.jspdf;
   let doc = new jsPDF();
 
-  // FONT BASE64 KODU — hazır gömülü Roboto-Regular
-  const robotoFontBase64 = "AAEAAAALAIAAAwAwT1MvMg8S...truncated for brevity...AAK5PAA=";
-
+  // Roboto font base64 gömülü (placeholder kısa, gerçek base64 kullan)
+  const robotoFontBase64 = "AAEAAAALAIAAAwAwT1MvMg8S...truncated...AAK5PAA=";
   doc.addFileToVFS("Roboto-Regular.ttf", robotoFontBase64);
   doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
   doc.setFont("Roboto");
@@ -76,27 +71,46 @@ async function olustur(){
   let telefon = document.getElementById("telefon").value;
   let email = document.getElementById("email").value;
 
-  doc.setFontSize(22);
+  // Başlık
+  doc.setFontSize(26);
+  doc.setTextColor(0, 40, 85);
+  doc.setFont("Roboto", "bold");
   doc.text(`${ad} ${soyad}`, 20, 30);
 
+  // Meslek
   doc.setFontSize(16);
-  doc.text(`Meslek: ${meslek}`, 20, 50);
-  doc.text(`Telefon: ${telefon}`, 20, 60);
-  doc.text(`Email: ${email}`, 20, 70);
+  doc.setFont("Roboto", "normal");
+  doc.text(`${meslek}`, 20, 40);
 
+  // Çizgi
+  doc.setDrawColor(0, 40, 85);
+  doc.setLineWidth(0.5);
+  doc.line(20, 45, 190, 45);
+
+  // İletişim
+  doc.setFontSize(12);
+  doc.text(`📞 ${telefon}   ✉️ ${email}`, 20, 55);
+
+  // Deneyim Başlığı
   doc.setFontSize(18);
-  doc.text("Deneyim", 20, 90);
-  doc.setFontSize(14);
+  doc.setTextColor(0, 40, 85);
+  doc.text("Deneyim", 20, 70);
+  doc.setDrawColor(0, 40, 85);
+  doc.line(20, 72, 190, 72);
 
+  // Deneyim listesi
   const deneyimler = document.querySelectorAll("#deneyimler-container .deneyim");
-  let y = 100;
+  let y = 80;
   deneyimler.forEach(d => {
     const firma = d.querySelector(".firma").value;
     const pozisyon = d.querySelector(".pozisyon").value;
     const sure = d.querySelector(".sure").value;
     if(firma || pozisyon || sure){
-      doc.text(`- ${firma} | ${sure} | ${pozisyon}`, 20, y);
-      y += 10;
+      doc.setFont("Roboto", "bold");
+      doc.text(firma, 20, y);
+      doc.setFont("Roboto", "italic");
+      doc.text(`${pozisyon} | ${sure}`, 20, y + 6);
+      y += 18;
     }
   });
 
@@ -105,21 +119,20 @@ async function olustur(){
 
 // Tema persist
 const themeToggle = document.getElementById("theme-toggle");
-if(localStorage.getItem('theme') === 'dark'){
+if(localStorage.getItem('theme')==='dark'){
     document.body.classList.add('dark');
-    themeToggle.textContent = '🌙';
-}else{ themeToggle.textContent = '☀️'; }
-themeToggle.addEventListener('click', ()=>{
+    themeToggle.textContent='🌙';
+}else{ themeToggle.textContent='☀️'; }
+themeToggle.addEventListener('click',()=>{
     document.body.classList.toggle('dark');
     if(document.body.classList.contains('dark')){
-        themeToggle.textContent = '🌙';
+        themeToggle.textContent='🌙';
         localStorage.setItem('theme','dark');
-    } else {
-        themeToggle.textContent = '☀️';
+    }else{
+        themeToggle.textContent='☀️';
         localStorage.setItem('theme','light');
     }
 });
 </script>
-
 </body>
 </html>
