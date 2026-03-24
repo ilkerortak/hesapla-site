@@ -2,50 +2,32 @@
 <html lang="tr">
 <head><link rel="stylesheet" href="style.css"></head>
 <body>
-<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a></nav>
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
+    <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
+    <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
+    <a href="kdv.html" class="active">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+</div></nav>
 <div class="container">
-    <h2>🧾 KDV Hesaplayıcı</h2>
-    <div class="input-group"><label>Tutar (TL)</label><input type="number" id="tutar"></div>
+    <h2>🧾 KDV Hesapla</h2>
+    <div class="input-group"><label>Tutar</label><input type="number" id="t" placeholder="Tutar giriniz"></div>
     <div class="input-group">
-        <label>KDV Oranı (%)</label>
-        <select id="oran" style="width:100%; padding:12px; border-radius:10px; background:rgba(0,0,0,0.2); color:#fff; border:2px solid var(--border);">
-            <option value="20">%20 (Genel)</option>
-            <option value="10">%10 (Gıda vb.)</option>
-            <option value="1">%1 (Temel Gıda)</option>
-        </select>
+        <label>KDV Oranı</label>
+        <select id="o"><option value="0.20">%20 (Genel)</option><option value="0.10">%10 (Gıda vb.)</option><option value="0.01">%1</option></select>
     </div>
-    <div style="display:flex; gap:10px; margin-bottom:20px;">
-        <button onclick="hesapla('dahil')" style="background:#a855f7;">KDV Dahil Et</button>
-        <button onclick="hesapla('haric')">KDV Hariç Çıkar</button>
-    </div>
-
-    <div id="sonuc-box" style="display:none;" class="result-item">
-        <div class="detail-row"><span>Matrah (Net Tutar)</span> <span id="matrah"></span></div>
-        <div class="detail-row"><span>Hesaplanan KDV</span> <span id="kdv-tutar"></span></div>
-        <div class="detail-row total"><span>Genel Toplam</span> <span id="toplam" style="color:#a855f7; font-size:1.4rem;"></span></div>
+    <button onclick="calc()">Vergi Analizi</button>
+    <div id="res" class="result-box">
+        <div class="row"><span>Net Matrah</span><span id="m"></span></div>
+        <div class="row"><span>KDV Tutarı</span><span id="kt"></span></div>
+        <div class="row total"><span>Genel Toplam (KDV Dahil)</span><span id="gt"></span></div>
     </div>
 </div>
 <script>
-    function hesapla(tip) {
-        let t = parseFloat(document.getElementById("tutar").value);
-        let o = parseFloat(document.getElementById("oran").value) / 100;
-        if(!t) return;
-        let matrah, kdv, toplam;
-
-        if(tip === 'dahil') {
-            matrah = t;
-            kdv = t * o;
-            toplam = t + kdv;
-        } else {
-            toplam = t;
-            matrah = t / (1 + o);
-            kdv = t - matrah;
-        }
-        document.getElementById("sonuc-box").style.display = "block";
-        document.getElementById("matrah").innerText = matrah.toLocaleString() + " TL";
-        document.getElementById("kdv-tutar").innerText = kdv.toLocaleString() + " TL";
-        document.getElementById("toplam").innerText = toplam.toLocaleString() + " TL";
-    }
+function calc(){
+    let t=parseFloat(document.getElementById("t").value), o=parseFloat(document.getElementById("o").value); if(!t)return;
+    document.getElementById("res").style.display="block";
+    document.getElementById("m").innerText=t.toLocaleString()+" TL";
+    document.getElementById("kt").innerText=(t*o).toLocaleString()+" TL";
+    document.getElementById("gt").innerText=(t*(1+o)).toLocaleString()+" TL";
+}
 </script>
-</body>
-</html>
+</body></html>
