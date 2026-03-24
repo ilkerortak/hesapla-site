@@ -7,36 +7,34 @@
 </head>
 <body>
 <nav>
-    <a href="index.html" class="logo-link"><div class="logo" style="font-weight:800; color:white; font-size:1.4rem;">HESAPLA<span style="color:#fbbf24;">360</span></div></a>
-    <ul><li><a href="yas.html" class="active">Yaş</a></li><li><a href="cv.html">CV</a></li></ul>
-    <button id="theme-toggle">☀️</button>
+    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
+    <ul class="nav-menu"><li><a href="yas.html" class="active">Yaş</a></li><li><a href="cv.html">CV</a></li></ul>
+    <div class="theme-switch-wrapper"><label class="theme-switch"><input type="checkbox" id="theme-checkbox"><span class="slider"></span></label></div>
 </nav>
 
 <div class="container">
-    <h1>Detaylı Yaş Analizi</h1>
-    <div class="input-group">
-        <p>Doğum Tarihiniz:</p>
-        <input type="date" id="dogum">
-    </div>
-    <button onclick="yasHesapla()">Analiz Et</button>
+    <h2>Yaş Analizi</h2>
+    <div class="input-group"><label>Doğum Tarihi</label><input type="date" id="dogum"></div>
+    <button onclick="yasAnaliz()">Analiz Et</button>
     <div id="sonuc-box" style="display:none;" class="result-item">
-        <strong id="tam-yas"></strong>
-        <p id="burc-bilgi" style="margin-top:10px; font-weight:bold; color:var(--primary);"></p>
-        <p id="gun-bilgi" style="font-size:0.9rem; opacity:0.8;"></p>
+        <p>Yaşınız</p>
+        <strong id="y-sonuc"></strong>
     </div>
 </div>
-<script src="script.js"></script>
+
 <script>
-function yasHesapla() {
-    let d = new Date(document.getElementById("dogum").value);
-    let bugun = new Date();
-    if(isNaN(d)) return;
-    let yil = bugun.getFullYear() - d.getFullYear();
-    let fark = Math.ceil(Math.abs(bugun - d) / (1000 * 60 * 60 * 24));
-    document.getElementById("sonuc-box").style.display = "block";
-    document.getElementById("tam-yas").innerText = yil + " Yaşındasınız";
-    document.getElementById("gun-bilgi").innerText = `Tam ${fark.toLocaleString()} gündür hayattasınız.`;
-}
+    const checkbox = document.getElementById('theme-checkbox');
+    if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark'); checkbox.checked = true; }
+    checkbox.addEventListener('change', () => { document.body.classList.toggle('dark'); localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light'); });
+
+    function yasAnaliz() {
+        let d = new Date(document.getElementById("dogum").value);
+        let b = new Date();
+        if(isNaN(d)) return;
+        let yas = b.getFullYear() - d.getFullYear();
+        document.getElementById("sonuc-box").style.display = "block";
+        document.getElementById("y-sonuc").innerText = yas + " Yaşındasınız";
+    }
 </script>
 </body>
 </html>
