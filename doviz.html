@@ -1,95 +1,34 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Döviz Çevirici - Hesapla360</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+<head><link rel="stylesheet" href="style.css"></head>
 <body>
-<nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <div class="nav-menu">
-        <a href="netmaas.html">💰 Maaş</a>
-        <a href="tazminat.html">💼 Tazminat</a>
-        <a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html">🏦 Kredi</a>
-        <a href="yas.html">🎂 Yaş</a>
-        <a href="doviz.html" class="active">💱 Döviz</a>
-        <a href="cv.html">📄 CV</a>
-    </div>
-</nav>
-
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
+    <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
+    <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html" class="active">💱 Döviz</a>
+    <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+</div></nav>
 <div class="container">
     <h2>💱 Döviz Çevirici</h2>
-    
+    <div class="input-group"><label>Tutar</label><input type="number" id="a" value="1"></div>
     <div class="input-group">
-        <label>Miktar</label>
-        <input type="number" id="amount" value="1" placeholder="Miktar giriniz">
+        <label>İşlem</label>
+        <select id="s">
+            <option value="45.5">USD -> TRY (Dolar Satış)</option>
+            <option value="1">TRY -> USD (Dolar Alış)</option>
+        </select>
     </div>
-
-    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-        <div style="flex: 1;">
-            <label style="font-size: 0.8rem; display: block; margin-bottom: 5px;">Kaynak</label>
-            <select id="fromCurrency" style="width: 100%; padding: 12px; border-radius: 10px; background: rgba(0,0,0,0.2); color: #fff; border: 2px solid var(--border);">
-                <option value="USD">USD - Dolar</option>
-                <option value="EUR">EUR - Euro</option>
-                <option value="TRY" selected>TRY - TL</option>
-                <option value="GBP">GBP - Sterlin</option>
-            </select>
-        </div>
-        <div style="align-self: flex-end; padding-bottom: 10px; font-size: 1.5rem;">➡️</div>
-        <div style="flex: 1;">
-            <label style="font-size: 0.8rem; display: block; margin-bottom: 5px;">Hedef</label>
-            <select id="toCurrency" style="width: 100%; padding: 12px; border-radius: 10px; background: rgba(0,0,0,0.2); color: #fff; border: 2px solid var(--border);">
-                <option value="USD" selected>USD - Dolar</option>
-                <option value="EUR">EUR - Euro</option>
-                <option value="TRY">TRY - TL</option>
-                <option value="GBP">GBP - Sterlin</option>
-            </select>
-        </div>
-    </div>
-
-    <button onclick="convertCurrency()">Hemen Çevir</button>
-
-    <div id="sonuc-box" style="display:none;" class="result-item">
-        <p style="opacity:0.7;" id="conversion-text">1 TRY = </p>
-        <strong id="result-value" style="color:#a855f7; font-size:2rem;">0.00</strong>
-        
-        <div style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
-            <div class="detail-row"><span>Güncelleme</span> <span id="last-update">Şimdi</span></div>
-            <div class="detail-row"><span>Kaynak</span> <span>TCMB / Global Market</span></div>
-        </div>
+    <button onclick="calc()">Dövizi Çevir</button>
+    <div id="res" class="result-box">
+        <div class="row"><span>Birim Kur</span><span id="k"></span></div>
+        <div class="row total"><span>Hesaplanan Tutar</span><span id="so"></span></div>
     </div>
 </div>
-
 <script>
-    // İlker, buraya gerçek bir API anahtarı (exchangerate-api gibi) ekleyebilirsin.
-    // Şimdilik demo kurlar ile mantığı kuruyorum:
-    async function convertCurrency() {
-        const amount = document.getElementById('amount').value;
-        const from = document.getElementById('fromCurrency').value;
-        const to = document.getElementById('toCurrency').value;
-
-        if(!amount) return;
-
-        // Gerçek kullanımda: fetch(`https://api.exchangerate-api.com/v4/latest/${from}`)
-        // Demo Sabit Kurlar (2026 Tahmini / Temsili)
-        const rates = {
-            "TRY": { "USD": 0.022, "EUR": 0.020, "GBP": 0.017, "TRY": 1 },
-            "USD": { "TRY": 45.50, "EUR": 0.92, "GBP": 0.78, "USD": 1 },
-            "EUR": { "TRY": 49.30, "USD": 1.09, "GBP": 0.85, "EUR": 1 },
-            "GBP": { "TRY": 58.10, "USD": 1.28, "EUR": 1.18, "GBP": 1 }
-        };
-
-        const rate = rates[from][to];
-        const result = amount * rate;
-
-        document.getElementById("sonuc-box").style.display = "block";
-        document.getElementById("conversion-text").innerText = `${amount} ${from} karşılığı:`;
-        document.getElementById("result-value").innerText = result.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " " + to;
-        document.getElementById("last-update").innerText = new Date().toLocaleTimeString('tr-TR');
-    }
+function calc(){
+    let a=document.getElementById("a").value, k=document.getElementById("s").value; 
+    document.getElementById("res").style.display="block"; 
+    document.getElementById("k").innerText=k+" TL";
+    document.getElementById("so").innerText=k==45.5?(a*k).toFixed(2)+" TRY":(a/45.5).toFixed(2)+" USD";
+}
 </script>
-</body>
-</html>
+</body></html>
