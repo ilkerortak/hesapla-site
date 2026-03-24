@@ -2,45 +2,28 @@
 <html lang="tr">
 <head><link rel="stylesheet" href="style.css"></head>
 <body>
-<nav>
-    <a href="index.html" class="logo">HESAPLA<span>360</span></a>
-    <div class="nav-menu">
-        <a href="netmaas.html">💰 Maaş</a>
-        <a href="tazminat.html" class="active">💼 Tazminat</a>
-        <a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html">🏦 Kredi</a>
-        <a href="yas.html">🎂 Yaş</a>
-        <a href="cv.html">📄 CV</a>
-    </div>
-</nav>
-
+<nav><a href="index.html" class="logo">HESAPLA<span>360</span></a><div class="nav-menu">
+    <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html" class="active">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
+    <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
+    <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+</div></nav>
 <div class="container">
-    <h2>💼 Tazminat Dökümü</h2>
-    <div class="input-group"><label>Brüt Maaş</label><input type="number" id="brut"></div>
-    <div class="input-group"><label>Çalışma Süresi (Yıl)</label><input type="number" id="yil"></div>
-    <button onclick="tazminat()">Hesapla</button>
-
-    <div id="sonuc-box" style="display:none;" class="result-item">
-        <div class="detail-row"><span>Kıdem Tazminatı (Brüt)</span> <span id="kb"></span></div>
-        <div class="detail-row"><span>Damga Vergisi Kesintisi</span> <span id="dv"></span></div>
-        <div class="detail-row total"><span>Net Kıdem Tazminatı</span> <span id="net"></span></div>
-        <p style="font-size:0.7rem; color:orange; margin-top:10px;">*Tazminat tavanı 72.500 TL olarak baz alınmıştır.</p>
+    <h2>💼 Tazminat</h2>
+    <div class="input-group"><label>Brüt Maaş</label><input type="number" id="b"></div>
+    <div class="input-group"><label>Çalışma Yılı</label><input type="number" id="y"></div>
+    <button onclick="calc()">RGB Hesapla</button>
+    <div id="res" class="result-item">
+        <div class="detail-row"><span>Brüt Kıdem</span><span id="k"></span></div>
+        <div class="detail-row total"><span>Net Ödeme</span><span id="n"></span></div>
     </div>
 </div>
-
 <script>
-    function tazminat() {
-        let b = parseFloat(document.getElementById("brut").value);
-        let y = parseFloat(document.getElementById("yil").value);
-        const tavan = 72500;
-        let esas = b > tavan ? tavan : b;
-        let brutKidem = esas * y;
-        let dv = brutKidem * 0.00759;
-
-        document.getElementById("sonuc-box").style.display = "block";
-        document.getElementById("kb").innerText = brutKidem.toLocaleString() + " TL";
-        document.getElementById("dv").innerText = "-" + dv.toLocaleString() + " TL";
-        document.getElementById("net").innerText = (brutKidem - dv).toLocaleString() + " TL";
+    function calc(){
+        let b=document.getElementById("b").value, y=document.getElementById("y").value; if(!b)return;
+        let k=Math.min(b,72500)*y;
+        document.getElementById("res").style.display="block";
+        document.getElementById("k").innerText=k.toLocaleString()+" TL";
+        document.getElementById("n").innerText=(k*0.992).toLocaleString()+" TL";
     }
 </script>
 </body>
