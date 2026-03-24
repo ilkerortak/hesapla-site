@@ -1,63 +1,181 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+/* Genel Ayarlar ve Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
-:root {
-    --bg: #000000;
-    --card: #0d1117;
-    --border: #30363d;
-    --accent: #58a6ff;
-    --text: #f0f6fc;
-    --dim: #8b949e;
-    --gold: #d4af37;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
-body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+body {
+    background-color: #0b0e14; /* Daha derin bir siyah-lacivert */
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
 
-/* 3. MADDE: Navigasyon Hizalaması & High-End Menü */
+/* 1. Navigasyon Çubuğu */
 nav {
-    display: flex; justify-content: space-between; align-items: center; /* Dikeyde tam ortala */
-    padding: 0 5%; height: 75px; background: rgba(1, 4, 9, 0.95);
-    border-bottom: 1px solid var(--border); backdrop-filter: blur(10px);
+    background: rgba(18, 22, 30, 0.8);
+    backdrop-filter: blur(15px);
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.logo { font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -1px; }
-.logo span { color: var(--accent); }
-
-.nav-menu { display: flex; gap: 8px; align-items: center; /* Linkleri dikeyde ortala */ }
-.nav-menu a {
-    text-decoration: none; color: var(--dim); font-size: 0.75rem; font-weight: 600;
-    padding: 10px 14px; border-radius: 10px; transition: 0.2s; display: flex; align-items: center; gap: 5px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+    font-weight: 800;
+    font-size: 1.4rem;
 }
-.nav-menu a:hover, .nav-menu a.active { color: #fff; background: #21262d; }
 
-/* 1. MADDE: Üst Veri Barı (Bayraklar & Net Boşluk) */
+.logo-box {
+    background: linear-gradient(135deg, #007bff, #00d4ff);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+}
+
+.logo span { color: #007bff; }
+
+/* 2. Canlı Finans Bandı */
 .rate-bar {
-    background: #010409; text-align: center; padding: 12px;
-    font-size: 0.8rem; border-bottom: 1px solid var(--border);
-    font-weight: 600; color: var(--dim); display: flex; justify-content: center; gap: 30px; /* Boşlukları artırdık */
+    background: #12161e;
+    padding: 10px 5%;
+    display: flex;
+    gap: 30px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    overflow-x: auto;
+    white-space: nowrap;
 }
-.rate-bar span { display: flex; align-items: center; gap: 8px; /* Bayrak ve rakam arası mesafe */ }
-.rate-bar b { color: var(--text); }
-.rate-gold b { color: var(--gold); }
 
-/* 2. MADDE: 9'lu Grid & Apple Style İkonlar */
+.rate-bar span { color: #888; font-weight: 500; }
+.rate-bar b { color: #fff; margin-left: 5px; }
+
+/* Trend Renkleri */
+.up { color: #2ecc71 !important; font-weight: bold; margin-left: 4px; }
+.down { color: #e74c3c !important; font-weight: bold; margin-left: 4px; }
+
+/* 3. Hero & Karşılama Bölümü */
+.hero-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.welcome-text h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #fff, #888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.welcome-text p { color: #666; margin-top: 5px; }
+
+/* 4. Arama Kutusu */
+.search-box input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 25px;
+    border-radius: 30px;
+    color: white;
+    width: 300px;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    width: 350px;
+    border-color: #007bff;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+/* 5. Kart Izgarası (Grid) */
 .grid-container {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 16px; max-width: 960px; margin: 60px auto; padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 20px auto 60px;
+    padding: 0 20px;
 }
 
+/* 6. Özellik Kartları (Glassmorphism) */
 .feature-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 40px 20px; text-align: center;
-    text-decoration: none; color: inherit; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px); background: #161b22;
-    border-color: var(--accent); box-shadow: 0 10px 30px -10px rgba(88, 166, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-8px);
+    border-color: rgba(0, 123, 255, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* İkon Boyutu ve Font-Size Ayarı */
-.feature-card .icon { font-size: 2.2rem; display: block; margin-bottom: 15px; filter: grayscale(20%); /* Emojileri biraz yumuşat */ }
-.feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; color: #fff; }
-.feature-card p { font-size: 0.75rem; color: var(--dim); font-weight: 500; }
+.feature-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+}
+
+.feature-card h3 {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.feature-card p {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* Kartın içindeki gizli parlama efekti */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at top right, rgba(0, 123, 255, 0.1), transparent);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.feature-card:hover::before { opacity: 1; }
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+    .hero-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .search-box input { width: 100%; }
+    .welcome-text h2 { font-size: 1.8rem; }
+}
