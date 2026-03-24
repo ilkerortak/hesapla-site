@@ -1,36 +1,103 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><meta charset="UTF-8"><link rel="stylesheet" href="style.css"><title>Kredi Planı</title></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Kredi Planı | Hesapla360</title>
+</head>
 <body>
+
 <nav>
     <a href="index.html" class="logo">HESAPLA<span>360</span></a>
     <div class="nav-menu">
-        <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a><a href="issizlik.html">📅 İşsizlik</a>
-        <a href="kredi.html" class="active">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a><a href="doviz.html">💱 Döviz</a>
-        <a href="kdv.html">🧾 KDV</a><a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+        <a href="netmaas.html">💰 Maaş</a>
+        <a href="tazminat.html">💼 Tazminat</a>
+        <a href="issizlik.html">📅 İşsizlik</a>
+        <a href="kredi.html" class="active">🏦 Kredi</a>
+        <a href="yas.html">🎂 Yaş</a>
+        <a href="doviz.html">💱 Döviz</a>
+        <a href="kdv.html">🧾 KDV</a>
+        <a href="mesai.html">🕒 Mesai</a>
+        <a href="cv.html">📄 CV</a>
     </div>
 </nav>
 
-<div class="container">
-    <h2>🏦 Kredi Ödeme Planı</h2>
-    <div class="input-group"><label>Kredi Tutarı</label><input type="number" id="t"></div>
-    <div class="input-group"><label>Vade (Ay)</label><input type="number" id="v"></div>
-    <div class="input-group"><label>Aylık Faiz (%)</label><input type="number" id="f" step="0.01"></div>
-    <button onclick="calc()">Taksitleri Gör</button>
-    <div id="res" class="result-box">
-        <div class="row"><span>Aylık Taksit</span><span id="at"></span></div>
-        <div class="row total"><span>Toplam Geri Ödeme</span><span id="go" style="color:var(--accent); font-weight:800;"></span></div>
+<div style="max-width: 600px; margin: 60px auto; padding: 0 20px;">
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -1px;">Kredi <span style="color: var(--accent);">Planı</span></h2>
+        <p style="color: var(--dim); font-size: 0.85rem; margin-top: 5px;">Banka faizleri ve vergiler dahil taksit dökümü.</p>
+    </div>
+
+    <div class="feature-card" style="text-align: left; cursor: default; transform: none; padding: 35px;">
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Kredi Tutarı (TL)</label>
+            <input type="number" id="t" placeholder="Örn: 100.000" 
+                style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+            <div class="input-group">
+                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Vade (Ay)</label>
+                <input type="number" id="v" placeholder="Örn: 12" 
+                    style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; outline: none;">
+            </div>
+            <div class="input-group">
+                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--dim); margin-bottom: 10px; text-transform: uppercase;">Aylık Faiz (%)</label>
+                <input type="number" id="f" step="0.01" placeholder="Örn: 3.99" 
+                    style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: #fff; outline: none;">
+            </div>
+        </div>
+
+        <button onclick="calc()" 
+            style="width: 100%; background: var(--accent); color: #fff; border: none; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);">
+            TAKSİTLERİ HESAPLA
+        </button>
+
+        <div id="res" style="display: none; margin-top: 35px; padding-top: 25px; border-top: 1px dotted var(--border);">
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem;">
+                <span style="color: var(--dim);">Aylık Taksit Tutarı</span>
+                <span id="at" style="color: #fff; font-weight: 600;"></span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding: 20px; background: rgba(88, 166, 255, 0.05); border-radius: 12px; border: 1px solid rgba(88, 166, 255, 0.1);">
+                <span style="color: #fff; font-weight: 700; font-size: 1.1rem;">Toplam Geri Ödeme</span>
+                <span id="go" style="color: var(--accent); font-weight: 800; font-size: 1.5rem;"></span>
+            </div>
+
+            <p style="font-size: 0.7rem; color: var(--dim); margin-top: 15px; text-align: center;">
+                * Hesaplamaya BSMV ve KKDF vergileri (ortalama %30 faiz artışı) dahil edilmiştir.
+            </p>
+        </div>
     </div>
 </div>
 
 <script>
 function calc(){
-    let t=parseFloat(document.getElementById("t").value), v=parseFloat(document.getElementById("v").value), f=(parseFloat(document.getElementById("f").value)/100)*1.3;
-    if(!t || !v || !f) return;
-    let tak=(t*f*Math.pow(1+f,v))/(Math.pow(1+f,v)-1);
-    document.getElementById("res").style.display="block";
-    document.getElementById("at").innerText=tak.toLocaleString()+" ₺";
-    document.getElementById("go").innerText=(tak*v).toLocaleString()+" ₺";
+    let t = parseFloat(document.getElementById("t").value);
+    let v = parseFloat(document.getElementById("v").value);
+    let fInput = parseFloat(document.getElementById("f").value);
+    
+    if(!t || !v || !fInput) {
+        alert("Lütfen tüm alanları doldurun.");
+        return;
+    }
+
+    // Faiz oranını yüzdeye çevir ve vergileri (1.3 çarpanı) ekle
+    let f = (fInput / 100) * 1.3;
+    
+    // Kredi taksit formülü
+    let tak = (t * f * Math.pow(1 + f, v)) / (Math.pow(1 + f, v) - 1);
+    let toplam = tak * v;
+
+    document.getElementById("res").style.display = "block";
+    document.getElementById("at").innerText = tak.toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " ₺";
+    document.getElementById("go").innerText = toplam.toLocaleString('tr-TR', {maximumFractionDigits: 2}) + " ₺";
 }
 </script>
-</body></html>
+
+</body>
+</html>
