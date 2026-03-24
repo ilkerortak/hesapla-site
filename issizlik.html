@@ -17,18 +17,23 @@
     <li><a href="cv.html">CV Oluşturucu</a></li>
   </ul>
 </nav>
-<hr>
+
+<div class="container">
 <h1>İşsizlik Maaşı Hesaplama 2026</h1>
+<button onclick="toggleTheme()">Koyu/Açık Tema</button>
 <p>Brüt maaşınızı girin:</p>
-<input type="number" id="brut">
+<input type="number" id="brut" placeholder="Örn: 20000">
 <button onclick="hesapla()">Hesapla</button>
 <h2 id="sonuc"></h2>
+</div>
+
 <script>
 function hesapla() {
   let brut = document.getElementById("brut").value;
   let net = brut * 0.50;
   document.getElementById("sonuc").innerText = "Yaklaşık İşsizlik Maaşı: " + net + " TL";
 }
+function toggleTheme() { document.body.classList.toggle("dark"); }
 </script>
 </body>
 </html>
