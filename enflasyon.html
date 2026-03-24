@@ -1,36 +1,33 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>H360 | Enflasyon</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav><a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a></nav>
-    <div class="hero-section" style="justify-content: center; text-align: center;">
-        <div class="welcome-text">
-            <h2 style="font-size: 2.5rem;">Enflasyon Analizi</h2>
-            <p>Paranın değer kaybı ve alım gücü sorgulama.</p>
-        </div>
-    </div>
+<div class="hero-section">
+    <h2>Enflasyon Analizi</h2>
+    <p>SATIN ALMA GÜCÜ VE DEĞER KAYBI SORGULAMA</p>
+</div>
 
-    <div class="grid-container" style="display: flex; justify-content: center;">
-        <div class="feature-card" style="width: 100%; max-width: 500px; cursor: default;">
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; color: #fff; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 15px;">Mevcut Ana Para (TL)</label>
-                <input type="number" id="amt" placeholder="Örn: 100.000" style="background: none; border: none; color: #fff; font-size: 1.5rem; width: 100%; outline: none;">
-            </div>
-            <button onclick="calc()" style="background: #111; border: 1px solid #222; color: #fff; padding: 20px; border-radius: 15px; font-weight: 800; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">ANALİZİ YAP</button>
-            <div id="res" style="margin-top: 20px; display: none; color: #007bff; font-weight: 800; text-align: center; font-size: 1.2rem;"></div>
+<div class="form-box">
+    <label>BAŞLANGIÇ TUTARI (TL)</label>
+    <input type="number" id="amt" placeholder="Örn: 100.000">
+    
+    <label>YILLIK ENFLASYON ORANI (%)</label>
+    <input type="number" id="inf" placeholder="Örn: 65">
+
+    <button class="btn-calc" onclick="calcInf()">PARANIN DEĞERİNİ ÖLÇ</button>
+
+    <div id="res" class="res-area">
+        <p style="color:#555; font-size:0.7rem; font-weight:800;">1 YIL SONRAKİ REEL DEĞER</p>
+        <div class="res-val" id="reel">0 ₺</div>
+        <div style="margin-top:15px; font-size:0.85rem; color:#e74c3c; font-weight:700;">
+            Hissedilen Kayıp: - <span id="loss">0</span> ₺
         </div>
     </div>
-    <script>
-        function calc() {
-            const a = parseFloat(document.getElementById('amt').value) || 0;
-            const loss = a * 0.65; // Örnek %65 kayıp
-            document.getElementById('res').innerText = "Yıllık Değer Kaybı: " + loss.toLocaleString() + " ₺";
-            document.getElementById('res').style.display = "block";
-        }
-    </script>
-</body>
-</html>
+</div>
+
+<script>
+    function calcInf() {
+        const a = parseFloat(document.getElementById('amt').value) || 0;
+        const r = parseFloat(document.getElementById('inf').value) / 100;
+        const reelVal = a / (1 + r);
+        document.getElementById('reel').innerText = Math.round(reelVal).toLocaleString() + " ₺";
+        document.getElementById('loss').innerText = Math.round(a - reelVal).toLocaleString();
+        document.getElementById('res').style.display = "block";
+    }
+</script>
