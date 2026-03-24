@@ -4,59 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H360 | Yakıt Tüketim Analizi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
-    <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
-    <div class="nav-container">
-        <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
-        <div class="dropdown-menu" id="navMenu">
-            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
-            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
-            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
-            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
-            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
-            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+<nav class="glass-nav">
+    <div class="nav-left">
+        <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    </div>
+    <div class="nav-right">
+        <div class="menu-container">
+            <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
+            <div class="dropdown-menu" id="navMenu">
+                <a href="netmaas.html">💰 Maaş</a><a href="tazminat.html">💼 Tazminat</a>
+                <a href="issizlik.html">📅 İşsizlik</a><a href="faiz.html">📈 Faiz</a>
+                <a href="yakit.html">⛽ Yakıt</a><a href="enflasyon.html">📉 Enflasyon</a>
+                <a href="kredi.html">🏦 Kredi</a><a href="yas.html">🎂 Yaş</a>
+                <a href="doviz.html">💱 Döviz</a><a href="kdv.html">🧾 KDV</a>
+                <a href="mesai.html">🕒 Mesai</a><a href="cv.html">📄 CV</a>
+            </div>
         </div>
     </div>
 </nav>
 
-<div class="hero-section">
-    <h2>Yakıt Tüketim Analizi</h2>
-    <p>YOL MALİYET VE LOJİSTİK PLANLAMA</p>
-</div>
+<div class="calculation-container">
+    <header class="premium-header" style="margin-bottom: 30px;">
+        <h1 class="premium-title" style="font-size: 1.8rem;">YAKIT ANALİZİ</h1>
+        <p class="premium-status">YOL MALİYET VE LOJİSTİK PLANLAMA</p>
+    </header>
 
-<div class="form-box">
-    <label>GİDİLECEK MESAFE (KM)</label>
-    <input type="number" id="dist" placeholder="Örn: 450">
-    
-    <label>ORTALAMA TÜKETİM (L/100KM)</label>
-    <input type="number" id="cons" placeholder="Örn: 6.5">
+    <div class="form-card">
+        <div class="input-group">
+            <label>GİDİLECEK MESAFE (KM)</label>
+            <input type="number" id="dist" placeholder="Örn: 450">
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="input-group">
+                <label>TÜKETİM (L/100KM)</label>
+                <input type="number" id="cons" placeholder="Örn: 6.5">
+            </div>
+            <div class="input-group">
+                <label>LİTRE FİYATI (TL)</label>
+                <input type="number" id="price" placeholder="Örn: 42.50">
+            </div>
+        </div>
 
-    <label>YAKIT LİTRE FİYATI (TL)</label>
-    <input type="number" id="price" placeholder="Örn: 62.50">
+        <button class="btn-calc" onclick="calcFuel()">MALİYET ANALİZİ YAP</button>
 
-    <button class="btn-calc" onclick="calcFuel()">MALİYET ANALİZİ YAP</button>
-
-    <div id="res" class="res-area">
-        <p style="color:#555; font-size:0.75rem; font-weight:800;">TOPLAM YAKIT GİDERİ</p>
-        <div class="res-val" id="fTotal">0 ₺</div>
-        <div style="display:flex; justify-content:space-between; margin-top:20px; font-size:0.85rem; color:#888; border-top: 1px solid #1c212c; padding-top: 15px;">
-            <span>Toplam Yakıt: <b id="liters" style="color:#fff">0 L</b></span>
-            <span>KM Başı: <b id="perKm" style="color:#fff">0 ₺</b></span>
+        <div id="res" class="res-area">
+            <p style="font-size:0.7rem; font-weight:800; color: var(--text-dim); text-transform: uppercase;">TOPLAM YAKIT GİDERİ</p>
+            <div class="res-val" id="fTotal">0 ₺</div>
+            
+            <div style="display:flex; justify-content:space-between; margin-top:20px; font-size:0.85rem; color:var(--text-dim); border-top: 1px dashed var(--border); padding-top: 15px;">
+                <span>Toplam: <b id="liters" style="color:#fff">0</b> <small>Litre</small></span>
+                <span>KM Başı: <b id="perKm" style="color:#fff">0</b> <small>₺</small></span>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Menü açma/kapama
-    function toggleMenu() { 
-        document.getElementById('navMenu').classList.toggle('active'); 
-    }
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 
-    // Yakıt hesaplama motoru
     function calcFuel() {
         const d = parseFloat(document.getElementById('dist').value) || 0;
         const c = parseFloat(document.getElementById('cons').value) || 0;
@@ -64,23 +76,20 @@
         
         if(d > 0 && c > 0 && p > 0) {
             const total = (d * c / 100) * p;
-            document.getElementById('fTotal').innerText = Math.round(total).toLocaleString() + " ₺";
-            document.getElementById('liters').innerText = (d * c / 100).toFixed(1);
-            document.getElementById('perKm').innerText = (total / d).toFixed(2);
+            const totalLiters = (d * c / 100);
+            const kmPrice = total / d;
+
+            document.getElementById('fTotal').innerText = Math.round(total).toLocaleString('tr-TR') + " ₺";
+            document.getElementById('liters').innerText = totalLiters.toFixed(1).replace('.', ',');
+            document.getElementById('perKm').innerText = kmPrice.toFixed(2).replace('.', ',');
             document.getElementById('res').style.display = "block";
         }
     }
 
-    // Menü dışına tıklandığında kapat
-    window.onclick = function(event) {
-        if (!event.target.matches('.menu-btn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-menu");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('active')) {
-                    openDropdown.classList.remove('active');
-                }
-            }
+    window.onclick = function(e) { 
+        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
+            const menu = document.getElementById('navMenu');
+            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
         }
     }
 </script>
