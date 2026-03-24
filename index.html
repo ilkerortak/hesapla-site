@@ -3,64 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Finansal Analiz Merkezi</title>
+    <title>HESAPLA360 | Finansal Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
-    <a href="/" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    <a href="index.html" class="logo"><div class="logo-box">H360</div> HESAPLA<span>360</span></a>
+    
     <div class="nav-container">
         <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
+        
         <div class="dropdown-menu" id="navMenu">
-            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
-            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
-            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
-            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
-            <a href="/doviz">💱 Döviz</a><a href="/bitcoin">₿ Bitcoin</a><a href="/kdv">🧾 KDV</a>
-            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+            <a href="netmaas.html">💰 Maaş</a>
+            <a href="tazminat.html">💼 Tazminat</a>
+            <a href="issizlik.html">📅 İşsizlik</a>
+            <a href="kredi.html">🏦 Kredi</a>
+            <a href="yas.html">🎂 Yaş</a>
+            <a href="doviz.html">💱 Döviz</a>
+            <a href="kdv.html">🧾 KDV</a>
+            <a href="mesai.html">🕒 Mesai</a>
+            <a href="cv.html">📄 CV</a>
         </div>
     </div>
 </nav>
 
-<div class="hero-section">
-    <h2>Finansal Analiz Merkezi</h2>
-    <p>SİSTEM AKTİF | 24 MART 2026</p>
-</div>
-
-<div class="live-ticker">
-    <div class="ticker-item">🇺🇸 <b>USD:</b> 32.54 ₺</div>
-    <div class="ticker-item">🇪🇺 <b>EUR:</b> 35.18 ₺</div>
-    <div class="ticker-item">🟡 <b>ALTIN:</b> 2.450 ₺</div>
-    <div class="ticker-item btc-item">₿ <b>BITCOIN:</b> 2.154.200 ₺</div>
+<div class="rate-bar" id="rateBar">
+    <span class="rate-usd">🇺🇸 USD: <b id="usdVal">--.-- ₺</b></span>
+    <span class="rate-eur">🇪🇺 EUR: <b id="eurVal">--.-- ₺</b></span>
+    <span class="rate-gold" style="color: #f2ba49;">🟡 ALTIN: <b id="goldVal">--.-- ₺</b></span>
 </div>
 
 <div class="grid-container">
-    <a href="/netmaas" class="feature-card"><h3>💰 Maaş</h3><p>Bordro & Net Analizi</p></a>
-    <a href="/tazminat" class="feature-card"><h3>💼 Tazminat</h3><p>Kıdem & İhbar Hesabı</p></a>
-    <a href="/issizlik" class="feature-card"><h3>📅 İşsizlik</h3><p>Süre & Ödenek Planı</p></a>
-    <a href="/faiz" class="feature-card"><h3>📈 Faiz</h3><p>Bileşik Getiri Analizi</p></a>
-    <a href="/yakit" class="feature-card"><h3>⛽ Yakıt</h3><p>Yol Maliyeti & Tüketim</p></a>
-    <a href="/enflasyon" class="feature-card"><h3>📉 Enflasyon</h3><p>Alım Gücü Kaybı</p></a>
-    <a href="/kredi" class="feature-card"><h3>🏦 Kredi</h3><p>Banka Ödeme Planı</p></a>
-    <a href="/yas" class="feature-card"><h3>🎂 Yaş</h3><p>Kronolojik Analiz</p></a>
-    <a href="/doviz" class="feature-card"><h3>💱 Döviz & Altın</h3><p>Anlık Kur Çeviri</p></a>
-    <a href="/bitcoin" class="feature-card" style="border-bottom: 2px solid #f7931a;">
-        <h3 style="color: #f7931a;">₿ Bitcoin</h3>
-        <p>Kripto Varlık Analizi</p>
-    </a>
-    <a href="/kdv" class="feature-card"><h3>🧾 KDV</h3><p>Vergi Matrah Hesabı</p></a>
-    <a href="/mesai" class="feature-card"><h3>🕒 Mesai</h3><p>Ek Kazanç Tablosu</p></a>
-    <a href="/cv" class="feature-card"><h3>📄 CV</h3><p>Hızlı PDF Oluşturucu</p></a>
+    <a href="netmaas.html" class="feature-card"><span class="icon">💰</span><h3>Maaş</h3><p>Bordro & Net Analizi</p></a>
+    <a href="tazminat.html" class="feature-card"><span class="icon">💼</span><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></a>
+    <a href="issizlik.html" class="feature-card"><span class="icon">📅</span><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></a>
+    <a href="kredi.html" class="feature-card"><span class="icon">🏦</span><h3>Kredi</h3><p>Banka Ödeme Planı</p></a>
+    <a href="yas.html" class="feature-card"><span class="icon">🎂</span><h3>Yaş</h3><p>Kronolojik Analiz</p></a>
+    <a href="doviz.html" class="feature-card"><span class="icon">💱</span><h3>Döviz</h3><p>Global Kur Çeviri</p></a>
+    <a href="kdv.html" class="feature-card"><span class="icon">🧾</span><h3>KDV</h3><p>Vergi Matrah Hesabı</p></a>
+    <a href="mesai.html" class="feature-card"><span class="icon">🕒</span><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></a>
+    <a href="cv.html" class="feature-card"><span class="icon">📄</span><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></a>
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-    window.onclick = function(e) { 
+    // MENÜ KONTROLÜ
+    function toggleMenu() {
+        document.getElementById('navMenu').classList.toggle('active');
+    }
+
+    // Menü dışına tıklandığında kapatma (Hata Taraması Yapıldı)
+    window.onclick = function(e) {
         if(!e.target.matches('.menu-btn')) {
-            document.getElementById('navMenu').classList.remove('active');
+            const menu = document.getElementById('navMenu');
+            if(menu && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
         }
     }
+
+    // CANLI VERİ FONKSİYONU
+    async function updateRates() {
+        try {
+            const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            const data = await res.json();
+            const tryVal = data.rates.TRY;
+            const eurRate = data.rates.EUR;
+            const xauUsd = data.rates.XAU;
+
+            const eurTry = (tryVal / eurRate).toFixed(2);
+            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
+            document.getElementById('eurVal').innerText = eurTry + " ₺";
+
+            // Altın Verisi (Ons/USD üzerinden TL Gram hesaplama)
+            if (xauUsd) {
+                const goldPrice = ((1 / xauUsd) / 31.1034) * tryVal;
+                document.getElementById('goldVal').innerText = goldPrice.toFixed(2) + " ₺";
+            }
+        } catch (err) { console.error("Veri çekme hatası:", err); }
+    }
+
+    updateRates();
+    setInterval(updateRates, 60000);
 </script>
+
 </body>
 </html>
