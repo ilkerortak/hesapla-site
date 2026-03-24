@@ -4,7 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H360 | Hızlı CV Oluşturucu</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS Başlangıcı */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #05080d; color: white; margin: 0; }
+        nav { background: #0b1018; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1c212c; }
+        .logo { color: white; text-decoration: none; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; }
+        .logo-box { background: #007bff; color: white; padding: 5px 10px; border-radius: 5px; margin-right: 10px; }
+        .logo span { color: #007bff; }
+        
+        .nav-container { position: relative; }
+        .menu-btn { background: #1c212c; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; }
+        .dropdown-menu { 
+            display: none; position: absolute; right: 0; background: #0b1018; 
+            border: 1px solid #1c212c; min-width: 160px; z-index: 1000; border-radius: 8px; margin-top: 10px;
+        }
+        .dropdown-menu.active { display: block; }
+        .dropdown-menu a { color: #ccc; padding: 10px 15px; text-decoration: none; display: block; font-size: 0.9rem; }
+        .dropdown-menu a:hover { background: #1c212c; color: #007bff; }
+
+        .hero-section { text-align: center; padding: 40px 20px; }
+        .hero-section h2 { margin-bottom: 5px; }
+        .hero-section p { color: #888; font-size: 0.9rem; }
+
+        .form-box { max-width: 500px; margin: 0 auto; background: #0b1018; padding: 30px; border-radius: 15px; border: 1px solid #1c212c; }
+        label { display: block; margin-bottom: 8px; font-size: 0.8rem; color: #888; font-weight: bold; }
+        input { 
+            width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; 
+            border: 1px solid #1c212c; background: #05080d; color: white; box-sizing: border-box;
+        }
+        .btn-calc { 
+            width: 100%; padding: 15px; background: #007bff; color: white; border: none; 
+            border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 20px;
+        }
+        .btn-calc:hover { background: #0056b3; }
+        
+        /* Sonuç Alanı Başta Gizli */
+        .res-area { display: none; margin-top: 20px; }
+
+        /* Yazdırma Modu */
+        @media print {
+            body * { visibility: hidden; }
+            #res, #res * { visibility: visible; }
+            #res { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
+            button { display: none !important; }
+        }
+    </style>
 </head>
 <body>
 
@@ -16,12 +60,9 @@
     <div class="nav-container">
         <button class="menu-btn" onclick="toggleMenu()">MENÜ ▾</button>
         <div class="dropdown-menu" id="navMenu">
-            <a href="/netmaas">💰 Maaş</a><a href="/tazminat">💼 Tazminat</a>
-            <a href="/issizlik">📅 İşsizlik</a><a href="/faiz">📈 Faiz</a>
-            <a href="/yakit">⛽ Yakıt</a><a href="/enflasyon">📉 Enflasyon</a>
-            <a href="/kredi">🏦 Kredi</a><a href="/yas">🎂 Yaş</a>
-            <a href="/doviz">💱 Döviz</a><a href="/kdv">🧾 KDV</a>
-            <a href="/mesai">🕒 Mesai</a><a href="/cv">📄 CV</a>
+            <a href="#">💰 Maaş</a><a href="#">💼 Tazminat</a>
+            <a href="#">📅 İşsizlik</a><a href="#">📈 Faiz</a>
+            <a href="#">📄 CV</a>
         </div>
     </div>
 </nav>
@@ -57,12 +98,10 @@
 </div>
 
 <script>
-    // Menü Fonksiyonları
     function toggleMenu() { 
         document.getElementById('navMenu').classList.toggle('active'); 
     }
 
-    // CV Oluşturma Motoru
     function genCV() {
         const name = document.getElementById('name').value;
         const job = document.getElementById('job').value;
@@ -73,10 +112,11 @@
             document.getElementById('resJob').innerText = job;
             document.getElementById('resMail').innerText = mail.toLowerCase();
             document.getElementById('res').style.display = "block";
+        } else {
+            alert("Lütfen tüm alanları doldurun!");
         }
     }
 
-    // Menü dışına tıklandığında kapatma
     window.onclick = function(event) {
         if (!event.target.matches('.menu-btn')) {
             var dropdowns = document.getElementsByClassName("dropdown-menu");
