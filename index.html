@@ -2,129 +2,42 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Hesapla360 - 2026 Güncel Hesaplama Portalı</title>
+    <title>Hesapla360 - Ana Sayfa</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="2026 yılı güncel maaş, kredi, işsizlik maaşı ve yaş hesaplama araçları. Ücretsiz CV oluşturucu Hesapla360'ta.">
 </head>
 <body>
 <nav>
-    <div class="logo" style="font-weight: 800; color: var(--nav-text); font-size: 1.4rem;">HESAPLA<span style="color: #fbbf24;">360</span></div>
+    <a href="index.html" class="logo-link">
+        <div style="font-weight:800; color:white; font-size:1.4rem;">HESAPLA<span style="color:#fbbf24;">360</span></div>
+    </a>
     <ul>
-        <li><a href="index.html" class="active">Ana Sayfa</a></li>
-        <li><a href="netmaas.html">Net Maaş</a></li>
-        <li><a href="issizlik.html">İşsizlik</a></li>
+        <li><a href="netmaas.html">Maaş</a></li>
         <li><a href="kredi.html">Kredi</a></li>
-        <li><a href="yas.html">Yaş</a></li>
         <li><a href="cv.html">CV</a></li>
     </ul>
     <button id="theme-toggle">☀️</button>
 </nav>
 
-<header style="text-align: center; margin-top: 50px;">
-    <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Hesapla<span style="color: #fbbf24;">360</span>'a Hoş Geldiniz</h1>
-    <p style="opacity: 0.8; font-size: 1.1rem;">2026 yılının en güncel verileriyle hızlı ve güvenilir hesaplamalar.</p>
-</header>
-
-<div class="grid-container">
-    <a href="netmaas.html" class="feature-card">
-        <div class="icon">💰</div>
-        <h3>Net Maaş</h3>
-        <p>2026 vergi dilimlerine göre net maaşını kuruşu kuruşuna hesapla.</p>
-    </a>
-
-    <a href="kredi.html" class="feature-card">
-        <div class="icon">🏦</div>
-        <h3>Kredi Hesaplama</h3>
-        <p>Banka faiz oranları ve vergiler dahil taksit planını hemen çıkar.</p>
-    </a>
-
-    <a href="issizlik.html" class="feature-card">
-        <div class="icon">📅</div>
-        <h3>İşsizlik Maaşı</h3>
-        <p>Hak kazandığın tutarı ve kaç ay alabileceğini anında öğren.</p>
-    </a>
-
-    <a href="yas.html" class="feature-card">
-        <div class="icon">🎂</div>
-        <h3>Yaş Analizi</h3>
-        <p>Burcun, yaşadığın toplam gün ve sıradaki doğum gününe kalan süre.</p>
-    </a>
-
-    <a href="cv.html" class="feature-card">
-        <div class="icon">📄</div>
-        <h3>CV Oluşturucu</h3>
-        <p>Profesyonel bilgilerini gir, modern bir PDF CV'ye anında sahip ol.</p>
-    </a>
-
-    <div class="feature-card inactive">
-        <div class="icon">⚙️</div>
-        <h3>Daha Fazlası</h3>
-        <p>Enflasyon ve Tazminat hesaplayıcıları çok yakında sizlerle.</p>
-    </div>
+<div style="text-align:center; margin-top:50px;">
+    <h1>Hesapla<span style="color:#4f46e5;">360</span> Portalı</h1>
+    <p>2026 Güncel Verileriyle Tüm Hesaplamalar Tek Noktada</p>
 </div>
 
-<script>
-// Tema Yönetimi
-const themeToggle = document.getElementById("theme-toggle");
-if(localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark');
-    themeToggle.textContent = '🌙';
-}
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    themeToggle.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
-    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-});
-</script>
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px; max-width:900px; margin:40px auto; padding:20px;">
+    <a href="netmaas.html" class="container" style="text-decoration:none; text-align:center; margin:0;">
+        <div style="font-size:3rem;">💰</div>
+        <h3>Net Maaş</h3>
+    </a>
+    <a href="kredi.html" class="container" style="text-decoration:none; text-align:center; margin:0;">
+        <div style="font-size:3rem;">🏦</div>
+        <h3>Kredi</h3>
+    </a>
+    <a href="cv.html" class="container" style="text-decoration:none; text-align:center; margin:0;">
+        <div style="font-size:3rem;">📄</div>
+        <h3>CV Oluştur</h3>
+    </a>
+</div>
 
-<style>
-/* Index'e Özel Ek CSS */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.feature-card {
-    background: var(--card-bg);
-    padding: 30px;
-    border-radius: 20px;
-    text-decoration: none;
-    color: var(--text-color);
-    box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0,0,0,0.05);
-    text-align: center;
-}
-
-.feature-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--primary);
-}
-
-.feature-card.inactive {
-    opacity: 0.6;
-    cursor: default;
-}
-
-.feature-card .icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-}
-
-.feature-card h3 {
-    margin-bottom: 10px;
-    color: var(--primary);
-}
-
-.feature-card p {
-    font-size: 0.95rem;
-    opacity: 0.8;
-}
-</style>
+<script src="script.js"></script>
 </body>
 </html>
