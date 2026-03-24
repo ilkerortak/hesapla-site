@@ -1,0 +1,6 @@
+body { font-family: Arial; margin: 20px; }
+nav ul { list-style: none; padding: 0; display: flex; gap: 15px; }
+nav ul li { display: inline; }
+nav ul li a { text-decoration: none; color: #007BFF; }
+nav ul li a:hover { text-decoration: underline; }
+input, button { padding: 5px; margin-top: 5px; }
