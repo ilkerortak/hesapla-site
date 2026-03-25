@@ -7,47 +7,73 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* Banka Seçim Listesi Düzenleyici */
+        .bank-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .bank-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+        }
+
+        .bank-item:hover, .bank-item.active {
+            background: rgba(0, 123, 255, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .bank-logo img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .bank-name { font-size: 0.85rem; font-weight: 600; color: #fff; }
+        .bank-rate { font-size: 0.75rem; color: var(--accent); }
+
         .tur-btn { 
             padding: 10px 25px; border-radius: 30px; border: 1px solid var(--border);
             background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; transition: 0.3s;
             font-weight: 600; font-size: 0.8rem;
         }
         .tur-btn.active { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 15px rgba(0,123,255,0.4); }
+        
         .plan-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 20px; }
         .plan-table th { padding: 12px; color: var(--text-dim); font-size: 0.7rem; text-transform: uppercase; text-align: left; }
-        .plan-table td { padding: 15px 12px; background: rgba(255,255,255,0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); color: #fff; font-size: 0.85rem; }
-        .plan-table td:first-child { border-left: 1px solid var(--border); border-radius: 12px 0 0 12px; font-weight: 700; color: var(--accent); }
-        .plan-table td:last-child { border-right: 1px solid var(--border); border-radius: 0 12px 12px 0; }
-        
-        /* SEO Metin Alanı Stili */
-        .seo-section { margin-top: 50px; padding: 30px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
-        .seo-section h2 { color: var(--accent); font-size: 1.3rem; margin-bottom: 15px; font-weight: 600; }
-        .seo-section p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.8; margin-bottom: 15px; }
-        .seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .info-card { padding: 15px; background: rgba(255,255,255,0.03); border-radius: 12px; border-left: 3px solid var(--accent); }
-        .info-card h4 { font-size: 0.9rem; color: #fff; margin-bottom: 5px; }
-        .info-card p { font-size: 0.8rem; margin: 0; }
+        .plan-table td { padding: 15px 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); color: #fff; font-size: 0.85rem; }
+        .plan-table td:first-child { border-radius: 12px 0 0 12px; font-weight: 700; color: var(--accent); }
+        .plan-table td:last-child { border-radius: 0 12px 12px 0; }
 
-        @media (max-width: 768px) { .seo-grid { grid-template-columns: 1fr; } }
+        .seo-section { margin-top: 50px; padding: 30px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
+        .seo-section h2 { color: var(--accent); font-size: 1.3rem; margin-bottom: 15px; }
+        .seo-section p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.8; }
     </style>
 </head>
 <body>
 
 <nav class="glass-nav">
-    <a href="index.html" class="nav-home-btn"><i class="fa-solid fa-house"></i> Ana Sayfa</a>
+    <a href="index.html" class="nav-home-btn">Ana Sayfa</a>
 </nav>
 
 <div class="main-wrapper">
-    <div class="ads-top-banner">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1894587939365426" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-
     <div class="calc-card" style="max-width: 900px;">
-        <h1 style="text-align:center; margin-bottom:10px; font-weight:300; letter-spacing:2px; color:#fff;">BANKA KREDİ ANALİZİ</h1>
-        <p style="text-align:center; color:var(--text-dim); font-size:0.8rem; margin-bottom:30px;">İhtiyaç, Taşıt ve Konut kredilerini güncel faiz oranlarıyla karşılaştırın.</p>
+        <h1 style="text-align:center; color:#fff; font-weight:300;">KREDİ ANALİZ MERKEZİ</h1>
         
-        <div class="kredi-turleri" style="display:flex; gap:10px; justify-content:center; margin-bottom:25px;">
+        <div class="kredi-turleri" style="display:flex; gap:10px; justify-content:center; margin:25px 0;">
             <button class="tur-btn active" id="btn-ihtiyac" onclick="changeType('ihtiyac')">İhtiyaç</button>
             <button class="tur-btn" id="btn-tasit" onclick="changeType('tasit')">Taşıt</button>
             <button class="tur-btn" id="btn-konut" onclick="changeType('konut')">Konut</button>
@@ -55,70 +81,49 @@
 
         <div class="bank-selector-grid" id="bank-list"></div>
 
-        <div class="grid-3" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; margin-top:25px;">
-            <div class="input-group"><label>KREDİ TUTARI</label><input type="number" id="kt" value="100000"></div>
-            <div class="input-group"><label>AYLIK FAİZ (%)</label><input type="number" id="kf" step="0.01" value="3.89"></div>
+        <div class="grid-3" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
+            <div class="input-group"><label>TUTAR</label><input type="number" id="kt" value="100000"></div>
+            <div class="input-group"><label>FAİZ (%)</label><input type="number" id="kf" step="0.01" value="3.89"></div>
             <div class="input-group"><label>VADE (AY)</label><input type="number" id="kv" value="12"></div>
         </div>
 
-        <button class="btn-calc" onclick="calculateKredi()">HESAPLAMAYI BAŞLAT</button>
+        <button class="btn-calc" onclick="calculateKredi()">HESAPLA</button>
 
-        <div id="res" class="result-box">
+        <div id="res" class="result-box" style="display:none;">
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:20px;">
                 <div class="res-main"><span>AYLIK TAKSİT</span><h3 id="resTaksit">0 ₺</h3></div>
-                <div class="res-main" style="border-color: var(--border);"><span>TOPLAM GERİ ÖDEME</span><h3 id="resTotal">0 ₺</h3></div>
+                <div class="res-main"><span>TOPLAM ÖDEME</span><h3 id="resTotal">0 ₺</h3></div>
             </div>
             <table class="plan-table" id="planTable">
-                <thead><tr><th>Ay</th><th>Ana Para</th><th>Faiz + Vergi</th><th>Kalan Borç</th></tr></thead>
+                <thead><tr><th>Ay</th><th>Ana Para</th><th>Faiz+Vergi</th><th>Kalan Borç</th></tr></thead>
                 <tbody></tbody>
             </table>
         </div>
 
         <article class="seo-section">
-            <h2>Kredi Hesaplama Nasıl Yapılır?</h2>
-            <p>Kredi ödeme planı oluşturulurken bankaların uyguladığı aylık faiz oranına ek olarak, Türkiye'deki yasal düzenlemeler gereği <strong>KKDF (%15)</strong> ve <strong>BSMV (%5)</strong> vergileri dahil edilir. H360 algoritması, bu vergileri otomatik olarak hesaplamanıza dahil ederek size net maliyeti sunar.</p>
-            
-            <div class="seo-grid">
-                <div class="info-card">
-                    <h4>İhtiyaç Kredisi</h4>
-                    <p>Genellikle 36 aya kadar vade imkanı sunan, kısa vadeli nakit ihtiyaçları için kullanılan kredi türüdür.</p>
-                </div>
-                <div class="info-card">
-                    <h4>Konut Kredisi</h4>
-                    <p>Uzun vadeli (120-240 ay) ve düşük faiz oranlı, gayrimenkul alımına yönelik teminatlı kredilerdir.</p>
-                </div>
-            </div>
-
-            <h2 style="margin-top:30px;">Taksit Tutarı Neye Göre Belirlenir?</h2>
-            <p>Taksit tutarı; anapara, faiz oranı ve vade süresinin bileşik faiz formülü ile hesaplanması sonucu oluşur. Vade süresi uzadıkça aylık taksitler düşse de toplamda bankaya ödenen faiz miktarı artış gösterir. H360 ile en avantajlı ödeme planını kolayca analiz edebilirsiniz.</p>
+            <h2>Kredi Maliyeti Nasıl Hesaplanır?</h2>
+            <p>H360 algoritması, bankaların sunduğu ham faiz oranlarına Türkiye Cumhuriyeti yasalarınca belirlenen <strong>%15 KKDF</strong> ve <strong>%5 BSMV</strong> vergilerini otomatik ekler. Böylece gördüğünüz taksit tutarı, bankada ödeyeceğiniz tutarla birebir aynı olur.</p>
         </article>
     </div>
 </div>
 
 <script>
-    // JS Mantığı aynen devam ediyor...
     const bankData = {
         ihtiyac: [
             { name: "Akbank", rate: 3.89, logo: "https://www.akbank.com/favicon.ico" },
-            { name: "Garanti BBVA", rate: 4.24, logo: "https://www.garantibbva.com.tr/favicon.ico" },
-            { name: "Ziraat", rate: 3.75, logo: "https://www.ziraatbank.com.tr/favicon.ico" },
-            { name: "İş Bankası", rate: 4.10, logo: "https://www.isbank.com.tr/favicon.ico" }
+            { name: "Garanti", rate: 4.24, logo: "https://www.garantibbva.com.tr/favicon.ico" },
+            { name: "İş Bankası", rate: 4.10, logo: "https://www.isbank.com.tr/favicon.ico" },
+            { name: "Ziraat", rate: 3.75, logo: "https://www.ziraatbank.com.tr/favicon.ico" }
         ],
         tasit: [
-            { name: "Akbank", rate: 4.10, logo: "https://www.akbank.com/favicon.ico" },
-            { name: "Vakıfbank", rate: 3.50, logo: "https://www.vakifbank.com.tr/favicon.ico" }
+            { name: "Vakıfbank", rate: 3.65, logo: "https://www.vakifbank.com.tr/favicon.ico" },
+            { name: "Halkbank", rate: 3.70, logo: "https://www.halkbank.com.tr/favicon.ico" }
         ],
         konut: [
             { name: "Ziraat", rate: 3.20, logo: "https://www.ziraatbank.com.tr/favicon.ico" },
-            { name: "Halkbank", rate: 3.25, logo: "https://www.halkbank.com.tr/favicon.ico" }
+            { name: "Garanti", rate: 3.50, logo: "https://www.garantibbva.com.tr/favicon.ico" }
         ]
     };
-
-    function changeType(type) {
-        document.querySelectorAll('.tur-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('btn-' + type).classList.add('active');
-        renderBanks(type);
-    }
 
     function renderBanks(type) {
         const list = document.getElementById('bank-list');
@@ -128,6 +133,12 @@
                 <div class="bank-info"><span class="bank-name">${b.name}</span><span class="bank-rate">%${b.rate}</span></div>
             </div>
         `).join('');
+    }
+
+    function changeType(type) {
+        document.querySelectorAll('.tur-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-' + type).classList.add('active');
+        renderBanks(type);
     }
 
     function setRate(rate, el) {
@@ -142,7 +153,7 @@
         const v = parseInt(document.getElementById('kv').value);
         if(!t || !f || !v) return;
 
-        const bFaiz = (f/100) * 1.20; // KKDF+BSMV Dahil
+        const bFaiz = (f/100) * 1.20; // Vergiler dahil aylık faiz
         const taksit = (t * bFaiz * Math.pow(1+bFaiz, v)) / (Math.pow(1+bFaiz, v) - 1);
         
         document.getElementById('resTaksit').innerText = Math.round(taksit).toLocaleString('tr-TR') + " ₺";
@@ -160,6 +171,7 @@
         document.getElementById('res').style.display = 'block';
     }
 
+    // Sayfa açıldığında ihtiyaç kredisi bankalarını getir
     renderBanks('ihtiyac');
 </script>
 </body>
