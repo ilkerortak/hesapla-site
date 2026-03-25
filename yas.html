@@ -3,184 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Yaşam Analizi</title>
+    <title>H360 | Profesyonel Yaşam & Zaman Analizi</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ANA DEEP NIGHT TEMA */
-        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; overflow-x: hidden; }
+        /* Tasarım Bütünlüğü İçin Ek Özelleştirmeler */
+        .calc-card { max-width: 650px !important; } /* Biraz daha genişlettik detaylar sığsın diye */
         
-        .main-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 120px 20px 60px; }
+        .astro-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .astro-card {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            padding: 15px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .astro-card i { color: #3b82f6; font-size: 1.2rem; }
+        .astro-info span { display: block; font-size: 0.65rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; }
+        .astro-info b { font-size: 0.95rem; color: #fff; }
+
+        .seo-rich-content {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .seo-rich-content h2 { color: #fff; font-size: 1.2rem; margin-bottom: 15px; }
+        .seo-rich-content p { color: #94a3b8; font-size: 0.85rem; line-height: 1.8; margin-bottom: 15px; }
         
-        .calc-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px; padding: 40px; width: 100%; max-width: 500px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+        /* Sonuç ekranında yaş rakamı parlasın */
+        .big-age-display b {
+            background: linear-gradient(180deg, #fff 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        /* Başlık Alanı */
-        .header-area { display: flex; align-items: center; gap: 20px; margin-bottom: 35px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 25px; }
-        .icon-box { 
-            width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); 
-            border-radius: 16px; display: flex; align-items: center; justify-content: center;
-            color: #10b981; font-size: 1.5rem; border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-        .title-text h1 { font-size: 1.3rem; margin: 0; color: #fff; letter-spacing: 1px; }
-        .title-text p { color: #3b82f6; font-size: 0.7rem; font-weight: 800; margin: 4px 0 0; text-transform: uppercase; }
-
-        /* Inputlar */
-        .input-group { margin-bottom: 25px; }
-        .input-group label { display: block; color: #94a3b8; font-size: 0.65rem; font-weight: 800; margin-bottom: 10px; letter-spacing: 0.5px; }
-        .input-group input {
-            width: 100%; padding: 18px; background: #080b12;
-            border: 1px solid #1e293b; border-radius: 14px;
-            color: #fff; font-size: 1.1rem; transition: 0.3s; box-sizing: border-box; outline: none;
-            color-scheme: dark;
-        }
-        .input-group input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
-
-        .calc-btn {
-            width: 100%; padding: 20px; background: #3b82f6; color: #fff;
-            border: none; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1rem;
-            transition: 0.3s; letter-spacing: 1px; margin-top: 10px;
-        }
-        .calc-btn:hover { background: #2563eb; transform: translateY(-2px); }
-
-        /* Sonuç Alanı */
-        .result-box { margin-top: 40px; animation: slideIn 0.5s ease; display: none; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .big-age-display {
-            text-align: center; background: #080b12;
-            padding: 30px; border-radius: 20px; border: 1px solid #1e293b;
-            margin-bottom: 25px; position: relative; overflow: hidden;
-        }
-        .big-age-display span { font-size: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
-        .big-age-display b { font-size: 4rem; color: #fff; display: block; line-height: 1; margin: 10px 0; letter-spacing: -2px; }
-        .big-age-display i { font-size: 1rem; color: #3b82f6; font-style: normal; font-weight: 600; }
-
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        .info-item {
-            background: rgba(255, 255, 255, 0.01); padding: 20px; border-radius: 16px;
-            text-align: center; border: 1px solid #1e293b; transition: 0.3s;
-        }
-        .info-item:hover { background: rgba(255,255,255,0.03); border-color: #3b82f6; }
-        .info-item label { display: block; font-size: 0.65rem; color: #3b82f6; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
-        .info-item b { font-size: 1.1rem; color: #fff; letter-spacing: 0.5px; }
-
-        .next-birthday {
-            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 100%);
-            padding: 20px 25px; border-radius: 16px; border-left: 4px solid #3b82f6;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .next-birthday span { font-size: 0.8rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
-        .next-birthday b { color: #3b82f6; font-size: 1.4rem; letter-spacing: -0.5px; }
     </style>
 </head>
 <body>
 
+<nav class="glass-nav">
+    <a href="index.html" class="nav-home-btn"><i class="fa-solid fa-house"></i> Ana Sayfa</a>
+</nav>
+
 <div class="main-wrapper">
     <div class="calc-card">
         <div class="header-area">
-            <div class="icon-box"><i class="fa-solid fa-hourglass-half"></i></div>
+            <div class="icon-box" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border-color: rgba(59, 130, 246, 0.2);">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
             <div class="title-text">
-                <h1>YAŞ ANALİZİ</h1>
-                <p>Kişisel Zaman Çizelgesi</p>
+                <h1>YAŞAM ANALİZİ</h1>
+                <p>Zamanın ve Karakterin İz Düşümü</p>
             </div>
         </div>
 
         <div class="input-group">
-            <label>DOĞUM TARİHİNİZ</label>
-            <input type="date" id="birthDate">
+            <label>DOĞUM TARİHİNİZ VE SAATİNİZ (OPSİYONEL)</label>
+            <div style="display: flex; gap: 10px;">
+                <input type="date" id="birthDate" style="flex: 2;">
+                <input type="time" id="birthTime" value="12:00" style="flex: 1;">
+            </div>
         </div>
 
-        <button class="calc-btn" onclick="analyzeAge()">HAYATIMI ANALİZ ET</button>
+        <button class="calc-btn" onclick="analyzeLife()">ANALİZİ BAŞLAT</button>
 
         <div id="res" class="result-box">
             <div class="big-age-display">
-                <span>Şu An Tam Olarak</span>
+                <span>Şu An Dünyadaki Süreniz</span>
                 <b id="yVal">0</b>
-                <i>Yaşındasınız</i>
+                <i id="fullAgeString">Yıl, Ay ve Gün</i>
             </div>
 
             <div class="info-grid">
-                <div class="info-item">
-                    <label>Doğum Günü</label>
-                    <b id="birthDayName">-</b>
+                <div class="info-item"><label>Doğum Günü</label><b id="birthDayName">-</b></div>
+                <div class="info-item"><label>Toplam Hafta</label><b id="wVal">0</b></div>
+                <div class="info-item"><label>Toplam Gün</label><b id="dVal">0</b></div>
+                <div class="info-item"><label>Toplam Saat</label><b id="hVal">0</b></div>
+            </div>
+
+            <div class="astro-grid">
+                <div class="astro-card">
+                    <i class="fa-solid fa-moon"></i>
+                    <div class="astro-info"><span>Burç</span><b id="zodiacSign">-</b></div>
                 </div>
-                <div class="info-item">
-                    <label>Toplam Hafta</label>
-                    <b id="wVal">0</b>
+                <div class="astro-card">
+                    <i class="fa-solid fa-dragon"></i>
+                    <div class="astro-info"><span>Çin Zodyağı</span><b id="chineseZodiac">-</b></div>
                 </div>
-                <div class="info-item">
-                    <label>Toplam Gün</label>
-                    <b id="dVal">0</b>
+                <div class="astro-card">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <div class="astro-info"><span>Yaşam Yolu (Numeroloji)</span><b id="lifePathNum">-</b></div>
                 </div>
-                <div class="info-item">
-                    <label>Toplam Saat</label>
-                    <b id="hVal">0</b>
+                <div class="astro-card">
+                    <i class="fa-solid fa-cake-candles"></i>
+                    <div class="astro-info"><span>Sıradaki Yaş</span><b id="nextAge">-</b></div>
                 </div>
             </div>
 
-            <div class="next-birthday">
-                <span>Yeni Yaşa Kalan Süre</span>
+            <div class="next-birthday" style="margin-top: 20px;">
+                <span>Yeni Yaşa Kalan Yolculuk</span>
                 <b><span id="nextDays">0</span> Gün</b>
             </div>
         </div>
+
+        <article class="seo-rich-content">
+            <h2>Neden Detaylı Yaş Analizi?</h2>
+            <p>Zaman, sadece geçen yıllardan ibaret değildir. <b>H360 Yaşam Analizi</b> modülü, biyolojik yaşınızın ötesine geçerek evrensel takvimlerdeki yerinizi belirler. Doğduğunuz günün karakterinize etkisi, numerolojik yaşam yolu sayınız ve Çin takvimindeki elementiniz gibi veriler, kişisel farkındalığınızı artırmak için tasarlanmıştır.</p>
+            
+            <div style="border-left: 2px solid #3b82f6; padding-left: 15px; margin: 20px 0;">
+                <h4 style="color: #fff; font-size: 0.9rem; margin-bottom: 5px;">Hesaplama Metodu</h4>
+                <p style="margin: 0;">Algoritmamız, artık yılları ve saat farklarını milisaniyelik hassasiyetle hesaplayarak size en doğru zaman çizelgesini sunar. Numerolojik veriler, Pisagor sistemine göre doğum tarihinizin rakamlarının sadeleştirilmesiyle elde edilir.</p>
+            </div>
+        </article>
     </div>
-</div>
-<div class="info-section" style="margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 15px; border: 1px dashed rgba(255,255,255,0.1); color: #aaa; font-size: 0.9rem;">
-    <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.1rem;">Nedir? Nasıl Hesaplanır?</h3>
-    <p>Detaylı Yaş ve Zaman Hesaplayıcı
-Doğum tarihinize göre sadece kaç yaşında olduğunuzu değil; kaç gün, kaç hafta ve kaç aydır hayatta olduğunuzu detaylıca raporlar. Bir sonraki doğum gününüze ne kadar zaman kaldığını da milisaniyelik doğrulukla öğrenebilirsiniz.</p>
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-
-    window.onclick = function(e) {
-        if (!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if (menu && menu.classList.contains('active')) menu.classList.remove('active');
-        }
-    }
-
-    function analyzeAge() {
+    function analyzeLife() {
         const birthInput = document.getElementById('birthDate').value;
+        const timeInput = document.getElementById('birthTime').value;
         if(!birthInput) return;
         
-        const birth = new Date(birthInput);
+        const birth = new Date(birthInput + 'T' + timeInput);
         const now = new Date();
         const diff = now - birth;
         
-        if (diff < 0) { alert("Henüz doğmamış olamazsınız!"); return; }
+        if (diff < 0) { alert("Gelecekten gelmiş olamazsınız!"); return; }
 
-        const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-        const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const totalWeeks = Math.floor(totalDays / 7);
-        const totalHours = totalDays * 24;
-
-        const daysTR = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
-        const dayName = daysTR[birth.getDay()];
-
-        let nextBirth = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
-        if (nextBirth < now) {
-            nextBirth.setFullYear(now.getFullYear() + 1);
-        }
-        const timeToNext = nextBirth - now;
-        const daysToNext = Math.ceil(timeToNext / (1000 * 60 * 60 * 24));
+        // 1. Temel Yaş Hesaplama (Yıl-Ay-Gün Detaylı)
+        let years = now.getFullYear() - birth.getFullYear();
+        let months = now.getMonth() - birth.getMonth();
+        let days = now.getDate() - birth.getDate();
+        if (days < 0) { months--; days += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+        if (months < 0) { years--; months += 12; }
 
         document.getElementById('yVal').innerText = years;
-        document.getElementById('birthDayName').innerText = dayName;
-        document.getElementById('wVal').innerText = totalWeeks.toLocaleString('tr-TR');
+        document.getElementById('fullAgeString').innerText = `${months} Ay, ${days} Gün`;
+
+        // 2. Zaman İstatistikleri
+        const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById('wVal').innerText = Math.floor(totalDays / 7).toLocaleString('tr-TR');
         document.getElementById('dVal').innerText = totalDays.toLocaleString('tr-TR');
-        document.getElementById('hVal').innerText = totalHours.toLocaleString('tr-TR');
+        document.getElementById('hVal').innerText = Math.floor(diff / (1000 * 60 * 60)).toLocaleString('tr-TR');
+        
+        const daysTR = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+        document.getElementById('birthDayName').innerText = daysTR[birth.getDay()];
+
+        // 3. Burç Hesaplama
+        const month = birth.getMonth() + 1;
+        const day = birth.getDate();
+        const zodiacs = [
+            {n: "Oğlak", d:20, m:1}, {n: "Kova", d:18, m:2}, {n: "Balık", d:20, m:3},
+            {n: "Koç", d:19, m:4}, {n: "Boğa", d:20, m:5}, {n: "İkizler", d:20, m:6},
+            {n: "Yengeç", d:22, m:7}, {n: "Aslan", d:22, m:8}, {n: "Başak", d:22, m:9},
+            {n: "Terazi", d:22, m:10}, {n: "Akrep", d:21, m:11}, {n: "Yay", d:21, m:12},
+            {n: "Oğlak", d:31, m:12}
+        ];
+        const sign = zodiacs.find(z => (month < z.m) || (month === z.m && day <= z.d));
+        document.getElementById('zodiacSign').innerText = sign ? sign.n : "Oğlak";
+
+        // 4. Çin Zodyağı
+        const chineseArr = ["Maymun", "Horoz", "Köpek", "Domuz", "Fare", "Öküz", "Kaplan", "Tavşan", "Ejderha", "Yılan", "At", "Keçi"];
+        document.getElementById('chineseZodiac').innerText = chineseArr[birth.getFullYear() % 12];
+
+        // 5. Numeroloji (Yaşam Yolu)
+        const digits = birthInput.replace(/-/g, '').split('').map(Number);
+        let sum = digits.reduce((a, b) => a + b, 0);
+        while (sum > 9 && sum !== 11 && sum !== 22) { // 11 ve 22 ana sayılardır
+            sum = sum.toString().split('').map(Number).reduce((a, b) => a + b, 0);
+        }
+        document.getElementById('lifePathNum').innerText = sum;
+
+        // 6. Sıradaki Yaş ve Kalan Gün
+        let nextBirth = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
+        if (nextBirth < now) nextBirth.setFullYear(now.getFullYear() + 1);
+        const daysToNext = Math.ceil((nextBirth - now) / (1000 * 60 * 60 * 24));
         document.getElementById('nextDays').innerText = daysToNext;
+        document.getElementById('nextAge').innerText = (daysToNext === 365 || daysToNext === 0) ? years : years + 1;
 
         document.getElementById('res').style.display = "block";
     }
 </script>
-    <script src="h360-core.js"></script>
+<script src="h360-core.js"></script>
 </body>
 </html>
