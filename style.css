@@ -124,3 +124,58 @@ body { background-color: var(--bg); color: var(--text); overflow-x: hidden; line
 }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Banka Seçim Listesi Düzenleyici */
+.bank-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.bank-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.bank-item:hover, .bank-item.active {
+    background: rgba(0, 123, 255, 0.1);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+.bank-logo img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.bank-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.bank-name { font-size: 0.85rem; font-weight: 600; color: #fff; }
+.bank-rate { font-size: 0.75rem; color: var(--accent); }
+
+/* Giriş Alanları Grid */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+@media (max-width: 600px) {
+    .grid-3 { grid-template-columns: 1fr; }
+    .bank-selector-grid { grid-template-columns: 1fr 1fr; }
+}
