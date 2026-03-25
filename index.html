@@ -4,120 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H360 | Finansal Analiz ve Hesaplama Merkezi</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426" crossorigin="anonymous"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426" crossorigin="anonymous"></script>
-    <script src="h360-core.js"></script>
     <style>
-        /* Menü butonunun sağ üstte sabit kalmasını garanti altına alalım */
-        .menu-btn {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            z-index: 1001; /* Diğer öğelerin üzerinde kalması için */
-        }
+        /* AdSense ve Zengin Görünüm Eklemeleri */
+        .ads-top-banner { width: 100%; max-width: 970px; margin: 20px auto; min-height: 90px; background: rgba(255,255,255,0.02); border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; border-radius: 12px; }
+        .footer-seo { margin-top: 60px; padding: 40px 20px; background: rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid var(--border); }
+        .footer-seo h2 { color: #fff; font-size: 1.1rem; margin-bottom: 15px; }
+        .footer-seo p { color: #888; font-size: 0.85rem; line-height: 1.7; }
+        
+        /* Kart İkonları İçin Renk Paleti */
+        .grid-container a:nth-child(1) .icon-box { color: #10b981; } /* Maaş */
+        .grid-container a:nth-child(2) .icon-box { color: #f59e0b; } /* Tazminat */
+        .grid-container a:nth-child(7) .icon-box { color: #3b82f6; } /* Kredi */
+        .grid-container a:nth-child(6) .icon-box { color: #ef4444; } /* Enflasyon */
     </style>
 </head>
 <body>
 
-<nav id="navMenu" class="nav-overlay">
-    <div class="nav-content">
-        <a href="index.html">Ana Sayfa</a>
-        <a href="gizlilik-politikasi.html">Gizlilik Politikası</a>
-        <a href="iletisim.html">İletişim</a>
+<nav class="glass-nav">
+    <a href="index.html" class="logo">
+        <div class="logo-box">H360</div>
+        <span>Dashboard</span>
+    </a>
+    <div class="live-ticker">
+        <div class="ticker-item"><span class="gold-txt">USD</span> <span id="usdVal">...</span></div>
+        <div class="ticker-item"><span class="gold-txt">EUR</span> <span id="eurVal">...</span></div>
+        <div class="ticker-item"><span class="gold-txt">ALTIN</span> <span id="goldVal">...</span></div>
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()">MENÜ <i class="fa-solid fa-bars-staggered"></i></button>
+    <div class="dropdown-menu" id="navMenu">
+        <a href="netmaas.html">Maaş Analizi</a>
+        <a href="tazminat.html">Tazminat Hesabı</a>
+        <a href="kredi.html">Kredi Planlama</a>
+        <a href="enflasyon.html">Kira & Enflasyon</a>
     </div>
 </nav>
 
-<header class="hero premium-header">
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="Menü">
-        <i class="fa-solid fa-bars"></i> MENÜ
-    </button>
-
-    <div class="header-content">
-        <div class="header-icon-group">
-            <i class="fa-solid fa-chart-simple header-data-icon"></i>
-            <i class="fa-solid fa-coins header-coin-icon"></i>
-        </div>
-        <h1 class="premium-title">FİNANSAL ANALİZ MERKEZİ</h1>
-        <div class="premium-separator"></div>
-        <p class="premium-status">
-            <i class="fa-solid fa-satellite-dish"></i> Türkiye'nin dijital hesaplama portalı. Maaş, tazminat ve vergi analizlerinizi H360 altyapısıyla güvenle gerçekleştirin.
-        </p>
-    </div>
+<header class="premium-header">
     <div class="background-glow top-left-glow"></div>
-    <div class="background-glow bottom-right-glow"></div>
+    <div class="header-icon-group">
+        <i class="fa-solid fa-chart-simple header-data-icon"></i>
+        <i class="fa-solid fa-coins header-coin-icon"></i>
+        <i class="fa-solid fa-calculator"></i>
+    </div>
+    <h1 class="premium-title">FİNANSAL ANALİZ MERKEZİ</h1>
+    <div class="premium-separator"></div>
+    <p class="premium-status">
+        <i class="fa-solid fa-satellite-dish"></i> Türkiye'nin dijital hesaplama portalı. 2026 güncel verileriyle analizlerinizi güvenle gerçekleştirin.
+    </p>
 </header>
 
-<div class="container">
-    <div class="grid-container">
-        <a href="netmaas.html" class="feature-card"><div class="icon-box">💰</div><div class="card-content"><h3>Maaş</h3><p>Bordro & Net Analizi</p></div></a>
-        <a href="tazminat.html" class="feature-card"><div class="icon-box">💼</div><div class="card-content"><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></div></a>
-        <a href="issizlik.html" class="feature-card"><div class="icon-box">📅</div><div class="card-content"><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></div></a>
-        
-        <a href="faiz.html" class="feature-card"><div class="icon-box">📈</div><div class="card-content"><h3>Faiz</h3><p>Bileşik Getiri Analizi</p></div></a>
-        <a href="yakit.html" class="feature-card"><div class="icon-box">⛽</div><div class="card-content"><h3>Yakıt</h3><p>Yol Maliyeti & Tüketim</p></div></a>
-        <a href="enflasyon.html" class="feature-card"><div class="icon-box">📉</div><div class="card-content"><h3>Enflasyon</h3><p>Alım Gücü Kaybı</p></div></a>
-
-        <a href="kredi.html" class="feature-card"><div class="icon-box">🏦</div><div class="card-content"><h3>Kredi</h3><p>Banka Ödeme Planı</p></div></a>
-        <a href="yas.html" class="feature-card"><div class="icon-box">🎂</div><div class="card-content"><h3>Yaş</h3><p>Kronolojik Analiz</p></div></a>
-        <a href="doviz.html" class="feature-card"><div class="icon-box">💱</div><div class="card-content"><h3>Döviz</h3><p>Global Kur Çeviri</p></div></a>
-
-        <a href="kdv.html" class="feature-card"><div class="icon-box">🧾</div><div class="card-content"><h3>KDV</h3><p>Vergi Matrah Hesabı</p></div></a>
-        <a href="mesai.html" class="feature-card"><div class="icon-box">🕒</div><div class="card-content"><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></div></a>
-        <a href="cv.html" class="feature-card"><div class="icon-box">📄</div><div class="card-content"><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></div></a>
-    </div>
-
-    <section class="site-info-content" style="margin-top: 60px; padding: 40px; background: rgba(255,255,255,0.02); border-radius: 20px; color: #b0b0b0; line-height: 1.8;">
-        <h2 style="color: #fff; margin-bottom: 20px; font-size: 22px;">Hesapla360: Finansal Okuryazarlık ve Analiz Portalı</h2>
-        <p>Hesapla360, 2026 yılı güncel ekonomik verileri ve yasal mevzuatları temel alarak geliştirilmiş bir <strong>finansal analiz merkezidir</strong>. Platformumuzda yer alan tüm araçlar, karmaşık hesaplamaları saniyeler içinde sonuçlandırarak karar alma süreçlerinizi kolaylaştırır.</p>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 30px;">
-            <div>
-                <h4 style="color: #4A90E2; margin-bottom: 10px;">Hızlı ve Güvenli</h4>
-                <p style="font-size: 14px;">Tüm hesaplamalar tarayıcı tarafında yapılır. Verileriniz sunucularımıza gönderilmez, gizliliğiniz %100 korunur.</p>
-            </div>
-            <div>
-                <h4 style="color: #4A90E2; margin-bottom: 10px;">Güncel Mevzuat</h4>
-                <p style="font-size: 14px;">SGK parametreleri, vergi dilimleri ve enflasyon oranları düzenli olarak güncellenerek en doğru sonuçlara ulaşmanız sağlanır.</p>
-            </div>
-        </div>
-    </section>
+<div class="ads-top-banner">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1894587939365426"
+         data-ad-slot="auto"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
-<footer style="margin-top: 50px; padding: 40px; text-align: center; border-top: 1px solid #1a1a1a;">
-    <div style="margin-bottom: 20px;">
-        <a href="gizlilik-politikasi.html" style="color: #555; text-decoration: none; margin: 0 15px; font-size: 14px;">Gizlilik Politikası</a>
-        <a href="gizlilik-politikasi.html" style="color: #555; text-decoration: none; margin: 0 15px; font-size: 14px;">Hizmet Şartları</a>
-        <a href="iletisim.html" style="color: #555; text-decoration: none; margin: 0 15px; font-size: 14px;">İletişim</a>
+<main class="container">
+    <div class="grid-container">
+        <a href="netmaas.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-wallet"></i></div><div class="card-content"><h3>Maaş</h3><p>Bordro & Net Analizi</p></div></a>
+        <a href="tazminat.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-briefcase"></i></div><div class="card-content"><h3>Tazminat</h3><p>Kıdem & İhbar Hesabı</p></div></a>
+        <a href="issizlik.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-calendar-check"></i></div><div class="card-content"><h3>İşsizlik</h3><p>Süre & Ödenek Planı</p></div></a>
+        
+        <a href="faiz.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-chart-line"></i></div><div class="card-content"><h3>Faiz</h3><p>Bileşik Getiri Analizi</p></div></a>
+        <a href="yakit.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-gas-pump"></i></div><div class="card-content"><h3>Yakıt</h3><p>Yol Maliyeti & Tüketim</p></div></a>
+        <a href="enflasyon.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-arrow-down-wide-short"></i></div><div class="card-content"><h3>Enflasyon</h3><p>Alım Gücü Kaybı</p></div></a>
+
+        <a href="kredi.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-building-columns"></i></div><div class="card-content"><h3>Kredi</h3><p>Banka Ödeme Planı</p></div></a>
+        <a href="yas.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-cake-candles"></i></div><div class="card-content"><h3>Yaş</h3><p>Kronolojik Analiz</p></div></a>
+        <a href="doviz.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-money-bill-transfer"></i></div><div class="card-content"><h3>Döviz</h3><p>Global Kur Çeviri</p></div></a>
+
+        <a href="kdv.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-receipt"></i></div><div class="card-content"><h3>KDV</h3><p>Vergi Matrah Hesabı</p></div></a>
+        <a href="mesai.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-clock"></i></div><div class="card-content"><h3>Mesai</h3><p>Ek Kazanç Tablosu</p></div></a>
+        <a href="cv.html" class="feature-card"><div class="icon-box"><i class="fa-solid fa-file-pdf"></i></div><div class="card-content"><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></div></a>
     </div>
-    <p style="color: #444; font-size: 12px;">&copy; 2026 Hesapla360 (H360) | Tüm Hakları Saklıdır.</p>
-</footer>
+
+    <article class="footer-seo">
+        <h2>H360: Finansal Hesaplamalarda Dijital Rehberiniz</h2>
+        <p>
+            Hesapla360 (H360), maaş hesaplamadan kredi ödeme planlarına, kıdem tazminatından enflasyon analizine kadar geniş bir yelpazede 
+            ücretsiz finansal araçlar sunar. 2026 yılı güncel asgari ücret, vergi dilimleri ve TÜFE verileriyle entegre çalışan sistemimiz, 
+            karmaşık mali tabloları saniyeler içinde net sonuçlara dönüştürür. Hedefimiz, Türkiye'deki kullanıcıların ekonomik kararlarını 
+            veriye dayalı ve doğru bir şekilde almalarına yardımcı olmaktır.
+        </p>
+    </article>
+</main>
 
 <script>
-    function toggleMenu() { 
-        document.getElementById('navMenu').classList.toggle('active'); 
-    }
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
     
-    window.onclick = function(e) { 
-        if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if(menu && menu.classList.contains('active')) menu.classList.remove('active');
-        }
-    }
-
+    // Canlı Döviz ve Altın Verileri
     async function updateRates() {
         try {
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await res.json();
             const tryVal = data.rates.TRY;
             const eurRate = data.rates.EUR;
-            if(document.getElementById('usdVal')) document.getElementById('usdVal').innerText = tryVal.toFixed(2);
-            if(document.getElementById('eurVal')) document.getElementById('eurVal').innerText = (tryVal / eurRate).toFixed(2);
-        } catch (err) { console.error("Döviz verisi hatası"); }
+            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
+            document.getElementById('eurVal').innerText = (tryVal / eurRate).toFixed(2) + " ₺";
+            // Altın tahmini (Ons üzerinden gram hesabı)
+            const goldGram = ((1 / data.rates.XAU) / 31.1034) * tryVal;
+            if(goldGram) document.getElementById('goldVal').innerText = Math.round(goldGram).toLocaleString('tr-TR') + " ₺";
+        } catch (err) { console.log("Ticker hatası"); }
     }
     updateRates();
     setInterval(updateRates, 60000);
 </script>
+<script src="h360-core.js"></script>
 </body>
 </html>
