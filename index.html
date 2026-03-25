@@ -3,140 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Finansal Analiz ve Hesaplama Merkezi</title>
-    <meta name="description" content="Hesap Kurdu tarzında, 12 farklı finansal analiz aracıyla 2026 güncel verileri keşfedin.">
+    <title>H360 | Profesyonel Finansal Analiz Merkezi</title>
+    <meta name="description" content="Kredi, maaş, mevduat ve uzman analiz araçlarıyla Türkiye'nin en kapsamlı karanlık mod finans platformu.">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426" crossorigin="anonymous"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-deep: #0b0f19;
-            --card-dark: #111827;
-            --accent-blue: #3b82f6;
-            --text-muted: #94a3b8;
-            --border-subtle: rgba(255, 255, 255, 0.05);
+            --bg: #0b0f19;
+            --card: #111827;
+            --primary: #3b82f6;
+            --accent: #60a5fa;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.06);
         }
 
-        body { background-color: var(--bg-deep); margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
+        body { background-color: var(--bg); margin: 0; font-family: 'Inter', sans-serif; color: var(--text-main); line-height: 1.6; }
 
-        /* Üst Bar */
-        .top-nav {
-            background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-subtle); padding: 15px 0;
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Navigasyon */
+        nav {
+            background: rgba(11, 24, 39, 0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); padding: 15px 0;
             position: sticky; top: 0; z-index: 1000;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; text-decoration: none; color: #fff; display: flex; align-items: center; gap: 8px; }
-        .logo span { color: var(--accent-blue); }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.6rem; font-weight: 800; text-decoration: none; color: #fff; letter-spacing: -1px; }
+        .logo span { color: var(--primary); }
 
-        /* Kahraman Bölümü (Hesap Kurdu Tarzı Minimal Başlık) */
-        .hero-section { padding: 80px 20px 40px; text-align: center; }
-        .hero-section h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
-        .hero-section p { color: var(--text-muted); font-size: 1.1rem; }
+        /* Hero */
+        .hero { padding: 100px 0 60px; text-align: center; }
+        .hero h1 { font-size: 3rem; font-weight: 800; margin: 0; letter-spacing: -2px; }
+        .hero p { color: var(--text-dim); font-size: 1.2rem; margin-top: 15px; }
 
-        /* İkonlu Grid Sistemi (Hesap Kurdu Yerleşimi) */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr); /* Masaüstünde 5'li yapı */
-            gap: 15px;
-            margin-bottom: 60px;
+        /* Kategori Başlıkları */
+        .section-title { 
+            font-size: 0.85rem; font-weight: 800; color: var(--accent); 
+            text-transform: uppercase; letter-spacing: 2px;
+            margin: 40px 0 20px; display: flex; align-items: center; gap: 15px;
         }
+        .section-title::after { content: ""; height: 1px; background: var(--border); flex: 1; }
 
-        .service-card {
-            background: var(--card-dark);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 30px 20px;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
+        /* Ana Grid (Hesap Kurdu Tarzı) */
+        .grid-main { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+        
+        /* Kart Tasarımı */
+        .card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 25px; text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
         }
-
-        .service-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
+        .card:hover {
+            border-color: var(--primary); transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            background: rgba(59, 130, 246, 0.03);
         }
+        .card i { font-size: 2rem; color: var(--primary); transition: 0.3s; }
+        .card span { font-weight: 700; font-size: 1rem; color: #fff; }
+        .card small { color: var(--text-dim); font-size: 0.75rem; text-align: center; }
 
-        .service-card i {
-            font-size: 1.8rem;
-            color: var(--accent-blue);
+        /* Pro Araçlar Özel Bloğu */
+        .pro-section {
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.1), rgba(11, 15, 25, 0));
+            border-radius: 24px; padding: 30px; border: 1px solid rgba(59, 130, 246, 0.2);
+            margin: 40px 0;
         }
-
-        .service-card span {
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.95rem;
+        .pro-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; }
+        .pro-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; text-decoration: none;
         }
+        .pro-card:hover { background: var(--primary); }
+        .pro-card i { color: var(--accent); font-size: 1.5rem; }
+        .pro-card:hover i, .pro-card:hover h4, .pro-card:hover p { color: #fff; }
+        .pro-info h4 { margin: 0; color: #fff; font-size: 0.9rem; }
+        .pro-info p { margin: 2px 0 0; color: var(--text-dim); font-size: 0.7rem; }
 
-        /* Banner / Reklam Alanı */
-        .promo-banner {
-            background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
-            border-radius: 20px;
-            padding: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 60px;
-        }
-        .promo-content h2 { margin: 0; font-size: 1.8rem; }
-        .promo-content p { margin: 10px 0 0; opacity: 0.9; }
-
-        /* Mobil Uyumluluk */
-        @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { 
-            .services-grid { grid-template-columns: repeat(2, 1fr); }
-            .hero-section h1 { font-size: 1.8rem; }
-            .promo-banner { flex-direction: column; text-align: center; gap: 20px; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .grid-main { grid-template-columns: repeat(2, 1fr); }
+            .pro-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<nav class="top-nav">
-    <div class="container nav-flex">
-        <a href="#" class="logo">H<span>ESAPLA</span>360</a>
-        <div style="font-size: 0.8rem; font-weight: 700;">
-            <span style="color:var(--accent-blue)">USD</span> 32.14 ₺ | 
-            <span style="color:var(--accent-blue)">EUR</span> 34.85 ₺
+<nav>
+    <div class="container nav-content">
+        <a href="index.html" class="logo">H<span>ESAPLA</span>360</a>
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim);">
+            <i class="fa-solid fa-bolt" style="color:var(--accent)"></i> 2026 GÜNCEL VERİ
         </div>
     </div>
 </nav>
 
 <div class="container">
-    <section class="hero-section">
-        <h1>En Avantajlı Finansal Fırsatlar</h1>
-        <p>Kıyasla, Analiz Et, Karar Ver!</p>
-    </section>
+    <header class="hero">
+        <h1>Finansal Kararlarını <br><span>Veriye Dayalı</span> Al.</h1>
+        <p>Hesap Kurdu standartlarında analiz, H360 hızıyla cebinizde.</p>
+    </header>
 
-    <main class="services-grid">
-        <a href="netmaas.html" class="service-card"><i class="fa-solid fa-wallet"></i><span>Maaş</span></a>
-        <a href="tazminat.html" class="service-card"><i class="fa-solid fa-briefcase"></i><span>Tazminat</span></a>
-        <a href="issizlik.html" class="service-card"><i class="fa-solid fa-calendar-check"></i><span>İşsizlik</span></a>
-        <a href="faiz.html" class="service-card"><i class="fa-solid fa-chart-line"></i><span>Faiz Analizi</span></a>
-        <a href="yakit.html" class="service-card"><i class="fa-solid fa-gas-pump"></i><span>Yakıt</span></a>
-        <a href="enflasyon.html" class="service-card"><i class="fa-solid fa-arrow-trend-up"></i><span>Enflasyon</span></a>
-        <a href="kredi.html" class="service-card"><i class="fa-solid fa-building-columns"></i><span>Kredi</span></a>
-        <a href="yas.html" class="service-card"><i class="fa-solid fa-cake-candles"></i><span>Yaş Analizi</span></a>
-        <a href="doviz.html" class="service-card"><i class="fa-solid fa-money-bill-transfer"></i><span>Döviz</span></a>
-        <a href="kdv.html" class="service-card"><i class="fa-solid fa-receipt"></i><span>KDV</span></a>
-        <a href="mesai.html" class="service-card"><i class="fa-solid fa-clock"></i><span>Mesai</span></a>
-        <a href="cv.html" class="service-card"><i class="fa-solid fa-file-pdf"></i><span>Hızlı CV</span></a>
+    <div class="section-title">TEMEL HESAPLAMALAR</div>
+    <main class="grid-main">
+        <a href="kredi.html" class="card"><i class="fa-solid fa-landmark"></i><span>Kredi</span><small>Tüm bankaları kıyasla</small></a>
+        <a href="netmaas.html" class="card"><i class="fa-solid fa-coins"></i><span>Maaş</span><small>Netten brüte vergi analizi</small></a>
+        <a href="tazminat.html" class="card"><i class="fa-solid fa-hand-holding-dollar"></i><span>Tazminat</span><small>Kıdem ve ihbar hesabı</small></a>
+        <a href="doviz.html" class="card"><i class="fa-solid fa-money-bill-transfer"></i><span>Döviz</span><small>Anlık kur çevirici</small></a>
+        <a href="faiz.html" class="card"><i class="fa-solid fa-chart-line"></i><span>Mevduat</span><small>Net getiri ve stopaj</small></a>
+        <a href="yakit.html" class="card"><i class="fa-solid fa-gas-pump"></i><span>Yakıt</span><small>Yol ve tüketim maliyeti</small></a>
     </main>
 
-    <div class="promo-banner">
-        <div class="promo-content">
-            <h2>Kredini Hemen Planla</h2>
-            <p>8 farklı banka seçeneği ve 2026 güncel faiz oranlarıyla karşılaştır.</p>
+    <div class="section-title">PRO ANALİZ ARAÇLARI</div>
+    <div class="pro-section">
+        <div class="pro-grid">
+            <a href="limit-sorgulama.html" class="pro-card">
+                <i class="fa-solid fa-gauge-high"></i>
+                <div class="pro-info"><h4>Ne Kadar Kredi Alabilirim?</h4><p>Gelirine göre maksimum limitini gör.</p></div>
+            </a>
+            <a href="yapilandirma.html" class="pro-card">
+                <i class="fa-solid fa-arrows-rotate"></i>
+                <div class="pro-info"><h4>Kredi Yapılandırma</h4><p>Mevcut kredini değiştirince ne kar edersin?</p></div>
+            </a>
+            <a href="kk-asgari.html" class="pro-card">
+                <i class="fa-solid fa-credit-card"></i>
+                <div class="pro-info"><h4>Kart Asgari Hesabı</h4><p>Asgari ödeme ve faiz yükünü hesapla.</p></div>
+            </a>
+            <a href="enflasyon.html" class="pro-card">
+                <i class="fa-solid fa-arrow-down-up-lock"></i>
+                <div class="pro-info"><h4>Alım Gücü Analizi</h4><p>Paran yıllar içinde ne kadar eridi?</p></div>
+            </a>
         </div>
-        <a href="kredi.html" style="background:#fff; color:var(--accent-blue); padding:15px 30px; border-radius:12px; text-decoration:none; font-weight:800;">ŞİMDİ HESAPLA</a>
     </div>
+
+    <div class="section-title">DİĞER YARDIMCILAR</div>
+    <div class="grid-main" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
+        <a href="issizlik.html" class="card"><i class="fa-solid fa-user-slash"></i><span>İşsizlik Maaşı</span></a>
+        <a href="kdv.html" class="card"><i class="fa-solid fa-receipt"></i><span>KDV Hesapla</span></a>
+        <a href="yas.html" class="card"><i class="fa-solid fa-calendar-days"></i><span>Yaş Analizi</span></a>
+        <a href="mesai.html" class="card"><i class="fa-solid fa-clock"></i><span>Fazla Mesai</span></a>
+        <a href="cv.html" class="card"><i class="fa-solid fa-file-invoice"></i><span>Hızlı CV</span></a>
+    </div>
+
+    <footer style="padding: 60px 0; text-align: center; color: var(--text-dim); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 60px;">
+        <p>© 2026 H360 Finansal Teknolojiler. Tüm hakları saklıdır.</p>
+    </footer>
 </div>
 
 </body>
