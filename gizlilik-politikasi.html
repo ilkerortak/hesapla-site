@@ -4,55 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gizlilik Politikası ve Kullanım Şartları - H360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css"> <style>
-        body { background: #0b0f19; color: #ccc; font-family: 'Inter', sans-serif; line-height: 1.8; margin: 0; }
-        .legal-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 80px; }
-        .legal-card { background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px; border: 1px solid #1e293b; }
-        h1 { color: #fff; border-left: 5px solid #3b82f6; padding-left: 20px; font-size: 2.2rem; margin-bottom: 40px; }
-        h2 { color: #3b82f6; margin-top: 40px; font-size: 1.5rem; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
-        p { margin-bottom: 20px; font-size: 1rem; color: #a0aec0; }
-        ul { margin-bottom: 20px; padding-left: 20px; color: #a0aec0; }
-        li { margin-bottom: 10px; }
-        .highlight { color: #fff; font-weight: 600; }
-        .back-btn { display: inline-block; color: #3b82f6; text-decoration: none; margin-bottom: 30px; font-weight: bold; }
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Sayfaya özel ek düzenlemeler */
+        body { 
+            background: #0b0f19; 
+            color: #ccc; 
+            font-family: 'Inter', sans-serif; 
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        .legal-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .legal-card {
+            background: rgba(30, 41, 59, 0.5); /* Hafif transparan koyu arka plan */
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 { 
+            color: #fff; 
+            font-size: 2.5rem; 
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .last-update {
+            color: #3b82f6;
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            display: block;
+            font-weight: 600;
+        }
+
+        h2 { 
+            color: #fff; 
+            font-size: 1.5rem; 
+            margin-top: 40px; 
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+
+        p { 
+            margin-bottom: 20px; 
+            color: #94a3b8;
+        }
+
+        ul { 
+            margin-bottom: 25px; 
+            padding-left: 20px; 
+        }
+
+        li { 
+            margin-bottom: 12px; 
+            color: #94a3b8;
+        }
+
+        .highlight-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            color: #e2e8f0;
+        }
+
+        .back-home {
+            text-decoration: none;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .back-home:hover {
+            color: #3b82f6;
+        }
+
+        @media (max-width: 768px) {
+            .legal-card { padding: 30px 20px; }
+            h1 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="legal-container">
-        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Ana Sayfaya Dön</a>
-        
-        <div class="legal-card">
-            <h1>Gizlilik Politikası ve Kullanım Şartları</h1>
-            <p>Son Güncelleme: 25 Mart 2026</p>
-            
-            <p>Hesapla360 (H360) platformuna hoş geldiniz. Bu sayfa, web sitemizi kullanırken kişisel verilerinizin nasıl işlendiğini, çerez politikalarımızı ve hizmet kullanım şartlarımızı kapsamlı bir şekilde açıklar.</p>
 
-            <h2>1. Veri Gizliliği ve Güvenliği</h2>
-            <p>H360 bir "İstemci Taraflı" (Client-Side) platformdur. Bu, <span class="highlight">maaş, tazminat, kredi tutarı veya kimlik bilgisi</span> gibi hesaplama araçlarına girdiğiniz hiçbir verinin sunucularımıza iletilmediği ve kaydedilmediği anlamına gelir. Tüm matematiksel işlemler doğrudan kullanıcının tarayıcısında gerçekleşir.</p>
+    <div class="legal-wrapper">
+        <a href="index.html" class="back-home">
+            <i class="fa-solid fa-arrow-left"></i> Ana Sayfaya Dön
+        </a>
 
-            <h2>2. Google AdSense ve Reklam Politikaları</h2>
-            <p>Sitemiz, içerik maliyetlerini karşılamak ve ücretsiz hizmet sunmaya devam edebilmek için <span class="highlight">Google AdSense</span> reklam sistemini kullanır. Google, sitemizde reklam yayınlamak için çerezleri (cookies) kullanır:</p>
+        <article class="legal-card">
+            <h1>Gizlilik Politikası</h1>
+            <span class="last-update">Son Güncelleme: 25 Mart 2026</span>
+
+            <p>Hesapla360 (H360) olarak, kullanıcılarımızın dijital gizliliğini en üst seviyede tutmayı taahhüt ediyoruz. Bu metin, platformumuzu kullandığınızda verilerinizin nasıl işlendiğini ve reklam ortaklarımızın politikalarını açıklar.</p>
+
+            <h2>1. Veri İşleme Prensiplerimiz</h2>
+            <p>H360, kullanıcı dostu ve gizlilik odaklı bir araçtır. Platformumuzda yer alan maaş, tazminat, kredi veya döviz hesaplama formlarına girdiğiniz hiçbir veri tarafımızca <strong>toplanmaz, saklanmaz veya üçüncü taraflarla paylaşılmaz.</strong></p>
+            <div class="highlight-box">
+                <strong>Bilgi:</strong> Tüm hesaplamalar tarayıcınız (JavaScript) üzerinde gerçekleşir. "Hesapla" butonuna bastığınızda verileriniz sunucularımıza gönderilmez.
+            </div>
+
+            <h2>2. Reklamlar ve Çerez (Cookie) Politikası</h2>
+            <p>Sitemizde Google AdSense reklam sistemi kullanılmaktadır. Google, sitemizi ziyaret eden kullanıcılara ilgi alanlarına göre reklam sunmak için çerezlerden yararlanır:</p>
             <ul>
-                <li>Google, üçüncü taraf bir satıcı olarak, sitemizde reklam yayınlamak için çerezlerden yararlanır.</li>
-                <li>Google'ın reklam çerezlerini kullanması, kullanıcılarımızın sitemize ve İnternet'teki diğer sitelere yaptıkları ziyaretlere dayalı reklamlar sunmasına olanak tanır.</li>
-                <li>Kullanıcılar, <a href="https://adssettings.google.com" target="_blank" style="color: #3b82f6;">Google Reklam Ayarları</a> sayfasını ziyaret ederek kişiselleştirilmiş reklamcılığı devre dışı bırakabilirler.</li>
+                <li>Google dahil üçüncü taraf satıcılar, kullanıcının web sitemize veya diğer web sitelerine yaptığı önceki ziyaretlere dayalı olarak reklam sunmak için çerezleri kullanır.</li>
+                <li>Google'ın reklam çerezlerini kullanması, kendisinin ve ortaklarının kullanıcılarımıza sitemiz ve/veya İnternet'teki diğer sitelere yaptıkları ziyaretlere dayalı reklamlar sunmasına olanak tanır.</li>
+                <li>Kullanıcılar, <a href="https://adssettings.google.com" target="_blank" style="color:#3b82f6;">Reklam Ayarları</a> sayfasını ziyaret ederek kişiselleştirilmiş reklamcılığı devre dışı bırakabilirler.</li>
             </ul>
 
-            <h2>3. Çerezler (Cookies) ve Günlük Dosyaları</h2>
-            <p>H360, standart günlük dosyaları (log files) tutmaktadır. Bu dosyalar IP adresleri, tarayıcı türü, İnternet Servis Sağlayıcısı (ISP), tarih/saat damgaları gibi teknik verileri içerir. Bu veriler şahsa özel kimlik tespiti için değil, site trafiğini analiz etmek ve kullanıcı deneyimini iyileştirmek için kullanılır.</p>
+            <h2>3. Sorumluluk Reddi (Disclaimer)</h2>
+            <p>H360 üzerinde sunulan araçlar genel bilgilendirme amaçlıdır. Verilerimiz 2026 yılı güncel mevzuatına göre hazırlansa da, sonuçların resmi bir bağlayıcılığı yoktur. Finansal kararlarınızdan önce uzman görüşü almanız tavsiye edilir.</p>
 
-            <h2>4. Hizmet Kullanım Şartları (Sorumluluk Reddi)</h2>
-            <p>H360 tarafından sunulan tüm hesaplama araçları bilgilendirme amaçlıdır. Platformumuzdaki veriler resmi kurumların (SGK, Gelir İdaresi Başkanlığı vb.) güncel mevzuatlarına göre düzenlense de:</p>
-            <ul>
-                <li>Sonuçlar bağlayıcı bir resmi belge niteliği taşımaz.</li>
-                <li>Hatalı veri girişi veya mevzuat yorum farklarından kaynaklanabilecek mali kayıplardan H360 sorumlu tutulamaz.</li>
-                <li>Resmi işlemleriniz için mutlaka profesyonel bir mali müşavir veya hukuk danışmanına başvurmanız önerilir.</li>
-            </ul>
-
-            <h2>5. İletişim</h2>
-            <p>Politikalarımız hakkında sorularınız için bizimle <span class="highlight">iletisim@h360.com.tr</span> (veya kendi mail adresin) adresi üzerinden iletişime geçebilirsiniz.</p>
-        </div>
+            <h2>4. İletişim Bilgileri</h2>
+            <p>Bu politika metni veya gizlilik haklarınızla ilgili her türlü soru için <strong>iletisim@h360.com.tr</strong> üzerinden bize ulaşabilirsiniz.</p>
+        </article>
     </div>
+
 </body>
 </html>
