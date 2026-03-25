@@ -9,81 +9,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --primary: #8b5cf6;
-            --success: #10b981;
-            --bg: #0b0f19;
-            --card-bg: rgba(255, 255, 255, 0.02);
-            --border: rgba(255, 255, 255, 0.05);
-        }
-
+        :root { --primary: #8b5cf6; --success: #10b981; --bg: #0b0f19; --card-bg: rgba(255, 255, 255, 0.02); --border: rgba(255, 255, 255, 0.05); }
         body { background-color: var(--bg); margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; line-height: 1.6; }
         
-        /* --- ÜST NAVİGASYON --- */
-        .glass-nav {
-            position: fixed; top: 0; left: 0; right: 0; height: 75px;
-            background: rgba(11, 15, 25, 0.8); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 5%; z-index: 2000;
-        }
+        /* NAVİGASYON */
+        .glass-nav { position: fixed; top: 0; left: 0; right: 0; height: 75px; background: rgba(11, 15, 25, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 5%; z-index: 2000; }
         .logo { color: #fff; text-decoration: none; font-weight: 800; font-size: 1.2rem; }
         .logo span { color: var(--primary); }
+        .home-btn { color: #fff; text-decoration: none; background: rgba(255,255,255,0.05); padding: 10px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; }
+        .home-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
 
-        .main-wrapper { display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 120px 20px 60px; }
-        
-        /* Dashboard Kartı */
-        .calc-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 28px; padding: 40px; width: 100%; max-width: 580px;
-            backdrop-filter: blur(15px); box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-        }
-
+        .main-wrapper { display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 130px 20px 60px; }
+        .calc-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px; padding: 40px; width: 100%; max-width: 580px; backdrop-filter: blur(15px); box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
         .header-area { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
-        .icon-box { 
-            width: 55px; height: 55px; background: rgba(139, 92, 246, 0.1); 
-            border-radius: 16px; display: flex; align-items: center; justify-content: center;
-            color: var(--primary); font-size: 1.4rem; border: 1px solid rgba(139, 92, 246, 0.2);
-        }
-
+        .icon-box { width: 55px; height: 55px; background: rgba(139, 92, 246, 0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.4rem; border: 1px solid rgba(139, 92, 246, 0.2); }
         .input-group { margin-bottom: 20px; }
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .input-group label { display: block; color: #94a3b8; font-size: 0.65rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
-        .input-group input {
-            width: 100%; padding: 16px; background: #080b12; border: 1px solid #1e293b; border-radius: 12px;
-            color: #fff; font-size: 1rem; outline: none; box-sizing: border-box;
-        }
-
-        .calc-btn {
-            width: 100%; padding: 18px; background: #3b82f6; color: #fff;
-            border: none; border-radius: 14px; font-weight: 700; cursor: pointer; transition: 0.3s;
-        }
-
-        /* Sonuç Paneli */
+        .input-group input { width: 100%; padding: 16px; background: #080b12; border: 1px solid #1e293b; border-radius: 12px; color: #fff; font-size: 1rem; outline: none; box-sizing: border-box; }
+        .calc-btn { width: 100%; padding: 18px; background: #3b82f6; color: #fff; border: none; border-radius: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; }
         .result-box { margin-top: 35px; display: none; animation: fadeIn 0.5s ease; }
         .res-item { background: #080b12; padding: 20px; border-radius: 18px; margin-bottom: 12px; border: 1px solid #1e293b; }
-        .res-item span { font-size: 0.65rem; color: #3b82f6; font-weight: 800; display: block; }
-        .res-item b { font-size: 1.8rem; color: #fff; }
-        
-        .res-total { 
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 100%);
-            padding: 25px; border-radius: 20px; text-align: center; border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        /* SEO İÇERİK */
+        .res-total { background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 100%); padding: 25px; border-radius: 20px; text-align: center; border: 1px solid rgba(16, 185, 129, 0.2); }
         .seo-content { max-width: 800px; margin-top: 60px; color: #94a3b8; }
-        .seo-content h2 { color: #fff; font-size: 1.5rem; margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 15px; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin: 30px 0; }
-        .info-card { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <nav class="glass-nav">
     <a href="index.html" class="logo">H360<span>.</span></a>
-    <button onclick="location.href='index.html'" style="background:none; border:1px solid #1e293b; color:#fff; padding:8px 15px; border-radius:10px; cursor:pointer;">
+    <a href="index.html" class="home-btn">
         <i class="fa-solid fa-house"></i>
-    </button>
+        <span>Ana Sayfa</span>
+    </a>
 </nav>
 
 <div class="main-wrapper">
@@ -91,8 +50,8 @@
         <div class="header-area">
             <div class="icon-box"><i class="fa-solid fa-briefcase"></i></div>
             <div class="title-text">
-                <h1>TAZMİNAT ANALİZİ</h1>
-                <p>2026 Yasal Mevzuat Uyumu</p>
+                <h1 style="font-size: 1.3rem; margin: 0; color: #fff;">TAZMİNAT ANALİZİ</h1>
+                <p style="color: var(--primary); font-size: 0.7rem; font-weight: 800; margin: 4px 0 0;">2026 YASAL MEVZUAT UYUMU</p>
             </div>
         </div>
 
@@ -116,72 +75,46 @@
 
         <div id="res" class="result-box">
             <div class="res-item">
-                <span>NET KIDEM TAZMİNATI</span>
-                <b id="kidemRes">0 ₺</b>
-                <div style="font-size: 0.7rem; color: #475569; margin-top: 5px;">Damga Vergisi Kesintisi: <span id="kidemVergi">0 ₺</span></div>
+                <span style="font-size: 0.65rem; color: #3b82f6; font-weight: 800;">NET KIDEM TAZMİNATI</span>
+                <b id="kidemRes" style="font-size: 1.8rem; color: #fff;">0 ₺</b>
+                <div style="font-size: 0.7rem; color: #475569; margin-top: 5px;">Damga Vergisi: <span id="kidemVergi">0 ₺</span></div>
             </div>
 
             <div class="res-item">
-                <span>NET İHBAR TAZMİNATI</span>
-                <b id="ihbarRes">0 ₺</b>
+                <span style="font-size: 0.65rem; color: #3b82f6; font-weight: 800;">NET İHBAR TAZMİNATI</span>
+                <b id="ihbarRes" style="font-size: 1.8rem; color: #fff;">0 ₺</b>
                 <div style="font-size: 0.7rem; color: #475569; margin-top: 5px;">İhbar Süresi: <span id="ihbarHafta">0</span> Hafta</div>
             </div>
 
             <div class="res-total">
                 <span style="font-size: 0.7rem;">TOPLAM NET ALACAK</span>
-                <b id="toplamRes">0 ₺</b>
+                <b id="toplamRes" style="font-size: 2.2rem; color: #10b981; display: block; margin-top: 5px;">0 ₺</b>
             </div>
         </div>
     </div>
 
     <article class="seo-content">
-        <h2>Kıdem ve İhbar Tazminatı Hakkında Bilmeniz Gerekenler</h2>
-        <p>Tazminat hesaplamaları, 1475 sayılı İş Kanunu çerçevesinde işçinin çalışma süresi ve giydirilmiş brüt ücreti üzerinden gerçekleştirilir. <strong>2026 yılı kıdem tazminatı tavanı</strong> ve güncel vergi oranları hesaplamanın temel taşlarını oluşturur.</p>
-
-        <div class="info-grid">
-            <div class="info-card">
-                <h4 style="color:var(--primary); margin-top:0;">Kıdem Tazminatı Şartları</h4>
-                <p style="font-size:0.85rem;">Aynı işverene bağlı olarak en az 1 yıl çalışmış olmak ve iş sözleşmesinin tazminata hak kazanacak şekilde (emeklilik, haklı fesih, askerlik vb.) sona ermesi gerekir.</p>
-            </div>
-            <div class="info-card">
-                <h4 style="color:var(--primary); margin-top:0;">İhbar Süreleri Nelerdir?</h4>
-                <ul style="font-size:0.85rem; padding-left:15px;">
-                    <li>6 aya kadar: 2 Hafta</li>
-                    <li>6 ay - 1.5 yıl: 4 Hafta</li>
-                    <li>1.5 yıl - 3 yıl: 6 Hafta</li>
-                    <li>3 yıl üzeri: 8 Hafta</li>
-                </ul>
-            </div>
-        </div>
-
-        <h3>Giydirilmiş Brüt Ücret Nedir?</h3>
-        <p>Sadece çıplak maaşınız değil; yol yardımı, yemek bedeli, düzenli primler ve yakacak yardımı gibi süreklilik arz eden tüm yan hakların toplamı <strong>Giydirilmiş Brüt Ücret</strong>i oluşturur. Hesaplama yapılırken bu toplam tutar baz alınmalıdır.</p>
+        <h2 style="color: #fff; font-size: 1.5rem; margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 15px;">Tazminat Hesaplama Rehberi</h2>
+        <p>Kıdem tazminatı, en az 1 yıl çalışan işçinin hakkıdır. <strong>2026 Kıdem Tazminatı Tavanı</strong> baz alınarak yapılan bu hesaplama, net ele geçen tutarı gösterir.</p>
+        <p>İhbar tazminatı ise çalışma süresine göre 2 ile 8 hafta arasında değişen süreler üzerinden hesaplanır ve Gelir/Damga vergisi kesintilerine tabidir.</p>
     </article>
 </div>
-
-<footer style="padding: 40px; text-align: center; border-top: 1px solid var(--border);">
-    <a href="gizlilik-politikasi.html" style="color: #475569; text-decoration: none; font-size: 0.8rem; margin: 0 10px;">Gizlilik</a>
-    <a href="iletisim.html" style="color: #475569; text-decoration: none; font-size: 0.8rem; margin: 0 10px;">İletişim</a>
-</footer>
 
 <script>
     function hesapla() {
         const brut = parseFloat(document.getElementById('brut').value) || 0;
         const yil = parseFloat(document.getElementById('yil').value) || 0;
         const ay = parseFloat(document.getElementById('ay').value) || 0;
-        const KIDEM_TAVAN = 35058.58; // 2026 Varsayılan Tavan
+        const KIDEM_TAVAN = 35058.58; 
 
         if(brut <= 0) return;
 
         const esasBrut = brut > KIDEM_TAVAN ? KIDEM_TAVAN : brut;
         const toplamYil = yil + (ay / 12);
-        
-        // Kıdem
         const brutKidem = esasBrut * toplamYil;
         const kidemDamga = brutKidem * 0.00759;
         const netKidem = brutKidem - kidemDamga;
 
-        // İhbar
         let hafta = 2;
         if (toplamYil >= 0.5 && toplamYil < 1.5) hafta = 4;
         else if (toplamYil >= 1.5 && toplamYil < 3) hafta = 6;
@@ -191,15 +124,12 @@
         const brutIhbar = gunlukBrut * (hafta * 7);
         const netIhbar = brutIhbar - (brutIhbar * 0.15) - (brutIhbar * 0.00759);
 
-        // UI Güncelleme
         document.getElementById('kidemRes').innerText = Math.round(netKidem).toLocaleString('tr-TR') + " ₺";
         document.getElementById('kidemVergi').innerText = Math.round(kidemDamga).toLocaleString('tr-TR') + " ₺";
         document.getElementById('ihbarRes').innerText = Math.round(netIhbar).toLocaleString('tr-TR') + " ₺";
         document.getElementById('ihbarHafta').innerText = hafta;
         document.getElementById('toplamRes').innerText = Math.round(netKidem + netIhbar).toLocaleString('tr-TR') + " ₺";
-        
         document.getElementById('res').style.display = "block";
-        window.scrollTo({ top: 400, behavior: 'smooth' });
     }
 </script>
 <script src="h360-core.js"></script>
