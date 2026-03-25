@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H360 | Kredi Limit Analizi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #030712;
+            --card: rgba(17, 24, 39, 0.8);
+            --primary: #3b82f6;
+            --border: rgba(255, 255, 255, 0.08);
+            --text-dim: #9ca3af;
+        }
+
+        body { 
+            background: var(--bg); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: #fff; margin: 0; padding: 20px;
+            background-image: radial-gradient(circle at 50% 0%, #1e3a8a33 0%, transparent 50%);
+        }
+
+        .analyzer-container { max-width: 800px; margin: 60px auto; }
+
+        /* Başlık Alanı */
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 10px; }
+        .header p { color: var(--text-dim); }
+
+        /* Form Kartı */
+        .glass-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 32px; padding: 40px; backdrop-filter: blur(20px);
+        }
+
+        .input-group { margin-bottom: 25px; }
+        label { display: block; margin-bottom: 10px; font-size: 0.9rem; font-weight: 600; color: var(--text-dim); }
+        input {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+            padding: 15px; border-radius: 12px; color: #fff; font-size: 1.1rem; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary); }
+
+        .btn-analyze {
+            width: 100%; background: var(--primary); color: #fff; border: none;
+            padding: 20px; border-radius: 15px; font-size: 1.1rem; font-weight: 800;
+            cursor: pointer; transition: 0.3s; margin-top: 10px;
+        }
+        .btn-analyze:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4); }
+
+        /* Sonuç Paneli */
+        #resultArea { display: none; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 30px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .limit-box {
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.1), transparent);
+            padding: 30px; border-radius: 20px; text-align: center; border: 1px dashed var(--primary);
+        }
+        .limit-value { font-size: 3rem; font-weight: 900; color: var(--primary); display: block; }
+        .advice-text { margin-top: 15px; font-size: 0.9rem; color: #10b981; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="analyzer-container">
+    <div class="header">
+        <h1>Kredi Limit Analizi</h1>
+        <p>Banka algoritmasıyla çekebileceğiniz maksimum tutarı hesaplayın.</p>
+    </div>
+
+    <div class="glass-card">
+        <div class="input-group">
+            <label>Aylık Net Gelir (₺)</label>
+            <input type="number" id="income" placeholder="Örn: 45000">
+        </div>
+        <div class="input-group">
+            <label>Diğer Kredi/Kart Taksit Toplamı (₺)</label>
+            <input type="number" id="debts" placeholder="Örn: 5000">
+        </div>
+        <div class="input-group">
+            <label>Tercih Edilen Vade (Ay)</label>
+            <input type="number" id="term" value="12" max="36">
+        </div>
+
+        <button class="btn-analyze" onclick="calculateLimit()">STRATEJİYİ ANALİZ ET</button>
+
+        <div id="resultArea">
+            <div class="limit-box">
+                <span style="font-size: 0.9rem; color: var(--text-dim);">Tahmini Maksimum Limitiniz</span>
+                <span class="limit-value" id="maxLimit">0 ₺</span>
+                <p class="advice-text" id="advice"><i class="fa-solid fa-check-double"></i> Kredi notunuz 1500+ ise onay ihtimali %95.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculateLimit() {
+        const income = parseFloat(document.getElementById('income').value);
+        const debts = parseFloat(document.getElementById('debts').value) || 0;
+        const term = parseInt(document.getElementById('term').value);
+
+        if (!income || income <= 0) {
+            alert("Lütfen geçerli bir gelir giriniz.");
+            return;
+        }
+
+        // Bankacılık Rasyosu: Gelirin %50'si taksitlere gidebilir
+        const disposableIncome = (income * 0.50) - debts;
+
+        if (disposableIncome <= 0) {
+            document.getElementById('maxLimit').innerText = "Limit Yok";
+            document.getElementById('advice').innerText = "Mevcut borç yükünüz çok yüksek.";
+            document.getElementById('resultArea').style.display = 'block';
+            return;
+        }
+
+        // Basit faiz simülasyonu ile (2026 ortalaması %3.89 faiz varsayımı) 
+        // PV = PMT * [(1 - (1 + i)^-n) / i] formülü simülasyonu
+        const monthlyRate = 0.0389; 
+        const maxLimit = disposableIncome * ((1 - Math.pow(1 + monthlyRate, -term)) / monthlyRate);
+
+        document.getElementById('maxLimit').innerText = Math.floor(maxLimit).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('resultArea').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
