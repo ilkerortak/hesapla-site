@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H360 | Finansal Analiz ve Hesaplama Merkezi</title>
+    <meta name="description" content="Maaş, kredi, tazminat ve döviz gibi 12 farklı finansal aracı 2026 güncel verileriyle kullanın.">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426" crossorigin="anonymous"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -18,7 +19,7 @@
             --text-main: #cbd5e0;
         }
 
-        body { background-color: var(--bg); margin: 0; font-family: 'Inter', sans-serif; color: var(--text-main); }
+        body { background-color: var(--bg); margin: 0; font-family: 'Inter', sans-serif; color: var(--text-main); overflow-x: hidden; }
 
         /* Gelişmiş Navigasyon */
         .glass-nav {
@@ -36,50 +37,55 @@
         .logo-text { color: #fff; font-size: 1.3rem; letter-spacing: 1px; font-weight: 700; }
         .logo-text span { color: var(--primary); }
 
-        /* Canlı Kur Bandı */
-        .live-ticker { display: flex; gap: 20px; font-size: 0.85rem; font-weight: 600; }
-        .ticker-item { background: rgba(255,255,255,0.03); padding: 6px 15px; border-radius: 20px; border: 1px solid var(--border); }
-        .ticker-item span:first-child { color: #94a3b8; margin-right: 5px; }
-        .ticker-item span:last-child { color: #10b981; }
+        .live-ticker { display: flex; gap: 15px; font-size: 0.8rem; font-weight: 600; }
+        .ticker-item { background: rgba(255,255,255,0.03); padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border); color: #fff; }
+        .ticker-item span { color: var(--primary); margin-right: 4px; }
 
         /* Premium Header */
         .premium-header { 
-            padding: 160px 20px 80px; text-align: center; 
+            padding: 160px 20px 60px; text-align: center; 
             background: radial-gradient(circle at top, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
         }
         .hero-badge {
             display: inline-flex; align-items: center; gap: 8px; background: rgba(59, 130, 246, 0.1);
-            color: var(--primary); padding: 8px 16px; border-radius: 30px; font-size: 0.75rem;
+            color: var(--primary); padding: 8px 16px; border-radius: 30px; font-size: 0.7rem;
             font-weight: 700; margin-bottom: 25px; border: 1px solid rgba(59, 130, 246, 0.2);
         }
-        .premium-title { font-size: 3.5rem; color: #fff; margin: 0; font-weight: 800; letter-spacing: -1px; }
+        .premium-title { font-size: 3.5rem; color: #fff; margin: 0; font-weight: 800; letter-spacing: -1.5px; }
+        .premium-subtitle { color: #94a3b8; max-width: 600px; margin: 20px auto; line-height: 1.6; font-size: 1rem; }
 
-        /* Kart Sistemi */
+        /* 12'li Grid Sistemi */
         .main-grid { 
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px; max-width: 1300px; margin: 0 auto; padding: 40px 25px;
+            gap: 20px; max-width: 1300px; margin: 0 auto; padding: 20px 25px 80px;
         }
         .feature-card {
             background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px;
-            padding: 30px; text-decoration: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; gap: 15px; position: relative; overflow: hidden;
+            padding: 25px; text-decoration: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; gap: 20px;
         }
         .feature-card:hover { 
             background: rgba(255,255,255,0.05); border-color: var(--primary); 
-            transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
-        .icon-wrapper {
-            width: 50px; height: 50px; border-radius: 14px; background: rgba(255,255,255,0.03);
-            display: flex; align-items: center; justify-content: center; font-size: 1.4rem; transition: 0.3s;
+        .icon-box {
+            min-width: 55px; height: 55px; border-radius: 16px; background: rgba(255,255,255,0.02);
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transition: 0.3s;
+            border: 1px solid var(--border);
         }
-        .feature-card:hover .icon-wrapper { background: var(--primary); color: #fff; }
-        .card-info h3 { color: #fff; margin: 0 0 5px 0; font-size: 1.2rem; }
-        .card-info p { color: #64748b; margin: 0; font-size: 0.85rem; line-height: 1.5; }
+        .feature-card:hover .icon-box { background: var(--primary); color: #fff; transform: rotate(-5deg); border-color: transparent; }
+        
+        .card-text h3 { color: #fff; margin: 0 0 4px 0; font-size: 1.1rem; font-weight: 700; }
+        .card-text p { color: #64748b; margin: 0; font-size: 0.8rem; line-height: 1.4; }
 
-        /* Mobilde İyileştirme */
+        /* AdSense Alanı */
+        .ads-container { max-width: 1300px; margin: 0 auto 40px; padding: 0 25px; }
+        .ad-box { width: 100%; height: 100px; background: rgba(255,255,255,0.01); border: 1px dashed var(--border); border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+
         @media (max-width: 768px) {
             .premium-title { font-size: 2.2rem; }
             .live-ticker { display: none; }
+            .main-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -92,97 +98,95 @@
             <div class="logo-text">HESAPLA<span>360</span></div>
         </a>
         <div class="live-ticker">
-            <div class="ticker-item"><span>USD</span><span id="usdVal">00.00 ₺</span></div>
-            <div class="ticker-item"><span>EUR</span><span id="eurVal">00.00 ₺</span></div>
-            <div class="ticker-item"><span>ALTIN</span><span id="goldVal">0.000 ₺</span></div>
+            <div class="ticker-item"><span>USD</span> <small id="usdVal">00.00 ₺</small></div>
+            <div class="ticker-item"><span>EUR</span> <small id="eurVal">00.00 ₺</small></div>
         </div>
-        <button class="menu-btn" onclick="toggleMenu()" style="background:transparent; border:none; color:#fff; cursor:pointer; font-size:1.2rem;">
-            <i class="fa-solid fa-bars-staggered"></i>
-        </button>
+        <div style="color: #fff; cursor: pointer;"><i class="fa-solid fa-bars-staggered"></i></div>
     </div>
 </nav>
 
 <header class="premium-header">
-    <div class="hero-badge">
-        <i class="fa-solid fa-bolt"></i> 2026 GÜNCEL VERİ ALGORİTMASI
-    </div>
-    <h1 class="premium-title">Akıllı Finansal Analiz</h1>
-    <p style="max-width:600px; margin: 20px auto; color:#94a3b8; line-height:1.8;">
-        Türkiye'nin en kapsamlı dijital hesaplama portalı. Maaştan krediye, tazminattan enflasyon analizine kadar her şey tek ekranda.
-    </p>
+    <div class="hero-badge"><i class="fa-solid fa-shield-check"></i> 2026 GÜNCEL VERİ ANALİZİ</div>
+    <h1 class="premium-title">Dijital Finans Merkezi</h1>
+    <p class="premium-subtitle">Türkiye'nin en hızlı hesaplama portalı. 12 farklı profesyonel araçla finansal kararlarınızı veriye dayalı alın.</p>
 </header>
+
+<div class="ads-container">
+    <div class="ad-box">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1894587939365426" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+</div>
 
 <main class="main-grid">
     <a href="netmaas.html" class="feature-card">
-        <div class="icon-wrapper" style="color: #10b981;"><i class="fa-solid fa-wallet"></i></div>
-        <div class="card-info">
-            <h3>Maaş Analizi</h3>
-            <p>Brüt-Net çevrimi, vergi dilimi ve kesinti detaylarını 2026 verileriyle görün.</p>
-        </div>
+        <div class="icon-box" style="color: #10b981;"><i class="fa-solid fa-wallet"></i></div>
+        <div class="card-text"><h3>Maaş</h3><p>Brüt-Net & Vergi Analizi</p></div>
     </a>
-
-    <a href="kredi.html" class="feature-card">
-        <div class="icon-wrapper" style="color: #3b82f6;"><i class="fa-solid fa-building-columns"></i></div>
-        <div class="card-info">
-            <h3>Kredi Planlama</h3>
-            <p>İhtiyaç, Konut ve Taşıt kredilerini banka logolarıyla karşılaştırın.</p>
-        </div>
-    </a>
-
     <a href="tazminat.html" class="feature-card">
-        <div class="icon-wrapper" style="color: #f59e0b;"><i class="fa-solid fa-briefcase"></i></div>
-        <div class="card-info">
-            <h3>Tazminat Hesabı</h3>
-            <p>Kıdem ve ihbar tazminatınızı son tavan ücretlere göre hesaplayın.</p>
-        </div>
+        <div class="icon-box" style="color: #f59e0b;"><i class="fa-solid fa-briefcase"></i></div>
+        <div class="card-text"><h3>Tazminat</h3><p>Kıdem & İhbar Hesaplama</p></div>
     </a>
-
-    <a href="enflasyon.html" class="feature-card">
-        <div class="icon-wrapper" style="color: #ef4444;"><i class="fa-solid fa-arrow-down-wide-short"></i></div>
-        <div class="card-info">
-            <h3>Enflasyon Analizi</h3>
-            <p>Paranızın yıllar içindeki alım gücü kaybını TÜİK verileriyle ölçün.</p>
-        </div>
+    <a href="issizlik.html" class="feature-card">
+        <div class="icon-box" style="color: #3b82f6;"><i class="fa-solid fa-calendar-check"></i></div>
+        <div class="card-text"><h3>İşsizlik</h3><p>Ödenek Süresi & Tutarı</p></div>
     </a>
-    
-    <a href="yas.html" class="feature-card">
-        <div class="icon-wrapper" style="color: #a855f7;"><i class="fa-solid fa-cake-candles"></i></div>
-        <div class="card-info">
-            <h3>Yaşam Analizi</h3>
-            <p>Yaş, burç, yükselen ve numeroloji detaylarını keşfedin.</p>
-        </div>
-    </a>
-
     <a href="faiz.html" class="feature-card">
-        <div class="icon-wrapper" style="color: #14b8a6;"><i class="fa-solid fa-chart-line"></i></div>
-        <div class="card-info">
-            <h3>Bileşik Faiz</h3>
-            <p>Birikimlerinizin zaman içindeki kartopu etkisini analiz edin.</p>
-        </div>
+        <div class="icon-box" style="color: #14b8a6;"><i class="fa-solid fa-percent"></i></div>
+        <div class="card-text"><h3>Faiz</h3><p>Mevduat & Bileşik Getiri</p></div>
+    </a>
+    <a href="yakit.html" class="feature-card">
+        <div class="icon-box" style="color: #f43f5e;"><i class="fa-solid fa-gas-pump"></i></div>
+        <div class="card-text"><h3>Yakıt</h3><p>Yol Maliyeti & Tüketim</p></div>
+    </a>
+    <a href="enflasyon.html" class="feature-card">
+        <div class="icon-box" style="color: #8b5cf6;"><i class="fa-solid fa-arrow-down-wide-short"></i></div>
+        <div class="card-text"><h3>Enflasyon</h3><p>Alım Gücü Kaybı Ölçümü</p></div>
+    </a>
+    <a href="kredi.html" class="feature-card">
+        <div class="icon-box" style="color: #3b82f6;"><i class="fa-solid fa-building-columns"></i></div>
+        <div class="card-text"><h3>Kredi</h3><p>Banka Ödeme Planları</p></div>
+    </a>
+    <a href="yas.html" class="feature-card">
+        <div class="icon-box" style="color: #ec4899;"><i class="fa-solid fa-cake-candles"></i></div>
+        <div class="card-text"><h3>Yaş</h3><p>Kronolojik Hayat Analizi</p></div>
+    </a>
+    <a href="doviz.html" class="feature-card">
+        <div class="icon-box" style="color: #fbbf24;"><i class="fa-solid fa-money-bill-transfer"></i></div>
+        <div class="card-text"><h3>Döviz</h3><p>Anlık Kur Çevirici</p></div>
+    </a>
+    <a href="kdv.html" class="feature-card">
+        <div class="icon-box" style="color: #2dd4bf;"><i class="fa-solid fa-receipt"></i></div>
+        <div class="card-text"><h3>KDV</h3><p>Dahil & Hariç Hesaplama</p></div>
+    </a>
+    <a href="mesai.html" class="feature-card">
+        <div class="icon-box" style="color: #6366f1;"><i class="fa-solid fa-clock"></i></div>
+        <div class="card-text"><h3>Mesai</h3><p>Ek Kazanç Hesap Tablosu</p></div>
+    </a>
+    <a href="cv.html" class="feature-card">
+        <div class="icon-box" style="color: #94a3b8;"><i class="fa-solid fa-file-pdf"></i></div>
+        <div class="card-text"><h3>CV</h3><p>Hızlı PDF Özgeçmiş</p></div>
     </a>
 </main>
 
-<article class="container" style="max-width:1300px; margin: 40px auto; padding: 0 25px;">
-    <div style="background: var(--card-bg); padding: 40px; border-radius: 24px; border: 1px solid var(--border);">
-        <h2 style="color:#fff; font-size:1.2rem; margin-bottom:15px;">H360: Finansal Hesaplamalarda Dijital Rehberiniz</h2>
-        <p style="color:#64748b; font-size:0.9rem; line-height:1.8;">
-            Hesapla360 (H360), maaş hesaplamadan kredi ödeme planlarına, kıdem tazminatından enflasyon analizine kadar geniş bir yelpazede ücretsiz finansal araçlar sunar. 2026 yılı güncel verileriyle entegre çalışan sistemimiz, karmaşık mali tabloları saniyeler içinde net sonuçlara dönüştürür.
+<footer style="max-width:1300px; margin: 0 auto; padding: 40px 25px; border-top: 1px solid var(--border);">
+    <div style="background: var(--card-bg); padding: 30px; border-radius: 24px; text-align: center;">
+        <h2 style="color:#fff; font-size:1rem; margin-bottom:10px;">H360: Finansal Özgürlük İçin Doğru Veri</h2>
+        <p style="font-size:0.8rem; color:#64748b; line-height:1.7;">
+            Hesapla360, 2026 yılı güncel vergi dilimleri, asgari ücret tutarları ve TÜFE verileriyle çalışır. 
+            Tüm hesaplamalar bilgilendirme amaçlıdır.
         </p>
     </div>
-</article>
+</footer>
 
 <script>
-    // Döviz API ve Menü fonksiyonları aynı kalacak
     async function updateRates() {
         try {
             const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
             const data = await res.json();
-            const tryVal = data.rates.TRY;
-            document.getElementById('usdVal').innerText = tryVal.toFixed(2) + " ₺";
-            document.getElementById('eurVal').innerText = (tryVal / data.rates.EUR).toFixed(2) + " ₺";
-            const goldGram = ((1 / data.rates.XAU) / 31.1034) * tryVal;
-            if(goldGram) document.getElementById('goldVal').innerText = Math.round(goldGram).toLocaleString('tr-TR') + " ₺";
-        } catch (e) { console.log("Kur hatası"); }
+            document.getElementById('usdVal').innerText = data.rates.TRY.toFixed(2) + " ₺";
+            document.getElementById('eurVal').innerText = (data.rates.TRY / data.rates.EUR).toFixed(2) + " ₺";
+        } catch (e) { console.error("Kur hatası"); }
     }
     updateRates();
     setInterval(updateRates, 60000);
