@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Profesyonel Kredi Analizi</title>
+    <title>Kredi Hesaplama 2026 | H360 Finansal Analiz</title>
+    <meta name="description" content="İhtiyaç, konut ve taşıt kredisi faiz oranlarını karşılaştırın, ödeme planınızı anında oluşturun.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1894587939365426" crossorigin="anonymous"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; }
+        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; overflow-x: hidden; }
         
-        /* Premium Navigasyon (Index ile Uyumlu) */
+        /* Premium Navigasyon */
         .glass-nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: rgba(11, 15, 25, 0.8); backdrop-filter: blur(12px);
@@ -22,7 +25,15 @@
         .logo-box span { color: #3b82f6; }
         .h360-logo-icon { background: #3b82f6; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; }
 
-        .main-wrapper { padding-top: 120px; padding-bottom: 60px; display: flex; flex-direction: column; align-items: center; }
+        .main-wrapper { padding: 120px 20px 60px; display: flex; flex-direction: column; align-items: center; }
+        
+        /* Kredi Türü Seçici */
+        .type-selector { display: flex; gap: 10px; margin-bottom: 25px; }
+        .type-btn {
+            padding: 10px 20px; border-radius: 12px; background: rgba(255,255,255,0.05);
+            color: #94a3b8; border: 1px solid transparent; cursor: pointer; transition: 0.3s; font-weight: 600; font-size: 0.8rem;
+        }
+        .type-btn.active { background: #3b82f6; color: #fff; }
 
         .calc-card {
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
@@ -30,50 +41,42 @@
             box-shadow: 0 40px 100px rgba(0,0,0,0.5);
         }
 
-        .header-area { text-align: center; margin-bottom: 35px; }
-        .header-area h1 { font-size: 1.6rem; color: #fff; margin: 0; letter-spacing: 1px; }
-        .header-area p { color: #3b82f6; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-top: 5px; }
-
-        /* Banka Seçici */
+        /* Banka Kartları */
         .bank-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 30px; }
         .bank-card {
             background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s;
         }
-        .bank-card:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); }
-        .bank-card.active { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); box-shadow: 0 0 20px rgba(59,130,246,0.2); }
-        .bank-logo { width: 32px; height: 32px; margin: 0 auto 8px; border-radius: 6px; overflow: hidden; }
-        .bank-logo img { width: 100%; height: 100%; object-fit: cover; }
-        .bank-name { display: block; font-size: 0.7rem; font-weight: 600; color: #94a3b8; }
-        .bank-rate { display: block; font-size: 0.85rem; font-weight: 700; color: #3b82f6; margin-top: 2px; }
+        .bank-card:hover { border-color: #3b82f6; }
+        .bank-card.active { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+        .bank-logo { width: 32px; height: 32px; margin: 0 auto 8px; border-radius: 6px; overflow: hidden; background: #fff; padding: 2px; }
+        .bank-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .bank-name { display: block; font-size: 0.65rem; color: #94a3b8; font-weight: 700; }
+        .bank-rate { display: block; font-size: 0.8rem; color: #3b82f6; font-weight: 800; margin-top: 4px; }
 
-        /* Inputlar */
+        /* Form Alanları */
         .input-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        label { display: block; color: #94a3b8; font-size: 0.65rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
-        input { width: 100%; padding: 15px; background: #080b12; border: 1px solid #1e293b; border-radius: 12px; color: #fff; outline: none; box-sizing: border-box; }
+        label { display: block; color: #94a3b8; font-size: 0.65rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
+        input { width: 100%; padding: 15px; background: #080b12; border: 1px solid #1e293b; border-radius: 12px; color: #fff; font-size: 1rem; outline: none; box-sizing: border-box; }
         input:focus { border-color: #3b82f6; }
 
         .calc-btn {
             width: 100%; padding: 20px; background: #3b82f6; color: #fff; border: none;
-            border-radius: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-bottom: 30px;
+            border-radius: 16px; font-weight: 700; cursor: pointer; transition: 0.3s;
         }
         .calc-btn:hover { background: #2563eb; transform: translateY(-2px); }
 
-        /* Sonuçlar */
-        .res-container { display: none; animation: fadeIn 0.5s ease; }
-        .res-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
-        .res-box { background: #080b12; border: 1px solid #1e293b; border-radius: 20px; padding: 25px; text-align: center; }
-        .res-box span { font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
-        .res-box b { display: block; font-size: 1.8rem; color: #fff; margin-top: 5px; }
+        /* Sonuç Paneli */
+        .res-display { margin-top: 35px; display: none; }
+        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .res-item { background: #080b12; border: 1px solid #1e293b; border-radius: 20px; padding: 25px; text-align: center; }
+        .res-item span { font-size: 0.7rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; }
+        .res-item b { display: block; font-size: 1.8rem; color: #fff; margin-top: 5px; }
 
-        /* Tablo */
-        .table-scroll { max-height: 300px; overflow-y: auto; border-radius: 16px; border: 1px solid #1e293b; background: #080b12; }
+        .table-wrap { max-height: 350px; overflow-y: auto; border-radius: 16px; border: 1px solid #1e293b; }
         table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         th { background: #1e293b; padding: 15px; text-align: left; font-size: 0.65rem; text-transform: uppercase; position: sticky; top: 0; }
         td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.03); color: #94a3b8; }
-        tr:hover td { background: rgba(59, 130, 246, 0.05); color: #fff; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -89,118 +92,100 @@
 </nav>
 
 <div class="main-wrapper">
-    <div class="calc-card">
-        <div class="header-area">
-            <p>Güncel Faiz ve Ödeme Projeksiyonu</p>
-            <h1>BANKA KREDİ ANALİZİ</h1>
-        </div>
+    <div class="type-selector">
+        <button class="type-btn active" onclick="updateType('ihtiyac', this)">İHTİYAÇ</button>
+        <button class="type-btn" onclick="updateType('tasit', this)">TAŞIT</button>
+        <button class="type-btn" onclick="updateType('konut', this)">KONUT</button>
+    </div>
 
+    <div class="calc-card">
         <div class="bank-grid" id="bankList">
-            <div class="bank-card active" onclick="selectBank(3.89, this)">
+            <div class="bank-card active" onclick="setBank(3.89, this)">
                 <div class="bank-logo"><img src="https://www.akbank.com/favicon.ico"></div>
-                <span class="bank-name">Akbank</span>
-                <span class="bank-rate">%3.89</span>
+                <span class="bank-name">Akbank</span><span class="bank-rate">%3.89</span>
             </div>
-            <div class="bank-card" onclick="selectBank(4.24, this)">
+            <div class="bank-card" onclick="setBank(4.24, this)">
                 <div class="bank-logo"><img src="https://www.garantibbva.com.tr/favicon.ico"></div>
-                <span class="bank-name">Garanti BBVA</span>
-                <span class="bank-rate">%4.24</span>
+                <span class="bank-name">Garanti BBVA</span><span class="bank-rate">%4.24</span>
             </div>
-            <div class="bank-card" onclick="selectBank(3.75, this)">
+            <div class="bank-card" onclick="setBank(3.75, this)">
                 <div class="bank-logo"><img src="https://www.ziraatbank.com.tr/favicon.ico"></div>
-                <span class="bank-name">Ziraat</span>
-                <span class="bank-rate">%3.75</span>
+                <span class="bank-name">Ziraat</span><span class="bank-rate">%3.75</span>
             </div>
-            <div class="bank-card" onclick="selectBank(4.10, this)">
+            <div class="bank-card" onclick="setBank(4.10, this)">
                 <div class="bank-logo"><img src="https://www.isbank.com.tr/favicon.ico"></div>
-                <span class="bank-name">İş Bankası</span>
-                <span class="bank-rate">%4.10</span>
+                <span class="bank-name">İş Bankası</span><span class="bank-rate">%4.10</span>
             </div>
         </div>
 
         <div class="input-row">
-            <div>
-                <label>Kredi Tutarı (TL)</label>
-                <input type="number" id="amount" value="100000">
-            </div>
-            <div>
-                <label>Faiz (%)</label>
-                <input type="number" id="interest" step="0.01" value="3.89">
-            </div>
-            <div>
-                <label>Vade (Ay)</label>
-                <input type="number" id="term" value="12">
-            </div>
+            <div><label>KREDİ TUTARI (TL)</label><input type="number" id="amt" value="100000"></div>
+            <div><label>FAİZ (%)</label><input type="number" id="rat" step="0.01" value="3.89"></div>
+            <div><label>VADE (AY)</label><input type="number" id="trm" value="12"></div>
         </div>
 
-        <button class="calc-btn" onclick="calculateKredi()">STRATEJİYİ ANALİZ ET</button>
+        <button class="calc-btn" onclick="runCalc()">HESAPLA VE PLANI GÖSTER</button>
 
-        <div id="resultArea" class="res-container">
-            <div class="res-summary">
-                <div class="res-box">
-                    <span>Aylık Taksit</span>
-                    <b id="monthTaksit">0 ₺</b>
-                </div>
-                <div class="res-box">
-                    <span>Toplam Ödeme</span>
-                    <b id="totalPay">0 ₺</b>
-                </div>
+        <div id="resPanel" class="res-display">
+            <div class="res-grid">
+                <div class="res-item"><span>Aylık Taksit</span><b id="mPay">0 ₺</b></div>
+                <div class="res-item"><span>Toplam Ödeme</span><b id="tPay">0 ₺</b></div>
             </div>
-
-            <div class="table-scroll">
-                <table id="planTable">
-                    <thead>
-                        <tr>
-                            <th>Ay</th>
-                            <th>Ana Para</th>
-                            <th>Faiz+Vergi</th>
-                            <th>Kalan Borç</th>
-                        </tr>
-                    </thead>
+            <div class="table-wrap">
+                <table id="plan">
+                    <thead><tr><th>Ay</th><th>Taksit</th><th>Ana Para</th><th>Faiz+Vergi</th><th>Bakiye</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <div class="calc-card" style="margin-top: 30px; padding: 30px;">
+        <h2 style="color:#fff; font-size:1.1rem; margin-bottom:15px;">Kredi Hesaplama Rehberi</h2>
+        <p style="font-size:0.85rem; line-height:1.7; color:#94a3b8;">
+            H360 kredi hesaplama aracı ile <b>ihtiyac kredisi</b>, <b>konut kredisi</b> ve <b>tasit kredisi</b> için en güncel maliyetleri analiz edebilirsiniz. 
+            Hesaplama yapılırken seçilen kredi türüne göre KKDF (%15) ve BSMV (%5) vergileri otomatik olarak dahil edilir (Konut kredisinde vergiler %0 uygulanır).
+        </p>
+    </div>
 </div>
 
 <script>
-    function selectBank(rate, el) {
+    let currentType = 'ihtiyac';
+    function updateType(type, el) {
+        document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        currentType = type;
+    }
+
+    function setBank(val, el) {
         document.querySelectorAll('.bank-card').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
-        document.getElementById('interest').value = rate;
+        document.getElementById('rat').value = val;
     }
 
-    function calculateKredi() {
-        const T = parseFloat(document.getElementById('amount').value);
-        const F = parseFloat(document.getElementById('interest').value) / 100;
-        const V = parseInt(document.getElementById('term').value);
+    function runCalc() {
+        const t = parseFloat(document.getElementById('amt').value);
+        const f = parseFloat(document.getElementById('rat').value) / 100;
+        const v = parseInt(document.getElementById('trm').value);
         
-        // KKDF %15, BSMV %5 dahil brüt faiz
-        const brutFaiz = F * 1.20;
-        const taksit = (T * brutFaiz * Math.pow(1 + brutFaiz, V)) / (Math.pow(1 + brutFaiz, V) - 1);
+        let vergiler = currentType === 'konut' ? 1 : 1.20; // KKDF+BSMV
+        const brüt = f * vergiler;
         
-        document.getElementById('monthTaksit').innerText = Math.round(taksit).toLocaleString('tr-TR') + " ₺";
-        document.getElementById('totalPay').innerText = Math.round(taksit * V).toLocaleString('tr-TR') + " ₺";
+        const taksit = (t * brüt * Math.pow(1+brüt, v)) / (Math.pow(1+brüt, v) - 1);
+        document.getElementById('mPay').innerText = Math.round(taksit).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('tPay').innerText = Math.round(taksit * v).toLocaleString('tr-TR') + " ₺";
 
-        const tbody = document.querySelector('#planTable tbody');
+        const tbody = document.querySelector('#plan tbody');
         tbody.innerHTML = "";
-        let kalan = T;
-
-        for(let i = 1; i <= V; i++) {
-            let fV = kalan * brutFaiz;
-            let aP = taksit - fV;
-            kalan -= aP;
-            tbody.innerHTML += `<tr>
-                <td>${i}</td>
-                <td>${Math.round(aP).toLocaleString('tr-TR')} ₺</td>
-                <td>${Math.round(fV).toLocaleString('tr-TR')} ₺</td>
-                <td>${Math.max(0, Math.round(kalan)).toLocaleString('tr-TR')} ₺</td>
-            </tr>`;
+        let kalan = t;
+        for(let i=1; i<=v; i++) {
+            let faiz = kalan * brüt;
+            let ana = taksit - faiz;
+            kalan -= ana;
+            tbody.innerHTML += `<tr><td>${i}</td><td>${Math.round(taksit).toLocaleString('tr-TR')} ₺</td><td>${Math.round(ana).toLocaleString('tr-TR')} ₺</td><td>${Math.round(faiz).toLocaleString('tr-TR')} ₺</td><td>${Math.max(0, Math.round(kalan)).toLocaleString('tr-TR')} ₺</td></tr>`;
         }
-        document.getElementById('resultArea').style.display = 'block';
+        document.getElementById('resPanel').style.display = 'block';
     }
 </script>
-<script src="h360-core.js"></script>
 </body>
 </html>
