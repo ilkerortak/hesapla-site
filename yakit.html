@@ -3,86 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Gelişmiş Yakıt Analizi</title>
+    <title>H360 | Gelişmiş Yakıt Analizi & Yolculuk Maliyeti</title>
+    <meta name="description" content="2026 güncel yakıt fiyatları ile yolculuk maliyetinizi hesaplayın. KM başı tüketim ve kişi başı masraf bölüşümü analizi.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ANA DEEP NIGHT TEMA */
-        body { background-color: #0b0f19; margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; overflow-x: hidden; }
+        :root { --primary: #f59e0b; --blue: #3b82f6; --success: #10b981; --bg: #0b0f19; --card-bg: rgba(255, 255, 255, 0.02); --border: rgba(255, 255, 255, 0.05); }
+        body { background-color: var(--bg); margin: 0; font-family: 'Inter', sans-serif; color: #cbd5e0; overflow-x: hidden; line-height: 1.6; }
         
-        .main-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 120px 20px 60px; }
+        /* NAVİGASYON */
+        .glass-nav { position: fixed; top: 0; left: 0; right: 0; height: 75px; background: rgba(11, 15, 25, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 5%; z-index: 2000; }
+        .logo { color: #fff; text-decoration: none; font-weight: 800; font-size: 1.2rem; }
+        .logo span { color: var(--primary); }
+        .home-btn { color: #fff; text-decoration: none; background: rgba(245, 158, 11, 0.1); padding: 10px 18px; border-radius: 12px; border: 1px solid rgba(245, 158, 11, 0.2); transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; }
+        .home-btn:hover { background: rgba(245, 158, 11, 0.2); transform: translateY(-2px); }
+
+        .main-wrapper { display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 130px 20px 60px; }
         
-        .yakit-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px; padding: 40px; width: 100%; max-width: 600px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-        }
-
-        /* Başlık Alanı */
-        .header-area { display: flex; align-items: center; gap: 20px; margin-bottom: 35px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 25px; }
-        .icon-box { 
-            width: 60px; height: 60px; background: rgba(245, 158, 11, 0.1); 
-            border-radius: 16px; display: flex; align-items: center; justify-content: center;
-            color: #f59e0b; font-size: 1.5rem; border: 1px solid rgba(245, 158, 11, 0.2);
-        }
-        .title-text h1 { font-size: 1.3rem; margin: 0; color: #fff; letter-spacing: 1px; }
-        .title-text p { color: #f59e0b; font-size: 0.7rem; font-weight: 800; margin: 4px 0 0; text-transform: uppercase; }
-
+        /* Yakıt Kartı */
+        .yakit-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px; padding: 40px; width: 100%; max-width: 600px; backdrop-filter: blur(15px); box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
+        .header-area { display: flex; align-items: center; gap: 20px; margin-bottom: 35px; border-bottom: 1px solid var(--border); padding-bottom: 25px; }
+        .icon-box { width: 55px; height: 55px; background: rgba(245, 158, 11, 0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.4rem; border: 1px solid rgba(245, 158, 11, 0.2); }
+        
         /* Inputlar */
         .input-group { margin-bottom: 25px; }
-        .input-group label { display: block; color: #94a3b8; font-size: 0.65rem; font-weight: 800; margin-bottom: 10px; letter-spacing: 0.5px; }
-        .input-group input {
-            width: 100%; padding: 18px; background: #080b12;
-            border: 1px solid #1e293b; border-radius: 14px;
-            color: #fff; font-size: 1.1rem; transition: 0.3s; box-sizing: border-box; outline: none;
-        }
-        .input-group input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        .input-group label { display: block; color: #94a3b8; font-size: 0.65rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
+        .input-group input { width: 100%; padding: 18px; background: #080b12; border: 1px solid #1e293b; border-radius: 14px; color: #fff; font-size: 1.1rem; outline: none; box-sizing: border-box; transition: 0.3s; }
+        .input-group input:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
 
-        /* Hızlı Seçim Etiketleri */
         .quick-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-        .q-tag { 
-            background: #111827; padding: 6px 14px; border-radius: 10px; 
-            font-size: 0.7rem; cursor: pointer; border: 1px solid #1e293b; color: #64748b; transition: 0.2s; font-weight: 600;
-        }
-        .q-tag:hover { background: #1e293b; border-color: #3b82f6; color: #fff; transform: translateY(-2px); }
+        .q-tag { background: #111827; padding: 6px 14px; border-radius: 10px; font-size: 0.7rem; cursor: pointer; border: 1px solid #1e293b; color: #64748b; transition: 0.2s; font-weight: 600; }
+        .q-tag:hover { background: #1e293b; border-color: var(--blue); color: #fff; transform: translateY(-2px); }
 
         .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        
-        .calc-btn {
-            width: 100%; padding: 20px; background: #3b82f6; color: #fff;
-            border: none; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1rem;
-            transition: 0.3s; letter-spacing: 1px; margin-top: 10px;
-        }
+        .calc-btn { width: 100%; padding: 20px; background: var(--blue); color: #fff; border: none; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1rem; transition: 0.3s; margin-top: 10px; }
         .calc-btn:hover { background: #2563eb; transform: translateY(-2px); }
 
         /* Sonuç Paneli */
-        .result-box { margin-top: 35px; animation: fadeIn 0.5s ease; display: none; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .main-res { 
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 100%);
-            padding: 30px; border-radius: 20px; text-align: center; border: 1px solid rgba(16, 185, 129, 0.2);
-            margin-bottom: 20px;
-        }
-        .main-res small { font-size: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
-        .main-res b { font-size: 2.8rem; color: #10b981; display: block; margin-top: 8px; letter-spacing: -1px; }
+        .result-box { margin-top: 35px; display: none; animation: fadeIn 0.5s ease; }
+        .main-res { background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 100%); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid rgba(16, 185, 129, 0.2); margin-bottom: 20px; }
+        .main-res b { font-size: 2.8rem; color: var(--success); display: block; margin-top: 8px; }
 
         .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
         .stat-card { background: #080b12; padding: 18px 10px; border-radius: 18px; text-align: center; border: 1px solid #1e293b; }
         .stat-card small { font-size: 0.6rem; color: #64748b; display: block; margin-bottom: 6px; font-weight: 800; text-transform: uppercase; }
-        .stat-card span { font-size: 1.1rem; font-weight: 700; color: #fff; }
+
+        .seo-content { max-width: 800px; margin-top: 60px; color: #94a3b8; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
+
+<nav class="glass-nav">
+    <a href="index.html" class="logo">H360<span>.</span></a>
+    <a href="index.html" class="home-btn">
+        <i class="fa-solid fa-house"></i>
+        <span>Ana Sayfa</span>
+    </a>
+</nav>
 
 <div class="main-wrapper">
     <div class="yakit-card">
         <div class="header-area">
             <div class="icon-box"><i class="fa-solid fa-gas-pump"></i></div>
             <div class="title-text">
-                <h1>YAKIT ANALİZİ</h1>
-                <p>Detaylı Yolculuk Maliyeti</p>
+                <h1 style="margin: 0; color: #fff;">YAKIT ANALİZİ</h1>
+                <p>Detaylı Yolculuk Maliyet Projeksiyonu</p>
             </div>
         </div>
 
@@ -101,8 +88,8 @@
                 <label>ORT. TÜKETİM (L/100KM)</label>
                 <input type="number" id="cons" step="0.1" placeholder="6.5">
                 <div class="quick-tags">
-                    <span class="q-tag" onclick="setVal('cons', 5.5)">Eco</span>
-                    <span class="q-tag" onclick="setVal('cons', 8.5)">Sport</span>
+                    <span class="q-tag" onclick="setVal('cons', 5.5)">Ekonomik</span>
+                    <span class="q-tag" onclick="setVal('cons', 8.5)">Performans</span>
                 </div>
             </div>
             <div class="input-group">
@@ -131,36 +118,28 @@
             <div class="stats-row">
                 <div class="stat-card">
                     <small>KM BAŞI</small>
-                    <span id="resKm" style="color:#10b981">0 ₺</span>
+                    <span id="resKm" style="color:var(--success); font-weight:700;">0 ₺</span>
                 </div>
                 <div class="stat-card">
                     <small>TOPLAM LİTRE</small>
-                    <span id="resLitre">0 L</span>
+                    <span id="resLitre" style="color:#fff; font-weight:700;">0 L</span>
                 </div>
                 <div class="stat-card">
                     <small>KİŞİ BAŞI</small>
-                    <span id="resPpl" style="color:#3b82f6">0 ₺</span>
+                    <span id="resPpl" style="color:var(--blue); font-weight:700;">0 ₺</span>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="info-section" style="margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 15px; border: 1px dashed rgba(255,255,255,0.1); color: #aaa; font-size: 0.9rem;">
-    <h3 style="color: #fff; margin-bottom: 10px; font-size: 1.1rem;">Nedir? Nasıl Hesaplanır?</h3>
-    <p>Yolculuk Yakıt Maliyeti Analizi
-Gideceğiniz mesafe, aracınızın ortalama tüketimi ve güncel yakıt fiyatlarını kullanarak seyahat maliyetinizi hesaplar. Hem bütçenizi planlamanıza yardımcı olur hem de yolculuk öncesi yakıt giderinizi ön görmenizi sağlar.</p>
+
+    <article class="seo-content">
+        <h2 style="color: #fff; border-left: 4px solid var(--primary); padding-left: 15px;">Yolculuk Maliyeti Nasıl Hesaplanır?</h2>
+        <p>Seyahat masraflarınızı planlarken en büyük kalem olan yakıt giderini hesaplamak için: <strong>(Mesafe / 100) x Ortalama Tüketim x Yakıt Fiyatı</strong> formülü kullanılır. Bu araç, sadece toplam maliyeti değil, aynı zamanda yol arkadaşlarınızla bölüşebileceğiniz kişi başı tutarı da saniyeler içinde analiz eder.</p>
+    </article>
 </div>
 
 <script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
     function setVal(id, val) { document.getElementById(id).value = val; }
-
-    window.onclick = function(e) {
-        if (!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
-            const menu = document.getElementById('navMenu');
-            if (menu && menu.classList.contains('active')) menu.classList.remove('active');
-        }
-    }
 
     function calculate() {
         const d = parseFloat(document.getElementById('dist').value) || 0;
@@ -168,7 +147,10 @@ Gideceğiniz mesafe, aracınızın ortalama tüketimi ve güncel yakıt fiyatlar
         const p = parseFloat(document.getElementById('price').value) || 0;
         const ppl = parseInt(document.getElementById('ppl').value) || 1;
 
-        if(d <= 0 || c <= 0 || p <= 0) return;
+        if(d <= 0 || c <= 0 || p <= 0) {
+            alert("Lütfen tüm alanları doldurun.");
+            return;
+        }
 
         const totalLitre = (d * c) / 100;
         const totalTl = totalLitre * p;
@@ -181,8 +163,9 @@ Gideceğiniz mesafe, aracınızın ortalama tüketimi ve güncel yakıt fiyatlar
         document.getElementById('resPpl').innerText = Math.round(perPerson).toLocaleString('tr-TR') + " ₺";
 
         document.getElementById('res').style.display = "block";
+        window.scrollTo({ top: 400, behavior: 'smooth' });
     }
 </script>
-    <script src="h360-core.js"></script>
+<script src="h360-core.js"></script>
 </body>
 </html>
