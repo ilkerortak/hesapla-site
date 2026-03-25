@@ -3,156 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limit Analizi | Hesap360 Profesyonel</title>
+    <title>Kredi Limit Analizi | Hesap360</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
         :root {
             --bg: #020617;
             --surface: #0f172a;
             --primary: #3b82f6;
             --accent: #60a5fa;
-            --border: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
             --text-dim: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
-            background: var(--bg); font-family: 'Plus Jakarta Sans', sans-serif; color: #fff; margin: 0;
-            background-image: radial-gradient(circle at 50% -20%, #1e40af44 0%, transparent 60%);
+            background: var(--bg); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: var(--text-main);
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 50% -10%, #1e40af33 0%, transparent 50%);
+            min-height: 100vh;
         }
 
-        .container { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
 
-        /* Üst Başlık */
-        .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
-        .page-header h1 { font-size: 2rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
-        .badge-pro { background: var(--primary); padding: 5px 15px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; vertical-align: middle; margin-left: 10px; }
+        /* --- Header --- */
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 50px; border-bottom: 1px solid var(--border); padding-bottom: 20px;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; text-decoration: none; color: #fff; }
+        .logo span { color: var(--primary); }
+        .back-btn { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+        .back-btn:hover { color: #fff; }
 
-        /* Ana Panel Düzeni */
-        .main-panel { display: grid; grid-template-columns: 1fr 350px; gap: 30px; }
+        /* --- Ana Panel --- */
+        .main-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; }
 
-        /* Sol Taraf: Input Kartı */
         .analysis-card {
             background: var(--surface); border: 1px solid var(--border); border-radius: 24px;
-            padding: 40px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
 
+        .section-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: var(--primary); }
+
+        /* Form Elemanları */
         .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
-        .input-group { display: flex; flex-direction: column; gap: 8px; }
-        label { color: var(--text-dim); font-size: 0.85rem; font-weight: 600; }
+        .field { display: flex; flex-direction: column; gap: 8px; }
+        label { font-size: 0.75rem; font-weight: 700; color: var(--text-dim); letter-spacing: 1px; }
         
         input {
-            background: #020617; border: 1px solid var(--border); padding: 16px; 
-            border-radius: 14px; color: #fff; font-size: 1rem; transition: 0.3s;
+            background: rgba(2, 6, 23, 0.6); border: 1px solid var(--border); padding: 16px; 
+            border-radius: 12px; color: #fff; font-size: 1.1rem; transition: 0.3s; width: 100%;
         }
-        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+        input::placeholder { color: #334155; }
 
-        .btn-main {
+        .helper-text { font-size: 0.7rem; color: var(--text-dim); font-style: italic; }
+
+        .btn-calculate {
             width: 100%; background: var(--primary); color: #fff; border: none; padding: 20px;
             border-radius: 16px; font-size: 1.1rem; font-weight: 800; cursor: pointer;
-            transition: 0.3s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: 0.3s; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 12px;
         }
-        .btn-main:hover { background: #2563eb; transform: translateY(-2px); }
+        .btn-calculate:hover { background: #2563eb; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4); }
 
-        /* Sağ Taraf: Bilgi Kartları */
-        .info-sidebar { display: flex; flex-direction: column; gap: 20px; }
-        .side-box {
+        /* --- Sağ Panel (Bilgilendirme) --- */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .info-box {
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
             padding: 25px; border-radius: 20px;
         }
-        .side-box i { color: var(--accent); font-size: 1.5rem; margin-bottom: 15px; display: block; }
-        .side-box h4 { margin: 0 0 10px 0; font-size: 1rem; }
-        .side-box p { margin: 0; color: var(--text-dim); font-size: 0.8rem; line-height: 1.5; }
+        .info-box i { font-size: 1.5rem; color: var(--accent); margin-bottom: 15px; display: block; }
+        .info-box h4 { font-size: 1rem; margin-bottom: 10px; }
+        .info-box p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
 
-        /* Sonuç Alanı (Default Gizli) */
-        #resultContainer { 
-            display: none; grid-column: span 2; margin-top: 20px;
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        /* --- Sonuç Raporu --- */
+        #resultArea { 
+            display: none; grid-column: span 2; margin-top: 30px; 
+            animation: fadeIn 0.5s ease-out; 
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .result-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-        .res-card {
-            background: linear-gradient(145deg, #1e293b, #0f172a);
-            border: 1px solid var(--border); padding: 30px; border-radius: 24px; text-align: center;
+        .result-container { 
+            background: linear-gradient(145deg, #1e293b, #0f172a); 
+            border: 1px solid var(--primary); border-radius: 24px; padding: 35px;
         }
-        .res-card.highlight { border-color: var(--primary); background: rgba(59, 130, 246, 0.05); }
-        .res-val { display: block; font-size: 2rem; font-weight: 800; color: var(--accent); margin: 10px 0; }
-        .res-label { color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+        .result-header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        
+        .grid-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .res-item { text-align: center; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 15px; }
+        .res-label { display: block; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 10px; }
+        .res-val { font-size: 1.8rem; font-weight: 800; color: var(--accent); }
 
-        @media (max-width: 900px) {
-            .main-panel { grid-template-columns: 1fr; }
+        .risk-bar-container { margin-top: 30px; }
+        .risk-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 10px; font-weight: 700; }
+        .risk-track { height: 10px; background: #1e293b; border-radius: 10px; overflow: hidden; position: relative; }
+        .risk-fill { height: 100%; width: 0%; transition: 1s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        @media (max-width: 850px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .grid-results { grid-template-columns: 1fr; }
             .input-row { grid-template-columns: 1fr; }
-            .result-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="page-header">
-        <h1>Kredi Limit Analizi <span class="badge-pro">PRO ANALİZ</span></h1>
-        <a href="index.html" style="color:var(--text-dim); text-decoration:none; font-size:0.9rem;"><i class="fa-solid fa-arrow-left"></i> Geri Dön</a>
-    </div>
+    <header>
+        <a href="index.html" class="logo">HESAP<span>360</span></a>
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-chevron-left"></i> Vazgeç ve Dön</a>
+    </header>
 
-    <div class="main-panel">
+    <div class="main-grid">
         <div class="analysis-card">
-            <div class="input-row">
-                <div class="input-group">
-                    <label>AYLIK NET GELİR (₺)</label>
-                    <input type="number" id="income" placeholder="Örn: 55.000">
-                </div>
-                <div class="input-group">
-                    <label>TOPLAM KREDİ/KART TAKSİDİ (₺)</label>
-                    <input type="number" id="debts" placeholder="Örn: 4.500">
-                </div>
+            <div class="section-title">
+                <i class="fa-solid fa-chart-line"></i>
+                <h2>Limit Stratejisi Analizi</h2>
             </div>
-            
+
             <div class="input-row">
-                <div class="input-group">
-                    <label>VADE SEÇİMİ (AY)</label>
-                    <input type="number" id="term" value="12">
+                <div class="field">
+                    <label>AYLIK NET GELİR (₺)</label>
+                    <input type="number" id="income" placeholder="Örn: 50000">
+                    <span class="helper-text">Tüm yan haklar dahil net kazancınız.</span>
                 </div>
-                <div class="input-group">
-                    <label>KREDİ NOTU TAHMİNİ</label>
-                    <input type="number" id="score" placeholder="Örn: 1550">
+                <div class="field">
+                    <label>BANKALARA TOPLAM AYLIK ÖDEME (₺)</label>
+                    <input type="number" id="debts" placeholder="Örn: 10000">
+                    <span class="helper-text">Mevcut taksitler ve kart ödemeleri.</span>
                 </div>
             </div>
 
-            <button class="btn-main" onclick="runUltiAnalysis()">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> STRATEJİYİ ANALİZ ET
+            <div class="input-row">
+                <div class="field">
+                    <label>İSTENEN VADE (AY)</label>
+                    <input type="number" id="term" value="12" max="36">
+                </div>
+                <div class="field">
+                    <label>FİNDEKS NOTU (TAHMİNİ)</label>
+                    <input type="number" id="score" placeholder="Örn: 1400">
+                </div>
+            </div>
+
+            <button class="btn-calculate" onclick="calculateH360Limit()">
+                <i class="fa-solid fa-microchip"></i> ANALİZİ BAŞLAT
             </button>
         </div>
 
-        <div class="info-sidebar">
-            <div class="side-box">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h4>Güvenli Hesaplama</h4>
-                <p>Verileriniz hiçbir yere kaydedilmez, sadece anlık analiz için kullanılır.</p>
+        <div class="sidebar">
+            <div class="info-box">
+                <i class="fa-solid fa-building-columns"></i>
+                <h4>DTI (Borç/Gelir) Kuralı</h4>
+                <p>Türkiye'deki bankacılık regülasyonlarına göre, aylık toplam borç ödemeleriniz net gelirinizin <b>%50</b>'sini aşamaz.</p>
             </div>
-            <div class="side-box">
-                <i class="fa-solid fa-circle-info"></i>
-                <h4>Banka Algoritması</h4>
-                <p>Hesaplama, Türkiye'deki bankaların 2026 yasal borç/gelir rasyosu ($%50$) üzerinden yapılır.</p>
+            <div class="info-box">
+                <i class="fa-solid fa-shield-check"></i>
+                <h4>Analiz Kapsamı</h4>
+                <p>Bu hesaplama, 2026 yılı güncel faiz projeksiyonları ve banka rasyoları kullanılarak yapılmaktadır.</p>
             </div>
         </div>
 
-        <div id="resultContainer">
-            <div class="result-grid">
-                <div class="res-card highlight">
-                    <span class="res-label">Maksimum Kredi Limiti</span>
-                    <span class="res-val" id="resLimit">0 ₺</span>
-                    <small style="color:#10b981;">Onay ihtimali yüksek</small>
+        <div id="resultArea">
+            <div class="result-container">
+                <div class="result-header">
+                    <h3 id="statusTitle">Analiz Raporu Hazır</h3>
+                    <p style="color: var(--text-dim); font-size: 0.9rem;" id="statusDesc">Mevcut verilerinizle banka limitleriniz şu şekildedir:</p>
                 </div>
-                <div class="res-card">
-                    <span class="res-label">Maksimum Taksit Gücü</span>
-                    <span class="res-val" id="resInstallment">0 ₺</span>
-                    <small style="color:var(--text-dim);">Aylık ödenebilir tutar</small>
+
+                <div class="grid-results">
+                    <div class="res-item">
+                        <span class="res-label">Maks. Kredi Limiti</span>
+                        <span class="res-val" id="valLimit">0 ₺</span>
+                    </div>
+                    <div class="res-item">
+                        <span class="res-label">Ek Taksit Gücü</span>
+                        <span class="res-val" id="valPower">0 ₺</span>
+                    </div>
+                    <div class="res-item">
+                        <span class="res-label">Borç Yükü Oranı</span>
+                        <span class="res-val" id="valRatio">%0</span>
+                    </div>
                 </div>
-                <div class="res-card">
-                    <span class="res-label">Banka Limit Doluluğu</span>
-                    <span class="res-val" id="resRatio">%0</span>
-                    <small style="color:var(--text-dim);">Gelire göre borç oranı</small>
+
+                <div class="risk-bar-container">
+                    <div class="risk-label">
+                        <span>KREDİ ONAY RİSKİ</span>
+                        <span id="riskText">HESAPLANIYOR...</span>
+                    </div>
+                    <div class="risk-track">
+                        <div id="riskFill" class="risk-fill"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -160,29 +210,56 @@
 </div>
 
 <script>
-    function runUltiAnalysis() {
+    function calculateH360Limit() {
         const income = parseFloat(document.getElementById('income').value);
         const debts = parseFloat(document.getElementById('debts').value) || 0;
         const term = parseInt(document.getElementById('term').value) || 12;
         
-        if(!income) { alert("Lütfen gelirinizi girin."); return; }
+        if(!income || income <= 0) {
+            alert("Lütfen gelirinizi doğru giriniz.");
+            return;
+        }
 
-        // Banka kuralı: Gelirin yarısından borçlar düşülür
-        const availableMonthly = (income * 0.5) - debts;
-        
-        // 2026 ortalama kredi faiz çarpanı simülasyonu
-        const rate = 0.0389; 
-        const limit = availableMonthly * ((1 - Math.pow(1 + rate, -term)) / rate);
-        
+        // Banka Mantığı: Gelirin %50'si toplam taksit limiti
+        const totalInstallmentLimit = income * 0.5;
+        const availableMonthly = totalInstallmentLimit - debts;
         const ratio = (debts / income) * 100;
 
-        // Değerleri bas
-        document.getElementById('resLimit').innerText = (limit > 0 ? Math.floor(limit).toLocaleString('tr-TR') : 0) + " ₺";
-        document.getElementById('resInstallment').innerText = (availableMonthly > 0 ? Math.floor(availableMonthly).toLocaleString('tr-TR') : 0) + " ₺";
-        document.getElementById('resRatio').innerText = "%" + ratio.toFixed(1);
+        // 2026 Tahmini Faiz Çarpanı (Aylık %3.89 faiz ile simülasyon)
+        const monthlyRate = 0.0389;
+        const maxLimit = availableMonthly > 0 
+            ? availableMonthly * ((1 - Math.pow(1 + monthlyRate, -term)) / monthlyRate) 
+            : 0;
 
-        // Paneli göster
-        document.getElementById('resultContainer').style.display = 'block';
+        // Arayüzü Güncelle
+        document.getElementById('valLimit').innerText = Math.floor(maxLimit).toLocaleString('tr-TR') + " ₺";
+        document.getElementById('valPower').innerText = (availableMonthly > 0 ? Math.floor(availableMonthly).toLocaleString('tr-TR') : 0) + " ₺";
+        document.getElementById('valRatio').innerText = "%" + ratio.toFixed(1);
+
+        // Risk Barı Mantığı
+        const riskFill = document.getElementById('riskFill');
+        const riskText = document.getElementById('riskText');
+        
+        document.getElementById('resultArea').style.display = 'block';
+
+        setTimeout(() => {
+            if(ratio < 30) {
+                riskFill.style.width = "25%";
+                riskFill.style.backgroundColor = "var(--success)";
+                riskText.innerText = "ÇOK DÜŞÜK RİSK (Onay Bekleniyor)";
+                riskText.style.color = "var(--success)";
+            } else if (ratio < 48) {
+                riskFill.style.width = "65%";
+                riskFill.style.backgroundColor = "#f59e0b"; // Turuncu
+                riskText.innerText = "ORTA RİSK (Banka İnsiyatifi)";
+                riskText.style.color = "#f59e0b";
+            } else {
+                riskFill.style.width = "95%";
+                riskFill.style.backgroundColor = "var(--danger)";
+                riskText.innerText = "YÜKSEK RİSK (Limit Dolu)";
+                riskText.style.color = "var(--danger)";
+            }
+        }, 100);
     }
 </script>
 
