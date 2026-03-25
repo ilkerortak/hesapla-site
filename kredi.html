@@ -12,32 +12,62 @@
         
         .calc-card {
             background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 24px; padding: 35px; width: 100%; max-width: 750px;
+            border-radius: 24px; padding: 35px; width: 100%; max-width: 850px;
             backdrop-filter: blur(20px); box-shadow: 0 40px 100px rgba(0,0,0,0.5);
             margin: 0 auto;
         }
 
-        /* Banka Listesi Tasarımı */
-        .bank-selector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 25px; }
-        .bank-item {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            padding: 12px; border-radius: 12px; cursor: pointer; text-align: center; transition: 0.3s;
+        /* Banka Seçici Grid - 8 Banka İçin Optimize Edildi */
+        .bank-selector-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 12px; 
+            margin-bottom: 25px; 
         }
-        .bank-item:hover, .bank-item.active { background: rgba(59, 130, 246, 0.1); border-color: var(--accent); }
-        .bank-item img { height: 20px; filter: grayscale(1); opacity: 0.7; transition: 0.3s; margin-bottom: 5px; }
-        .bank-item.active img { filter: grayscale(0); opacity: 1; }
-        .bank-name { font-size: 0.7rem; font-weight: 700; color: #fff; display: block; }
-        .bank-rate { font-size: 0.65rem; color: var(--accent); }
+
+        .bank-item {
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid var(--border);
+            padding: 15px; 
+            border-radius: 14px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            transition: 0.3s;
+        }
+
+        .bank-item:hover, .bank-item.active { 
+            background: rgba(59, 130, 246, 0.1); 
+            border-color: var(--accent); 
+            transform: translateY(-2px);
+        }
+
+        /* Banka Logoları İçin Alan */
+        .bank-logo {
+            width: 32px;
+            height: 32px;
+            background: #fff; /* Logoların net görünmesi için beyaz zemin */
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            flex-shrink: 0;
+        }
+
+        .bank-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .bank-info { text-align: left; }
+        .bank-name { font-size: 0.75rem; font-weight: 700; color: #fff; display: block; }
+        .bank-rate { font-size: 0.7rem; color: var(--accent); font-weight: 600; }
 
         .res-item-big { background: #080b12; padding: 20px; border-radius: 16px; text-align: center; border: 1px solid var(--border); }
-        
-        /* Tablo Container */
         .table-container { margin-top: 25px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
-        table { width: 100%; border-collapse: collapse; font-size: 0.75rem; color: var(--text-dim); }
-        th { background: #1e293b; color: #fff; padding: 12px; font-size: 0.65rem; text-transform: uppercase; }
-        td { padding: 12px; border-bottom: 1px solid var(--border); background: #080b12; }
-
-        .ads-slot { margin: 25px 0; background: rgba(255,255,255,0.01); border: 1px dashed var(--border); height: 90px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
@@ -48,7 +78,7 @@
         <span>Kredi Analiz</span>
     </a>
     <div class="live-ticker">
-        <div class="ticker-item"><span class="gold-txt">İhtiyaç Faiz</span> %3.99</div>
+        <div class="ticker-item"><span class="gold-txt">İhtiyaç Faiz</span> %3.75'den başlayan</div>
     </div>
     <a href="index.html" class="nav-home-btn">
         <i class="fa-solid fa-house"></i>
@@ -62,37 +92,50 @@
             <div class="icon-box" style="width:50px; height:50px; background:rgba(59,130,246,0.1); color:var(--accent); display:flex; align-items:center; justify-content:center; border-radius:12px;"><i class="fa-solid fa-building-columns"></i></div>
             <div>
                 <h1 style="font-size:1.2rem; color:#fff; margin:0;">BANKA KREDİ KARŞILAŞTIRMA</h1>
-                <p style="font-size:0.65rem; color:var(--accent); font-weight:700;">Güncel Faiz Oranları ile Analiz</p>
+                <p style="font-size:0.65rem; color:var(--accent); font-weight:700;">8 Farklı Banka Analizi</p>
             </div>
         </div>
 
-        <label style="font-size:0.65rem; font-weight:800; color:#94a3b8; margin-bottom:10px; display:block;">BANKA SEÇİNİZ</label>
+        <label style="font-size:0.65rem; font-weight:800; color:#94a3b8; margin-bottom:12px; display:block;">GÜNCEL FAİZ ORANLARIYLA BANKA SEÇİN</label>
+        
         <div class="bank-selector-grid">
             <div class="bank-item active" onclick="selectBank(this, 3.89)">
-                <span class="bank-name">Akbank</span>
-                <span class="bank-rate">%3.89</span>
+                <div class="bank-logo"><img src="https://www.akbank.com/favicon.ico" alt="Akbank"></div>
+                <div class="bank-info"><span class="bank-name">Akbank</span><span class="bank-rate">%3.89</span></div>
             </div>
             <div class="bank-item" onclick="selectBank(this, 4.24)">
-                <span class="bank-name">Garanti BBVA</span>
-                <span class="bank-rate">%4.24</span>
+                <div class="bank-logo"><img src="https://www.garantibbva.com.tr/favicon.ico" alt="Garanti"></div>
+                <div class="bank-info"><span class="bank-name">Garanti BBVA</span><span class="bank-rate">%4.24</span></div>
             </div>
             <div class="bank-item" onclick="selectBank(this, 3.75)">
-                <span class="bank-name">Ziraat Bankası</span>
-                <span class="bank-rate">%3.75</span>
+                <div class="bank-logo"><img src="https://www.ziraatbank.com.tr/favicon.ico" alt="Ziraat"></div>
+                <div class="bank-info"><span class="bank-name">Ziraat Bankası</span><span class="bank-rate">%3.75</span></div>
             </div>
             <div class="bank-item" onclick="selectBank(this, 4.10)">
-                <span class="bank-name">İş Bankası</span>
-                <span class="bank-rate">%4.10</span>
+                <div class="bank-logo"><img src="https://www.isbank.com.tr/favicon.ico" alt="İş Bankası"></div>
+                <div class="bank-info"><span class="bank-name">İş Bankası</span><span class="bank-rate">%4.10</span></div>
             </div>
             <div class="bank-item" onclick="selectBank(this, 4.50)">
-                <span class="bank-name">QNB Finansbank</span>
-                <span class="bank-rate">%4.50</span>
+                <div class="bank-logo"><img src="https://www.qnb.com.tr/favicon.ico" alt="QNB"></div>
+                <div class="bank-info"><span class="bank-name">QNB Finansbank</span><span class="bank-rate">%4.50</span></div>
+            </div>
+            <div class="bank-item" onclick="selectBank(this, 4.39)">
+                <div class="bank-logo"><img src="https://www.yapikredi.com.tr/favicon.ico" alt="Yapı Kredi"></div>
+                <div class="bank-info"><span class="bank-name">Yapı Kredi</span><span class="bank-rate">%4.39</span></div>
+            </div>
+            <div class="bank-item" onclick="selectBank(this, 3.80)">
+                <div class="bank-logo"><img src="https://www.vakifbank.com.tr/favicon.ico" alt="Vakıfbank"></div>
+                <div class="bank-info"><span class="bank-name">Vakıfbank</span><span class="bank-rate">%3.80</span></div>
+            </div>
+            <div class="bank-item" onclick="selectBank(this, 3.95)">
+                <div class="bank-logo"><img src="https://www.halkbank.com.tr/favicon.ico" alt="Halkbank"></div>
+                <div class="bank-info"><span class="bank-name">Halkbank</span><span class="bank-rate">%3.95</span></div>
             </div>
         </div>
 
-        <div class="grid-3" style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:15px;">
+        <div class="grid-3" style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:15px; margin-top:20px;">
             <div class="input-group">
-                <label>KREDİ TUTARI</label>
+                <label>KREDİ TUTARI (TL)</label>
                 <input type="number" id="kt" value="100000">
             </div>
             <div class="input-group">
@@ -105,25 +148,16 @@
             </div>
         </div>
 
-        <button class="btn-calc" onclick="calculateKredi()">PLANLAMAYI OLUŞTUR</button>
+        <button class="btn-calc" onclick="calculateKredi()" style="width:100%; padding:18px; background:var(--accent); color:#fff; border:none; border-radius:12px; font-weight:700; cursor:pointer; margin-top:15px;">HESAPLA VE PLANI GÖSTER</button>
 
-        <div class="ads-slot">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1894587939365426"
-                 data-ad-slot="auto"
-                 data-ad-format="auto"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
-
-        <div id="res" class="result-box">
+        <div id="res" class="result-box" style="margin-top:30px;">
             <div class="main-res-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
                 <div class="res-item-big">
                     <span style="font-size:0.6rem; color:#64748b; display:block;">AYLIK TAKSİT</span>
                     <b id="resTaksit" style="color:#fff; font-size:1.6rem;">0 ₺</b>
                 </div>
                 <div class="res-item-big">
-                    <span style="font-size:0.6rem; color:#64748b; display:block;">TOPLAM MALİYET</span>
+                    <span style="font-size:0.6rem; color:#64748b; display:block;">TOPLAM GERİ ÖDEME</span>
                     <b id="resTotal" style="color:#fff; font-size:1.6rem;">0 ₺</b>
                 </div>
             </div>
@@ -137,11 +171,6 @@
                 </table>
             </div>
         </div>
-    </div>
-
-    <div class="info-section" style="max-width:750px; margin:40px auto; padding:20px; background:rgba(255,255,255,0.02); border-radius:15px; color:#888; font-size:0.8rem; border:1px dashed var(--border);">
-        <h3 style="color:#fff; margin-bottom:10px;">Banka Kredi Faizleri Nasıl Belirlenir?</h3>
-        <p>Kredi faiz oranları, Merkez Bankası politika faizi, bankanın likidite durumu ve kredi türüne (ihtiyaç, konut, taşıt) göre değişkenlik gösterir. 2026 yılı banka güncellemeleri dahilinde KKDF (%15) ve BSMV (%5) vergileri hesaplamaya dahil edilmektedir. <br><br><strong>Not:</strong> Yukarıdaki oranlar temsilidir, kesin onay ve oran için ilgili bankanın şubesi veya mobil uygulaması üzerinden başvuru yapmanız gerekir.</p>
     </div>
 </div>
 
@@ -160,7 +189,7 @@
         
         if(!t || !f || !v) return;
 
-        const brütFaiz = (f / 100) * 1.20; // KKDF %15 + BSMV %5 = 1.20 katsayısı
+        const brütFaiz = (f / 100) * 1.20; // KKDF %15 + BSMV %5
         const taksit = (t * brütFaiz * Math.pow(1 + brütFaiz, v)) / (Math.pow(1 + brütFaiz, v) - 1);
         const toplam = taksit * v;
 
@@ -175,12 +204,11 @@
             let odFaiz = kalan * brütFaiz;
             let odAna = taksit - odFaiz;
             kalan -= odAna;
-            tbody.innerHTML += `<tr><td>${i}</td><td>${Math.round(odAna).toLocaleString('tr-TR')} ₺</td><td>${Math.round(odFaiz).toLocaleString('tr-TR')} ₺</td><td>${Math.max(0, Math.round(kalan)).toLocaleString('tr-TR')} ₺</td></tr>`;
+            tbody.innerHTML += `<tr><td>${i}. Ay</td><td>${Math.round(odAna).toLocaleString('tr-TR')} ₺</td><td>${Math.round(odFaiz).toLocaleString('tr-TR')} ₺</td><td>${Math.max(0, Math.round(kalan)).toLocaleString('tr-TR')} ₺</td></tr>`;
         }
         document.getElementById('res').style.display = "block";
     }
     
-    // Sayfa açıldığında ilk hesaplamayı yap
     window.onload = calculateKredi;
 </script>
 <script src="h360-core.js"></script>
