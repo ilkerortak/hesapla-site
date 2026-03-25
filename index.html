@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H360 | Finansal Analiz ve Hesaplama Dashboard</title>
+    <title>H360 | Finansal Analiz ve Hesaplama Merkezi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -15,7 +15,6 @@
 <nav id="navMenu" class="nav-overlay">
     <div class="nav-content">
         <a href="index.html">Ana Sayfa</a>
-        <a href="#rehber">Finans Rehberi</a>
         <a href="hakkimizda.html">Hakkımızda</a>
         <a href="gizlilik.html">Gizlilik Politikası</a>
         <a href="iletisim.html">İletişim</a>
@@ -23,9 +22,10 @@
 </nav>
 
 <header class="hero premium-header">
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="Menü">
+    <button class="menu-btn" onclick="toggleMenu()" style="position: absolute; right: 20px; top: 20px;">
         <i class="fa-solid fa-bars"></i> MENÜ
     </button>
+
     <div class="header-content">
         <div class="header-icon-group">
             <i class="fa-solid fa-chart-simple header-data-icon"></i>
@@ -60,40 +60,34 @@
         <a href="cv.html" class="feature-card"><div class="icon-box">📄</div><div class="card-content"><h3>CV</h3><p>Hızlı PDF Oluşturucu</p></div></a>
     </div>
 
-    <section id="rehber" class="site-info-content" style="margin-top: 80px; padding-bottom: 50px; border-top: 1px solid #222;">
-        <div style="padding-top: 40px; color: #b0b0b0; line-height: 1.8;">
-            <h2 style="color: #fff; margin-bottom: 20px;">Hesapla360: Güçlü Finansal Analiz Araçları</h2>
-            <p>
-                Hesapla360 (H360), bireysel ve kurumsal finansal ihtiyaçlarınızı karşılamak için geliştirilmiş kapsamlı bir <strong>finansal analiz merkezidir</strong>. Platformumuz, Türkiye'deki güncel ekonomik parametreleri ve 2026 yılı yasal mevzuatlarını temel alarak en doğru sonuçları üretir.
-            </p>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px;">
-                <div>
-                    <h3 style="color: #4A90E2;"><i class="fa-solid fa-briefcase"></i> İş Hayatı ve Kariyer</h3>
-                    <p style="font-size: 0.95em;">İşçi ve işveren arasındaki finansal süreçleri şeffaflaştırıyoruz. <strong>Kıdem tazminatı</strong>, ihbar süreleri ve brüt-net maaş dönüşümlerini saniyeler içinde raporlayın. İşsizlik ödeneği planlaması ile kariyer geçişlerinizi güvenle yönetin.</p>
-                </div>
-                <div>
-                    <h3 style="color: #4A90E2;"><i class="fa-solid fa-chart-line"></i> Yatırım ve Vergi Analizi</h3>
-                    <p style="font-size: 0.95em;">Birikimlerinizin geleceğini görün. <strong>Bileşik faiz hesaplama</strong> ve enflasyon karşısındaki alım gücü kaybı analizleri ile yatırımlarınıza yön verin. KDV matrah hesaplama ve döviz kurları ile ticari işlemlerinizi hızlandırın.</p>
-                </div>
-                <div>
-                    <h3 style="color: #4A90E2;"><i class="fa-solid fa-shield-halved"></i> Güvenli ve Güncel Veri</h3>
-                    <p style="font-size: 0.95em;">Verileriniz cihazınızda kalır. Hesapla360, gizlilik odaklı mimarisiyle hiçbir kişisel veriyi sunucularında barındırmaz. Algoritmalarımız, resmi gazete duyuruları ve banka verileriyle düzenli olarak senkronize edilir.</p>
-                </div>
+    <section class="site-info-content" style="margin-top: 60px; padding: 40px; background: rgba(255,255,255,0.02); border-radius: 20px; color: #b0b0b0; line-height: 1.8;">
+        <h2 style="color: #fff; margin-bottom: 20px; font-size: 22px;">Hesapla360: Finansal Okuryazarlık ve Analiz Portalı</h2>
+        <p>Hesapla360, 2026 yılı güncel ekonomik verileri ve yasal mevzuatları temel alarak geliştirilmiş bir <strong>finansal analiz merkezidir</strong>. Platformumuzda yer alan tüm araçlar, karmaşık hesaplamaları saniyeler içinde sonuçlandırarak karar alma süreçlerinizi kolaylaştırır.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 30px;">
+            <div>
+                <h4 style="color: #4A90E2; margin-bottom: 10px;">Hızlı ve Güvenli</h4>
+                <p style="font-size: 14px;">Tüm hesaplamalar tarayıcı tarafında yapılır. Verileriniz sunucularımıza gönderilmez, gizliliğiniz %100 korunur.</p>
+            </div>
+            <div>
+                <h4 style="color: #4A90E2; margin-bottom: 10px;">Güncel Mevzuat</h4>
+                <p style="font-size: 14px;">SGK parametreleri, vergi dilimleri ve enflasyon oranları düzenli olarak güncellenerek en doğru sonuçlara ulaşmanız sağlanır.</p>
             </div>
         </div>
     </section>
 </div>
 
-<footer style="text-align: center; padding: 40px; color: #555; font-size: 0.8em; border-top: 1px solid #111;">
-    <p>&copy; 2026 Hesapla360 (H360) | Tüm Hakları Saklıdır.</p>
+<footer style="margin-top: 50px; padding: 40px; text-align: center; border-top: 1px solid #1a1a1a;">
+    <div style="margin-bottom: 20px;">
+        <a href="gizlilik.html" style="color: #555; text-decoration: none; margin: 0 15px; font-size: 14px;">Gizlilik Politikası</a>
+        <a href="gizlilik.html" style="color: #555; text-decoration: none; margin: 0 15px; font-size: 14px;">Hizmet Şartları</a>
+        <a href="iletisim.html" style="color: #555; text-decoration: none; margin: 0 15px; font-size: 14px;">İletişim</a>
+    </div>
+    <p style="color: #444; font-size: 12px;">&copy; 2026 Hesapla360 (H360) | Tüm Hakları Saklıdır.</p>
 </footer>
 
 <script>
-    function toggleMenu() { 
-        const menu = document.getElementById('navMenu');
-        menu.classList.toggle('active'); 
-    }
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
     
     window.onclick = function(e) { 
         if(!e.target.matches('.menu-btn') && !e.target.closest('.menu-btn')) {
@@ -108,16 +102,9 @@
             const data = await res.json();
             const tryVal = data.rates.TRY;
             const eurRate = data.rates.EUR;
-            const xauUsd = data.rates.XAU;
-
-            // Bu ID'ler index sayfasında şu an görünür değil, hata vermemesi için kontrol ekliyoruz
             if(document.getElementById('usdVal')) document.getElementById('usdVal').innerText = tryVal.toFixed(2);
             if(document.getElementById('eurVal')) document.getElementById('eurVal').innerText = (tryVal / eurRate).toFixed(2);
-            if (xauUsd && document.getElementById('goldVal')) {
-                const goldPrice = ((1 / xauUsd) / 31.1034) * tryVal;
-                document.getElementById('goldVal').innerText = goldPrice.toFixed(0);
-            }
-        } catch (err) { console.error("Döviz verisi alınamadı."); }
+        } catch (err) { console.error("Veri hatası"); }
     }
     updateRates();
     setInterval(updateRates, 60000);
